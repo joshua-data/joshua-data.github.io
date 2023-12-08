@@ -21,6 +21,7 @@ tags:
 ## 1. 탈중앙화의 개념
 
 ![Blockchain Trilemma]({{ site.baseurl }}/assets/2022-07-12-measuring-decentralization/blockchain-trilemma.webp)
+> 블록체인 트릴레마(Trilemma)
 
 블록체인 트릴레마(Trilemma)란, 확장성(Scalability), 보안성(Security), 탈중앙화(Decentralization) 세 가지 지표를 동시에 모두 향상시키기 어려운 블록체인의 기술적 성격을 의미한다. 즉, 블록체인 네트워크를 설계하는 과정에서 특정 두 가지 지표를 향상시키고자 할 경우, 나머지 하나는 반드시 약화될 수밖에 없다는 것이다.
 
@@ -69,7 +70,7 @@ tags:
 
 HHI 공식허핀달-허쉬만 지수(이하 HHI)는 특정 시장의 집중도를 평가할 때 사용되는 지표로서, 시장 내 모든 사업자들의 각 시장 점유율(%)을 제곱하여 합한 값을 말한다. 시장의 독과점에 대한 공정거래법을 적용하는 척도로 사용되기도 하는데, HHI는 다음과 같은 특징을 지니고 있다.
 
-|HHI|Value|탈중앙화 정도|
+|**HHI**|**Value**|**탈중앙화 정도**|
 |-|--|-|
 |Minimum|`0.0000`|완전 탈중앙화|
 |Maximum|`1.0000`|완전 중앙화|
@@ -78,7 +79,7 @@ HHI 공식허핀달-허쉬만 지수(이하 HHI)는 특정 시장의 집중도�
 * [HHI의 역수는 이론상 당해 시장 내에 똑같은 규모를 갖는 기업들이 존재한다고 가정할 때 얼마나 많은 기업이 존재할 것인가를 나타내며 그 수효가 많으면 많을수록 그 시장은 보다 경쟁적이라는 것을 시사한다.](https://www.ftc.go.kr/callPop.do?url=%2FjargonSearchView.do%3Fkey%3D451&dicseq=428&titl=%ED%97%88%ED%95%80%EB%8B%AC-%ED%97%88%EC%89%AC%EB%A7%8C+%EC%A7%80%EC%88%98%28Herfindal-Hershman+Index%29)
 * [미국은 합병 심사 시 시장집중 측정지표로 HHI를 다음과 같이 평가하고 있다.](https://www.ftc.go.kr/callPop.do?url=/jargonSearchView.do?key=451&dicseq=428&titl=%ED%97%88%ED%95%80%EB%8B%AC-%ED%97%88%EC%89%AC%EB%A7%8C%20%EC%A7%80%EC%88%98(Herfindal-Hershman%20Index))
 
-HHI|Class
+**HHI**|**Class**
 -|-
 `0.0000 < HHI <= 0.1000`|비집중적인 시장
 `0.1000 < HHI <= 0.1800`|어느 정도 집중적인 시장
@@ -103,7 +104,7 @@ def getHHI(series):
 
 Source지니 계수(이하 Gini)는 경제적 불평등 및 빈부 격차의 정도를 계수화한 지표로, 한 국가 내애서의 소득 불평등 정도를 측정하기 위해 가장 널리 사용된다. 위 그림에서는 직각삼각형의 넓이 중 색칠된 영역의 넓이가 차지하는 비율로 산출된다. Gini는 다음과 같은 특징을 지닌다.
 
-|Gini|Value|탈중앙화 정도|
+|**Gini**|**Value**|**탈중앙화 정도**|
 |-|--|-|
 |Minimum|`0.0000`|완전 탈중앙화|
 |Maximum|`1.0000`|완전 중앙화|
@@ -135,7 +136,7 @@ def getGini(series):
 
 엔트로피는 자연과학이나 정보이론에서 중요하게 다뤄지는 지표로, 확률변수의 불확실성이나 데이터의 혼잡도를 측정하기 위해 사용된다. 엔트로피는 다음과 같은 특징을 지닌다.
 
-|Entropy|Value|탈중앙화 정도|
+|**Entropy**|**Value**|**탈중앙화 정도**|
 |-|--|-|
 |Minimum|`0.0000`|완전 중앙화|
 |Maximum|`Infinite`|완전 탈중앙화|
@@ -170,7 +171,7 @@ def getEntropy(series):
 
 DQ는 검열저항성(Censorship Resistance)에 기반한 탈중앙화 지수로, 특정 소수 노드의 허위 블록 생성이나 프론트러닝(Front-running) 등 악의적 행위에 대한 저항성을 의미한다. DQ는 다음과 같은 특징을 지닌다.
 
-|DQ|Value|탈중앙화 정도|
+|**DQ**|**Value**|**탈중앙화 정도**|
 |-|--|-|
 |Minimum|`0.0000`|완전 탈중앙화|
 |Maximum|`1.0000`|완전 중앙화|
@@ -191,7 +192,7 @@ def getDQ(series):
 
 **(5) Recap**
 
-|Network|HHI 탈중앙화 순위|Gini 탈중앙화 순위|Entropy 탈중앙화 순위|DQ 탈중앙화 순위
+|**Network**|**HHI 탈중앙화 순위**|**Gini 탈중앙화 순위**|**Entropy 탈중앙화 순위**|**DQ 탈중앙화 순위**
 |-|-|-|-|-|
 |Ethereum|`10`|`8`|`10`|`10`|
 |Binance Smart Chain|`6`|`1`|`8`|`6`|
