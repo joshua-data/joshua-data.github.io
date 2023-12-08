@@ -40,4 +40,5 @@ permalink: /about/
 * [joshuajkim413@gmail.com](mailto:joshuajkim413@gmail.com)
 * [LinkedIn](https://www.linkedin.com/in/joshuajsk/)
 * [Medium](https://joshua-data.medium.com)
+* [GiHub](https://github.com/joshua-data)
 * [Kaggle](https://www.kaggle.com/joshuajsk)
