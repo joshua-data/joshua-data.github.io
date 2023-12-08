@@ -1,15 +1,31 @@
 ---
 layout: page
-title: About
+title: Who is Joshua?
 permalink: /about/
 ---
 
-Some information about you!
+He is a Data Analyst on a Never-Ending Thirst for Learning through Computers, Books, and People!
 
-### More Information
+### Education
 
-A place to include any other types of information that you'd like to include about yourself.
+Master of Engineering in AI Big Data (AI & ML Engineering Track)
+Bachelor of Business Administration in Accountancy & Finance
+Bachelor of Arts in Philosophy
 
-### Contact me
+### Work Experience
 
-[email@domain.com](mailto:email@domain.com)
+Data Analyst & Analytics Engineer | [CrossAngle](https://xangle.io/en) | Seoul, South Korea
+Data Analyst | [IoTrust](https://dcentwallet.com) | Seoul, South Korea
+Research Analyst | [Coredax](https://www.coredax.com) | Seoul, South Korea
+Custody Analyst | [Korbit](https://korbit.co.kr/) | Seoul, South Korea
+VBA Developer | [Product Asset Consulting](https://www.productasset.com) | Seoul, South Korea
+Financial Analyst (Internship) | [PeopleFund](https://peoplefund.org) | Austin, Texas, United States
+Data Entry Assistant (Internship) | [Korea Listed Companies Association](https://www.klca.or.kr) | Seoul, South Korea
+Equity Research Assistant (Internship) | [Heungkuk Securities](http://www.heungkuksec.co.kr) | Seoul, South Korea
+
+### Contact Me
+
+[joshuajkim413@gmail.com](mailto:joshuajkim413@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/joshuajsk/)
+[Medium](joshua-data.medium.com)
+[Kaggle](https://www.kaggle.com/joshuajsk)
