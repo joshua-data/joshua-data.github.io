@@ -7,6 +7,8 @@ tags:
   - statistics
 ---
 
+> "블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다."
+
 ### CONTENTS
 1. 탈중앙화의 개념
 2. 탈중앙화의 측정
@@ -17,9 +19,7 @@ tags:
 
 ---
 
-> "블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다."
-
-## 1. 탈중앙화의 개념
+# 1. 탈중앙화의 개념
 
 ![Blockchain Trilemma]({{ site.baseurl }}/assets/2022-07-12-measuring-decentralization/blockchain-trilemma.webp)
 > 블록체인 트릴레마(Trilemma)
@@ -36,9 +36,11 @@ tags:
 * **작업증명 기반 네트워크에서의 탈중앙화**: 해시레이트(Hashrate) 혹은 연산 능력(Computing Power)이 얼마나 골고루 분산 되어 있는가
 * **지분증명 기반 네트워크에서의 탈중앙화**: 스테이킹 자산(Staked Assets)으로 표현되는 지분량이 얼마나 골고루 분산 되어 있는가
 
-## 2. 탈중앙화의 측정
+# 2. 탈중앙화의 측정
 
-### 2.1. 준비: 데이터 수집
+## 2.1. 준비: 데이터 수집
+
+---
 
 다음 10개의 네트워크를 선정하고, 탈중앙화 정도를 측정하기 위한 데이터를 수집하였다.
 * [Ethereum (ETH)](https://blockchair.com/ethereum/charts/hashrate-distribution): 해시레이트(Hashrate) 분포
@@ -62,7 +64,9 @@ tags:
 ![Utilized Seaborn Library in Python 3]({{ site.baseurl }}/assets/2022-07-12-measuring-decentralization/Utilized Seaborn Library in Python 3.webp)
 > Utilized Seaborn Library in Python 3
 
-### 2.2. 유형별 측정
+## 2.2. 유형별 측정
+
+---
 
 **(1) 허핀달-허쉬만 지수 (HHI, Herfindal-Hershman Index)**
 
@@ -206,13 +210,13 @@ def getDQ(series):
 |Klaytn|`7`|`3`|`9`|`7`|
 |Celo|`3`|`2`|`3`|`3`|
 
-## 3. 결론
+# 3. 결론
 
 탈중앙화 개념에 대해 정량적으로 접근하는 방법에는 상술한 네 가지 방법 외에도 수많은 아이디어들이 있다. 이더리움 창시자 비탈릭 부테린이 2017년 처음으로 탈중앙화 개념을 추상적으로 제안한 이후, 여러 가지 측면에서 탈중앙화 지수가 등장했다.
 
 **그러나 본 아티클에서 다룬 4가지 측정 방법들은 다음 측면에서 중대한 문제점이 있다.**
-**1. 노드의 수(Total Absolute Number of Nodes in the Network)를 고려하지 않아, 네트워크 참여나 활성화 정도를 고려하지 않았다.**
-**2. 노드 참여에 대한 자격 요건(Prerequisite)을 배제한 채 실험이 진행되었다.**
+1. **노드의 수(Total Absolute Number of Nodes in the Network)를 고려하지 않아, 네트워크 참여나 활성화 정도를 고려하지 않았다.**
+2. **노드 참여에 대한 자격 요건(Prerequisite)을 배제한 채 실험이 진행되었다.**
 
 노드의 수와 자격 요건 등을 고려하지 않은 채 실험을 진행한 결과, Klaytn과 Solana가 Ethereum보다 탈중앙성이 더욱 높은 결과가 도출되었다. 가령, Klaytn의 경우 재단과 파트너십 관계에 있는 약 30개의 노드들만 선정되었고 일반인이 운영하는 노드의 자유로운 Entry/Exit이 불가능한 Governance를 지니고 있고, Solana의 경우 노드에 참여하기 위한 Resource Requirements가 매우 높은 편이다. 결국, Klaytn과 Solana가 Ethereum보다 높은 탈중앙성을 지니고 있다고 말하는 것은 선뜻 상식에 부합되기 어려워 보인다. 따라서, **탈중앙화 측정을 위해 소개한 4가지 방법들은 탈중앙화를 측정한다기보다는, 단순히 "현재 노드들 간의 빈부격차" 정도로만 해석하는 것이 바람직할 것으로 보인다.**
 
@@ -236,3 +240,6 @@ def getDQ(series):
 * [DQ: Two approaches to measure the degree of decentralization of blockchain](https://www.sciencedirect.com/science/article/pii/S2405959521000977)
 
 ---
+
+## *Published by* Joshua Kim
+![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)
