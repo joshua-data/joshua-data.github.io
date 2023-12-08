@@ -8,7 +8,7 @@ permalink: /about/
 
 ### Discover Joshua
 
-**"Primarily an introverted individual, he's scattered with occasional extroverted and proactive traits. It seems like He has numerous personas within him."**
+**"Primarily an introverted individual, he's scattered with occasional extroverted and proactive traits. It seems like he has numerous personas within him."**
 
 * He enjoys learning foreign languages. (Every conversation in a foreign language brings a refreshing change in his mindset and paradigm.)
 * He loves both watching and playing soccer. (He's been rooting for Liverpool FC since 2005.)
