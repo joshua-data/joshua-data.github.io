@@ -4,15 +4,15 @@ title: Who is Joshua?
 permalink: /about/
 ---
 
-He is a Data Analyst on a Never-Ending Thirst for Learning through Computers, Books, and People!
+"He is a Data Analyst on a Never-Ending Thirst for Learning through Computers, Books, and People!"
 
-### Education
+### :man_student: Education
 
 * Master of Engineering in **AI Big Data** (AI & ML Engineering Track)
 * Bachelor of Business Administration in **Accountancy & Finance**
 * Bachelor of Arts in **Philosophy**
 
-### Work Experience
+### :man_office_worker:	Work Experience
 
 **Position** | **Company** | **Location**
 Data Analyst | [CrossAngle](https://xangle.io/en) | Seoul, South Korea
@@ -24,9 +24,15 @@ Financial Analyst (Internship) | [PeopleFund](https://peoplefund.org) | Austin T
 Data Entry Assistant (Internship) | [Korea Listed Companies Association](https://www.klca.or.kr) | Seoul, South Korea
 Equity Research Assistant (Internship) | [Heungkuk Securities](http://www.heungkuksec.co.kr) | Seoul, South Korea
 
-### Contact Me
+### :globe_with_meridians: Contact Me
 
 * [joshuajkim413@gmail.com](mailto:joshuajkim413@gmail.com)
 * [LinkedIn](https://www.linkedin.com/in/joshuajsk/)
 * [Medium](https://joshua-data.medium.com)
 * [Kaggle](https://www.kaggle.com/joshuajsk)
+
+### :speaking_head:	Languages
+
+* :kr: Korean (Native)
+* :us: English (Full Professional Proficiency)
+* :taiwan: Mandarin Chinese (Lower-intermediate)
