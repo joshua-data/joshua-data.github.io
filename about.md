@@ -28,5 +28,5 @@ Equity Research Assistant (Internship) | [Heungkuk Securities](http://www.heungk
 
 * [joshuajkim413@gmail.com](mailto:joshuajkim413@gmail.com)
 * [LinkedIn](https://www.linkedin.com/in/joshuajsk/)
-* [Medium](joshua-data.medium.com)
+* [Medium](https://joshua-data.medium.com)
 * [Kaggle](https://www.kaggle.com/joshuajsk)
