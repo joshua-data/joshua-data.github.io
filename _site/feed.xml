@@ -1,4 +1,307 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-08T22:41:49+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">탈중앙화: 개념과 측정 방법, 그리고 한계</title><link href="http://localhost:4000/measuring-decentralization/" rel="alternate" type="text/html" title="탈중앙화: 개념과 측정 방법, 그리고 한계" /><published>2022-07-12T00:00:00+09:00</published><updated>2022-07-12T00:00:00+09:00</updated><id>http://localhost:4000/measuring-decentralization</id><content type="html" xml:base="http://localhost:4000/measuring-decentralization/"><![CDATA[<h1 id="탈중앙화-개념과-측정-방법-그리고-한계">탈중앙화: 개념과 측정 방법, 그리고 한계</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-09T18:30:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Amplitude 톺아보기</title><link href="http://localhost:4000/amplitude/" rel="alternate" type="text/html" title="Amplitude 톺아보기" /><published>2022-11-01T00:00:00+09:00</published><updated>2022-11-01T00:00:00+09:00</updated><id>http://localhost:4000/%08amplitude</id><content type="html" xml:base="http://localhost:4000/amplitude/"><![CDATA[<blockquote>
+  <p>이번 아티클에서 다룰 이야기는 바로  <strong>Amplitude</strong>(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>데이터 기반 성장의 시대</li>
+  <li>Amplitude: “나는 네가 지난 여름에 한 일을 알고 있다.”
+2.1. 고객  (User)
+2.2. 행동 (Event)</li>
+  <li>DB Schema를 떠올려보면 Amplitude도 결국 SQL 날리는 거야!</li>
+  <li>Amplitude는 결국 전부 필터링 &amp; 분류, That’s enough!</li>
+  <li>그래서 Amplitude 고수가 되려면 어떻게 해야 하는데?</li>
+</ol>
+
+<hr />
+
+<h1 id="1-데이터-기반-성장의-시대">1. 데이터 기반 성장의 시대</h1>
+
+<p>우리는 데이터의 시대에 살고 있다. 데이터 공부를 한 사람 입장에서 아주 자기중심적이고 과장된 표현이라는 것을 인정하지만, 데이터를 보지 않는 기업이나 국가기관은 이제 거의 없다.</p>
+
+<p>빅데이터의 수집, ETL(추출, 변환, 적재) 인프라와 하드웨어의 발전 덕분에 수 년 전 데이터가 돈이 될 수 있는 시대에 진입했었다면, 지금은 기업의 경영과 국가 정책 결정 과정에 있어서 데이터가 필수 불가결한 수준까지 도달했다. 즉, 데이터 없이는 생존하기 어려운 시대가 온 것이다.</p>
+
+<p>물론 데이터가 의사결정이나 전략적 방향 수립을 위한 유일무이한 관점이라고 말할 수는 없다. 그럼에도 불구하고, 사람의 직관으로 결론 내리기 어려운 것들에 대해 데이터가 매우 큰 힘을 발휘해줄 수 있으며, 효율적인 전략 방향 설정과 티핑 포인트(Tipping Point)를 탐색하는 데 데이터는 매우 중요한 도구적 가치를 지닌다.</p>
+
+<p>필자가 근무 중인 모 기업 역시, 전사적으로 데이터 분석 인프라를 갖춤으로써 데이터 기반 의사결정과 그로스 해킹 과정을 숱하게 겪고 있다. Amplitude, Google Analytics, AppsFlyer 등 3rd-party 데이터 분석 툴은 물론이고, BigQuery, Redash, 및 로컬 DB를 통해서도 분석에 적극적으로 활용하고 있다.</p>
+
+<p><img src="/assets/2022-11-01-amplitude/amplitude-logo.jpeg" alt="Amplitude Logo" /></p>
+<blockquote>
+  <p>Amplitude의 로고. 이니셜인 A를 Line Chart 처럼 형상화한 것이 개인적으로 참 마음에 든다.</p>
+</blockquote>
+
+<p>데이터 분석 스토리 시리즈의 첫 번째 이야기는 바로  <strong>Amplitude</strong>(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.</p>
+
+<p><img src="/assets/2022-11-01-amplitude/martian.gif" alt="The Martian" /></p>
+<blockquote>
+  <p>“개발자님! 이벤트 세팅해주신 것들 트랙킹된다! 트랙킹된다! 카피 댓!” (영화 마션)</p>
+</blockquote>
+
+<h1 id="2-amplitude-나는-네가-지난-여름에-한-일을-알고-있다">2. Amplitude: “나는 네가 지난 여름에 한 일을 알고 있다.”</h1>
+
+<p><img src="/assets/2022-11-01-amplitude/i-know-what-you-did-last-summer.png" alt="I Know What You Did Last Summer" /></p>
+<blockquote>
+  <p>“나는 네가 지난 여름에 한 일을 알고 있다.” (1997년 개봉한 짐 길레스피 감독의 영화)</p>
+</blockquote>
+
+<p>Amplitude를 살짝 섬뜩하게 표현하면, “디센트 앱을 이용하는 고객들이 무엇을 했는지 다 기록하고, 조회할 수 있는 툴”이다. 즉, 고객들이 다음과 같은 행동을 했을 때 Amplitude는 이를 데이터로 기록해두고, 데이터 분석을 하는 나는 이를 실시간 차트로 표현할 수 있다.</p>
+<ul>
+  <li>회원가입을 완료하다.</li>
+  <li>장바구니에 상품을 추가하다.</li>
+  <li>프로모션 배너를 클릭하다.</li>
+</ul>
+
+<p>물론, Amplitude는 각국의 개인정보 보호법을 준수하기 위해 모든 사용자 식별자를 암호화하여 생성한다. 이 때문에 데이터 분석가는 특정 고객의 이름이나 생년월일을 Amplitude에서 실시간으로 추적할 수 없을 뿐더러, 그 어떠한 제3자 데이터베이스에도 보관되지 않는다. (물론, 다른 직원들도 알 방법이 없다.) 다만, 특정 행동을 한 고객들의 수, 국가, 운영체제 등으로 그룹화하여 분석을 진행할 뿐이다.</p>
+
+<p>앞서 Amplitude를 섬뜩하게 표현했는데, 위키피디아 스타일로 정의를 내리자면 다음이 적절할 것 같다.</p>
+<blockquote>
+  <p>“Amplitude는  <strong>고객</strong>의  <strong>행동</strong>을 기록하고, 조회할 수 있는 툴이다.”</p>
+</blockquote>
+
+<p><strong>고객</strong>과 <strong>행동</strong>의 의미가 정확히 무엇인지 나누어 살펴보자.</p>
+
+<h2 id="21-고객--user">2.1. 고객  (User)</h2>
+
+<p>Amplitude에서는 고객을 User로 명명하여, 사용 기기(Device)의 정보나 로그인 정보 등 다양한 방식으로 식별하고 있다. User를 식별하는 것은 앱 데이터를 분석하는 과정에서 매우 (X 100) 중요하다. 가령, ”손흥민”이라는 고객을 2명이 아닌 1명의 고객으로 잘 식별해야만 해당 고객이 회원가입을 하고, 최종 상품을 구매할 경우, 전환율(Conversion Rate)을 정확하게 측정할 수 있기 때문이다. Amplitude에서는 이러한 고객의 식별자를 Amplitude ID로 명명하고 있다.</p>
+
+<p>Amplitude의  <a href="https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude#h_5c321a51-5d16-43f0-a4fe-f907567ad63b">Tech Docs</a>를 보면 식별 메커니즘을 명확하게 설명하고 있는데, 고객을 정확하게 식별하기 위해 2중으로 식별 알고리즘을 적용하여  <strong>Amplitude ID</strong>를 생성하고 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>알고리즘</strong></th>
+      <th><strong>우선순위</strong></th>
+      <th><strong>의미</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>User ID</td>
+      <td>1</td>
+      <td>앱 개발자가 직접 설정한 사용자 식별 방식</td>
+    </tr>
+    <tr>
+      <td>Device ID</td>
+      <td>2</td>
+      <td>사용 기기의 IDFV를 가져오거나 Random Alphanumeric 문자열을 쿠키 데이터로 심어놓음</td>
+    </tr>
+    <tr>
+      <td>Amplitude ID</td>
+      <td>3</td>
+      <td>User ID &gt; Device ID 순으로 참조하여 최종 고객 식별</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="22-행동-event">2.2. 행동 (Event)</h2>
+
+<p>행동은 단어 그대로, 고객의 특정 행동을 의미한다. 이를 좀 더 개발스럽게(?) 표현하면, 앱 상에서 고객이 클라이언트 내에서 서버를 향해 요청(Request)한 트랜잭션이라고 할 수 있다. 개발자가 아니라면 외계어(👾)처럼 들릴 수 있으니, 다음 그림을 한 번 보도록 하자.</p>
+
+<pre><code class="language-mermaid">	graph LR
+	U[사용자]
+	Event1[공지사항을 클릭하다.]
+	Event2[사용 가이드를 클릭하다.]
+	Event3[장바구니를 조회하다.]
+	Event4[구매를 완료하다.]
+	Event5[상품평을 작성하다.]
+	U -.-&gt; Event1
+	U -.-&gt; Event2
+	U -.-&gt; Event3
+	U -.-&gt; Event4
+	U -.-&gt; Event5
+</code></pre>
+<blockquote>
+  <p>필자는 그림에 소질이 없으니, 못생긴 그림이어도 이해를 바란다.</p>
+</blockquote>
+
+<p>즉, 행동(Event)은 공지사항을 클릭하거나, 구매를 완료하는 등 서버에 전달될 수 있는 사건들을 의미하는 것이다.</p>
+
+<p>자, 그럼 위키피디아 스타일의 Amplitude 정의를 좀 더 아름답게 표현해보면, 다음과 같다.</p>
+<blockquote>
+  <p>“Amplitude는  <strong>주어(User)</strong>  +  <strong>동사(Event)</strong>로 데이터를 기록하고, 우리는 이 데이터를 조회할 수 있다.”</p>
+</blockquote>
+
+<p>가령, 월드클래스️⚽손흥민과 피겨퀸 💃김연아, 총 2명의 고객이 우리 앱을 사용하고 있다고 가정해보자. 그리고 흥민님과 연아님은 오늘 디센트 앱에서 다음과 같은 Event를 발생시켰다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>User</strong></th>
+      <th><strong>Event</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>흥민</td>
+      <td>회원가입을 완료했다.</td>
+    </tr>
+    <tr>
+      <td>흥민</td>
+      <td>장바구니에 상품을 추가했다.</td>
+    </tr>
+    <tr>
+      <td>흥민</td>
+      <td>프로모션 페이지를 조회했다.</td>
+    </tr>
+    <tr>
+      <td>연아</td>
+      <td>공지사항을 클릭했다.</td>
+    </tr>
+    <tr>
+      <td>연아</td>
+      <td>댓글을 작성했다.</td>
+    </tr>
+    <tr>
+      <td>연아</td>
+      <td>프로모션 페이지를 조회했다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>그리고 데이터 덕후인 필자가 아래와 같은 궁금점을 해결하기 위해 Amplitude로 데이터 조회를 해보니, 다음과 같은 결과를 얻을 수 있었다.</p>
+
+<ul>
+  <li>영국(United Kingdom)에서 접속한 User의 Event가 무엇이 있을까?</li>
+</ul>
+
+<p><strong>User</strong>|<strong>Event</strong></p>
+<ul>
+  <li>|-
+XXX | 회원가입을 완료했다.
+XXX | 장바구니에 상품을 추가했다.
+XXX | 프로모션 페이지를 조회했다.
+    <blockquote>
+      <p>참고로 흥민님은 작성일 현재 영국 런던에 거주한다.
+오호, 영국 고객들이 이런 이벤트들을 행했구나!</p>
+    </blockquote>
+  </li>
+  <li>“프로모션 페이지 조회” Event를 행한 User는 총 몇 명일까?</li>
+</ul>
+
+<p><strong>User</strong>|<strong>Event</strong></p>
+<ul>
+  <li>|-
+XXX | 프로모션 페이지를 조회했다.
+XXX | 프로모션 페이지를 조회했다.
+    <blockquote>
+      <p>오늘 고객 2명이 디센트 아카데미를 클릭했구나!</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h1 id="3-db-schema를-떠올려보면-amplitude도-결국-sql-날리는-거야">3. DB Schema를 떠올려보면 Amplitude도 결국 SQL 날리는 거야!</h1>
+
+<p>Amplitude의 내부 데이터베이스를 살펴본 적도 없고 살펴볼 수도 없겠지만, Amplitude가 데이터를 기록하는 방식을 다음 ERD 다이어그램 정도로 이해하면 훨씬 습득력이 향상될 것 같다.</p>
+<ul>
+  <li>물론, Amplitude Data Export 기능을 활용하게 된다면 테이블 구조를 더욱 명확하게 확인할 수 있을 것이다.</li>
+</ul>
+
+<pre><code class="language-mermaid">	erDiagram 
+	USERS {
+		PK user_id
+		VARCHAR user_name
+		VARCHAR country
+		VARCHAR language
+		VARCHAR device_type
+		VARCHAR app_version
+	}
+	EVENTS {
+		PK event_id
+		FK user_id
+		VARCHAR event_name
+		datetime datetime
+	}
+
+	USERS ||--|{ EVENTS : creates
+</code></pre>
+
+<p>즉, User에는 식별자인 ID 뿐만 아니라, 거주 국가, 언어, 사용 기기, 운영체제 등 프로파일에 해당하는 정보를 가지고 있고, 각 User는 1개 이상의 Event를 행한다. 그리고 각 Event 역시 ID 뿐만 아니라, 상세 프로파일을 가지고 있다.</p>
+
+<h1 id="4-amplitude는-결국-전부-필터링--분류-thats-enough">4. Amplitude는 결국 전부 필터링 &amp; 분류, That’s enough!</h1>
+
+<p>Amplitude가 데이터를 수집하는 아키텍처를 굉장히 복잡하게 설명했지만, 사실 데이터 분석 업무에 이를 잘 녹여내기 위해서는 크게  <strong>필터링</strong>과  <strong>분류</strong>만 잘 하면 된다. 이를 좀 더 SQL스럽게(?) 말하면,  <strong>WHERE</strong> Syntax와  <strong>GROUP BY</strong>  Syntax만 잘 먹여주면 된다. 가령 다음과 같은 질문을 Amplitude가 쉽게 대답해줄 수 있다.</p>
+
+<h3 id="전체-사용자들을-국가country로-분류-좀-해줄래">전체 사용자들을 국가(Country)로 분류 좀 해줄래?</h3>
+
+<p><img src="/assets/2022-11-01-amplitude/user-group-by-country.png" alt="" /></p>
+<blockquote>
+  <p>Amplitude의 User Composition 차트</p>
+</blockquote>
+
+<ul>
+  <li>다음 SQL 문과 너무 유사한 컨셉이지 않은가?!
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">SELECT</span>
+      <span class="n">country</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">user_cnt</span>
+  <span class="k">FROM</span>
+      <span class="n">users</span>
+  <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="n">country</span>
+  <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="n">user_cnt</span> <span class="k">DESC</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="사용자-가이드-클릭-수를-일자-별로-흐름을-알려줄래">사용자 가이드 클릭 수를 일자 별로 흐름을 알려줄래?</h3>
+
+<p><img src="/assets/2022-11-01-amplitude/click-by-date.png" alt="" /></p>
+<blockquote>
+  <p>Amplitude의 Segmentation 차트</p>
+</blockquote>
+
+<ul>
+  <li>다음 SQL 문과 너무 유사한 컨셉이지 않은가?
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">SELECT</span>
+      <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">user_cnt</span>
+  <span class="k">FROM</span>
+      <span class="n">events</span>
+  <span class="k">WHERE</span>
+      <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'click_academy'</span>
+  <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">)</span>
+  <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="5-그래서-amplitude-고수가-되려면-어떻게-해야-하는데">5. 그래서 Amplitude 고수가 되려면 어떻게 해야 하는데?</h1>
+
+<p>엑셀과 SQL이 그렇듯, Amplitude도 쓰면 쓸수록 실력이 일취월장한다고 생각한다.</p>
+<ul>
+  <li>“아, 내가 이 경우를 고려하지 못하고 데이터를 추출했구나.”</li>
+  <li>“이런 된장, Null 값을 제외 못했네.”</li>
+  <li>“망했어, 기간 설정을 잘못했어.”</li>
+  <li>“비율을 거꾸로 적용했네. 어쩐지 이상하더라.”</li>
+</ul>
+
+<p>이러한 시행착오가 쌓이면 쌓일수록 (그렇다, 내 이야기 맞다.) 정확한 필터링과 분류 능력이 향상되는 것 같다. 추가로, 심심할 때마다 다음 컨텐츠들을 읽어보면서 틈틈이 공부하는 것도 매우 도움이 될 것이라고 생각한다.</p>
+<ul>
+  <li><a href="https://medium.com/@amplitudeHQ">Amplitude의 공식 Medium Page</a></li>
+  <li><a href="https://timothydaniell.medium.com/">Timothy Daniell의 Medium Page</a></li>
+  <li><a href="https://blog.ab180.co/category/amplitude">AB180 Amplitude 블로그</a></li>
+</ul>
+
+<p>그럼, 이 땅의 모든 데이터 분석가, 마케터, 프론트엔드 개발자들을 응원하며, 글을 마친다. 또 다른 주제로 다시 돌아온다!</p>
+
+<p><img src="/assets/2022-11-01-amplitude/the-simpsons.gif" alt="" /></p>
+<blockquote>
+  <p>너무 데이터 분석만 하지말고, 가끔씩 이렇게 멘탈을 놓고 춤도 춰야 한다.</p>
+</blockquote>
+
+<p><img src="/assets/2022-11-01-amplitude/alan-turing.png" alt="" /></p>
+<blockquote>
+  <p>“Those who can imagine anything, can create the impossible.” (어떤 것이든 상상이 가능한 사람은 불가능을 가능으로 바꿀 수 있다. ) - Alan Turing (튜링 머신의 아버지, 1912~1954)</p>
+</blockquote>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="amplitude" /><category term="data_analytics" /><summary type="html"><![CDATA[이번 아티클에서 다룰 이야기는 바로 Amplitude(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.]]></summary></entry><entry><title type="html">탈중앙화: 개념과 측정 방법, 그리고 한계</title><link href="http://localhost:4000/measuring-decentralization/" rel="alternate" type="text/html" title="탈중앙화: 개념과 측정 방법, 그리고 한계" /><published>2022-07-12T00:00:00+09:00</published><updated>2022-07-12T00:00:00+09:00</updated><id>http://localhost:4000/measuring-decentralization</id><content type="html" xml:base="http://localhost:4000/measuring-decentralization/"><![CDATA[<blockquote>
+  <p>“블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다.”</p>
+</blockquote>
 
 <h3 id="contents">CONTENTS</h3>
 <ol>
@@ -7,18 +310,17 @@
 2.1. 준비: 데이터 수집
 2.2. 유형별 측정
 2.3. Recap</li>
-  <li>
-    <h2 id="결론-탈중앙화와-빈부격차는-다르다">결론: “탈중앙화와 빈부격차는 다르다!”</h2>
-  </li>
+  <li>결론: “탈중앙화와 빈부격차는 다르다!”</li>
 </ol>
 
-<blockquote>
-  <p>“블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다.”</p>
-</blockquote>
+<hr />
 
-<h2 id="1-탈중앙화의-개념">1. 탈중앙화의 개념</h2>
+<h1 id="1-탈중앙화의-개념">1. 탈중앙화의 개념</h1>
 
 <p><img src="/assets/2022-07-12-measuring-decentralization/blockchain-trilemma.webp" alt="Blockchain Trilemma" /></p>
+<blockquote>
+  <p>블록체인 트릴레마(Trilemma)</p>
+</blockquote>
 
 <p>블록체인 트릴레마(Trilemma)란, 확장성(Scalability), 보안성(Security), 탈중앙화(Decentralization) 세 가지 지표를 동시에 모두 향상시키기 어려운 블록체인의 기술적 성격을 의미한다. 즉, 블록체인 네트워크를 설계하는 과정에서 특정 두 가지 지표를 향상시키고자 할 경우, 나머지 하나는 반드시 약화될 수밖에 없다는 것이다.</p>
 
@@ -36,9 +338,11 @@
   <li><strong>지분증명 기반 네트워크에서의 탈중앙화</strong>: 스테이킹 자산(Staked Assets)으로 표현되는 지분량이 얼마나 골고루 분산 되어 있는가</li>
 </ul>
 
-<h2 id="2-탈중앙화의-측정">2. 탈중앙화의 측정</h2>
+<h1 id="2-탈중앙화의-측정">2. 탈중앙화의 측정</h1>
 
-<h3 id="21-준비-데이터-수집">2.1. 준비: 데이터 수집</h3>
+<h2 id="21-준비-데이터-수집">2.1. 준비: 데이터 수집</h2>
+
+<hr />
 
 <p>다음 10개의 네트워크를 선정하고, 탈중앙화 정도를 측정하기 위한 데이터를 수집하였다.</p>
 <ul>
@@ -68,7 +372,9 @@
   <p>Utilized Seaborn Library in Python 3</p>
 </blockquote>
 
-<h3 id="22-유형별-측정">2.2. 유형별 측정</h3>
+<h2 id="22-유형별-측정">2.2. 유형별 측정</h2>
+
+<hr />
 
 <p><strong>(1) 허핀달-허쉬만 지수 (HHI, Herfindal-Hershman Index)</strong></p>
 
@@ -82,9 +388,9 @@
 <table>
   <thead>
     <tr>
-      <th>HHI</th>
-      <th>Value</th>
-      <th>탈중앙화 정도</th>
+      <th><strong>HHI</strong></th>
+      <th><strong>Value</strong></th>
+      <th><strong>탈중앙화 정도</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -110,8 +416,8 @@
 <table>
   <thead>
     <tr>
-      <th>HHI</th>
-      <th>Class</th>
+      <th><strong>HHI</strong></th>
+      <th><strong>Class</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -155,9 +461,9 @@
 <table>
   <thead>
     <tr>
-      <th>Gini</th>
-      <th>Value</th>
-      <th>탈중앙화 정도</th>
+      <th><strong>Gini</strong></th>
+      <th><strong>Value</strong></th>
+      <th><strong>탈중앙화 정도</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -209,9 +515,9 @@
 <table>
   <thead>
     <tr>
-      <th>Entropy</th>
-      <th>Value</th>
-      <th>탈중앙화 정도</th>
+      <th><strong>Entropy</strong></th>
+      <th><strong>Value</strong></th>
+      <th><strong>탈중앙화 정도</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -268,9 +574,9 @@
 <table>
   <thead>
     <tr>
-      <th>DQ</th>
-      <th>Value</th>
-      <th>탈중앙화 정도</th>
+      <th><strong>DQ</strong></th>
+      <th><strong>Value</strong></th>
+      <th><strong>탈중앙화 정도</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -309,11 +615,11 @@
 <table>
   <thead>
     <tr>
-      <th>Network</th>
-      <th>HHI 탈중앙화 순위</th>
-      <th>Gini 탈중앙화 순위</th>
-      <th>Entropy 탈중앙화 순위</th>
-      <th>DQ 탈중앙화 순위</th>
+      <th><strong>Network</strong></th>
+      <th><strong>HHI 탈중앙화 순위</strong></th>
+      <th><strong>Gini 탈중앙화 순위</strong></th>
+      <th><strong>Entropy 탈중앙화 순위</strong></th>
+      <th><strong>DQ 탈중앙화 순위</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -390,13 +696,15 @@
   </tbody>
 </table>
 
-<h2 id="3-결론">3. 결론</h2>
+<h1 id="3-결론">3. 결론</h1>
 
 <p>탈중앙화 개념에 대해 정량적으로 접근하는 방법에는 상술한 네 가지 방법 외에도 수많은 아이디어들이 있다. 이더리움 창시자 비탈릭 부테린이 2017년 처음으로 탈중앙화 개념을 추상적으로 제안한 이후, 여러 가지 측면에서 탈중앙화 지수가 등장했다.</p>
 
-<p><strong>그러나 본 아티클에서 다룬 4가지 측정 방법들은 다음 측면에서 중대한 문제점이 있다.</strong>
-<strong>1. 노드의 수(Total Absolute Number of Nodes in the Network)를 고려하지 않아, 네트워크 참여나 활성화 정도를 고려하지 않았다.</strong>
-<strong>2. 노드 참여에 대한 자격 요건(Prerequisite)을 배제한 채 실험이 진행되었다.</strong></p>
+<p><strong>그러나 본 아티클에서 다룬 4가지 측정 방법들은 다음 측면에서 중대한 문제점이 있다.</strong></p>
+<ol>
+  <li><strong>노드의 수(Total Absolute Number of Nodes in the Network)를 고려하지 않아, 네트워크 참여나 활성화 정도를 고려하지 않았다.</strong></li>
+  <li><strong>노드 참여에 대한 자격 요건(Prerequisite)을 배제한 채 실험이 진행되었다.</strong></li>
+</ol>
 
 <p>노드의 수와 자격 요건 등을 고려하지 않은 채 실험을 진행한 결과, Klaytn과 Solana가 Ethereum보다 탈중앙성이 더욱 높은 결과가 도출되었다. 가령, Klaytn의 경우 재단과 파트너십 관계에 있는 약 30개의 노드들만 선정되었고 일반인이 운영하는 노드의 자유로운 Entry/Exit이 불가능한 Governance를 지니고 있고, Solana의 경우 노드에 참여하기 위한 Resource Requirements가 매우 높은 편이다. 결국, Klaytn과 Solana가 Ethereum보다 높은 탈중앙성을 지니고 있다고 말하는 것은 선뜻 상식에 부합되기 어려워 보인다. 따라서, <strong>탈중앙화 측정을 위해 소개한 4가지 방법들은 탈중앙화를 측정한다기보다는, 단순히 “현재 노드들 간의 빈부격차” 정도로만 해석하는 것이 바람직할 것으로 보인다.</strong></p>
 
@@ -421,479 +729,7 @@
   <li><a href="https://www.sciencedirect.com/science/article/pii/S2405959521000977">DQ: Two approaches to measure the degree of decentralization of blockchain</a></li>
 </ul>
 
-<hr />]]></content><author><name></name></author><category term="korean" /><category term="blockchain" /><category term="statistics" /><summary type="html"><![CDATA[탈중앙화: 개념과 측정 방법, 그리고 한계]]></summary></entry><entry><title type="html">A Full and Comprehensive Style Test</title><link href="http://localhost:4000/style-test/" rel="alternate" type="text/html" title="A Full and Comprehensive Style Test" /><published>2016-08-15T00:00:00+09:00</published><updated>2016-08-15T00:00:00+09:00</updated><id>http://localhost:4000/style-test</id><content type="html" xml:base="http://localhost:4000/style-test/"><![CDATA[<p>Below is just about everything you’ll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.</p>
-
 <hr />
 
-<h2 id="1-header">1. Header</h2>
-
-<h1 id="header-1">Header 1</h1>
-
-<h2 id="header-2">Header 2</h2>
-
-<h3 id="header-3">Header 3</h3>
-
-<h4 id="header-4">Header 4</h4>
-
-<h5 id="header-5">Header 5</h5>
-
-<h6 id="header-6">Header 6</h6>
-
-<h3 id="1-1-header-alignment">1-1. Header Alignment</h3>
-
-<h5 id="leftdefault">Left(Default)</h5>
-
-<h5 class="center" id="center">Center</h5>
-
-<h5 class="right" id="right">Right</h5>
-
-<h2 id="2-body-text">2. Body Text</h2>
-
-<p>Lorem ipsum dolor sit amet, <a href="#">test link</a> adipiscing elit. <strong>This is strong.</strong> Nullam dignissim convallis est. Quisque aliquam. <em>This is emphasized.</em> Donec faucibus. Nunc iaculis suscipit dui. 5<sup>3</sup> = 125. Water is H<sub>2</sub>O. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. <u>Underline</u>. Maecenas ornare tortor. Donec sed tellus eget <code class="language-plaintext highlighter-rouge">COPY filename</code> sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, <del>Dinner’s at 5:00.</del> commodo vitae, feugiat in, nunc. Morbi imperdiet augue <mark>mark element</mark> quis tellus.</p>
-
-<h2 id="3-images">3. Images</h2>
-
-<p><img src="http://placehold.it/800x400" alt="Large example image" title="Large example image" />
-<img src="http://placehold.it/400x200" alt="Medium example image" title="Medium example image" />
-<img src="http://placehold.it/200x200" alt="Small example image" title="Small example image" /></p>
-
-<h3 id="3-1-image-alignment">3-1. Image Alignment</h3>
-<p><img src="http://placehold.it/200x200" alt="Center example image" title="Center" class="center-image" /></p>
-
-<h2 id="4-blockquotes">4. Blockquotes</h2>
-
-<blockquote>
-  <p>Lorem ipsum dolor sit amet, test link adipiscing elit. Nullam dignissim convallis est. Quisque aliquam.</p>
-</blockquote>
-
-<h2 id="5-list-types">5. List Types</h2>
-
-<h3 id="unordered-list">Unordered List</h3>
-
-<ul>
-  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-  <li>Nam ultrices nunc in nisi pellentesque ultricies. Cras scelerisque ipsum in ante laoreet viverra. Pellentesque eget quam et augue molestie tincidunt ac ut ex. Sed quis velit vulputate, rutrum nisl sit amet, molestie neque. Vivamus sed augue at turpis suscipit fringilla.</li>
-  <li>Integer pretium nisl vitae justo aliquam, at varius nisi blandit.
-    <ol>
-      <li>Nunc vehicula nulla ac odio gravida vestibulum sed nec mauris.</li>
-      <li>Duis at diam eget arcu dapibus consequat.</li>
-    </ol>
-  </li>
-  <li>Etiam vel elit in purus iaculis pretium.</li>
-</ul>
-
-<h3 id="ordered-list">Ordered List</h3>
-
-<ol>
-  <li>Quisque ullamcorper leo non ex pretium, in fermentum libero imperdiet.</li>
-  <li>Donec eu nulla euismod, rhoncus ipsum nec, faucibus elit.</li>
-  <li>Nam blandit purus gravida, accumsan sem in, lacinia orci.
-    <ul>
-      <li>Duis congue dui nec nisi posuere, at luctus velit semper.</li>
-      <li>Suspendisse in lorem id lacus elementum pretium nec vel nibh.</li>
-    </ul>
-  </li>
-  <li>Aliquam eget ipsum laoreet, maximus risus vitae, iaculis leo.</li>
-</ol>
-
-<h3 id="definition-lists">Definition Lists</h3>
-
-<dl>
-  <dt>kramdown</dt>
-  <dd>A Markdown-superset converter</dd>
-  <dt>Maruku</dt>
-  <dd>Another Markdown-superset converter</dd>
-</dl>
-
-<h2 id="6-tables">6. Tables</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Header1</th>
-      <th style="text-align: center">Header2</th>
-      <th style="text-align: right">Header3</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">cell1</td>
-      <td style="text-align: center">cell2</td>
-      <td style="text-align: right">cell3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">cell4</td>
-      <td style="text-align: center">cell5</td>
-      <td style="text-align: right">cell6</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td style="text-align: left">cell1</td>
-      <td style="text-align: center">cell2</td>
-      <td style="text-align: right">cell3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">cell4</td>
-      <td style="text-align: center">cell5</td>
-      <td style="text-align: right">cell6</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td style="text-align: left">Foot1</td>
-      <td style="text-align: center">Foot2</td>
-      <td style="text-align: right">Foot3</td>
-    </tr>
-  </tfoot>
-</table>
-
-<h2 id="7-code-snippets">7. Code Snippets</h2>
-
-<h3 id="highlighted-code-blocks">Highlighted Code Blocks</h3>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#container</span> <span class="p">{</span>
-  <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
-  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="standard-code-block">Standard code block</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="awesome"&gt;
-  &lt;p&gt;This is great isn't it?&lt;/p&gt;
-&lt;/div&gt;
-</code></pre></div></div>]]></content><author><name></name></author><category term="test" /><category term="style" /><summary type="html"><![CDATA[Below is just about everything you’ll need to style in the theme. Check the source code to see the many embedded elements within paragraphs.]]></summary></entry><entry><title type="html">A Full and Comprehensive Style Test(Korean ver.)</title><link href="http://localhost:4000/style-test-ko/" rel="alternate" type="text/html" title="A Full and Comprehensive Style Test(Korean ver.)" /><published>2016-08-14T00:00:00+09:00</published><updated>2016-08-14T00:00:00+09:00</updated><id>http://localhost:4000/style-test-ko</id><content type="html" xml:base="http://localhost:4000/style-test-ko/"><![CDATA[<p>이 글은 스타일을 모아둔 것입니다. 소스 코드를 확인하여 스타일을 적용하는 방법을 알아보세요.</p>
-
-<hr />
-
-<h2 id="1-제목">1. 제목</h2>
-
-<h1 id="제목-1">제목 1</h1>
-
-<h2 id="제목-2">제목 2</h2>
-
-<h3 id="제목-3">제목 3</h3>
-
-<h4 id="제목-4">제목 4</h4>
-
-<h5 id="제목-5">제목 5</h5>
-
-<h6 id="제목-6">제목 6</h6>
-
-<h3 id="1-1-제목-정렬">1-1. 제목 정렬</h3>
-
-<h5 id="왼쪽기본">왼쪽(기본)</h5>
-
-<h5 class="center" id="가운데">가운데</h5>
-
-<h5 class="right" id="오른쪽">오른쪽</h5>
-
-<h2 id="2-본문">2. 본문</h2>
-
-<p>탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 <a href="#">링크</a> 그 권한행사가 정지된다. 제2항과 제3항의 처분에 대하여는 <strong>굵게</strong> 법원에 제소할 수 없다. 선거와 국민투표의 공정한 관리 <em>기울임</em> 및 정당에 관한 사무를 처리하기 위하여 5<sup>3</sup> = 125 선거관리위원회를 둔다. 국무총리는 대통령을 보좌하며, H<sub>2</sub>O 행정에 관하여 대통령의 명을 받아 행정각부를 통할한다. 정당은 법률이 정하는 바에 의하여 <u>밑줄</u> 국가의 보호를 받으며, 국가는 법률이 정하는 바에 의하여 <code class="language-plaintext highlighter-rouge">파일명</code> 정당운영에 필요한 자금을 보조할 수 있다. 모든 국민은 종교의 자유를 가진다. 국회의원은 법률이 정하는 직을 겸할 수 없다. 감사원은 <del>가운데 줄</del> 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 <mark>형광펜</mark> 그 결과를 보고하여야 한다.</p>
-
-<h2 id="3-이미지">3. 이미지</h2>
-
-<p><img src="http://placehold.it/800x400" alt="큰 이미지" />
-<img src="http://placehold.it/400x200" alt="중간 이미지" />
-<img src="http://placehold.it/200x200" alt="작은 이미지" /></p>
-
-<h3 id="3-1-이미지-가운데-정렬">3-1. 이미지 가운데 정렬</h3>
-<p><img src="http://placehold.it/200x200" alt="이미지 가운데 정렬" class="center-image" /></p>
-
-<h2 id="4-인용구">4. 인용구</h2>
-
-<blockquote>
-  <p>나는 헌법을 준수하고 국가를 보위하며 조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다. 모든 국민은 통신의 비밀을 침해받지 아니한다. 국회의원은 법률이 정하는 직을 겸할 수 없다. 국회는 헌법 또는 법률에 특별한 규정이 없는 한 재적의원 과반수의 출석과 출석의원 과반수의 찬성으로 의결한다. 가부동수인 때에는 부결된 것으로 본다.</p>
-</blockquote>
-
-<h2 id="5-리스트">5. 리스트</h2>
-
-<h3 id="순서가-없는-리스트">순서가 없는 리스트</h3>
-
-<ul>
-  <li>국가원로자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.</li>
-  <li>모든 국민은 법률이 정하는 바에 의하여 국방의 의무를 진다.</li>
-  <li>탄핵소추의 의결을 받은 자는 탄핵심판이 있을 때까지 그 권한행사가 정지된다.
-    <ol>
-      <li>국회는 의원의 자격을 심사하며, 의원을 징계할 수 있다. 국가는 모성의 보호를 위하여 노력하여야 한다.</li>
-      <li>공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다.</li>
-    </ol>
-  </li>
-  <li>국회는 의장 1인과 부의장 2인을 선출한다. 정부는 회계연도마다 예산안을 편성하여 회계연도 개시 90일전까지 국회에 제출하고, 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.</li>
-</ul>
-
-<h3 id="순서가-있는-리스트">순서가 있는 리스트</h3>
-
-<ol>
-  <li>대통령으로 선거될 수 있는 자는 국회의원의 피선거권이 있고 선거일 현재 40세에 달하여야 한다.</li>
-  <li>각급 선거관리위원회는 선거인명부의 작성등 선거사무와 국민투표사무에 관하여 관계 행정기관에 필요한 지시를 할 수 있다.</li>
-  <li>예비비는 총액으로 국회의 의결을 얻어야 한다. 예비비의 지출은 차기국회의 승인을 얻어야 한다.
-    <ul>
-      <li>국가는 농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.</li>
-      <li>모든 국민은 법률이 정하는 바에 의하여 납세의 의무를 진다.</li>
-    </ul>
-  </li>
-  <li>형사피의자 또는 형사피고인으로서 구금되었던 자가 법률이 정하는 불기소처분을 받거나 무죄판결을 받은 때에는 법률이 정하는 바에 의하여 국가에 정당한 보상을 청구할 수 있다.</li>
-</ol>
-
-<h3 id="정의-리스트">정의 리스트</h3>
-
-<dl>
-  <dt>대통령은 제3항과 제4</dt>
-  <dd>국회의원은 그 지위를 남용하여 국가·공공단체 또는 기업체와의 계약이나 그 처분에 의하여 재산상의 권리·이익 또는 직위를 취득하거나 타인을 위하여 그 취득을 알선할 수 없다.</dd>
-  <dt>체포·구속·압수 또</dt>
-  <dd>헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다.</dd>
-</dl>
-
-<h2 id="6-표">6. 표</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">상단1</th>
-      <th style="text-align: center">상단2</th>
-      <th style="text-align: right">상단3</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">셀1</td>
-      <td style="text-align: center">셀2</td>
-      <td style="text-align: right">셀3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">셀4</td>
-      <td style="text-align: center">셀5</td>
-      <td style="text-align: right">셀6</td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td style="text-align: left">셀1</td>
-      <td style="text-align: center">셀2</td>
-      <td style="text-align: right">셀3</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">셀4</td>
-      <td style="text-align: center">셀5</td>
-      <td style="text-align: right">셀6</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td style="text-align: left">하단1</td>
-      <td style="text-align: center">하단2</td>
-      <td style="text-align: right">하단3</td>
-    </tr>
-  </tfoot>
-</table>
-
-<h2 id="7-코드-스타일">7. 코드 스타일</h2>
-
-<h3 id="코드-하이라이팅">코드 하이라이팅</h3>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#container</span> <span class="p">{</span>
-  <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
-  <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="일반적인-코드">일반적인 코드</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="awesome"&gt;
-  &lt;p&gt;This is great isn't it?&lt;/p&gt;
-&lt;/div&gt;
-</code></pre></div></div>
-
-<hr />
-
-<p>이 문서는 <a href="http://guny.kr/stuff/klorem/">한글 Lorem Ipsum</a>으로 생성되었습니다.</p>]]></content><author><name></name></author><category term="샘플 포스트" /><category term="테스트" /><category term="스타일" /><summary type="html"><![CDATA[이 글은 스타일을 모아둔 것입니다. 소스 코드를 확인하여 스타일을 적용하는 방법을 알아보세요.]]></summary></entry><entry><title type="html">Turkish Character Support</title><link href="http://localhost:4000/turkish-support/" rel="alternate" type="text/html" title="Turkish Character Support" /><published>2016-08-13T00:00:00+09:00</published><updated>2016-08-13T00:00:00+09:00</updated><id>http://localhost:4000/turkish-support</id><content type="html" xml:base="http://localhost:4000/turkish-support/"><![CDATA[<p>This template also supports <a href="https://en.wikipedia.org/wiki/Wikipedia:Turkish_characters">Turkish Characters</a> as well.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Character</th>
-      <th style="text-align: center">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">Ğ</td>
-      <td style="text-align: center">Uppercase “G” with breve accent</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">İ</td>
-      <td style="text-align: center">Uppercase dotted “I”</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Ş</td>
-      <td style="text-align: center">Uppercase “S” with cedilla</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">ğ</td>
-      <td style="text-align: center">Lowercase “g” with breve accent</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">ı</td>
-      <td style="text-align: center">Lowercase dotless “i”</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">ş</td>
-      <td style="text-align: center">Lowercase “s” with cedilla</td>
-    </tr>
-  </tbody>
-</table>]]></content><author><name></name></author><summary type="html"><![CDATA[This template also supports Turkish Characters as well.]]></summary></entry><entry><title type="html">Syntax Highlighting Post</title><link href="http://localhost:4000/code-highlighting-post/" rel="alternate" type="text/html" title="Syntax Highlighting Post" /><published>2015-08-16T00:00:00+09:00</published><updated>2015-08-16T00:00:00+09:00</updated><id>http://localhost:4000/code-highlighting-post</id><content type="html" xml:base="http://localhost:4000/code-highlighting-post/"><![CDATA[<p>Demo post displaying the various ways of highlighting code in Markdown.</p>
-
-<p>Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
-
-<h3 id="highlighted-code-blocks">Highlighted Code Blocks</h3>
-
-<p>To modify styling and highlight colors edit <code class="language-plaintext highlighter-rouge">/_sass/_highlighter.scss</code>.</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#container</span> <span class="p">{</span>
-    <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
-    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span> <span class="m">-240px</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">"pagination"</span> <span class="na">role=</span><span class="s">"navigation"</span><span class="nt">&gt;</span>
-    {% if page.previous %}
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.url }}{{ page.previous.url }}"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"{{ page.previous.title }}"</span><span class="nt">&gt;</span>Previous article<span class="nt">&lt;/a&gt;</span>
-    {% endif %}
-    {% if page.next %}
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{ site.url }}{{ page.next.url }}"</span> <span class="na">class=</span><span class="s">"btn"</span> <span class="na">title=</span><span class="s">"{{ page.next.title }}"</span><span class="nt">&gt;</span>Next article<span class="nt">&lt;/a&gt;</span>
-    {% endif %}
-<span class="nt">&lt;/nav&gt;</span><span class="c">&lt;!-- /.pagination --&gt;</span>
-</code></pre></div></div>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">Jekyll</span>
-  <span class="k">class</span> <span class="nc">TagIndex</span> <span class="o">&lt;</span> <span class="no">Page</span>
-    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
-      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
-      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
-      <span class="vi">@dir</span> <span class="o">=</span> <span class="n">dir</span>
-      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">'index.html'</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">'_layouts'</span><span class="p">),</span> <span class="s1">'tag_index.html'</span><span class="p">)</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'tag'</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag</span>
-      <span class="n">tag_title_prefix</span> <span class="o">=</span> <span class="n">site</span><span class="p">.</span><span class="nf">config</span><span class="p">[</span><span class="s1">'tag_title_prefix'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'Tagged: '</span>
-      <span class="n">tag_title_suffix</span> <span class="o">=</span> <span class="n">site</span><span class="p">.</span><span class="nf">config</span><span class="p">[</span><span class="s1">'tag_title_suffix'</span><span class="p">]</span> <span class="o">||</span> <span class="s1">'&amp;#8211;'</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"</span><span class="si">#{</span><span class="n">tag_title_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">self</span><span class="p">.</span><span class="nf">data</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"An archive of posts tagged </span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">."</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div></div>
-
-<h3 id="standard-code-block">Standard Code Block</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;nav class="pagination" role="navigation"&gt;
-    {% if page.previous %}
-        &lt;a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}"&gt;Previous article&lt;/a&gt;
-    {% endif %}
-    {% if page.next %}
-        &lt;a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}"&gt;Next article&lt;/a&gt;
-    {% endif %}
-&lt;/nav&gt;&lt;!-- /.pagination --&gt;
-</code></pre></div></div>
-
-<h3 id="github-gist-embed">GitHub Gist Embed</h3>
-
-<p>An example of a Gist embed below.</p>
-
-<script src="https://gist.github.com/mmistakes/43a355923921d22cd993.js"></script>
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:1" role="doc-endnote">
-      <p><a href="http://en.wikipedia.org/wiki/Syntax_highlighting">http://en.wikipedia.org/wiki/Syntax_highlighting</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
-  </ol>
-</div>]]></content><author><name></name></author><category term="sample post" /><category term="code" /><category term="highlighting" /><summary type="html"><![CDATA[Demo post displaying the various ways of highlighting code in Markdown.]]></summary></entry><entry><title type="html">Testing Readability with a Bunch of Text</title><link href="http://localhost:4000/readability-post/" rel="alternate" type="text/html" title="Testing Readability with a Bunch of Text" /><published>2014-05-22T00:00:00+09:00</published><updated>2014-05-22T00:00:00+09:00</updated><id>http://localhost:4000/readability-post</id><content type="html" xml:base="http://localhost:4000/readability-post/"><![CDATA[<p>A ton of text to test readability.</p>
-
-<p>Portland in shoreditch Vice, labore typewriter pariatur hoodie fap sartorial Austin. Pinterest literally occupy Schlitz forage. Odio ad blue bottle vinyl, 90’s narwhal commodo bitters pour-over nostrud. Ugh est hashtag in, fingerstache adipisicing laboris esse Pinterest shabby chic Portland. Shoreditch bicycle rights anim, flexitarian laboris put a bird on it vinyl cupidatat narwhal. Hashtag artisan skateboard, flannel Bushwick nesciunt salvia aute fixie do plaid post-ironic dolor McSweeney’s. Cliche pour-over chambray nulla four loko skateboard sapiente hashtag.</p>
-
-<p>Vero laborum commodo occupy. Semiotics voluptate mumblecore pug. Cosby sweater ullamco quinoa ennui assumenda, sapiente occupy delectus lo-fi. Ea fashion axe Marfa cillum aliquip. Retro Bushwick keytar cliche. Before they sold out sustainable gastropub Marfa readymade, ethical Williamsburg skateboard brunch qui consectetur gentrify semiotics. Mustache cillum irony, fingerstache magna pour-over keffiyeh tousled selfies.</p>
-
-<h2 id="cupidatat-90s-lo-fi-authentic-try-hard">Cupidatat 90’s lo-fi authentic try-hard</h2>
-
-<p>In pug Portland incididunt mlkshk put a bird on it vinyl quinoa. Terry Richardson shabby chic +1, scenester Tonx excepteur tempor fugiat voluptate fingerstache aliquip nisi next level. Farm-to-table hashtag Truffaut, Odd Future ex meggings gentrify single-origin coffee try-hard 90’s.</p>
-
-<ul>
-  <li>Sartorial hoodie</li>
-  <li>Labore viral forage</li>
-  <li>Tote bag selvage</li>
-  <li>DIY exercitation et id ugh tumblr church-key</li>
-</ul>
-
-<p>Incididunt umami sriracha, ethical fugiat VHS ex assumenda yr irure direct trade. Marfa Truffaut bicycle rights, kitsch placeat Etsy kogi asymmetrical. Beard locavore flexitarian, kitsch photo booth hoodie plaid ethical readymade leggings yr.</p>
-
-<p>Aesthetic odio dolore, meggings disrupt qui readymade stumptown brunch Terry Richardson pour-over gluten-free. Banksy american apparel in selfies, biodiesel flexitarian organic meh wolf quinoa gentrify banjo kogi. Readymade tofu ex, scenester dolor umami fingerstache occaecat fashion axe Carles jean shorts minim. Keffiyeh fashion axe nisi Godard mlkshk dolore. Lomo you probably haven’t heard of them eu non, Odd Future Truffaut pug keytar meggings McSweeney’s Pinterest cred. Etsy literally aute esse, eu bicycle rights qui meggings fanny pack. Gentrify leggings pug flannel duis.</p>
-
-<h2 id="forage-occaecat-cardigan-qui">Forage occaecat cardigan qui</h2>
-
-<p>Fashion axe hella gastropub lo-fi kogi 90’s aliquip +1 veniam delectus tousled. Cred sriracha locavore gastropub kale chips, iPhone mollit sartorial. Anim dolore 8-bit, pork belly dolor photo booth aute flannel small batch. Dolor disrupt ennui, tattooed whatever salvia Banksy sartorial roof party selfies raw denim sint meh pour-over. Ennui eu cardigan sint, gentrify iPhone cornhole.</p>
-
-<blockquote>
-  <p>Whatever velit occaecat quis deserunt gastropub, leggings elit tousled roof party 3 wolf moon kogi pug blue bottle ea. Fashion axe shabby chic Austin quinoa pickled laborum bitters next level, disrupt deep v accusamus non fingerstache.</p>
-</blockquote>
-
-<p>Tote bag asymmetrical elit sunt. Occaecat authentic Marfa, hella McSweeney’s next level irure veniam master cleanse. Sed hoodie letterpress artisan wolf leggings, 3 wolf moon commodo ullamco. Anim occupy ea labore Terry Richardson. Tofu ex master cleanse in whatever pitchfork banh mi, occupy fugiat fanny pack Austin authentic. Magna fugiat 3 wolf moon, labore McSweeney’s sustainable vero consectetur. Gluten-free disrupt enim, aesthetic fugiat jean shorts trust fund keffiyeh magna try-hard.</p>
-
-<h2 id="hoodie-duis">Hoodie Duis</h2>
-
-<p>Actually salvia consectetur, hoodie duis lomo YOLO sunt sriracha. Aute pop-up brunch farm-to-table odio, salvia irure occaecat. Sriracha small batch literally skateboard. Echo Park nihil hoodie, aliquip forage artisan laboris. Trust fund reprehenderit nulla locavore. Stumptown raw denim kitsch, keffiyeh nulla twee dreamcatcher fanny pack ullamco 90’s pop-up est culpa farm-to-table. Selfies 8-bit do pug odio.</p>
-
-<h3 id="thundercats-ho">Thundercats Ho!</h3>
-
-<p>Fingerstache thundercats Williamsburg, deep v scenester Banksy ennui vinyl selfies mollit biodiesel duis odio pop-up. Banksy 3 wolf moon try-hard, sapiente enim stumptown deep v ad letterpress. Squid beard brunch, exercitation raw denim yr sint direct trade. Raw denim narwhal id, flannel DIY McSweeney’s seitan. Letterpress artisan bespoke accusamus, meggings laboris consequat Truffaut qui in seitan. Sustainable cornhole Schlitz, twee Cosby sweater banh mi deep v forage letterpress flannel whatever keffiyeh. Sartorial cred irure, semiotics ethical sed blue bottle nihil letterpress.</p>
-
-<p>Occupy et selvage squid, pug brunch blog nesciunt hashtag mumblecore skateboard yr kogi. Ugh small batch swag four loko. Fap post-ironic qui tote bag farm-to-table american apparel scenester keffiyeh vero, swag non pour-over gentrify authentic pitchfork. Schlitz scenester lo-fi voluptate, tote bag irony bicycle rights pariatur vero Vice freegan wayfarers exercitation nisi shoreditch. Chambray tofu vero sed. Street art swag literally leggings, Cosby sweater mixtape PBR lomo Banksy non in pitchfork ennui McSweeney’s selfies. Odd Future Banksy non authentic.</p>
-
-<p>Aliquip enim artisan dolor post-ironic. Pug tote bag Marfa, deserunt pour-over Portland wolf eu odio intelligentsia american apparel ugh ea. Sunt viral et, 3 wolf moon gastropub pug id. Id fashion axe est typewriter, mlkshk Portland art party aute brunch. Sint pork belly Cosby sweater, deep v mumblecore kitsch american apparel. Try-hard direct trade tumblr sint skateboard. Adipisicing bitters excepteur biodiesel, pickled gastropub aute veniam.</p>]]></content><author><name></name></author><category term="sample post" /><category term="readability" /><category term="test" /><category term="intro" /><summary type="html"><![CDATA[A ton of text to test readability.]]></summary></entry><entry><title type="html">Testing Readability with a Bunch of Text(Korean ver.)</title><link href="http://localhost:4000/readability-post-ko/" rel="alternate" type="text/html" title="Testing Readability with a Bunch of Text(Korean ver.)" /><published>2014-05-21T00:00:00+09:00</published><updated>2014-05-21T00:00:00+09:00</updated><id>http://localhost:4000/readability-post-ko</id><content type="html" xml:base="http://localhost:4000/readability-post-ko/"><![CDATA[<p>정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다. 모든 국민은 고문을 받지 아니하며, 형사상 자기에게 불리한 진술을 강요당하지 아니한다. 새로운 회계연도가 개시될 때까지 예산안이 의결되지 못한 때에는 정부는 국회에서 예산안이 의결될 때까지 다음의 목적을 위한 경비는 전년도 예산에 준하여 집행할 수 있다.</p>
-
-<p>외국인은 국제법과 조약이 정하는 바에 의하여 그 지위가 보장된다. 헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여 국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을 얻어야 한다. 대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다. 국회는 정부의 동의없이 정부가 제출한 지출예산 각항의 금액을 증가하거나 새 비목을 설치할 수 없다.</p>
-
-<h1 id="대통령은-법률안의-일">대통령은 법률안의 일</h1>
-
-<p>대통령은 필요하다고 인정할 때에는 외교·국방·통일 기타 국가안위에 관한 중요정책을 국민투표에 붙일 수 있다. 한 회계연도를 넘어 계속하여 지출할 필요가 있을 때에는 정부는 연한을 정하여 계속비로서 국회의 의결을 얻어야 한다. 제3항의 승인을 얻지 못한 때에는 그 처분 또는 명령은 그때부터 효력을 상실한다. 이 경우 그 명령에 의하여 개정 또는 폐지되었던 법률은 그 명령이 승인을 얻지 못한 때부터 당연히 효력을 회복한다.</p>
-
-<ul>
-  <li>국무회의는 대통령·국무총리와 15인 이상 30인 이하의 국무위원으로 구성한다. 대통령은 국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을 겸할 수 없다.</li>
-  <li>나는 헌법을 준수하고 국가를 보위하며 조국의 평화적 통일과 국민의 자유와 복리의 증진 및 민족문화의 창달에 노력하여 대통령으로서의 직책을 성실히 수행할 것을 국민 앞에 엄숙히 선서합니다.</li>
-  <li>정당은 법률이 정하는 바에 의하여 국가의 보호를 받으며, 국가는 법률이 정하는 바에 의하여 정당운영에 필요한 자금을 보조할 수 있다. 이 헌법공포 당시의 국회의원의 임기는 제1항에 의한 국회의 최초의 집회일 전일까지로 한다.</li>
-  <li>모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 모든 국민은 고문을 받지 아니하며, 형사상 자기에게 불리한 진술을 강요당하지 아니한다.</li>
-</ul>
-
-<h2 id="국회의원은-국가이익">국회의원은 국가이익</h2>
-<p>체포·구속·압수 또는 수색을 할 때에는 적법한 절차에 따라 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다. 다만, 현행범인인 경우와 장기 3년 이상의 형에 해당하는 죄를 범하고 도피 또는 증거인멸의 염려가 있을 때에는 사후에 영장을 청구할 수 있다. 모든 국민은 소급입법에 의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다. 감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 군인 또는 군무원이 아닌 국민은 대한민국의 영역안에서는 중대한 군사상 기밀·초병·초소·유독음식물공급·포로·군용물에 관한 죄중 법률이 정한 경우와 비상계엄이 선포된 경우를 제외하고는 군사법원의 재판을 받지 아니한다.</p>
-
-<ol>
-  <li>대통령은 전시·사변 또는 이에 준하는 국가비상사태에 있어서 병력으로써 군사상의 필요에 응하거나 공공의 안녕질서를 유지할 필요가 있을 때에는 법률이 정하는 바에 의하여 계엄을 선포할 수 있다.</li>
-  <li>대통령은 국민의 보통·평등·직접·비밀선거에 의하여 선출한다. 대통령은 국무회의의 의장이 되고, 국무총리는 부의장이 된다. 대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다.</li>
-  <li>국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문회의를 둘 수 있다. 대법원과 각급법원의 조직은 법률로 정한다.</li>
-  <li>모든 국민은 근로의 의무를 진다. 국가는 근로의 의무의 내용과 조건을 민주주의원칙에 따라 법률로 정한다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다.</li>
-  <li>국민경제자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다. 법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다. 누구든지 체포 또는 구속의 이유와 변호인의 조력을 받을 권리가 있음을 고지받지 아니하고는 체포 또는 구속을 당하지 아니한다. 체포 또는 구속을 당한 자의 가족등 법률이 정하는 자에게는 그 이유와 일시·장소가 지체없이 통지되어야 한다.</li>
-  <li>국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 법률안에 이의가 있을 때에는 대통령은 제1항의 기간내에 이의서를 붙여 국회로 환부하고, 그 재의를 요구할 수 있다. 국회의 폐회중에도 또한 같다.</li>
-</ol>
-
-<h3 id="헌법재판소에서-법률">헌법재판소에서 법률</h3>
-
-<p>대한민국은 민주공화국이다. 국민경제의 발전을 위한 중요정책의 수립에 관하여 대통령의 자문에 응하기 위하여 국민경제자문회의를 둘 수 있다. 모든 국민의 재산권은 보장된다. 그 내용과 한계는 법률로 정한다. 모든 국민은 신속한 재판을 받을 권리를 가진다. 형사피고인은 상당한 이유가 없는 한 지체없이 공개재판을 받을 권리를 가진다. 대법원장은 국회의 동의를 얻어 대통령이 임명한다. 대통령은 국민의 보통·평등·직접·비밀선거에 의하여 선출한다. 정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다.</p>
-
-<blockquote>
-  <p>국가는 모성의 보호를 위하여 노력하여야 한다. 모든 국민은 학문과 예술의 자유를 가진다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 국무위원은 국무총리의 제청으로 대통령이 임명한다. 국회의원은 법률이 정하는 직을 겸할 수 없다.</p>
-</blockquote>
-
-<h4 id="선거운동은-각급-선거">선거운동은 각급 선거</h4>
-
-<p>대통령은 헌법과 법률이 정하는 바에 의하여 공무원을 임면한다. 군사법원의 조직·권한 및 재판관의 자격은 법률로 정한다. 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 모든 국민은 학문과 예술의 자유를 가진다. 국가는 과학기술의 혁신과 정보 및 인력의 개발을 통하여 국민경제의 발전에 노력하여야 한다. 모든 국민은 신체의 자유를 가진다. 누구든지 법률에 의하지 아니하고는 체포·구속·압수·수색 또는 심문을 받지 아니하며, 법률과 적법한 절차에 의하지 아니하고는 처벌·보안처분 또는 강제노역을 받지 아니한다. 학교교육 및 평생교육을 포함한 교육제도와 그 운영, 교육재정 및 교원의 지위에 관한 기본적인 사항은 법률로 정한다.</p>
-
-<hr />
-
-<p>이 문서는 <a href="http://guny.kr/stuff/klorem/">한글 Lorem Ipsum</a>으로 생성되었습니다.</p>]]></content><author><name></name></author><category term="샘플 포스트" /><category term="가독성" /><category term="테스트" /><summary type="html"><![CDATA[정당의 목적이나 활동이 민주적 기본질서에 위배될 때에는 정부는 헌법재판소에 그 해산을 제소할 수 있고, 정당은 헌법재판소의 심판에 의하여 해산된다. 모든 국민은 고문을 받지 아니하며, 형사상 자기에게 불리한 진술을 강요당하지 아니한다. 새로운 회계연도가 개시될 때까지 예산안이 의결되지 못한 때에는 정부는 국회에서 예산안이 의결될 때까지 다음의 목적을 위한 경비는 전년도 예산에 준하여 집행할 수 있다.]]></summary></entry></feed>
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="blockchain" /><category term="statistics" /><summary type="html"><![CDATA[“블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다.”]]></summary></entry></feed>
