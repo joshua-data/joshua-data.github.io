@@ -1,4 +1,787 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-10T00:41:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">온체인 데이터 분석하기 | Dune Analytics 101</title><link href="http://localhost:4000/dune-analytics/" rel="alternate" type="text/html" title="온체인 데이터 분석하기 | Dune Analytics 101" /><published>2022-12-03T00:00:00+09:00</published><updated>2022-12-03T00:00:00+09:00</updated><id>http://localhost:4000/dune-analytics</id><content type="html" xml:base="http://localhost:4000/dune-analytics/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-10T03:33:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">회귀 모델이 풀 수 없는 문제</title><link href="http://localhost:4000/when-regression-does-not-work/" rel="alternate" type="text/html" title="회귀 모델이 풀 수 없는 문제" /><published>2022-12-25T00:00:00+09:00</published><updated>2022-12-25T00:00:00+09:00</updated><id>http://localhost:4000/when-regression-does-not-work</id><content type="html" xml:base="http://localhost:4000/when-regression-does-not-work/"><![CDATA[<blockquote>
+  <p>이번 아티클에서는 회귀모델(Regression Model)이 어떤 경우에 저조한 성과를 내는지, 더 나아가 Dataset이 어떤 특성을 지닐 때 회귀모델로 해당 문제를 풀어낼 수 없는지 필자가 경험한 바를 서술해보고자 한다.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>Introduction</li>
+  <li>프로젝트 배경과 주제
+    <ul>
+      <li>2.1. 연구 주제</li>
+      <li>2.2. 산업 현황 및 연구 목적</li>
+      <li>2.3. 연구 문제 및 실험 정의</li>
+    </ul>
+  </li>
+  <li>데이터 소개와 변수 정의
+    <ul>
+      <li>3.1. 데이터 톺아보기</li>
+      <li>3.2. 122,400개의 인스턴스로 구성된 데이터</li>
+      <li>3.3. 변수 정의</li>
+    </ul>
+  </li>
+  <li>Data Preprocessing &amp; EDA
+    <ul>
+      <li>4.1. 변수명 Renaming</li>
+      <li>4.2. Data Preprocessing</li>
+      <li>4.3. EDA</li>
+    </ul>
+  </li>
+  <li>Modeling
+    <ul>
+      <li>5.1. Simple Linear Regression (v1)</li>
+      <li>5.2. Simple Linear Regression (v2) — “day” 변수 제외</li>
+      <li>5.3. Polynomial Regression (v1) — “degree=2”</li>
+      <li>5.4. Polynomial Regression (v2) — “degree=3”</li>
+      <li>5.5. Polynomial Regression (v3) — “degree=4”</li>
+      <li>5.6. Polynomial Regression (v4) — “degree=5”</li>
+    </ul>
+  </li>
+  <li>Conclusion
+    <ul>
+      <li>6.1. Regression Model 외의 모델이 필요하다!</li>
+      <li>6.2. Regression Model이 해당 Dataset 학습에 적절한 모델이 아님을 파악하는 방법은?</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/calculator.webp" alt="" /></p>
+
+<h1 id="1-introduction">1. Introduction</h1>
+
+<p>머신러닝과 딥러닝 알고리즘을 공부하신 분들이라면 누구나 아는 이야기이지만, 데이터 사이언스에서 가장 중요한 지침이 있다.</p>
+
+<blockquote>
+  <p>“어느 특정 모델이 모든 경우에 항상 우월한 퍼포먼스를 지니지 않는다.”</p>
+</blockquote>
+
+<p>즉, 아무리 복잡하고 인기가 많은 모델이더라도 데이터셋의 특성에 따라 우월한 Metric을 낳을 수도 있고, 혹은 저조한 Metric을 낳을 수도 있다. (그래서 모델링 작업에서 가장 중요한 것은 다름 아닌, Dataset에 대한 이해이기도 하다.)</p>
+
+<p>이번 아티클에서는 회귀모델(Regression Model)이 어떤 경우에 저조한 성과를 내는지, 더 나아가 Dataset이 어떤 특성을 지닐 때 회귀모델로 해당 문제를 풀어낼 수 없는지 필자가 경험한 바를 서술해보고자 한다.</p>
+
+<p>회귀모델 학습 실험을 하다가 우연히 직관적으로 알게 된 추측성 결론이었지만, 통계학 교수님으로부터 타당성을 인정 받았기 때문에 본 내용은 충분히 공개해도 되리라 생각한다. (교수님, 사랑합니다.)</p>
+
+<h1 id="2-프로젝트-배경과-주제">2. 프로젝트 배경과 주제</h1>
+
+<h2 id="21-연구-주제">2.1. 연구 주제</h2>
+
+<blockquote>
+  <p>“기상 정보를 통한 전력 사용량 예측 모델 구축하기”</p>
+</blockquote>
+
+<h2 id="22-산업-현황-및-연구-목적">2.2. 산업 현황 및 연구 목적</h2>
+
+<h3 id="1-한국의-전력-사용량은-매해-증가하는-추세">(1) 한국의 전력 사용량은 매해 증가하는 추세</h3>
+<ul>
+  <li>30년 전 대비 5배 이상 높아진 수준</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/korea.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://yearbook.enerdata.co.kr/electricity/electricity-domestic-consumption-data.html">electricity domestic consumption data</a></p>
+</blockquote>
+
+<h3 id="2-한국의-전기료는-oecd-회원국들의-50에-미치지-못할-정도로-저렴한-수준">(2) 한국의 전기료는 OECD 회원국들의 50%에 미치지 못할 정도로 저렴한 수준</h3>
+<ul>
+  <li>전력 사용량은 증가하는 반면, 상대적으로 낮게 책정된 전기료 수준</li>
+  <li>에너지 비용 모니터링 &amp; 예측 서비스를 도입하여 시장경쟁력 확보의 필요성</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/countries.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://home.kepco.co.kr/kepco/EB/A/htmlView/EBAAHP007.do">OECD 회원국의 가정용 &amp; 산업용 전기요금</a></p>
+</blockquote>
+
+<h3 id="3-한국의-전력-사용량은-여름철-증가하는-계절적-주기성이-존재함">(3) 한국의 전력 사용량은 여름철 증가하는 계절적 주기성이 존재함</h3>
+<ul>
+  <li>공급량 조절이 쉽지 않은 도메인 특성을 고려했을 때, 전력 사용량을 예측하여 효율적인 에너지 관리 방안 도입의 필요성</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/monthly.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://epsis.kpx.or.kr/epsisnew/selectEkgeEpsAepChart.do?menuId=030200">월별 평균 최대전력</a></p>
+</blockquote>
+
+<h2 id="23-연구-문제-및-실험-정의">2.3. 연구 문제 및 실험 정의</h2>
+
+<blockquote>
+  <p>“기상 데이터를 통해 <strong>전력사용량</strong> 예측 모델을 설계하고자 한다.”</p>
+</blockquote>
+
+<pre><code class="language-plain">	전력사용량 ~ 기온  
+	전력사용량 ~ 풍속  
+	전력사용량 ~ 습도  
+	전력사용량 ~ 강수량  
+	전력사용량 ~ 일조  
+	전력사용량 ~ (건물 내) 비전기냉방설비운영 여부  
+	전력사용량 ~ (건물 내) 태양광 보유 여부
+</code></pre>
+
+<h1 id="3-데이터-소개와-변수-정의">3. 데이터 소개와 변수 정의</h1>
+
+<h2 id="31-데이터-톺아보기">3.1. 데이터 톺아보기</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/df.head().webp" alt="" /></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
+</code></pre></div></div>
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/df.tail().webp" alt="" /></p>
+
+<h2 id="32-122400개의-인스턴스로-구성된-데이터">3.2. 122,400개의 인스턴스로 구성된 데이터</h2>
+
+<ul>
+  <li>60개의 건물별 (<code class="language-plaintext highlighter-rouge">num</code>)로 구성</li>
+  <li>2020년 6월 1일부터 2020년 8월 24일까지의 엔지니어링 데이터로 구성</li>
+  <li>측정 데이터의 Unit: 1시간</li>
+</ul>
+
+<h2 id="33-변수-정의">3.3. 변수 정의</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>변수</strong></th>
+      <th><strong>설명</strong></th>
+      <th><strong>변수 타입</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">num</code></td>
+      <td>건물번호 (1&lt;= Integer &lt;= 60)</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">date_time</code></td>
+      <td>YYYY-MM-DD HH</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">전력사용량(kWh)</code></td>
+      <td>전력사용량 (킬로와트시)</td>
+      <td><code class="language-plaintext highlighter-rouge">y</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">기온(°C)</code></td>
+      <td>섭씨 기온 (Celsius Degree)</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">풍속(m/s)</code></td>
+      <td>풍속 (초당 미터 속도)</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">습도(%)</code></td>
+      <td>습도</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">강수량(mm)</code></td>
+      <td>강수량</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">일조(hr)</code></td>
+      <td>1시간 중 일조량이 존재한 시간 (0.0 &lt;= Float &lt;= 1.0)</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">비전기냉방설비운영</code></td>
+      <td>운영 여부 Boolean 표현 (0: False, 1: True)</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">태양광보유</code></td>
+      <td>보유 여부 Boolean 표현 (0: False, 1: True)</td>
+      <td><code class="language-plaintext highlighter-rouge">x</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="4-data-preprocessing--eda">4. Data Preprocessing &amp; EDA</h1>
+
+<h2 id="41-변수명-renaming">4.1. 변수명 Renaming</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>AS-IS</th>
+      <th>TO-BE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">num</code></td>
+      <td><code class="language-plaintext highlighter-rouge">building_num</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">date_time</code></td>
+      <td><code class="language-plaintext highlighter-rouge">date_time</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">전력사용량(kWh)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">target</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">기온(°C)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">temp_celsius</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">풍속(m/s)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">wind_speed</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">습도(%)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">humidity</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">강수량(mm)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">rain</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">일조(hr)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sunshine</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">비전기냉방설비운영</code></td>
+      <td><code class="language-plaintext highlighter-rouge">nature_ac</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">태양광보유</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sunpower</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>고통스러운 한글 인코딩 문제는 언제 어디에서 터질지 모른다.</p>
+</blockquote>
+
+<h2 id="42-data-preprocessing">4.2. Data Preprocessing</h2>
+
+<h3 id="1-target-전력사용량">(1) <code class="language-plaintext highlighter-rouge">target</code> (전력사용량)</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">target</code>의 분포: “Positive Skewness” (양의 왜도, 오른쪽 꼬리가 길다.)</li>
+  <li>Model Fitting의 효과를 향상시키기 위해, 다음과 같이 변환하자.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="c1"># Train할 때  
+</span>	<span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">target</span><span class="p">)</span>  
+	<span class="c1"># Predict할 때  
+</span>	<span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p><strong>[변환 전] Distribution of Target Values</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/변환 전- Distribution of Target Values.webp" alt="" /></p>
+<blockquote>
+  <p>이러한 분포는 자연현상과 사회현상에서 흔히 나타나는데, Model의 Overfitting 문제에 매우 취약하다.</p>
+</blockquote>
+
+<p><strong>[변환 후] Distribution of Target Values</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/변환 후- Distribution of Target Values.webp" alt="" /></p>
+<blockquote>
+  <p>Gotcha! 어느 정도 정규성을 확보했군…</p>
+</blockquote>
+
+<h3 id="2-building_num-건물번호">(2) <code class="language-plaintext highlighter-rouge">building_num</code> (건물번호)</h3>
+
+<ul>
+  <li>Integer Type (1 ≤ <code class="language-plaintext highlighter-rouge">building_num</code> ≤ 60)</li>
+  <li>도메인 지식을 고려했을 때, 건물 별로 전력 설계 파이프라인, 건물의 위치 등에 따라 전력사용량이 국지적으로 큰 차이가 발생할 것이다.</li>
+</ul>
+
+<p><strong>각 60개 building_num별 Distribution of Target Values</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">if</span> <span class="n">skewness</span> <span class="o">&gt;=</span> <span class="mf">1.5</span><span class="p">:</span>  
+	<span class="n">color</span> <span class="o">=</span> <span class="sh">'</span><span class="s">red</span><span class="sh">'</span>  
+	<span class="k">elif</span> <span class="n">skewness</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">:</span>  
+	<span class="n">color</span> <span class="o">=</span> <span class="sh">'</span><span class="s">blue</span><span class="sh">'</span>  
+	<span class="k">else</span><span class="p">:</span>  
+	<span class="n">color</span> <span class="o">=</span> <span class="sh">'</span><span class="s">grey</span><span class="sh">'</span>
+</code></pre></div></div>
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/각 60개 building_num별 Distribution of Target Values.webp" alt="" /></p>
+
+<p><strong>1부터 60까지는 Ordinal이라기보다는, Cardinal한 Label이므로, 모델이 값의 우열이 있는 것으로 오해할 수 있다. 그래서 One Hot Encoding을 통해 각 <code class="language-plaintext highlighter-rouge">building_num</code>을 dummy화하도록 한다.</strong></p>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/building_num.webp" alt="" /></p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">building_num</code>이 사라지고, <code class="language-plaintext highlighter-rouge">building_#</code>의 <strong>Scarse Vectors</strong>로 대체되었다.</p>
+</blockquote>
+
+<h3 id="3-date_time-yyyy-mm-dd-hh">(3) <code class="language-plaintext highlighter-rouge">date_time</code> (YYYY-MM-DD HH)</h3>
+
+<ul>
+  <li>YYYY-MM-DD HH 포맷이 String data type으로 되어 있으므로, 이를 변환해야 한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">Year</code>, <code class="language-plaintext highlighter-rouge">Month</code>, <code class="language-plaintext highlighter-rouge">Day</code>, <code class="language-plaintext highlighter-rouge">Hour</code>: 기상 혹은 기후 현상과 상관성이 있는 정보</li>
+  <li>Day of Week (DoW): <code class="language-plaintext highlighter-rouge">date_time</code>에는 직접적으로 표기되어 있지 않으나, 전력사용량의 주기성을 지니고 있는 정보이므로 새롭게 생성하도록 한다.</li>
+  <li>본 Dataset에서는 <code class="language-plaintext highlighter-rouge">Year</code>가 ‘2020’ 한 가지만 존재하므로, <code class="language-plaintext highlighter-rouge">Year</code> 변수는 삭제하도록 한다.</li>
+</ul>
+
+<p><strong>변환 결과</strong></p>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/date_time.webp" alt="" /></p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">date_time</code>은 사라지고, <code class="language-plaintext highlighter-rouge">month</code>, <code class="language-plaintext highlighter-rouge">day</code>, <code class="language-plaintext highlighter-rouge">hour</code>, <code class="language-plaintext highlighter-rouge">dow</code>가 생성되었다.</p>
+</blockquote>
+
+<h2 id="43-eda">4.3. EDA</h2>
+
+<h3 id="1-correlation-coefficient-상관계수">(1) Correlation Coefficient (상관계수)</h3>
+
+<p><strong>Heat Map</strong></p>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/heat-map.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">humidity</code>(습도) ~ <code class="language-plaintext highlighter-rouge">temp_celsius</code>(섭씨온도)
+    <ul>
+      <li>상관계수: <code class="language-plaintext highlighter-rouge">-0.5091</code></li>
+      <li>약한 음의 상관관계를 가진다고 보는 것이 맞아보인다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/humidity(습도) ~ temp_celsius(섭씨온도).webp" alt="" /></p>
+<blockquote>
+  <p>humidity(습도) ~ temp_celsius(섭씨온도)</p>
+</blockquote>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sunshine</code>(일조) ~ <code class="language-plaintext highlighter-rouge">temp_celsius</code>(섭씨온도)
+    <ul>
+      <li>상관계수: <code class="language-plaintext highlighter-rouge">+0.5157</code></li>
+      <li>약한 양의 상관관계를 가진다고 보는 것이 맞아보인다.</li>
+      <li>하나는 categorical, 다른 하나는 numeric 이므로 둘 중 하나를 drop할 수 없다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/sunshine(일조) ~ temp_celsius(섭씨온도).webp" alt="" /></p>
+<blockquote>
+  <p>sunshine(일조) ~ temp_celsius(섭씨온도)</p>
+</blockquote>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sunshine</code>(일조) ~ <code class="language-plaintext highlighter-rouge">humidity</code>(습도)
+    <ul>
+      <li>상관계수: <code class="language-plaintext highlighter-rouge">-0.6276</code></li>
+      <li>약한 음의 상관관계를 가진다고 보는 것이 맞아보인다.</li>
+      <li>하나는 categorical, 다른 하나는 numeric 이므로 둘 중 하나를 drop할 수 없다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/sunshine(일조) ~ humidity(습도).webp" alt="" /></p>
+<blockquote>
+  <p>sunshine(일조) ~ humidity(습도)</p>
+</blockquote>
+
+<h3 id="2-pairplot">(2) Pairplot</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">building_{##}</code> 변수들을 제외한 채 visualize pairplot</strong></p>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/pairplot.webp" alt="" /></p>
+<blockquote>
+  <p>특정 하나의 독립변수가 Target에 절대적인 상관관계를 가지는 것이 관측되지 않는다.</p>
+</blockquote>
+
+<h3 id="3-각-독립변수들의-distribution-of-values">(3) 각 독립변수들의 Distribution of Values</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">temp_celsius</code> (섭씨온도)</strong></p>
+<ul>
+  <li>비선형 변환 불필요</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/temp_celsius (섭씨온도).webp" alt="" /></p>
+<blockquote>
+  <p>AS-IS</p>
+</blockquote>
+
+<p><strong><code class="language-plaintext highlighter-rouge">wind_speed</code> (풍속)</strong></p>
+<ul>
+  <li>log 변환 필요</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/wind_speed (풍속)-before-log.webp" alt="" /></p>
+<blockquote>
+  <p>AS-IS</p>
+</blockquote>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/wind_speed (풍속)-after-log.webp" alt="" /></p>
+<blockquote>
+  <p>TO-BE</p>
+</blockquote>
+
+<p><strong><code class="language-plaintext highlighter-rouge">humidity</code> (습도)</strong></p>
+<ul>
+  <li>square root 변환 필요</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/humidity (습도)-before-sqr.webp" alt="" /></p>
+<blockquote>
+  <p>AS-IS</p>
+</blockquote>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/humidity (습도)-after-sqr.webp" alt="" /></p>
+<blockquote>
+  <p>TO-BE</p>
+</blockquote>
+
+<p><strong><code class="language-plaintext highlighter-rouge">rain</code> (강수량)</strong></p>
+<ul>
+  <li>log 변환 필요</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/rain (강수량)-before-log.webp" alt="" /></p>
+<blockquote>
+  <p>AS-IS</p>
+</blockquote>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/rain (강수량)-after-log.webp" alt="" /></p>
+<blockquote>
+  <p>TO-BE</p>
+</blockquote>
+
+<h3 id="4-다중공선성multi-collinearity-확인">(4) 다중공선성(Multi-collinearity) 확인</h3>
+
+<p><strong>VIF ≥ 10 에 해당하는 독립변수는 학습시 제외하도록 한다.</strong></p>
+
+<ul>
+  <li><strong>“Variance Inflation Factors (분산팽창요인)”란?</strong>
+    <blockquote>
+      <p>특정 변수와 이미 높은 상관관계를 가짐으로써, 모델의 Overfitting에 영향을 끼칠 수 있는지를 측정하는 지표
+일반적으로 VIF &gt;= 5인 경우는 warning 신호, VIF &gt;=10인 경우는 삭제 필요 신호</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/vif.webp" alt="" /></p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">nature_ac</code>, <code class="language-plaintext highlighter-rouge">sunpower</code>는 각 <code class="language-plaintext highlighter-rouge">building_##</code>의 변수와 매우 높은 상관관계를 가지기 때문에 <strong>VIF = Infinite</strong>인 결과를 확인할 수 있었다.</p>
+</blockquote>
+
+<h3 id="5-outliers-handling">(5) Outliers Handling</h3>
+
+<blockquote>
+  <p>“평균값으로부터 <strong>3 Sigma</strong> 이상 편차가 발생하는 인스턴스를 모두 삭제하도록 한다.”</p>
+</blockquote>
+
+<p><strong>Box Plot of <code class="language-plaintext highlighter-rouge">temp_celsius</code></strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Box Plot of temp_celsius.webp" alt="" /></p>
+<blockquote>
+  <p>Box Plot of <code class="language-plaintext highlighter-rouge">temp_celsius</code></p>
+</blockquote>
+
+<p><strong>Box Plot of <code class="language-plaintext highlighter-rouge">wind_speed</code></strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Box Plot of wind_speed.webp" alt="" /></p>
+<blockquote>
+  <p>Box Plot of <code class="language-plaintext highlighter-rouge">wind_speed</code></p>
+</blockquote>
+
+<p><strong>Box Plot of <code class="language-plaintext highlighter-rouge">humidity</code></strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Box Plot of humidity.webp" alt="" /></p>
+<blockquote>
+  <p>Box Plot of <code class="language-plaintext highlighter-rouge">humidity</code></p>
+</blockquote>
+
+<p><strong>Box Plot of <code class="language-plaintext highlighter-rouge">rain</code></strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Box Plot of rain.webp" alt="" /></p>
+<blockquote>
+  <p>Box Plot of <code class="language-plaintext highlighter-rouge">rain</code></p>
+</blockquote>
+
+<p><strong>Box Plot of <code class="language-plaintext highlighter-rouge">sunshine</code></strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Box Plot of sunshine.webp" alt="" /></p>
+<blockquote>
+  <p>Box Plot of <code class="language-plaintext highlighter-rouge">sunshine</code></p>
+</blockquote>
+
+<p><strong>Box Plot of <code class="language-plaintext highlighter-rouge">month</code>, <code class="language-plaintext highlighter-rouge">day</code>, <code class="language-plaintext highlighter-rouge">hour</code>, and <code class="language-plaintext highlighter-rouge">dow</code></strong></p>
+<ul>
+  <li>date_time 형식으로 이미 outliers 없이 골고루 분포되어 있으므로, Outliers Handling 불필요</li>
+</ul>
+
+<p><strong>“StandardScaler 모듈을 사용하여 모든 독립변수들을 정규화한다.”</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Box Plot of month, day, hour, and dow.webp" alt="" /></p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">mean = 0</code>, <code class="language-plaintext highlighter-rouge">std = 1</code>의 <strong>표준정규분포</strong>로 변환</p>
+</blockquote>
+
+<ul>
+  <li>“<code class="language-plaintext highlighter-rouge">-3 ≤ Scaled Value ≤ +3</code>이 아닌 Feature가 1개라도 존재하는 인스턴스의 개수”
+    <ul>
+      <li>5,589개 (약 <code class="language-plaintext highlighter-rouge">4.57%</code>)</li>
+      <li>이 정도의 데이터 손실이라면, 오히려 제거를 하는 것이 Training에 유익한 결과를 낳을 것이다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Pair Plot (After Removing All the Outliers)</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Pair Plot (After Removing All the Outliers).webp" alt="" /></p>
+<blockquote>
+  <p>데이터의 국지적인 경향성이 상당 부분 제거가 되었다.</p>
+</blockquote>
+
+<h1 id="5-modeling">5. Modeling</h1>
+
+<h2 id="51-simple-linear-regression-v1">5.1. Simple Linear Regression (v1)</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">lr</span> <span class="o">=</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  
+	<span class="n">lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input</span><span class="p">,</span> <span class="n">data_target</span><span class="p">)</span>  
+	<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">R-squared:</span><span class="sh">'</span><span class="p">,</span> <span class="n">lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">data_input</span><span class="p">,</span> <span class="n">data_target</span><span class="p">).</span><span class="nf">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h3 id="1-target-잔차-분석">(1) Target 잔차 분석</h3>
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-Target 잔차분석.webp" alt="" /></p>
+<blockquote>
+  <p>[Residuals Plot] 잔차가 특정 패턴 없이 정규성을 잘 따르고 있는 것 같은데?</p>
+</blockquote>
+
+<h3 id="2-각-독립변수-잔차분석">(2) 각 독립변수 잔차분석</h3>
+
+<blockquote>
+  <p>오차항의 이분산성(heteroscedasticity) 없이, <strong>잔차가 정규분포를 가장 잘 따르고 있다.</strong>
+따라서 Polynomial or Logarithm을 즉각 적용해야 한다기보다, Regression Model 자체의 성능이 안 좋다는 것을 의미한다.</p>
+</blockquote>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-각 독립변수 잔차분석.webp" alt="" /></p>
+<blockquote>
+  <p>[Residuals Plot] 잔차가 특정 패턴 없이 정규성을 잘 따르고 있는 것 같은데?</p>
+</blockquote>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-qq plot.webp" alt="" /></p>
+<blockquote>
+  <p>[QQ Plot] 잔차의 분포가 정규분포에 가장 가깝네?</p>
+</blockquote>
+
+<h3 id="3-model-summary">(3) Model Summary</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="p">.</span><span class="nf">ols</span><span class="p">(</span>  
+	<span class="sh">'</span><span class="s">target</span><span class="sh">'</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> ~ </span><span class="sh">'</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> + </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_input</span><span class="p">.</span><span class="n">columns</span><span class="p">),</span>  
+	<span class="n">data</span> <span class="o">=</span> <span class="n">data_df</span>  
+	<span class="p">).</span><span class="nf">fit</span><span class="p">()</span>
+</code></pre></div></div>
+<blockquote>
+  <p><strong>F-test의 <code class="language-plaintext highlighter-rouge">p-value ≤ 0.05</code></strong>: 적어도 하나의 독립변수가 종속변수와 상관관계가 있다는 아주 강한 근거가 있다.<br />
+<strong>R-squared</strong>: 지나치게 낮아서 본 모델의 설명력이 <code class="language-plaintext highlighter-rouge">7.80%</code> 밖에 없다.</p>
+</blockquote>
+
+<h3 id="4-model의-train-result--유의성-지표">(4) Model의 Train Result &amp; 유의성 지표</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-result1.webp" alt="" /></p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">day</code> 변수 <strong>T-test의 <code class="language-plaintext highlighter-rouge">p-value ≥ 0.05</code></strong>: 제거하여 Refit Model 필요성이 있다.</p>
+</blockquote>
+
+<h3 id="5-독립변수별-train-result--유의성-지표">(5) 독립변수별 Train Result &amp; 유의성 지표</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-result2.webp" alt="" /></p>
+
+<h2 id="52-simple-linear-regression-v2--day-변수-제외">5.2. Simple Linear Regression (v2) — “day” 변수 제외</h2>
+
+<h3 id="1-model-summary">(1) Model Summary</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="p">.</span><span class="nf">ols</span><span class="p">(</span>  
+	    <span class="sh">'</span><span class="s">target</span><span class="sh">'</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> ~ </span><span class="sh">'</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> + </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">data_input</span><span class="p">.</span><span class="n">columns</span><span class="p">.</span><span class="nf">drop</span><span class="p">([</span><span class="sh">'</span><span class="s">day</span><span class="sh">'</span><span class="p">])),</span>  
+	    <span class="n">data</span> <span class="o">=</span> <span class="n">data_df</span>  
+	<span class="p">).</span><span class="nf">fit</span><span class="p">()</span>
+</code></pre></div></div>
+<blockquote>
+  <p><strong>F-test의 <code class="language-plaintext highlighter-rouge">p-value ≤ 0.05</code></strong>: 적어도 하나의 독립변수가 종속변수와 상관관계가 있다는 아주 강한 근거가 있다.<br />
+<strong>R-squared</strong>: 지나치게 낮아서 본 모델의 설명력이 <code class="language-plaintext highlighter-rouge">7.80%</code> 밖에 없다.</p>
+</blockquote>
+
+<h3 id="2-model의-train-result--유의성-지표">(2) Model의 Train Result &amp; 유의성 지표</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v2)-result1.webp" alt="" /></p>
+<blockquote>
+  <p>모든 변수가 T-test를 통과한다. (<strong>Confidence Level = <code class="language-plaintext highlighter-rouge">95%</code></strong>)</p>
+</blockquote>
+
+<h3 id="3-독립변수별-train-result--유의성-지표">(3) 독립변수별 Train Result &amp; 유의성 지표</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v2)-result2.webp" alt="" /></p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">day</code> 변수를 제외했음에도 불구하고, 모델의 설명력이 전혀 개선되지 않는다.
+따라서, 본 Dataset에서는 <strong>Simple Linear Regression의 Training Capacity 자체가 매우 낮은 의미</strong>로 이해된다.</p>
+</blockquote>
+
+<h2 id="53-polynomial-regression-v1--degree2">5.3. Polynomial Regression (v1) — “degree=2”</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">poly</span> <span class="o">=</span> <span class="nc">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  
+	<span class="n">poly</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	<span class="n">data_input_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	  
+	<span class="n">lr</span> <span class="o">=</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  
+	<span class="n">lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">)</span>  
+	<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">R-squared:</span><span class="sh">'</span><span class="p">,</span> <span class="n">lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">).</span><span class="nf">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  
+	<span class="c1"># &gt; R-squared: 0.1127
+</span></code></pre></div></div>
+
+<h3 id="1-잔차분석">(1) 잔차분석</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Polynomial Regression (v1)-잔차분석.webp" alt="" /></p>
+<blockquote>
+  <p>Polynomial Regression (v1) — “degree=2”</p>
+</blockquote>
+
+<h2 id="54-polynomial-regression-v2--degree3">5.4. Polynomial Regression (v2) — “degree=3”</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">poly</span> <span class="o">=</span> <span class="nc">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  
+	<span class="n">poly</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	<span class="n">data_input_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	  
+	<span class="n">lr</span> <span class="o">=</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  
+	<span class="n">lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">)</span>  
+	<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">R-squared:</span><span class="sh">'</span><span class="p">,</span> <span class="n">lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">).</span><span class="nf">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  
+	<span class="c1"># &gt; R-squared: 0.1362
+</span></code></pre></div></div>
+
+<h3 id="1-잔차분석-1">(1) 잔차분석</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Polynomial Regression (v2)-잔차분석.webp" alt="" /></p>
+<blockquote>
+  <p>Polynomial Regression (v2) — “degree=3”</p>
+</blockquote>
+
+<h2 id="55-polynomial-regression-v3--degree4">5.5. Polynomial Regression (v3) — “degree=4”</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">poly</span> <span class="o">=</span> <span class="nc">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  
+	<span class="n">poly</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	<span class="n">data_input_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	  
+	<span class="n">lr</span> <span class="o">=</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  
+	<span class="n">lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">)</span>  
+	<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">R-squared:</span><span class="sh">'</span><span class="p">,</span> <span class="n">lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">).</span><span class="nf">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  
+	<span class="c1"># &gt; R-squared: 0.1597
+</span></code></pre></div></div>
+
+<h3 id="1-잔차분석-2">(1) 잔차분석</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Polynomial Regression (v3)-잔차분석.webp" alt="" /></p>
+<blockquote>
+  <p>Polynomial Regression (v3) — “degree=4”</p>
+</blockquote>
+
+<h2 id="56-polynomial-regression-v4--degree5">5.6. Polynomial Regression (v4) — “degree=5”</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">poly</span> <span class="o">=</span> <span class="nc">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  
+	<span class="n">poly</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	<span class="n">data_input_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="p">.</span><span class="nf">transform</span><span class="p">(</span><span class="n">data_input</span><span class="p">)</span>  
+	  
+	<span class="n">lr</span> <span class="o">=</span> <span class="nc">LinearRegression</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  
+	<span class="n">lr</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">)</span>  
+	<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">R-squared:</span><span class="sh">'</span><span class="p">,</span> <span class="n">lr</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">data_input_poly</span><span class="p">,</span> <span class="n">data_target</span><span class="p">).</span><span class="nf">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>  
+	<span class="c1"># &gt; R-squared: 0.1806
+</span></code></pre></div></div>
+
+<h3 id="1-잔차분석-3">(1) 잔차분석</h3>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/Polynomial Regression (v4)-잔차분석.webp" alt="" /></p>
+<blockquote>
+  <p>Polynomial Regression (v4) — “degree=5”</p>
+</blockquote>
+
+<h1 id="6-conclusion">6. Conclusion</h1>
+
+<h2 id="61-regression-model-외의-모델이-필요하다">6.1. Regression Model 외의 모델이 필요하다!</h2>
+
+<h3 id="1-modeling-results">(1) Modeling Results</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>회귀 모델</strong></th>
+      <th><strong>특이사항</strong></th>
+      <th><strong>R-squared</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Simple Linear Regression</td>
+      <td>모든 독립변수 포함</td>
+      <td><code class="language-plaintext highlighter-rouge">0.0780</code></td>
+    </tr>
+    <tr>
+      <td>Simple Linear Regression</td>
+      <td><code class="language-plaintext highlighter-rouge">day</code> 독립변수 제외</td>
+      <td><code class="language-plaintext highlighter-rouge">0.0780</code></td>
+    </tr>
+    <tr>
+      <td>Polynomial Regression</td>
+      <td>Up to 2nd Degree</td>
+      <td><code class="language-plaintext highlighter-rouge">0.1127</code></td>
+    </tr>
+    <tr>
+      <td>Polynomial Regression</td>
+      <td>Up to 3rd Degree</td>
+      <td><code class="language-plaintext highlighter-rouge">0.1362</code></td>
+    </tr>
+    <tr>
+      <td>Polynomial Regression</td>
+      <td>Up to 4th Degree</td>
+      <td><code class="language-plaintext highlighter-rouge">0.1597</code></td>
+    </tr>
+    <tr>
+      <td>Polynomial Regression</td>
+      <td>Up to 5th Degree</td>
+      <td><code class="language-plaintext highlighter-rouge">0.1806</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>아무리 Capacity를 높여도 모델의 설명력이 극적으로 개선되지 않았다!</p>
+</blockquote>
+
+<h3 id="2-model-capacity">(2) Model Capacity</h3>
+
+<ul>
+  <li><strong>Model Capacity란?</strong>
+    <blockquote>
+      <p><strong>모델 용량</strong>: 다양한 차원의 관계성을 학습할 수 있는 능력 (The ability to fit a variety of functions)
+🌝 간단히, 모델의 학습 가능 차수(차원)로 불리기도 함</p>
+    </blockquote>
+  </li>
+  <li><strong>Models with Low Capacity</strong>: 학습 자체가 어려워진다. (<code class="language-plaintext highlighter-rouge">Underfitting</code> 문제)</li>
+  <li>
+    <p><strong>Models with High Capacity</strong>: Memory Effect의 부정적 효과가 발생한다. (<code class="language-plaintext highlighter-rouge">Overfitting</code> 문제)</p>
+  </li>
+  <li><strong>Tree</strong>, <strong>Ensemble</strong>, <strong>Time-series</strong> 계열의 ML 모델들을 통해 접근하는 것이 적절해 보인다.</li>
+</ul>
+
+<p><img src="/assets/2022-12-25-when-regression-does-not-work/dacon.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://dacon.io/competitions/official/235736/data">사실 이 Dataset은 Dacon에서 가져왔는데, Regression Model로 접근하는 사람들은 단 한 명도 없었다.</a></p>
+</blockquote>
+
+<h2 id="62-regression-model이-해당-dataset-학습에-적절한-모델이-아님을-파악하는-방법은">6.2. Regression Model이 해당 Dataset 학습에 적절한 모델이 아님을 파악하는 방법은?</h2>
+
+<h3 id="1-simple-linear-regression의-잔차가-이분산성-없이-정규성을-매우-잘-따르는데도-r-squared-값이-매우-저조하다">(1) Simple Linear Regression의 잔차가 이분산성 없이 정규성을 매우 잘 따르는데도, <code class="language-plaintext highlighter-rouge">R-squared</code> 값이 매우 저조하다.</h3>
+
+<p><strong>Simple Linear Regression: Target 잔차 분석</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-Target 잔차분석.webp" alt="" /></p>
+
+<p><strong>Simple Linear Regression: Target QQ Plot</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Simple Linear Regression (v1)-qq plot.webp" alt="" /></p>
+
+<h3 id="2-polynomial-regression의-degree를-높여도-잔차-자체가-개선되지-않는다">(2) Polynomial Regression의 <code class="language-plaintext highlighter-rouge">Degree</code>를 높여도 잔차 자체가 개선되지 않는다.</h3>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Degree=2</code>인 Polynomial Regression의 각 독립변수별 잔차</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Polynomial Regression (v1)-잔차분석.webp" alt="" /></p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">Degree=5</code>인 Polynomial Regression의 각 독립변수별 잔차</strong>
+<img src="/assets/2022-12-25-when-regression-does-not-work/Polynomial Regression (v4)-잔차분석.webp" alt="" /></p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="machine_learning" /><category term="statistics" /><category term="python" /><summary type="html"><![CDATA[이번 아티클에서는 회귀모델(Regression Model)이 어떤 경우에 저조한 성과를 내는지, 더 나아가 Dataset이 어떤 특성을 지닐 때 회귀모델로 해당 문제를 풀어낼 수 없는지 필자가 경험한 바를 서술해보고자 한다.]]></summary></entry><entry><title type="html">온체인 데이터 분석하기 | Dune Analytics 101</title><link href="http://localhost:4000/dune-analytics/" rel="alternate" type="text/html" title="온체인 데이터 분석하기 | Dune Analytics 101" /><published>2022-12-03T00:00:00+09:00</published><updated>2022-12-03T00:00:00+09:00</updated><id>http://localhost:4000/dune-analytics</id><content type="html" xml:base="http://localhost:4000/dune-analytics/"><![CDATA[<blockquote>
   <p>이번 시간에는 온체인 데이터 애널리틱스 플랫폼들 중 가장 핫하고 커뮤니티가 큰 <a href="https://dune.com/home">Dune Analytics</a>의 구조와 사용 방법에 대해 알아볼 것이다. 데이터 사이언스를 공부하고 블록체인 기업에서 일하는 본인에게 Dune Analytics는 가만히 쳐다보기만 해도 늘 심장이 쿵쾅거리며 텐션이 업되는 유토피아 같은 곳이다. 하지만 안타깝게도, 이 설레는 마음을 이어 받아 데이터 구조를 이해하고 사용 방법을 익히기 위한 레퍼런스가 상당히 부족하다는 것을 알게 되었다. 그리하여 나 처럼 데이터만 보면 마음이 벅차오르는 이 시대 모든 온체인 데이터 러버들에게 이 글을 바치고자 한다. Happy Duning!</p>
 </blockquote>
 
