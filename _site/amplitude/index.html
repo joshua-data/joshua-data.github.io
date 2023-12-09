@@ -40,6 +40,20 @@
   })(document);
 </script>
 
+
+  
+    <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -200,7 +214,7 @@
 
 <h2 id="21-고객--user">2.1. 고객  (User)</h2>
 
-<p>Amplitude에서는 고객을 User로 명명하여, 사용 기기(Device)의 정보나 로그인 정보 등 다양한 방식으로 식별하고 있다. User를 식별하는 것은 앱 데이터를 분석하는 과정에서 매우 (X 100) 중요하다. 가령, ”손흥민”이라는 고객을 2명이 아닌 1명의 고객으로 잘 식별해야만 해당 고객이 회원가입을 하고, 최종 상품을 구매할 경우, 전환율(Conversion Rate)을 정확하게 측정할 수 있기 때문이다. Amplitude에서는 이러한 고객의 식별자를 Amplitude ID로 명명하고 있다.</p>
+<p>Amplitude에서는 고객을 User로 명명하여, 사용 기기(Device)의 정보나 로그인 정보 등 다양한 방식으로 식별하고 있다. User를 식별하는 것은 앱 데이터를 분석하는 과정에서 매우 (X 100) 중요하다. 가령, “손흥민”이라는 고객을 2명이 아닌 1명의 고객으로 잘 식별해야만 해당 고객이 회원가입을 하고, 최종 상품을 구매할 경우, 전환율(Conversion Rate)을 정확하게 측정할 수 있기 때문이다. Amplitude에서는 이러한 고객의 식별자를 Amplitude ID로 명명하고 있다.</p>
 
 <p>Amplitude의  <a href="https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude#h_5c321a51-5d16-43f0-a4fe-f907567ad63b">Tech Docs</a>를 보면 식별 메커니즘을 명확하게 설명하고 있는데, 고객을 정확하게 식별하기 위해 2중으로 식별 알고리즘을 적용하여  <strong>Amplitude ID</strong>를 생성하고 있다.</p>
 
@@ -302,30 +316,60 @@
   <li>영국(United Kingdom)에서 접속한 User의 Event가 무엇이 있을까?</li>
 </ul>
 
-<p><strong>User</strong>|<strong>Event</strong></p>
-<ul>
-  <li>|-
-XXX | 회원가입을 완료했다.
-XXX | 장바구니에 상품을 추가했다.
-XXX | 프로모션 페이지를 조회했다.
-    <blockquote>
-      <p>참고로 흥민님은 작성일 현재 영국 런던에 거주한다.
+<table>
+  <thead>
+    <tr>
+      <th><strong>User</strong></th>
+      <th><strong>Event</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>XXX</td>
+      <td>회원가입을 완료했다.</td>
+    </tr>
+    <tr>
+      <td>XXX</td>
+      <td>장바구니에 상품을 추가했다.</td>
+    </tr>
+    <tr>
+      <td>XXX</td>
+      <td>프로모션 페이지를 조회했다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>참고로 흥민님은 작성일 현재 영국 런던에 거주한다.
 오호, 영국 고객들이 이런 이벤트들을 행했구나!</p>
-    </blockquote>
-  </li>
-  <li>“프로모션 페이지 조회” Event를 행한 User는 총 몇 명일까?</li>
+</blockquote>
+
+<ul>
+  <li>“프로모션 페이지 조회” Event를 행한 User는 총 몇 명일까?</li>
 </ul>
 
-<p><strong>User</strong>|<strong>Event</strong></p>
-<ul>
-  <li>|-
-XXX | 프로모션 페이지를 조회했다.
-XXX | 프로모션 페이지를 조회했다.
-    <blockquote>
-      <p>오늘 고객 2명이 디센트 아카데미를 클릭했구나!</p>
-    </blockquote>
-  </li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th><strong>User</strong></th>
+      <th><strong>Event</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>XXX</td>
+      <td>프로모션 페이지를 조회했다.</td>
+    </tr>
+    <tr>
+      <td>XXX</td>
+      <td>프로모션 페이지를 조회했다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>오늘 고객 2명이 디센트 아카데미를 클릭했구나!</p>
+</blockquote>
 
 <h1 id="3-db-schema를-떠올려보면-amplitude도-결국-sql-날리는-거야">3. DB Schema를 떠올려보면 Amplitude도 결국 SQL 날리는 거야!</h1>
 
@@ -383,7 +427,7 @@ XXX | 프로모션 페이지를 조회했다.
 
 <h3 id="사용자-가이드-클릭-수를-일자-별로-흐름을-알려줄래">사용자 가이드 클릭 수를 일자 별로 흐름을 알려줄래?</h3>
 
-<p><img src="/assets/2022-11-01-amplitude/click-by-date.png" alt="" /></p>
+<p><img src="/assets/2022-11-01-amplitude/click-by-date.png" alt="" /></p>
 <blockquote>
   <p>Amplitude의 Segmentation 차트</p>
 </blockquote>
@@ -451,6 +495,17 @@ XXX | 프로모션 페이지를 조회했다.
     
     
   </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
 
   
 </article>
