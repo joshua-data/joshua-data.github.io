@@ -13,8 +13,8 @@ mermaid: true
 ### CONTENTS
 1. 데이터 기반 성장의 시대
 2. Amplitude: “나는 네가 지난 여름에 한 일을 알고 있다.”
-2.1. 고객  (User)
-2.2. 행동 (Event)
+	* 2.1. 고객  (User)
+	* 2.2. 행동 (Event)
 3. DB Schema를 떠올려보면 Amplitude도 결국 SQL 날리는 거야!
 4. Amplitude는 결국 전부 필터링 & 분류, That’s enough!
 5. 그래서 Amplitude 고수가 되려면 어떻게 해야 하는데?

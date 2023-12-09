@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-10T00:33:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">온체인 데이터 분석하기 | Dune Analytics 101</title><link href="http://localhost:4000/dune-analytics/" rel="alternate" type="text/html" title="온체인 데이터 분석하기 | Dune Analytics 101" /><published>2022-12-03T00:00:00+09:00</published><updated>2022-12-03T00:00:00+09:00</updated><id>http://localhost:4000/dune-analytics</id><content type="html" xml:base="http://localhost:4000/dune-analytics/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-10T00:41:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">온체인 데이터 분석하기 | Dune Analytics 101</title><link href="http://localhost:4000/dune-analytics/" rel="alternate" type="text/html" title="온체인 데이터 분석하기 | Dune Analytics 101" /><published>2022-12-03T00:00:00+09:00</published><updated>2022-12-03T00:00:00+09:00</updated><id>http://localhost:4000/dune-analytics</id><content type="html" xml:base="http://localhost:4000/dune-analytics/"><![CDATA[<blockquote>
   <p>이번 시간에는 온체인 데이터 애널리틱스 플랫폼들 중 가장 핫하고 커뮤니티가 큰 <a href="https://dune.com/home">Dune Analytics</a>의 구조와 사용 방법에 대해 알아볼 것이다. 데이터 사이언스를 공부하고 블록체인 기업에서 일하는 본인에게 Dune Analytics는 가만히 쳐다보기만 해도 늘 심장이 쿵쾅거리며 텐션이 업되는 유토피아 같은 곳이다. 하지만 안타깝게도, 이 설레는 마음을 이어 받아 데이터 구조를 이해하고 사용 방법을 익히기 위한 레퍼런스가 상당히 부족하다는 것을 알게 되었다. 그리하여 나 처럼 데이터만 보면 마음이 벅차오르는 이 시대 모든 온체인 데이터 러버들에게 이 글을 바치고자 한다. Happy Duning!</p>
 </blockquote>
 
@@ -767,8 +767,11 @@
 <ol>
   <li>데이터 기반 성장의 시대</li>
   <li>Amplitude: “나는 네가 지난 여름에 한 일을 알고 있다.”
-2.1. 고객  (User)
-2.2. 행동 (Event)</li>
+    <ul>
+      <li>2.1. 고객  (User)</li>
+      <li>2.2. 행동 (Event)</li>
+    </ul>
+  </li>
   <li>DB Schema를 떠올려보면 Amplitude도 결국 SQL 날리는 거야!</li>
   <li>Amplitude는 결국 전부 필터링 &amp; 분류, That’s enough!</li>
   <li>그래서 Amplitude 고수가 되려면 어떻게 해야 하는데?</li>
@@ -1069,9 +1072,12 @@
 <ol>
   <li>탈중앙화의 개념</li>
   <li>탈중앙화의 측정
-2.1. 준비: 데이터 수집
-2.2. 유형별 측정
-2.3. Recap</li>
+    <ul>
+      <li>2.1. 준비: 데이터 수집</li>
+      <li>2.2. 유형별 측정</li>
+      <li>2.3. Recap</li>
+    </ul>
+  </li>
   <li>결론: “탈중앙화와 빈부격차는 다르다!”</li>
 </ol>
 
