@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-09T20:18:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Amplitude 톺아보기</title><link href="http://localhost:4000/amplitude/" rel="alternate" type="text/html" title="Amplitude 톺아보기" /><published>2022-11-01T00:00:00+09:00</published><updated>2022-11-01T00:00:00+09:00</updated><id>http://localhost:4000/amplitude</id><content type="html" xml:base="http://localhost:4000/amplitude/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-09T20:43:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Amplitude 톺아보기</title><link href="http://localhost:4000/amplitude/" rel="alternate" type="text/html" title="Amplitude 톺아보기" /><published>2022-11-01T00:00:00+09:00</published><updated>2022-11-01T00:00:00+09:00</updated><id>http://localhost:4000/amplitude</id><content type="html" xml:base="http://localhost:4000/amplitude/"><![CDATA[<blockquote>
   <p>이번 아티클에서 다룰 이야기는 바로  <strong>Amplitude</strong>(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.</p>
 </blockquote>
 
@@ -32,7 +32,7 @@
 
 <p>데이터 분석 스토리 시리즈의 첫 번째 이야기는 바로  <strong>Amplitude</strong>(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.</p>
 
-<p><img src="/assets/2022-11-01-amplitude/martian.gif" alt="The Martian" /></p>
+<p><img src="/assets/2022-11-01-amplitude/martian.jpeg" alt="The Martian" /></p>
 <blockquote>
   <p>“개발자님! 이벤트 세팅해주신 것들 트랙킹된다! 트랙킹된다! 카피 댓!” (영화 마션)</p>
 </blockquote>
@@ -97,19 +97,7 @@
 
 <p>행동은 단어 그대로, 고객의 특정 행동을 의미한다. 이를 좀 더 개발스럽게(?) 표현하면, 앱 상에서 고객이 클라이언트 내에서 서버를 향해 요청(Request)한 트랜잭션이라고 할 수 있다. 개발자가 아니라면 외계어(👾)처럼 들릴 수 있으니, 다음 그림을 한 번 보도록 하자.</p>
 
-<pre><code class="language-mermaid">	graph LR
-	U[사용자]
-	Event1[공지사항을 클릭하다.]
-	Event2[사용 가이드를 클릭하다.]
-	Event3[장바구니를 조회하다.]
-	Event4[구매를 완료하다.]
-	Event5[상품평을 작성하다.]
-	U -.-&gt; Event1
-	U -.-&gt; Event2
-	U -.-&gt; Event3
-	U -.-&gt; Event4
-	U -.-&gt; Event5
-</code></pre>
+<p><img src="/assets/2022-11-01-amplitude/user-events.png" alt="" /></p>
 <blockquote>
   <p>필자는 그림에 소질이 없으니, 못생긴 그림이어도 이해를 바란다.</p>
 </blockquote>
@@ -226,24 +214,7 @@
   <li>물론, Amplitude Data Export 기능을 활용하게 된다면 테이블 구조를 더욱 명확하게 확인할 수 있을 것이다.</li>
 </ul>
 
-<pre><code class="language-mermaid">	erDiagram 
-	USERS {
-		PK user_id
-		VARCHAR user_name
-		VARCHAR country
-		VARCHAR language
-		VARCHAR device_type
-		VARCHAR app_version
-	}
-	EVENTS {
-		PK event_id
-		FK user_id
-		VARCHAR event_name
-		datetime datetime
-	}
-
-	USERS ||--|{ EVENTS : creates
-</code></pre>
+<p><img src="/assets/2022-11-01-amplitude/user-events-erd.png" alt="" /></p>
 
 <p>즉, User에는 식별자인 ID 뿐만 아니라, 거주 국가, 언어, 사용 기기, 운영체제 등 프로파일에 해당하는 정보를 가지고 있고, 각 User는 1개 이상의 Event를 행한다. 그리고 각 Event 역시 ID 뿐만 아니라, 상세 프로파일을 가지고 있다.</p>
 
@@ -316,7 +287,7 @@
 
 <p>그럼, 이 땅의 모든 데이터 분석가, 마케터, 프론트엔드 개발자들을 응원하며, 글을 마친다. 또 다른 주제로 다시 돌아온다!</p>
 
-<p><img src="/assets/2022-11-01-amplitude/the-simpsons.gif" alt="" /></p>
+<p><img src="/assets/2022-11-01-amplitude/the-simpsons.jpeg" alt="" /></p>
 <blockquote>
   <p>너무 데이터 분석만 하지말고, 가끔씩 이렇게 멘탈을 놓고 춤도 춰야 한다.</p>
 </blockquote>

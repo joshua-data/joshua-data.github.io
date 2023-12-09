@@ -72,20 +72,7 @@ Amplitude ID | 3 | User ID > Device ID 순으로 참조하여 최종 고객 식�
 
 행동은 단어 그대로, 고객의 특정 행동을 의미한다. 이를 좀 더 개발스럽게(?) 표현하면, 앱 상에서 고객이 클라이언트 내에서 서버를 향해 요청(Request)한 트랜잭션이라고 할 수 있다. 개발자가 아니라면 외계어(👾)처럼 들릴 수 있으니, 다음 그림을 한 번 보도록 하자.
 
-```mermaid
-	graph LR
-	U[사용자]
-	Event1[공지사항을 클릭하다.]
-	Event2[사용 가이드를 클릭하다.]
-	Event3[장바구니를 조회하다.]
-	Event4[구매를 완료하다.]
-	Event5[상품평을 작성하다.]
-	U -.-> Event1
-	U -.-> Event2
-	U -.-> Event3
-	U -.-> Event4
-	U -.-> Event5
-```
+![]({{ site.baseurl }}/assets/2022-11-01-amplitude/user-events.png)
 > 필자는 그림에 소질이 없으니, 못생긴 그림이어도 이해를 바란다.
 
 즉, 행동(Event)은 공지사항을 클릭하거나, 구매를 완료하는 등 서버에 전달될 수 있는 사건들을 의미하는 것이다.
@@ -131,25 +118,7 @@ XXX | 프로모션 페이지를 조회했다.
 Amplitude의 내부 데이터베이스를 살펴본 적도 없고 살펴볼 수도 없겠지만, Amplitude가 데이터를 기록하는 방식을 다음 ERD 다이어그램 정도로 이해하면 훨씬 습득력이 향상될 것 같다.
 * 물론, Amplitude Data Export 기능을 활용하게 된다면 테이블 구조를 더욱 명확하게 확인할 수 있을 것이다.
 
-```mermaid	
-	erDiagram 
-	USERS {
-		PK user_id
-		VARCHAR user_name
-		VARCHAR country
-		VARCHAR language
-		VARCHAR device_type
-		VARCHAR app_version
-	}
-	EVENTS {
-		PK event_id
-		FK user_id
-		VARCHAR event_name
-		datetime datetime
-	}
-
-	USERS ||--|{ EVENTS : creates
-```
+![]({{ site.baseurl }}/assets/2022-11-01-amplitude/user-events-erd.png)
 
 즉, User에는 식별자인 ID 뿐만 아니라, 거주 국가, 언어, 사용 기기, 운영체제 등 프로파일에 해당하는 정보를 가지고 있고, 각 User는 1개 이상의 Event를 행한다. 그리고 각 Event 역시 ID 뿐만 아니라, 상세 프로파일을 가지고 있다.
 
