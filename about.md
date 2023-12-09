@@ -6,7 +6,7 @@ permalink: /about/
 
 > "He is a Data Analyst on a Never-Ending Thirst for Learning through Computers, Books, and People!"
 
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)
+![]({{ site.baseurl }}/assets/profile/joshua-cook.png)
 
 ### Discover Joshua
 
