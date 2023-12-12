@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>It’s Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery – Joshua Kim – Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  In this article, I’m going to talk about how to extract DAU separating new users and existing users directly from BigQuery. I prepared an insightful example to share some intuition with you, so that you can better understand.
+
+" />
+    <meta property="og:description" content="
+  In this article, I’m going to talk about how to extract DAU separating new users and existing users directly from BigQuery. I prepared an insightful example to share some intuition with you, so that you can better understand.
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="It’s Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery" />
+    <meta property="twitter:title" content="It’s Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+  <body>
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>It’s Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery</h1>
+
+  <div>
+    <span class="date">
+      2023-06-14
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#english">
+          english
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#sql">
+          sql
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#data_analytics">
+          data_analytics
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#bigquery">
+          bigquery
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>In this article, I’m going to talk about how to extract DAU separating new users and existing users directly from BigQuery. I prepared an insightful example to share some intuition with you, so that you can better understand.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>Full BigQuery Codes</li>
+  <li>Step by Step</li>
+  <li>An Intuitive Example</li>
+  <li>Review Full BigQuery Codes</li>
+</ol>
+
+<hr />
+
+<p><img src="/assets/2023-06-14-extract-dau-separating-new-and-existing-users/data-pipeline.webp" alt="" /></p>
+<blockquote>
+  <p>Data pipeline from the website all the way up to Redash</p>
+</blockquote>
+
+<h1 id="1-full-bigquery-codes">1. Full BigQuery Codes</h1>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_flattened</span> <span class="k">AS</span> <span class="p">(</span>  
+  <span class="c1">-- Confidential  </span>
+<span class="p">),</span>  
+<span class="n">CTE_users_min_gsn</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">PARSE_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="n">event_date</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>  
+        <span class="n">user_pseudo_id</span><span class="p">,</span>  
+        <span class="k">MIN</span><span class="p">(</span><span class="n">ga_session_number</span><span class="p">)</span> <span class="k">AS</span> <span class="n">min_gsn</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_flattened</span>  
+    <span class="k">WHERE</span> 
+	    <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'session_start'</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">event_date</span><span class="p">,</span> <span class="n">user_pseudo_id</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span>  
+    <span class="nb">date</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_pseudo_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_all</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">min_gsn</span> <span class="o">&lt;&gt;</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">user_pseudo_id</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_existing</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">min_gsn</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">user_pseudo_id</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_new</span>  
+<span class="k">FROM</span>
+	<span class="n">CTE_users_min_gsn</span>  
+<span class="k">GROUP</span> <span class="k">BY</span> 
+	<span class="nb">date</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="nb">date</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="2-step-by-step">2. Step by Step</h1>
+
+<h2 id="21-daily-initial-session-sequence-values">2.1. Daily Initial Session Sequence Values</h2>
+
+<p>First off, extract the <strong>daily initial session sequence values</strong> of all the users triggering <code class="language-plaintext highlighter-rouge">session_start</code>event.</p>
+<ul>
+  <li>the session sequence values are named <code class="language-plaintext highlighter-rouge">ga_session_number</code>in <a href="https://support.google.com/analytics/answer/7029846?hl=en#zippy=%2Cevent">BigQuery Export Schema of Google Analytics 4</a>.</li>
+  <li>When a user(<code class="language-plaintext highlighter-rouge">user_pseudo_id</code>) starts their session for the first time, the  <code class="language-plaintext highlighter-rouge">ga_session_number</code>  in the event parameters equals to <code class="language-plaintext highlighter-rouge">1</code>, and then it increases sequentially each time the user returns and starts the new session again.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_users_min_gsn</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">PARSE_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="n">event_date</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>  
+        <span class="n">user_pseudo_id</span><span class="p">,</span>  
+        <span class="k">MIN</span><span class="p">(</span><span class="n">ga_session_number</span><span class="p">)</span> <span class="k">AS</span> <span class="n">min_gsn</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_flattened</span>
+    <span class="k">WHERE</span> 
+	    <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'session_start'</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">event_date</span><span class="p">,</span> <span class="n">user_pseudo_id</span>  
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="22-separating-new--existing-users">2.2. Separating New &amp; Existing Users</h2>
+
+<p>For the second step, categorize users as new or existing based on whether the <strong>daily initial session sequence value</strong> is <code class="language-plaintext highlighter-rouge">1</code> or <code class="language-plaintext highlighter-rouge">not</code> on a daily basis.</p>
+<ul>
+  <li>A user named Joshua, who first visited your website for example, can trigger multiple <code class="language-plaintext highlighter-rouge">session_start</code>events in a single day.</li>
+  <li>Even though he returns to the website after his first visit, he should be still regarded as one of the new users when calculating on a daily basis.</li>
+  <li>That ‘s why I mentioned above that you need to extract the <strong>“daily” initial session sequence values</strong> of all the users.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="nb">date</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_pseudo_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_all</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">min_gsn</span> <span class="o">&lt;&gt;</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">user_pseudo_id</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_existing</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">min_gsn</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">user_pseudo_id</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_new</span>  
+<span class="k">FROM</span>
+	<span class="n">CTE_users_min_gsn</span>  
+<span class="k">GROUP</span> <span class="k">BY</span> 
+	<span class="nb">date</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="nb">date</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="3-an-intuitive-example">3. An Intuitive Example</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>Jan 1, before noon</strong></th>
+      <th><strong>Jan 1, afternoon</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Joshua</strong></td>
+      <td>1st Visit</td>
+      <td>2nd Visit</td>
+    </tr>
+    <tr>
+      <td><strong>Shane</strong></td>
+      <td>-</td>
+      <td>1st Visit</td>
+    </tr>
+    <tr>
+      <td><strong>Chloe</strong></td>
+      <td>2nd Visit</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>Angela</strong></td>
+      <td>1st Visit</td>
+      <td>2nd Visit</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>On January 1st, the DAU will be:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">3 New Users</code> (Joshua, Shane, and Angela)</li>
+  <li><code class="language-plaintext highlighter-rouge">1 Existing User</code> (Chloe)</li>
+</ul>
+
+<p>Keep in mind that Joshua and Angela are regarded as the new users <strong>in spite of the fact that they made their second visit</strong>.</p>
+
+<h3 id="step-1-identify-the-session-sequence-values-of-all-the-users">STEP 1. Identify the session sequence values of all the users.</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>Jan 1, before noon</strong></th>
+      <th><strong>Jan 1, afternoon</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Joshua</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 1</td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 2</td>
+    </tr>
+    <tr>
+      <td><strong>Shane</strong></td>
+      <td>-</td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 1</td>
+    </tr>
+    <tr>
+      <td><strong>Chloe</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 45</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><strong>Angela</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 1</td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="step2-aggregate-each-user-with-the-minimum-session-sequence-value">STEP2. Aggregate each user with the minimum session sequence value.</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>Jan 1</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Joshua</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 1</td>
+    </tr>
+    <tr>
+      <td><strong>Shane</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 1</td>
+    </tr>
+    <tr>
+      <td><strong>Chloe</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 45</td>
+    </tr>
+    <tr>
+      <td><strong>Angela</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ga_session_number</code> = 1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="step-3-classify-each-user-as-a-new-or-existing-user-based-on-whether-or-not-the-minimum-session-sequence-value-equals-to-1">STEP 3. Classify each user as a new or existing user based on whether or not the minimum session sequence value equals to 1.</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th><strong>Jan 1</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Joshua</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">New User</code></td>
+    </tr>
+    <tr>
+      <td><strong>Shane</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">New User</code></td>
+    </tr>
+    <tr>
+      <td><strong>Chloe</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">Existing User</code></td>
+    </tr>
+    <tr>
+      <td><strong>Angela</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">New User</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="4-review-full-bigquery-codes">4. Review Full BigQuery Codes</h1>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_flattened</span> <span class="k">AS</span> <span class="p">(</span>  
+  <span class="c1">-- Confidential  </span>
+<span class="p">),</span>  
+<span class="n">CTE_users_min_gsn</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">PARSE_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="n">event_date</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>  
+        <span class="n">user_pseudo_id</span><span class="p">,</span>  
+        <span class="k">MIN</span><span class="p">(</span><span class="n">ga_session_number</span><span class="p">)</span> <span class="k">AS</span> <span class="n">min_gsn</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_flattened</span>  
+    <span class="k">WHERE</span> 
+	    <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'session_start'</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">event_date</span><span class="p">,</span> <span class="n">user_pseudo_id</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span>  
+    <span class="nb">date</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_pseudo_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_all</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">min_gsn</span> <span class="o">&lt;&gt;</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">user_pseudo_id</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_existing</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">min_gsn</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="n">user_pseudo_id</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau_new</span>  
+<span class="k">FROM</span>
+	<span class="n">CTE_users_min_gsn</span>  
+<span class="k">GROUP</span> <span class="k">BY</span> 
+	<span class="nb">date</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="nb">date</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/ethereum-on-chain-data/">
+            &#xE000; Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+  <li><a href="mailto:joshuajkim413@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M101.3 141.6v228.9h0.3 308.4 0.8V141.6H101.3zM375.7 167.8l-119.7 91.5 -119.6-91.5H375.7zM127.6 194.1l64.1 49.1 -64.1 64.1V194.1zM127.8 344.2l84.9-84.9 43.2 33.1 43-32.9 84.7 84.7L127.8 344.2 127.8 344.2zM384.4 307.8l-64.4-64.4 64.4-49.3V307.8z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>© Joshua Kim</p>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
