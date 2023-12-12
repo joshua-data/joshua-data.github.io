@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention – Joshua Kim – Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the  DAU  and  MAU, but also with  Stickiness, and  Retention Rate, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!
+
+" />
+    <meta property="og:description" content="
+  In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the  DAU  and  MAU, but also with  Stickiness, and  Retention Rate, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention" />
+    <meta property="twitter:title" content="Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+  <body>
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention</h1>
+
+  <div>
+    <span class="date">
+      2023-05-29
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#english">
+          english
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#sql">
+          sql
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#blockchain">
+          blockchain
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#on_chain_data">
+          on_chain_data
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#data_analytics">
+          data_analytics
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the  <strong>DAU</strong>  and  <strong>MAU,</strong> but also with  <strong>Stickiness</strong>, and  <strong>Retention Rate</strong>, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>Introduction</li>
+  <li>DAU, MAU, and Stickiness (All the Transactions)
+    <ul>
+      <li>2.1.  Ethereum DAU and 30-day Moving MAU</li>
+      <li>2.2. Ethereum DAU (by new and existing addresses)</li>
+      <li>2.3. Ethereum DAU (by transaction types)</li>
+      <li>2.4. Ethereum Stickiness</li>
+    </ul>
+  </li>
+  <li>DAU, MAU, and Stickiness (Contract Call Only)
+    <ul>
+      <li>3.1. Ethereum DAU and 30-day Moving MAU</li>
+      <li>3.2. Ethereum DAU (new and existing addresses)</li>
+      <li>3.3. Ethereum DAU (by transaction types)</li>
+      <li>3.4. Ethereum Stickiness</li>
+    </ul>
+  </li>
+  <li>Cohord Retention (Contract Call Only)
+    <ul>
+      <li>4.1. Ethereum Cohort Retention (Since Jan 2023)</li>
+      <li>4.2. Ethereum Cohort Retention (Since Jan 2022)</li>
+    </ul>
+  </li>
+  <li>Why the Retention rate was high in May 2023?</li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-introduction">1. Introduction</h1>
+
+<p>There are already many Ethereum on-chain data analytics platforms such as Messari, Glassnode, and of course, Etherscan.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/messari.webp" alt="" /></p>
+<blockquote>
+  <p>Ethereum Daily Number of Active Addresses (Messari)</p>
+</blockquote>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/glassnode.webp" alt="" /></p>
+<blockquote>
+  <p>Ethereum Daily Number of Active Addresses (Glassnode)</p>
+</blockquote>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/etherscan.webp" alt="" /></p>
+<blockquote>
+  <p>Ethereum Daily Number of Transactions Broadcasted (Etherscan)</p>
+</blockquote>
+
+<p>Unfortunately, The charts above aren’t very helpful if you try to deeply analyze the on-chain data and find a specific action point regarding any blockchain services.</p>
+
+<p>Inthis article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the  <strong>DAU</strong>  and  <strong>MAU,</strong> but also with  <strong>Stickiness</strong>, and  <strong>Retention Rate</strong>, which are the most basic metrics when it comes to Data Analysis. Let’s directly dive into it!</p>
+
+<h1 id="2-dau-mau-and-stickiness-all-the-transactions">2. DAU, MAU, and Stickiness (All the Transactions)</h1>
+
+<h2 id="21--ethereum-dau-and-30-day-moving-mau">2.1.  Ethereum DAU and 30-day Moving MAU</h2>
+
+<p>Basically, I am not able to discern any meaningful insights from the chart below as a data analyst.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-dau-mau.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span>
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span> 
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span>
+	    <span class="n">block_date</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span>
+	<span class="o">*</span>  
+<span class="k">FROM</span> 
+	<span class="n">CTE_dau_mau</span>  
+<span class="k">WHERE</span> 
+	<span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="22-ethereum-dau-by-new-and-existing-addresses">2.2. Ethereum DAU (by new and existing addresses)</h2>
+
+<p>Here, I’ve distinguished daily new addresses from existing ones depending on the <strong>Nonce</strong> values.</p>
+<ul>
+  <li>If a transaction has a nonce of 0, it’s considered to be broadcast by <strong>a new address</strong>.</li>
+  <li>On the other hand, if a transaction nonce is not equal to 0, it’s considered to be broadcast by <strong>an existing address</strong>.</li>
+</ul>
+
+<p>Despite this analysis, I am still not able to discern any meaningful insights from the chart below.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-dau-new-vs-old.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span>   
+        <span class="k">CASE</span>  
+            <span class="k">WHEN</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="s1">'new_address'</span>  
+            <span class="k">ELSE</span> <span class="s1">'existing_address'</span>  
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">new_existing</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span>
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dnu_mnu</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">new_existing</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dnu</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span>
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span> 
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mnu</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span><span class="p">,</span> <span class="n">new_existing</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">new_existing</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span>
+	<span class="o">*</span>  
+<span class="k">FROM</span>
+	<span class="n">CTE_dnu_mnu</span>  
+<span class="k">WHERE</span> 
+	<span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="23-ethereum-dau-by-transaction-types">2.3. Ethereum DAU (by transaction types)</h2>
+
+<p>Here, I’ve distinquished daily new addresses from existing ones depending on the <strong>Nonce</strong> values.</p>
+<ul>
+  <li>If a transaction has a nonce of 0, it’s considered to be broadcast by <strong>a new address</strong>.</li>
+  <li>On the other hand, if a transaction nonce is not equal to 0, it’s considered to be broadcast by <strong>an existing address</strong>.</li>
+</ul>
+
+<p>Despite this analysis, I am still not able to discern any meaningful insights from the chart below.</p>
+
+<p>Again, I am still not able to discern any meaningful insights from the chart below.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">DynamicFee</code> indicates that the transaction has been broadcast in compliance with EIP-1559.</li>
+  <li><code class="language-plaintext highlighter-rouge">Legacy</code> signifies that the transaction has been broadcast using the traditional data format.</li>
+</ul>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-dau-tx-type.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span>
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau</span> <span class="k">AS</span> <span class="p">(</span>   
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span>
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span>
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span><span class="p">,</span> <span class="k">type</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span><span class="p">,</span> <span class="k">type</span>   
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span>  
+<span class="k">FROM</span> 
+	<span class="n">CTE_dau_mau</span>  
+<span class="k">WHERE</span> 
+	<span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="24-ethereum-stickiness">2.4. Ethereum Stickiness</h2>
+
+<blockquote>
+  <p><strong>Stickiness</strong> is, by definition, the proportion of users who started their sessions on a particular day among all monthly users.</p>
+</blockquote>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/stickiness-formula.webp" alt="" /></p>
+
+<p>For instance, users on various social media platforms like Facebook typically exhibit a significantly high Stickiness Ratio.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/dau-as-perc-of-mau.webp" alt="" /></p>
+
+<p>When it comes to Ethereum Stickiness, I noticed a potential upward trend since May 2023 in the chart below.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-stickiness.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span>
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span>
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span>
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau_stickiness</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span> <span class="n">dau</span><span class="p">,</span> <span class="n">mau</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="n">dau</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> <span class="o">/</span> <span class="k">CAST</span><span class="p">(</span><span class="n">mau</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">stickiness</span>  
+    <span class="k">FROM</span>
+	    <span class="n">CTE_dau_mau</span>  
+    <span class="k">WHERE</span>
+	    <span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span>
+	    <span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span> 
+<span class="k">FROM</span> 
+	<span class="n">CTE_dau_mau_stickiness</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="3--dau-mau-and-stickiness-contract-call-only">3.  DAU, MAU, and Stickiness (Contract Call Only)</h1>
+
+<p>Wait, I overlooked one crucial aspect in all of the above.</p>
+<ol>
+  <li>The primary essence of the Ethereum Network lies in its functionality as an application platform.</li>
+  <li>Consequently, it would be more accurate and insightful to extract transactions data that involves at least one contract call, rather than considering all transactions data.</li>
+</ol>
+
+<p>Let’s redraw the same charts, but this time, focusing only on transactions that involve calling a contract.</p>
+
+<h2 id="31-ethereum-dau-and-30-day-moving-mau">3.1. Ethereum DAU and 30-day Moving MAU</h2>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-contract-call-dau-mau.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span> 
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span> 
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span>  
+<span class="k">FROM</span> 
+	<span class="n">CTE_dau_mau</span>  
+<span class="k">WHERE</span> 
+	<span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="32-ethereum-dau-new-and-existing-addresses">3.2. Ethereum DAU (new and existing addresses)</h2>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-contract-call-dau-new-vs-old.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span>   
+        <span class="k">CASE</span>  
+            <span class="k">WHEN</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="s1">'new_address'</span>  
+            <span class="k">ELSE</span> <span class="s1">'existing_address'</span>  
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">new_existing</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dnu_mnu</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">new_existing</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dnu</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span> 
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span> 
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mnu</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span><span class="p">,</span> <span class="n">new_old</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">new_old</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span>  
+<span class="k">FROM</span> 
+	<span class="n">CTE_dnu_mnu</span>  
+<span class="k">WHERE</span> 
+	<span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="33-ethereum-dau-by-transaction-types">3.3. Ethereum DAU (by transaction types)</h2>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-contract-call-dau-tx-type.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span> 
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span> 
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span><span class="p">,</span> <span class="k">type</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span><span class="p">,</span> <span class="k">type</span>   
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span>  
+<span class="k">FROM</span> 
+	<span class="n">CTE_dau_mau</span>  
+<span class="k">WHERE</span> 
+	<span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+<span class="k">ORDER</span> <span class="k">BY</span> 
+	<span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="34-ethereum-stickiness">3.4. Ethereum Stickiness</h2>
+
+<p>I am even more convinced now that the upward trend I noticed earlier is indeed present here as well.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-contract-call-stickiness.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span>  
+        <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-12-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span><span class="p">,</span>  
+        <span class="p">(</span>  
+            <span class="k">SELECT</span> 
+	            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span>  
+            <span class="k">FROM</span> 
+	            <span class="n">CTE_raw</span> <span class="n">SUB</span>  
+            <span class="k">WHERE</span>  
+                <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span>  
+                <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="n">block_date</span> <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">block_date</span><span class="p">)</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span> <span class="n">MAIN</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">),</span>  
+<span class="n">CTE_dau_mau_stickiness</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">block_date</span><span class="p">,</span> <span class="n">dau</span><span class="p">,</span> <span class="n">mau</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="n">dau</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> <span class="o">/</span> <span class="k">CAST</span><span class="p">(</span><span class="n">mau</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">stickiness</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_dau_mau</span>  
+    <span class="k">WHERE</span> 
+	    <span class="n">block_date</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">block_date</span> <span class="k">DESC</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">CTE_dau_mau_stickiness</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="4--cohord-retention-contract-call-only">4.  Cohord Retention (Contract Call Only)</h1>
+
+<blockquote>
+  <p><strong>Retention</strong> is basically an indicator of how many users come back to the platform over time.</p>
+</blockquote>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/amplitude.webp" alt="" /></p>
+
+<p>There are at least three methodologies to measure the Retention rate, but here I’ll use the Cohort Retention.</p>
+
+<blockquote>
+  <p><strong>Cohort Retention</strong> is one method of measuring the Retention trends by dividing it based on the first visit date of the new users.</p>
+</blockquote>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/cohort-table.webp" alt="" /></p>
+
+<h2 id="41-ethereum-cohort-retention-since-jan-2023">4.1. Ethereum Cohort Retention (Since Jan 2023)</h2>
+
+<p>Newe addresses that have called contracts at least once demonstrate a notably high retention rate for at least a couple of weeks.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-cohort-retention-contract-call-only.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span>   
+        <span class="n">nonce</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-01-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_raw_new</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span> 
+	    <span class="o">*</span>   
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span>  
+    <span class="k">WHERE</span> 
+	    <span class="n">from_address</span> <span class="k">IN</span> <span class="p">(</span>  
+	        <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">from_address</span>  
+	        <span class="k">FROM</span> <span class="n">CTE_raw</span>  
+	        <span class="k">WHERE</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">0</span>  
+	    <span class="p">)</span>  
+<span class="p">),</span>  
+<span class="n">CTE_address_date_first</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">from_address</span><span class="p">,</span>  
+        <span class="n">block_date</span> <span class="k">AS</span> <span class="n">active_date</span><span class="p">,</span>  
+        <span class="k">MIN</span><span class="p">(</span><span class="n">block_date</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">from_address</span>
+	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">block_date</span>
+	        <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="n">UNBOUNDED</span> <span class="k">FOLLOWING</span>
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">first_date</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw_new</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">from_address</span><span class="p">,</span> <span class="n">block_date</span>  
+<span class="p">),</span>  
+<span class="n">CTE_address_date_first_length</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">from_address</span><span class="p">,</span>  
+        <span class="n">active_date</span><span class="p">,</span> <span class="n">first_date</span><span class="p">,</span>  
+        <span class="n">DATE_DIFF</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">first_date</span><span class="p">,</span> <span class="n">active_date</span><span class="p">)</span> <span class="k">AS</span> <span class="k">length</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_address_date_first</span>  
+<span class="p">),</span>  
+<span class="n">CTE_address_date_first_length7d</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">from_address</span><span class="p">,</span>  
+        <span class="k">MAX</span><span class="p">(</span><span class="n">active_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">active_date</span><span class="p">,</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'WEEK'</span><span class="p">,</span> <span class="k">MIN</span><span class="p">(</span><span class="n">first_date</span><span class="p">))</span> <span class="k">AS</span> <span class="n">first_week</span><span class="p">,</span>  
+        <span class="n">CEIL</span><span class="p">(</span><span class="k">length</span> <span class="o">/</span> <span class="mi">7</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="k">length</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_address_date_first_length</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">from_address</span><span class="p">,</span> <span class="n">CEIL</span><span class="p">(</span><span class="k">length</span> <span class="o">/</span> <span class="mi">7</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span>  
+<span class="p">),</span>  
+<span class="n">CTE_final</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">first_week</span><span class="p">,</span>  
+        <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">new_address</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span>
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_0</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_1</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_2</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_3</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">4</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_4</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_address_date_first_length7d</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">first_week</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">first_week</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span> 
+<span class="k">FROM</span> 
+	<span class="n">CTE_final</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="42-ethereum-cohort-retention-since-jan-2022">4.2. Ethereum Cohort Retention (Since Jan 2022)</h2>
+
+<p>Let’s repeat the process from above, this time starting from January 2022 for a more convincing analysis.</p>
+
+<p>The retention rate in May 2023 was the second-highest since last year, warranting further analysis.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-cohort-retention-contract-call-only-since-2022.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span>   
+        <span class="n">nonce</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">block_time</span> <span class="o">&gt;=</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2022-01-01'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_raw_new</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span> 
+	    <span class="o">*</span>   
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span>  
+    <span class="k">WHERE</span> 
+	    <span class="n">from_address</span> <span class="k">IN</span> <span class="p">(</span>  
+	        <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">from_address</span>  
+	        <span class="k">FROM</span> <span class="n">CTE_raw</span>  
+	        <span class="k">WHERE</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">0</span>  
+	    <span class="p">)</span>  
+<span class="p">),</span>  
+<span class="n">CTE_address_date_first</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">from_address</span><span class="p">,</span>  
+        <span class="n">block_date</span> <span class="k">AS</span> <span class="n">active_date</span><span class="p">,</span>  
+        <span class="k">MIN</span><span class="p">(</span><span class="n">block_date</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">from_address</span>
+	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">block_date</span>
+	        <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="n">UNBOUNDED</span> <span class="k">FOLLOWING</span>
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">first_date</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw_new</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">from_address</span><span class="p">,</span> <span class="n">block_date</span>  
+<span class="p">),</span>  
+<span class="n">CTE_address_date_first_length</span> <span class="k">AS</span> <span class="p">(</span>   
+    <span class="k">SELECT</span>  
+        <span class="n">from_address</span><span class="p">,</span>  
+        <span class="n">active_date</span><span class="p">,</span> <span class="n">first_date</span><span class="p">,</span>  
+        <span class="n">DATE_DIFF</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">first_date</span><span class="p">,</span> <span class="n">active_date</span><span class="p">)</span> <span class="k">AS</span> <span class="k">length</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_address_date_first</span>  
+<span class="p">),</span>  
+<span class="n">CTE_address_date_first_length7d</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">from_address</span><span class="p">,</span>  
+        <span class="k">MAX</span><span class="p">(</span><span class="n">active_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">active_date</span><span class="p">,</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'WEEK'</span><span class="p">,</span> <span class="k">MIN</span><span class="p">(</span><span class="n">first_date</span><span class="p">))</span> <span class="k">AS</span> <span class="n">first_week</span><span class="p">,</span>  
+        <span class="n">CEIL</span><span class="p">(</span><span class="k">length</span> <span class="o">/</span> <span class="mi">7</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="k">length</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_address_date_first_length</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">from_address</span><span class="p">,</span> <span class="n">CEIL</span><span class="p">(</span><span class="k">length</span> <span class="o">/</span> <span class="mi">7</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span>  
+<span class="p">),</span>  
+<span class="n">CTE_final</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">first_week</span><span class="p">,</span>  
+        <span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">new_address</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_0</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_1</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_2</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">3</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_3</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">4</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">/</span> 
+        <span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="k">length</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span> 
+        <span class="o">*</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="k">AS</span> <span class="n">week_4</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_address_date_first_length7d</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">first_week</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">first_week</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span> 
+<span class="k">FROM</span> <span class="n">CTE_final</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="5--why-the-retention-rate-was-high-in-may-2023">5.  Why the Retention rate was high in May 2023?</h1>
+
+<p>The significant increase in the retention rate suggests a positive shift in user experience, indicating that users are now having a more positive experience than ever before.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/ethereum-cohort-retention-contract-call-only-since-2022-2.webp" alt="" /></p>
+
+<p>Now, let’s extract the list of contract addresses that have been called the most by the new addresses from May 1 to May 8, 2023.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/to-address-rank-2023-05-01-2023-05-08.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="n">block_time</span><span class="p">)</span> <span class="k">AS</span> <span class="n">block_date</span><span class="p">,</span>  
+        <span class="n">block_number</span><span class="p">,</span>  
+        <span class="nv">"from"</span> <span class="k">AS</span> <span class="n">from_address</span><span class="p">,</span>   
+        <span class="nv">"to"</span> <span class="k">AS</span> <span class="n">to_address</span><span class="p">,</span>  
+        <span class="n">nonce</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="k">type</span><span class="p">,</span>  
+        <span class="n">value</span><span class="p">,</span> <span class="k">data</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="nb">TIMESTAMP</span> <span class="s1">'2023-05-01'</span> <span class="o">&lt;=</span> <span class="n">block_time</span>
+        <span class="k">AND</span> <span class="n">block_time</span> <span class="o">&lt;</span> <span class="nb">TIMESTAMP</span> <span class="s1">'2023-05-08'</span>  
+        <span class="k">AND</span> <span class="n">success</span> <span class="o">=</span> <span class="k">true</span>  
+        <span class="k">AND</span> <span class="k">data</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="n">x</span>  
+<span class="p">),</span>  
+<span class="n">CTE_raw_new</span> <span class="k">AS</span> <span class="p">(</span> 
+    <span class="k">SELECT</span> 
+	    <span class="o">*</span>   
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw</span>  
+    <span class="k">WHERE</span> 
+	    <span class="n">from_address</span> <span class="k">IN</span> <span class="p">(</span>  
+	        <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">from_address</span>  
+	        <span class="k">FROM</span> <span class="n">CTE_raw</span>  
+	        <span class="k">WHERE</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">0</span>  
+	    <span class="p">)</span>  
+<span class="p">),</span>  
+<span class="n">CTE_ca_new_list</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">to_address</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">from_address</span><span class="p">)</span> <span class="k">AS</span> <span class="n">address_cnt</span>  
+    <span class="k">FROM</span> 
+	    <span class="n">CTE_raw_new</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span> 
+	    <span class="n">to_address</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span> 
+	    <span class="n">address_cnt</span> <span class="k">DESC</span>  
+    <span class="k">LIMIT</span> 
+	    <span class="mi">100</span>  
+<span class="p">)</span>  
+<span class="k">SELECT</span> 
+	<span class="o">*</span> 
+<span class="k">FROM</span> 
+	<span class="n">CTE_ca_new_list</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now, let’s identify the top 2 contracts from the table shown below.</p>
+
+<p><strong>Rank 1. Tether USD (USDT) Contract</strong></p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/etherscan-usdt.webp" alt="" /></p>
+
+<p>Tether USD (USDT), being a widely traded stablecoin on the Ethereum Network, does not reveal any significant changes in the new user experience.</p>
+
+<p><strong>Rank 2. Uniswap Universal Router Contract</strong></p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/etherscan-uniswap.webp" alt="" /></p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/universal-router.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://blog.uniswap.org/permit2-and-universal-router">Permit2 and Universal Router</a></p>
+</blockquote>
+
+<p>Now we’ve idenfified it. The Uniswap Universal Router, introduced in November 2022, has been instrumental in enhancing the positive user experience on the Ethereum Network.</p>
+
+<p><img src="/assets/2023-05-29-ethereum-on-chain-data/universal-router-flowchart.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://blog.uniswap.org/permit2-and-universal-router">Permit2 and Universal Router</a></p>
+</blockquote>
+
+<p>As demonstrated above, we can execute multiple separate swaps in a single transaction, resulting in lowe gas fees.</p>
+
+<h1 id="6--conclusion">6.  Conclusion</h1>
+
+<ol>
+  <li>In May 2023, new addresses exhibit the second-highest retention rate since January 2022.</li>
+  <li>This abrupt increase in the retention rate appears to be significantly influenced by the swift and widespread adoption of the Uniswap Universal Router.</li>
+</ol>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/sankey-chart/">
+            &#xE000; Let’s Create the Sankey Chart
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+  <li><a href="mailto:joshuajkim413@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M101.3 141.6v228.9h0.3 308.4 0.8V141.6H101.3zM375.7 167.8l-119.7 91.5 -119.6-91.5H375.7zM127.6 194.1l64.1 49.1 -64.1 64.1V194.1zM127.8 344.2l84.9-84.9 43.2 33.1 43-32.9 84.7 84.7L127.8 344.2 127.8 344.2zM384.4 307.8l-64.4-64.4 64.4-49.3V307.8z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>© Joshua Kim</p>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
