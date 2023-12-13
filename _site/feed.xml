@@ -1,4 +1,425 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-12T22:55:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">OpenSea에서 발생한 트랜잭션 데이터 구조</title><link href="http://localhost:4000/opensea-transaction/" rel="alternate" type="text/html" title="OpenSea에서 발생한 트랜잭션 데이터 구조" /><published>2023-09-18T00:00:00+09:00</published><updated>2023-09-18T00:00:00+09:00</updated><id>http://localhost:4000/opensea-transaction</id><content type="html" xml:base="http://localhost:4000/opensea-transaction/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-13T09:12:36+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)</title><link href="http://localhost:4000/finding-nfts/" rel="alternate" type="text/html" title="Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)" /><published>2023-10-08T00:00:00+09:00</published><updated>2023-10-08T00:00:00+09:00</updated><id>http://localhost:4000/finding-nfts</id><content type="html" xml:base="http://localhost:4000/finding-nfts/"><![CDATA[<blockquote>
+  <p>Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua’s expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don’t miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>Contract = Functions + Events</li>
+  <li>ERC721 Interface</li>
+  <li>Summary: From Collecting Transfer Events To Calculating Wallet Balance</li>
+  <li>Step by Step
+    <ul>
+      <li>4.1️. Collect All Transfer Events.</li>
+      <li>4.2️. Filter Out the Most Recent Transfer Events for Each Token.</li>
+      <li>4.3. Filter the Results to Show Only Those Related to the Specific Address.</li>
+      <li>4.4️. Determine the Acquisition Price of the Tokens and Label the Contracts.</li>
+    </ul>
+  </li>
+  <li>Case Study</li>
+  <li>References</li>
+</ol>
+
+<hr />
+
+<h1 id="1-contract--functions--events">1. Contract = Functions + Events</h1>
+
+<p><img src="/assets/2023-10-08-finding-nfts/flowchart.webp" alt="" /></p>
+
+<h3 id="functions"><code class="language-plaintext highlighter-rouge">Functions</code></h3>
+<p>When you call a <code class="language-plaintext highlighter-rouge">function</code>:</p>
+<ul>
+  <li>
+    <ol>
+      <li>it returns a value, or</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>it trigers an event. (= emits an event.)</li>
+    </ol>
+  </li>
+</ul>
+
+<h3 id="events"><code class="language-plaintext highlighter-rouge">Events</code></h3>
+<p>WHen an <code class="language-plaintext highlighter-rouge">event</code> is emitted:</p>
+<ul>
+  <li>
+    <ol>
+      <li>it creates and. broadcasts a TX message, then</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>the TX message leads to state change of Ethereum.</li>
+    </ol>
+  </li>
+</ul>
+
+<h1 id="2-erc721-interface">2. ERC721 Interface</h1>
+
+<h3 id="functions-1"><code class="language-plaintext highlighter-rouge">Functions</code></h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">balanceOf</span><span class="p">(</span><span class="n">owner</span><span class="p">):</span>  
+    <span class="k">return</span> <span class="sh">"</span><span class="s">Number of Tokens held by the Owner</span><span class="sh">'</span><span class="s">s Account</span><span class="sh">"</span>  
+<span class="k">def</span> <span class="nf">ownerOf</span><span class="p">(</span><span class="n">tokenId</span><span class="p">):</span>  
+    <span class="k">return</span> <span class="sh">"</span><span class="s">Owner</span><span class="sh">'</span><span class="s">s Address holding the Token</span><span class="sh">"</span>  
+<span class="k">def</span> <span class="nf">transferFrom</span><span class="p">(</span><span class="k">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">tokenId</span><span class="p">):</span>  
+    <span class="n">emit</span> <span class="n">Transfer</span>  
+<span class="k">def</span> <span class="nf">approve</span><span class="p">(</span><span class="n">to</span><span class="p">,</span> <span class="n">tokenId</span><span class="p">):</span>  
+    <span class="n">emit</span> <span class="n">Approval</span>  
+<span class="bp">...</span>
+</code></pre></div></div>
+
+<h3 id="events-1"><code class="language-plaintext highlighter-rouge">Events</code></h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span> <span class="nc">Transfer</span><span class="p">(</span><span class="k">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">tokenId</span><span class="p">):</span>  
+    <span class="c1">#  "tokenId" token is transferred from "from" to "to".  
+</span><span class="n">event</span> <span class="nc">Approval</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">approved</span><span class="p">,</span> <span class="n">tokenId</span><span class="p">):</span>  
+    <span class="c1"># "owner" enables "approved" to manage the "tokenId" token.  
+</span><span class="bp">...</span>
+</code></pre></div></div>
+
+<h1 id="3-summary-from-collecting-transfer-events-to-calculating-wallet-balance">3. Summary: From Collecting Transfer Events To Calculating Wallet Balance</h1>
+
+<h3 id="collect-all-events-involving--david">Collect All Events Involving  <code class="language-plaintext highlighter-rouge">David</code>.</h3>
+
+<p><strong>Transfer Event #1:</strong></p>
+<ul>
+  <li>from = “Joshua”</li>
+  <li>to = “David”</li>
+  <li>tokenId = <code class="language-plaintext highlighter-rouge">1234</code></li>
+</ul>
+
+<p><strong>Transfer Event #2:</strong></p>
+<ul>
+  <li>from = “Angela”</li>
+  <li>to = “David”</li>
+  <li>tokenId = <code class="language-plaintext highlighter-rouge">5678</code></li>
+</ul>
+
+<p><strong>Transfer Event #3:</strong></p>
+<ul>
+  <li>from = “David”</li>
+  <li>to = “Angela”</li>
+  <li>tokenId = <code class="language-plaintext highlighter-rouge">1234</code></li>
+</ul>
+
+<h3 id="then-sum-up-all-the-events-to-determine-wallet-balance">Then Sum Up All the Events to Determine Wallet Balance.</h3>
+
+<p><strong>Tokens List “David” currently owns:</strong></p>
+<ul>
+  <li>tokenId = <code class="language-plaintext highlighter-rouge">5678</code></li>
+</ul>
+
+<h1 id="4-step-by-step">4. Step by Step</h1>
+
+<h2 id="41️-collect-all-transfer-events">4.1️. Collect All Transfer Events.</h2>
+
+<p><img src="/assets/2023-10-08-finding-nfts/erc721-evt_Transfer.webp" alt="" /></p>
+<blockquote>
+  <p>Dune Analytics</p>
+</blockquote>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_all_transfers</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">contract_address</span><span class="p">,</span>  
+        <span class="n">tokenId</span><span class="p">,</span>  
+        <span class="n">evt_tx_hash</span><span class="p">,</span>  
+        <span class="nv">"to"</span><span class="p">,</span>  
+        <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>  
+            <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">contract_address</span><span class="p">,</span> <span class="n">tokenId</span>  
+            <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">evt_block_number</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">evt_index</span> <span class="k">DESC</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">recent_idx</span>  
+    <span class="k">FROM</span>  
+        <span class="n">erc721_ethereum</span><span class="p">.</span><span class="n">evt_Transfer</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">contract_address</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>Query Results</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>contract_address</strong></th>
+      <th><strong>tokenId</strong></th>
+      <th><strong>evt_tx_hash</strong></th>
+      <th><strong>to</strong></th>
+      <th><strong>recent_idx</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>106</td>
+      <td><code class="language-plaintext highlighter-rouge">0xc8c0...4e4c</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x826e...1ff3</code></td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>113</td>
+      <td><code class="language-plaintext highlighter-rouge">0xcd01...66a2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0xc412...0620</code></td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>118</td>
+      <td><code class="language-plaintext highlighter-rouge">0x28dd...6e20</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x4d98...e5a8</code></td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...b183</code></td>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">0xd503...672a</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x8636...a5e9</code></td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...b183</code></td>
+      <td>13</td>
+      <td><code class="language-plaintext highlighter-rouge">0x3cc9...4121</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x47a1...c78a</code></td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="42️-filter-out-the-most-recent-transfer-events-for-each-token">4.2️. Filter Out the Most Recent Transfer Events for Each Token.</h2>
+<blockquote>
+  <p>So that we can see who owns the tokens at the moment!</p>
+</blockquote>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_last_transfers</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="o">*</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_all_transfers</span>  
+    <span class="k">WHERE</span>  
+        <span class="n">recent_idx</span> <span class="o">=</span> <span class="mi">1</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>Query Results</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>contract_address</strong></th>
+      <th><strong>tokenId</strong></th>
+      <th><strong>evt_tx_hash</strong></th>
+      <th><strong>to</strong></th>
+      <th><strong>recent_idx</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>0</td>
+      <td><code class="language-plaintext highlighter-rouge">0xfa58...164a</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="43-filter-the-results-to-show-only-those-related-to-the-specific-address">4.3. Filter the Results to Show Only Those Related to the Specific Address.</h2>
+<blockquote>
+  <p>So that we can see all the tokens that the address owns at the moment.</p>
+</blockquote>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_last_transfers_cohort</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="o">*</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_last_transfers</span>  
+    <span class="k">WHERE</span>  
+        <span class="nv">"to"</span> <span class="o">=</span>   
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>Query Results</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>contract_address</strong></th>
+      <th><strong>tokenId</strong></th>
+      <th><strong>evt_tx_hash</strong></th>
+      <th><strong>to</strong></th>
+      <th><strong>recent_idx</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>0</td>
+      <td><code class="language-plaintext highlighter-rouge">0xfa58...164a</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...8e25</code></td>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">0x0595...c802</code></td>
+      <td><code class="language-plaintext highlighter-rouge">0x0000...5e92</code></td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="44️-determine-the-acquisition-price-of-the-tokens-and-label-the-contracts">4.4️. Determine the Acquisition Price of the Tokens and Label the Contracts.</h2>
+
+<p><strong>Determine the Acquisition Price of the Tokens.</strong></p>
+
+<p><img src="/assets/2023-10-08-finding-nfts/flowchart.webp" alt="" /></p>
+
+<ul>
+  <li><strong>JOIN <code class="language-plaintext highlighter-rouge">hash</code> with <code class="language-plaintext highlighter-rouge">evt_tx_hash</code> and SELECT <code class="language-plaintext highlighter-rouge">value</code>.</strong></li>
+</ul>
+
+<p><img src="/assets/2023-10-08-finding-nfts/ethereum.transactions.webp" alt="" /></p>
+<blockquote>
+  <p>Dune Analytics</p>
+</blockquote>
+
+<p><strong>Label the Contracts.</strong></p>
+
+<p><img src="/assets/2023-10-08-finding-nfts/label-the-contracts.webp" alt="" /></p>
+<blockquote>
+  <p>Dune Analytics</p>
+</blockquote>
+
+<ul>
+  <li><strong>JOIN <code class="language-plaintext highlighter-rouge">contract_address</code> with <code class="language-plaintext highlighter-rouge">contract_address</code> and SELECT <code class="language-plaintext highlighter-rouge">name</code>.</strong></li>
+</ul>
+
+<p><img src="/assets/2023-10-08-finding-nfts/tokens.nft.webp" alt="" /></p>
+<blockquote>
+  <p>Dune Analytics</p>
+</blockquote>
+
+<p><strong>Final Query to Wrap Up</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_summary</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">LABELS</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>  
+        <span class="n">TRANSFERS</span><span class="p">.</span><span class="n">contract_address</span><span class="p">,</span>  
+        <span class="n">TRANSFERS</span><span class="p">.</span><span class="n">tokenId</span><span class="p">,</span>  
+        <span class="n">TXS</span><span class="p">.</span><span class="n">value</span> <span class="o">/</span> <span class="mi">1</span><span class="n">e18</span> <span class="k">AS</span> <span class="n">acquisition_cost</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_last_transfers_cohort</span> <span class="n">TRANSFERS</span>  
+    <span class="k">LEFT</span> <span class="k">JOIN</span>  
+        <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span> <span class="n">TXS</span>  
+        <span class="k">ON</span> <span class="n">TRANSFERS</span><span class="p">.</span><span class="n">evt_tx_hash</span> <span class="o">=</span> <span class="n">TXS</span><span class="p">.</span><span class="n">hash</span>  
+    <span class="k">LEFT</span> <span class="k">JOIN</span>  
+        <span class="n">tokens</span><span class="p">.</span><span class="n">nft</span> <span class="n">LABELS</span>  
+        <span class="k">ON</span> <span class="n">TRANSFERS</span><span class="p">.</span><span class="n">contract_address</span> <span class="o">=</span> <span class="n">LABELS</span><span class="p">.</span><span class="n">contract_address</span>  
+            <span class="k">AND</span> <span class="n">LABELS</span><span class="p">.</span><span class="n">blockchain</span> <span class="o">=</span> <span class="s1">'ethereum'</span>  
+<span class="p">)</span>
+<span class="k">SELECT</span>
+    <span class="o">*</span>
+<span class="k">FROM</span>
+    <span class="n">CTE_summary</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="5-case-study">5. Case Study</h1>
+
+<h3 id="binance-7--eoa-address"><code class="language-plaintext highlighter-rouge">Binance 7</code>  EOA Address</h3>
+<blockquote>
+  <p>☎️ <code class="language-plaintext highlighter-rouge">0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8</code></p>
+</blockquote>
+
+<h3 id="query-results">Query Results</h3>
+
+<p><img src="/assets/2023-10-08-finding-nfts/query-results.webp" alt="" /></p>
+<blockquote>
+  <p>🟠  <a href="https://dune.com/joshua_web3/blpas-sample-dashboard?address_t7a5e7=0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8">dune.com/joshua_web3</a></p>
+</blockquote>
+
+<h3 id="check-it-out-with--etherscan--just-in-case-its-not-been-correctly-queried">Check it out with  <code class="language-plaintext highlighter-rouge">Etherscan</code>  just in case it’s not been correctly queried.</h3>
+
+<ul>
+  <li>Holders of  <code class="language-plaintext highlighter-rouge">Documenta X by Vuk Cosic</code></li>
+</ul>
+
+<p><img src="/assets/2023-10-08-finding-nfts/etherscan-documenta.webp" alt="" /></p>
+<blockquote>
+  <p>Etherscan</p>
+</blockquote>
+
+<ul>
+  <li>Holders of  <code class="language-plaintext highlighter-rouge">New World Babies</code></li>
+</ul>
+
+<p><img src="/assets/2023-10-08-finding-nfts/etherscan-new-world-babies.webp" alt="" /></p>
+<blockquote>
+  <p>Etherscan</p>
+</blockquote>
+
+<h1 id="6-references">6. References</h1>
+
+<ul>
+  <li><a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc721">OpenZeppelin Docs</a></li>
+  <li><a href="https://dune.com/joshua_web3/blpas-sample-dashboard?address_t7a5e7=0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8">Dune Dashboard</a>  (created by Joshua)</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="blockchain" /><category term="on_chain_data" /><category term="sql" /><summary type="html"><![CDATA[Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua’s expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don’t miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.]]></summary></entry><entry><title type="html">OpenSea에서 발생한 트랜잭션 데이터 구조</title><link href="http://localhost:4000/opensea-transaction/" rel="alternate" type="text/html" title="OpenSea에서 발생한 트랜잭션 데이터 구조" /><published>2023-09-18T00:00:00+09:00</published><updated>2023-09-18T00:00:00+09:00</updated><id>http://localhost:4000/opensea-transaction</id><content type="html" xml:base="http://localhost:4000/opensea-transaction/"><![CDATA[<blockquote>
   <p>안녕하세요. 저는 블록체인 기반 서비스 기업에서 데이터 분석을 담당하고 있는 Joshua라고 합니다. 이번 아티클에서는 OpenSea에서 NFT Transfer가 발생했을 때, EVM 계열 블록체인의 온체인 상에 데이터가 어떤 모습으로 남아 있는지 파헤쳐 보도록 하겠습니다.</p>
 </blockquote>
 
