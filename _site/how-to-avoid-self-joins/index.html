@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법 – Joshua Kim – Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
+
+" />
+    <meta property="og:description" content="
+  대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법" />
+    <meta property="twitter:title" content="데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+  <body>
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법</h1>
+
+  <div>
+    <span class="date">
+      2023-11-30
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#korean">
+          korean
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#data_analytics">
+          data_analytics
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#sql">
+          sql
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>들어가는 글</li>
+  <li>Python과 달리 거칠게 사고해야 하는 SQL</li>
+  <li>SELF JOIN을 하면 연산량이 제곱으로 늘어난다.</li>
+  <li>Subquery와 EXISTS 사용하기</li>
+  <li>결론: 무조건적 우월성은 없다.</li>
+</ol>
+
+<hr />
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<p>본 자료는 작성자 본인의 견해일 뿐이며, 실제 데이터베이스의 환경에 따라 적합하지 않을 수 있습니다. 이미지 출처를 제외한 모든 쿼리문과 내용은 본인의 경험에 의해 작성되었습니다. 작성된 쿼리문은 샘플로 작성한 것이며, 본인의 과거 및 현재 재직 회사의 업무 현황과 무관합니다.</p>
+
+<h1 id="1-들어가는-글">1. 들어가는 글</h1>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/join-meme.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://miro.medium.com/v2/resize:fit:800/1*DTET9ngrx2Gzu6ZJk0G9BQ.jpeg">Source</a></p>
+</blockquote>
+
+<p>안녕하세요. 저는 친구들 얼굴을 보면 위와 같은 이상한 생각을 하는 데이터 분석가 Joshua라고 합니다.</p>
+
+<p>저는 일반적인 B2C 기업에서 데이터 분석가로 근무하며, GA4, Amplitude, BigQuery, Redash 등을 활용하여 A/B 테스트, 지표 모니터링 등을 수행하며 회사의 등대 역할을 하며 지냈습니다. 다른 분들과 비슷한 역할을 수행했던 것이죠.</p>
+
+<p>또한 GA4, Amplitude 등과 같은 B2B 데이터 분석 플랫폼 서비스를 만드는 경험도 살짝 했는데요. 그러다보니 저의 R&amp;R은 서비스 자체의 데이터 분석 업무 외에도, 고객들에게 데이터를 서빙하기 위한 데이터 마트 설계와 최적화 업무에 집중되기도 했습니다. 제 타이틀을 멋있게 가공하면 최근에 떠오르는 포지션인 Analytics Engineer, 반쪽 짜리 데이터 엔지니어, 아니면 대충 쿼리 머신 혹은 분지니어(?)인 것 같기도 합니다. 😅</p>
+
+<p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
+(SQL 전문가 분들이 많이 계시는 만큼, 제 글을 비판적으로 고찰해주시면 감사하겠습니다! 😄)</p>
+
+<p>쿼리로 고통 받으며 눈동자에 비가 내렸던 경험 이야기, 시작합니다! (울지마~ 울지마~ 울지마~)</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/crying-cat-meme.avif" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fwww.dailydot.com%2Fnews%2Fcat-crying-memes-explainer%2F&amp;psig=AOvVaw1JpDJ5k_6Tx93h2YT8in_Y&amp;ust=1702536707113000&amp;source=images&amp;cd=vfe&amp;opi=89978449&amp;ved=0CBMQjRxqFwoTCMC01dLpi4MDFQAAAAAdAAAAABAD">Source</a></p>
+</blockquote>
+
+<h1 id="2-python과-달리-거칠게-사고해야-하는-sql">2. Python과 달리 거칠게 사고해야 하는 SQL</h1>
+
+<p>SQL을 통해 OLAP(Online Analytical Processing)에 해당하는 데이터 웨어하우스를 구축하다보면, 종종  <strong>SELF JOIN</strong>이 필요합니다. 가령, 소스 테이블의 복사본인 Staging Table을 Pivoting 해야 하거나, 칼럼 A와 칼럼 B 간의 관계 규칙을 찾아 Data Cleaning을 해야 하는 경우에 특히 발생하는 것 같았어요.</p>
+
+<p>가령, Python의 Pandas Dataframe 환경에서는 메소드를 통해 너무나도 쉽게 Pivoting을 하거나, 반복문과 조건문을 통해 칼럼 사이의 관계 규칙을 고작 몇 줄 코드 만으로 Data Cleaning을 할 수 있을 것입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">.</span><span class="n">pivot</span>
+<span class="n">pandas</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">value</span> <span class="k">if</span> <span class="n">condition</span> <span class="ow">is</span> <span class="n">true</span> <span class="k">if</span> <span class="n">x</span> <span class="n">condition</span> <span class="k">else</span> <span class="n">value</span> <span class="n">of</span> <span class="n">condition</span> <span class="ow">is</span> <span class="n">false</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>하지만 안타깝게도 SQL에서는 다소 거친 방법으로 쿼리문을 작성해야 하므로 좀 더 테이블 자체를 기반의 Logical Thinking을 하는 것이 중요합니다.</p>
+
+<p>가령 다음 기본적인 사례와 같이, 국가 별로 MAU를 집계할 경우에 SQL은 훨씬 거칠게 표현합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span> <span class="n">yyyymm</span><span class="p">,</span>  
+   <span class="n">country</span><span class="p">,</span>  
+   <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span>  
+<span class="k">GROUP</span> <span class="k">BY</span>  
+   <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="k">ORDER</span> <span class="k">BY</span>  
+   <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source_events</span><span class="p">[</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">to_datetime</span><span class="p">(</span><span class="n">source_events</span><span class="p">[</span><span class="sh">'</span><span class="s">datetime</span><span class="sh">'</span><span class="p">]).</span><span class="n">dt</span><span class="p">.</span><span class="nf">to_period</span><span class="p">(</span><span class="sh">'</span><span class="s">M</span><span class="sh">'</span><span class="p">)</span>  
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">source_events</span><span class="p">.</span><span class="nf">groupby</span><span class="p">([</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">country</span><span class="sh">'</span><span class="p">]).</span><span class="nf">agg</span><span class="p">(</span><span class="n">mau</span><span class="o">=</span><span class="p">(</span><span class="sh">'</span><span class="s">user_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">nunique</span><span class="sh">'</span><span class="p">)).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">.</span><span class="nf">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">country</span><span class="sh">'</span><span class="p">]).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  
+<span class="nf">print</span><span class="p">(</span><span class="n">result_df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>즉, 파이썬의  <code class="language-plaintext highlighter-rouge">to_period</code>,  <code class="language-plaintext highlighter-rouge">groupby</code>,  <code class="language-plaintext highlighter-rouge">nunique</code>  등과 같은 내장 메소드의 연산 원리를 이해하여 이를  <code class="language-plaintext highlighter-rouge">DATE_TRUNC</code>,  <code class="language-plaintext highlighter-rouge">COUNT(DISTINCT …)</code>,  <code class="language-plaintext highlighter-rouge">GROUP BY</code>  등의 SQL 함수와 Statement로 표현해야 하는 것이죠.</p>
+
+<h1 id="3-self-join을-하면-연산량이-제곱으로-늘어난다">3. SELF JOIN을 하면 연산량이 제곱으로 늘어난다.</h1>
+
+<p>먼저 다음과 같은 쿼리문 사례를 살펴보도록 하죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_key</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_value</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span> <span class="n">MAIN</span>  
+<span class="k">LEFT</span> <span class="k">JOIN</span>  
+   <span class="n">source_events</span> <span class="n">SUB</span>  
+   <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
+      <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
+      <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
+<span class="k">WHERE</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>위 사례는 가령 이런 상황으로 이해하시면 될 것 같습니다. 사용자의 이벤트 로그 소스 테이블에서 각 이벤트의 파라미터 key-value가 unnested된 상태로 존재하거나, 혹은 특정 파라미터의 index를 기준으로 인접한 파라미터 정보들만 추출해야 하는 상황에서 위와 같은 쿼리문 작성이 필요할 것입니다.</p>
+
+<p>SQL의 연산 과정은  <strong>FROM → XXX JOIN → WHERE → GROUP BY → SELECT → HAVING → ORDER BY</strong>  등의 순으로 진행되는데요. 위 쿼리문을 연산하는 과정에서 WHERE Statement에 진입하기 전에, 먼저 FROM과 LEFT JOIN을 통해 모든 Row를 메모리에 로드하게 됩니다.</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/sql-processing.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://blog.kakaocdn.net/dn/ckOt66/btrjP1TVZsq/Ta9JdTTiEd9tddkKkFk2n1/img.png">Source</a></p>
+</blockquote>
+
+<p>가령,  <code class="language-plaintext highlighter-rouge">source_events</code>  테이블이 1,000,000개의 Row로 구성되어 있다면, 최대 1,000,000 * 1,000,000개의 Row가 메모리에 올라오게 되는 것이죠. 이는 쿼리 엔진의 메모리 및 트래픽 DevOps 환경이 중요한 경우 분명히 문제가 됩니다. 혹은 Usage Limit이 걸려 있을 경우에는 쿼리 실행이 몇 시간 동안 진행되다가 아침에 눈을 떠보면 트래픽 제한으로 인해 실행이 실패되었다는 매우 슬프고 참담한 상황에 마주하게 될 것입니다.</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/crying-meme.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://res.heraldm.com/content/image/2021/07/16/20210716000671_0.jpg">Source</a></p>
+</blockquote>
+
+<p>그렇다면, 이런 상황에서 어떻게 쿼리를 최적화할 수 있을까요?</p>
+
+<h1 id="4-subquery와-exists-사용하기">4. Subquery와 EXISTS 사용하기</h1>
+
+<p>위에서 보셨던 쿼리문을 아래와 같이 수정해봤습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="nb">datetime</span><span class="p">,</span>  
+   <span class="n">user_id</span><span class="p">,</span>  
+   <span class="n">session_id</span><span class="p">,</span>  
+   <span class="n">event_index</span><span class="p">,</span>  
+   <span class="n">event_param_index</span><span class="p">,</span>  
+   <span class="n">event_param_key</span><span class="p">,</span>  
+   <span class="n">event_param_value</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span> <span class="n">MAIN</span>  
+<span class="k">WHERE</span>  
+   <span class="k">EXISTS</span> <span class="p">(</span>  
+      <span class="k">SELECT</span> <span class="mi">1</span>  
+      <span class="k">FROM</span> <span class="n">source_events</span> <span class="n">SUB</span>  
+      <span class="k">WHERE</span>  
+         <span class="n">event_type</span> <span class="o">=</span> <span class="s1">'click_button'</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
+         <span class="k">AND</span> <span class="p">(</span>  
+            <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
+         <span class="p">)</span>  
+   <span class="p">)</span>
+</code></pre></div></div>
+
+<p>자, 어떻게 달라졌는지 차근차근 살펴보도록 하죠.</p>
+
+<h3 id="1-먼저-left-join이-사라지고-where-statement의-subquery가-추가되었습니다">1. 먼저, LEFT JOIN이 사라지고, WHERE Statement의 Subquery가 추가되었습니다.</h3>
+
+<p>JOIN보다 Subquery가 반드시 모든 상황에서 성능이 우월하지는 않지만, 이 상황에서는 메모리 데이터의 사이즈는 상당 부분 해소되었습니다. 앞서 말씀 드린 것처럼, SQL은 WHERE Statement를 고려하기 전에 먼저 FROM과 LEFT JOIN을 먼저 실행하게 되는데, WHERE Statement의 Subquery로 옮김으로써 LEFT JOIN에서 실행되어야 하는 작업을 WHERE에서 동시에 연산하여 메모리에 올릴 수 있게 되었습니다.</p>
+
+<p>가령,  <code class="language-plaintext highlighter-rouge">source_events</code>  테이블의 Row 수가 1,000,000개 이고, WHERE를 통해 Filter out된 Row 수가 10,000개라면, 메모리에 올라가게 되는 Row 수는 이전의 최대 1,000,000 * 1,000,000개에서 1,000,000 * 10,000개로 1% 수준으로 급감하였습니다.</p>
+
+<h3 id="2-in보다-exists가-연산-속도가-더-빠릅니다">2. IN보다 EXISTS가 연산 속도가 더 빠릅니다.</h3>
+
+<p>IN과 EXISTS 모두 “<strong>XXX한 경우가 존재하니?</strong>”를 질문하는 과정으로 추상화할 수 있을 것 같은데요.</p>
+
+<p>만약 IN을 통해 Filter out하려고 하면 가령 아래와 같은 쿼리문을 작성해야 합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">FROM</span> <span class="p">...)</span>  
+   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">FROM</span> <span class="p">...)</span>  
+   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">FROM</span> <span class="p">...)</span>  
+   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span> <span class="k">FROM</span> <span class="p">...)</span>  
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>위 과정은 한 가지 단점이 있습니다.  <code class="language-plaintext highlighter-rouge">SUB.event_param_index</code>  칼럼의 값들을 일일이 출력해야 하는데요. 즉, 다양한 값들로 구성된 칼럼을 메모리에 로드해야 한다는 것이죠.</p>
+
+<p>그러나 EXISTS를 통해 Filter out하려고 하면 아래와 같은 쿼리문으로 수정될 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span>  
+   <span class="k">EXISTS</span> <span class="p">(</span>  
+      <span class="k">SELECT</span> <span class="mi">1</span>  
+      <span class="k">FROM</span> <span class="p">...</span>  
+      <span class="k">WHERE</span>  
+         <span class="p">...</span>  
+         <span class="k">AND</span> <span class="p">(</span>  
+         <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
+   <span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 과정은 위에서 말씀 드린 IN의 단점을 상당 부분 해소합니다.  <code class="language-plaintext highlighter-rouge">SUB.event_param_index</code>  칼럼의 값들을 일일이 출력했던 것과 달리, 이번에는 조건을 만족하기만 하면 단순히 일괄적으로  <code class="language-plaintext highlighter-rouge">1</code>로만 구성된 칼럼을 메모리에 로드하게 됩니다. Data Type 측면에서 훨씬 메모리의 부담을 경감시킬 수 있습니다. (혹은 <code class="language-plaintext highlighter-rouge">1</code>이 아니라,  <code class="language-plaintext highlighter-rouge">True</code>나  <code class="language-plaintext highlighter-rouge">False</code>와 같은 Boolean 타입으로 출력하면 더 확실하게 경감시킬 수 있을 것 같네요.)</p>
+
+<h1 id="5-결론-무조건적-우월성은-없다">5. 결론: 무조건적 우월성은 없다.</h1>
+
+<p>자 이제 다시 최적화된 쿼리문 전체를 보시죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="nb">datetime</span><span class="p">,</span>  
+   <span class="n">user_id</span><span class="p">,</span>  
+   <span class="n">session_id</span><span class="p">,</span>  
+   <span class="n">event_index</span><span class="p">,</span>  
+   <span class="n">event_param_index</span><span class="p">,</span>  
+   <span class="n">event_param_key</span><span class="p">,</span>  
+   <span class="n">event_param_value</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span> <span class="n">MAIN</span>  
+<span class="k">WHERE</span>  
+   <span class="k">EXISTS</span> <span class="p">(</span>  
+      <span class="k">SELECT</span> <span class="mi">1</span>  
+      <span class="k">FROM</span> <span class="n">source_events</span> <span class="n">SUB</span>  
+      <span class="k">WHERE</span>  
+         <span class="n">event_type</span> <span class="o">=</span> <span class="s1">'click_button'</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
+         <span class="k">AND</span> <span class="p">(</span>  
+            <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
+         <span class="p">)</span>  
+   <span class="p">)</span>
+</code></pre></div></div>
+
+<p>프로그래밍에는 반드시 “<strong>방법 A가 방법 B보다 우월하다.</strong>”라는 것은 존재하지 않은 것처럼, 각자의 환경에 따라 취사선택하며 최적화를 하는 것이 중요할 것입니다.</p>
+
+<p>WHERE Statement의 Subquery가 JOIN보다 반드시 우월한 것도 아니고, 경우에 따라 EXISTS가 IN보다 반드시 뛰어난 성능을 보이지 않을 수도 있습니다.</p>
+
+<p>또한, 일반적으로 Subquery와 EXISTS 문법은 SQL 초급 사용자 분들께는 살짝 팔로업하기 어려울 수 있으므로, 가독성 측면에서 추후 유지보수의 장애로 작용할 수도 있을 것입니다.</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/infinite-challenge.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://i.pinimg.com/736x/cd/c3/57/cdc35735e9efc721d26a0f3f780178a4.jpg">Source</a></p>
+</blockquote>
+
+<p>앞으로, 대용량의 데이터 소스를 다루시다가 SELF JOIN 때문에 트래픽 문제가 발생하신다면 위와 같은 사례로도 접근 가능하다는 점을 참고하시고, 각자 처한 환경에 따라 최적화하여 가성비 좋은 데이터 분석을 하시길 바랄게요. 부족한 글을 읽어주셔서 감사합니다!</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/bye-guys.webp" alt="" /></p>
+<blockquote>
+  <p>퇴사하겠다는 의미가 아니라, 계속 쿼리 작성하러 가겠다는 의미</p>
+</blockquote>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/toastmasters-club-log-1/">
+            &#xE000; Toastmasters Club Log #1
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+  <li><a href="mailto:joshuajkim413@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M101.3 141.6v228.9h0.3 308.4 0.8V141.6H101.3zM375.7 167.8l-119.7 91.5 -119.6-91.5H375.7zM127.6 194.1l64.1 49.1 -64.1 64.1V194.1zM127.8 344.2l84.9-84.9 43.2 33.1 43-32.9 84.7 84.7L127.8 344.2 127.8 344.2zM384.4 307.8l-64.4-64.4 64.4-49.3V307.8z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>© Joshua Kim</p>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

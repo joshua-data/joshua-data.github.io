@@ -1,4 +1,252 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-13T15:22:04+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Toastmasters Club Log #1</title><link href="http://localhost:4000/toastmasters-club-log-1/" rel="alternate" type="text/html" title="Toastmasters Club Log #1" /><published>2023-11-25T00:00:00+09:00</published><updated>2023-11-25T00:00:00+09:00</updated><id>http://localhost:4000/toastmasters-club-log-1</id><content type="html" xml:base="http://localhost:4000/toastmasters-club-log-1/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-13T16:05:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법</title><link href="http://localhost:4000/how-to-avoid-self-joins/" rel="alternate" type="text/html" title="데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법" /><published>2023-11-30T00:00:00+09:00</published><updated>2023-11-30T00:00:00+09:00</updated><id>http://localhost:4000/how-to-avoid-self-joins</id><content type="html" xml:base="http://localhost:4000/how-to-avoid-self-joins/"><![CDATA[<blockquote>
+  <p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>들어가는 글</li>
+  <li>Python과 달리 거칠게 사고해야 하는 SQL</li>
+  <li>SELF JOIN을 하면 연산량이 제곱으로 늘어난다.</li>
+  <li>Subquery와 EXISTS 사용하기</li>
+  <li>결론: 무조건적 우월성은 없다.</li>
+</ol>
+
+<hr />
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<p>본 자료는 작성자 본인의 견해일 뿐이며, 실제 데이터베이스의 환경에 따라 적합하지 않을 수 있습니다. 이미지 출처를 제외한 모든 쿼리문과 내용은 본인의 경험에 의해 작성되었습니다. 작성된 쿼리문은 샘플로 작성한 것이며, 본인의 과거 및 현재 재직 회사의 업무 현황과 무관합니다.</p>
+
+<h1 id="1-들어가는-글">1. 들어가는 글</h1>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/join-meme.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://miro.medium.com/v2/resize:fit:800/1*DTET9ngrx2Gzu6ZJk0G9BQ.jpeg">Source</a></p>
+</blockquote>
+
+<p>안녕하세요. 저는 친구들 얼굴을 보면 위와 같은 이상한 생각을 하는 데이터 분석가 Joshua라고 합니다.</p>
+
+<p>저는 일반적인 B2C 기업에서 데이터 분석가로 근무하며, GA4, Amplitude, BigQuery, Redash 등을 활용하여 A/B 테스트, 지표 모니터링 등을 수행하며 회사의 등대 역할을 하며 지냈습니다. 다른 분들과 비슷한 역할을 수행했던 것이죠.</p>
+
+<p>또한 GA4, Amplitude 등과 같은 B2B 데이터 분석 플랫폼 서비스를 만드는 경험도 살짝 했는데요. 그러다보니 저의 R&amp;R은 서비스 자체의 데이터 분석 업무 외에도, 고객들에게 데이터를 서빙하기 위한 데이터 마트 설계와 최적화 업무에 집중되기도 했습니다. 제 타이틀을 멋있게 가공하면 최근에 떠오르는 포지션인 Analytics Engineer, 반쪽 짜리 데이터 엔지니어, 아니면 대충 쿼리 머신 혹은 분지니어(?)인 것 같기도 합니다. 😅</p>
+
+<p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
+(SQL 전문가 분들이 많이 계시는 만큼, 제 글을 비판적으로 고찰해주시면 감사하겠습니다! 😄)</p>
+
+<p>쿼리로 고통 받으며 눈동자에 비가 내렸던 경험 이야기, 시작합니다! (울지마~ 울지마~ 울지마~)</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/crying-cat-meme.avif" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fwww.dailydot.com%2Fnews%2Fcat-crying-memes-explainer%2F&amp;psig=AOvVaw1JpDJ5k_6Tx93h2YT8in_Y&amp;ust=1702536707113000&amp;source=images&amp;cd=vfe&amp;opi=89978449&amp;ved=0CBMQjRxqFwoTCMC01dLpi4MDFQAAAAAdAAAAABAD">Source</a></p>
+</blockquote>
+
+<h1 id="2-python과-달리-거칠게-사고해야-하는-sql">2. Python과 달리 거칠게 사고해야 하는 SQL</h1>
+
+<p>SQL을 통해 OLAP(Online Analytical Processing)에 해당하는 데이터 웨어하우스를 구축하다보면, 종종  <strong>SELF JOIN</strong>이 필요합니다. 가령, 소스 테이블의 복사본인 Staging Table을 Pivoting 해야 하거나, 칼럼 A와 칼럼 B 간의 관계 규칙을 찾아 Data Cleaning을 해야 하는 경우에 특히 발생하는 것 같았어요.</p>
+
+<p>가령, Python의 Pandas Dataframe 환경에서는 메소드를 통해 너무나도 쉽게 Pivoting을 하거나, 반복문과 조건문을 통해 칼럼 사이의 관계 규칙을 고작 몇 줄 코드 만으로 Data Cleaning을 할 수 있을 것입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">.</span><span class="n">pivot</span>
+<span class="n">pandas</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">value</span> <span class="k">if</span> <span class="n">condition</span> <span class="ow">is</span> <span class="n">true</span> <span class="k">if</span> <span class="n">x</span> <span class="n">condition</span> <span class="k">else</span> <span class="n">value</span> <span class="n">of</span> <span class="n">condition</span> <span class="ow">is</span> <span class="n">false</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>하지만 안타깝게도 SQL에서는 다소 거친 방법으로 쿼리문을 작성해야 하므로 좀 더 테이블 자체를 기반의 Logical Thinking을 하는 것이 중요합니다.</p>
+
+<p>가령 다음 기본적인 사례와 같이, 국가 별로 MAU를 집계할 경우에 SQL은 훨씬 거칠게 표현합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span> <span class="n">yyyymm</span><span class="p">,</span>  
+   <span class="n">country</span><span class="p">,</span>  
+   <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span>  
+<span class="k">GROUP</span> <span class="k">BY</span>  
+   <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="k">ORDER</span> <span class="k">BY</span>  
+   <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source_events</span><span class="p">[</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">to_datetime</span><span class="p">(</span><span class="n">source_events</span><span class="p">[</span><span class="sh">'</span><span class="s">datetime</span><span class="sh">'</span><span class="p">]).</span><span class="n">dt</span><span class="p">.</span><span class="nf">to_period</span><span class="p">(</span><span class="sh">'</span><span class="s">M</span><span class="sh">'</span><span class="p">)</span>  
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">source_events</span><span class="p">.</span><span class="nf">groupby</span><span class="p">([</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">country</span><span class="sh">'</span><span class="p">]).</span><span class="nf">agg</span><span class="p">(</span><span class="n">mau</span><span class="o">=</span><span class="p">(</span><span class="sh">'</span><span class="s">user_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">nunique</span><span class="sh">'</span><span class="p">)).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">.</span><span class="nf">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">country</span><span class="sh">'</span><span class="p">]).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  
+<span class="nf">print</span><span class="p">(</span><span class="n">result_df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>즉, 파이썬의  <code class="language-plaintext highlighter-rouge">to_period</code>,  <code class="language-plaintext highlighter-rouge">groupby</code>,  <code class="language-plaintext highlighter-rouge">nunique</code>  등과 같은 내장 메소드의 연산 원리를 이해하여 이를  <code class="language-plaintext highlighter-rouge">DATE_TRUNC</code>,  <code class="language-plaintext highlighter-rouge">COUNT(DISTINCT …)</code>,  <code class="language-plaintext highlighter-rouge">GROUP BY</code>  등의 SQL 함수와 Statement로 표현해야 하는 것이죠.</p>
+
+<h1 id="3-self-join을-하면-연산량이-제곱으로-늘어난다">3. SELF JOIN을 하면 연산량이 제곱으로 늘어난다.</h1>
+
+<p>먼저 다음과 같은 쿼리문 사례를 살펴보도록 하죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_key</span><span class="p">,</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_value</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span> <span class="n">MAIN</span>  
+<span class="k">LEFT</span> <span class="k">JOIN</span>  
+   <span class="n">source_events</span> <span class="n">SUB</span>  
+   <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
+      <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
+      <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
+<span class="k">WHERE</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>위 사례는 가령 이런 상황으로 이해하시면 될 것 같습니다. 사용자의 이벤트 로그 소스 테이블에서 각 이벤트의 파라미터 key-value가 unnested된 상태로 존재하거나, 혹은 특정 파라미터의 index를 기준으로 인접한 파라미터 정보들만 추출해야 하는 상황에서 위와 같은 쿼리문 작성이 필요할 것입니다.</p>
+
+<p>SQL의 연산 과정은  <strong>FROM → XXX JOIN → WHERE → GROUP BY → SELECT → HAVING → ORDER BY</strong>  등의 순으로 진행되는데요. 위 쿼리문을 연산하는 과정에서 WHERE Statement에 진입하기 전에, 먼저 FROM과 LEFT JOIN을 통해 모든 Row를 메모리에 로드하게 됩니다.</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/sql-processing.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://blog.kakaocdn.net/dn/ckOt66/btrjP1TVZsq/Ta9JdTTiEd9tddkKkFk2n1/img.png">Source</a></p>
+</blockquote>
+
+<p>가령,  <code class="language-plaintext highlighter-rouge">source_events</code>  테이블이 1,000,000개의 Row로 구성되어 있다면, 최대 1,000,000 * 1,000,000개의 Row가 메모리에 올라오게 되는 것이죠. 이는 쿼리 엔진의 메모리 및 트래픽 DevOps 환경이 중요한 경우 분명히 문제가 됩니다. 혹은 Usage Limit이 걸려 있을 경우에는 쿼리 실행이 몇 시간 동안 진행되다가 아침에 눈을 떠보면 트래픽 제한으로 인해 실행이 실패되었다는 매우 슬프고 참담한 상황에 마주하게 될 것입니다.</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/crying-meme.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://res.heraldm.com/content/image/2021/07/16/20210716000671_0.jpg">Source</a></p>
+</blockquote>
+
+<p>그렇다면, 이런 상황에서 어떻게 쿼리를 최적화할 수 있을까요?</p>
+
+<h1 id="4-subquery와-exists-사용하기">4. Subquery와 EXISTS 사용하기</h1>
+
+<p>위에서 보셨던 쿼리문을 아래와 같이 수정해봤습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="nb">datetime</span><span class="p">,</span>  
+   <span class="n">user_id</span><span class="p">,</span>  
+   <span class="n">session_id</span><span class="p">,</span>  
+   <span class="n">event_index</span><span class="p">,</span>  
+   <span class="n">event_param_index</span><span class="p">,</span>  
+   <span class="n">event_param_key</span><span class="p">,</span>  
+   <span class="n">event_param_value</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span> <span class="n">MAIN</span>  
+<span class="k">WHERE</span>  
+   <span class="k">EXISTS</span> <span class="p">(</span>  
+      <span class="k">SELECT</span> <span class="mi">1</span>  
+      <span class="k">FROM</span> <span class="n">source_events</span> <span class="n">SUB</span>  
+      <span class="k">WHERE</span>  
+         <span class="n">event_type</span> <span class="o">=</span> <span class="s1">'click_button'</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
+         <span class="k">AND</span> <span class="p">(</span>  
+            <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
+         <span class="p">)</span>  
+   <span class="p">)</span>
+</code></pre></div></div>
+
+<p>자, 어떻게 달라졌는지 차근차근 살펴보도록 하죠.</p>
+
+<h3 id="1-먼저-left-join이-사라지고-where-statement의-subquery가-추가되었습니다">1. 먼저, LEFT JOIN이 사라지고, WHERE Statement의 Subquery가 추가되었습니다.</h3>
+
+<p>JOIN보다 Subquery가 반드시 모든 상황에서 성능이 우월하지는 않지만, 이 상황에서는 메모리 데이터의 사이즈는 상당 부분 해소되었습니다. 앞서 말씀 드린 것처럼, SQL은 WHERE Statement를 고려하기 전에 먼저 FROM과 LEFT JOIN을 먼저 실행하게 되는데, WHERE Statement의 Subquery로 옮김으로써 LEFT JOIN에서 실행되어야 하는 작업을 WHERE에서 동시에 연산하여 메모리에 올릴 수 있게 되었습니다.</p>
+
+<p>가령,  <code class="language-plaintext highlighter-rouge">source_events</code>  테이블의 Row 수가 1,000,000개 이고, WHERE를 통해 Filter out된 Row 수가 10,000개라면, 메모리에 올라가게 되는 Row 수는 이전의 최대 1,000,000 * 1,000,000개에서 1,000,000 * 10,000개로 1% 수준으로 급감하였습니다.</p>
+
+<h3 id="2-in보다-exists가-연산-속도가-더-빠릅니다">2. IN보다 EXISTS가 연산 속도가 더 빠릅니다.</h3>
+
+<p>IN과 EXISTS 모두 “<strong>XXX한 경우가 존재하니?</strong>”를 질문하는 과정으로 추상화할 수 있을 것 같은데요.</p>
+
+<p>만약 IN을 통해 Filter out하려고 하면 가령 아래와 같은 쿼리문을 작성해야 합니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span>  
+   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">FROM</span> <span class="p">...)</span>  
+   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">FROM</span> <span class="p">...)</span>  
+   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">FROM</span> <span class="p">...)</span>  
+   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span> <span class="k">FROM</span> <span class="p">...)</span>  
+<span class="p">...</span>
+</code></pre></div></div>
+
+<p>위 과정은 한 가지 단점이 있습니다.  <code class="language-plaintext highlighter-rouge">SUB.event_param_index</code>  칼럼의 값들을 일일이 출력해야 하는데요. 즉, 다양한 값들로 구성된 칼럼을 메모리에 로드해야 한다는 것이죠.</p>
+
+<p>그러나 EXISTS를 통해 Filter out하려고 하면 아래와 같은 쿼리문으로 수정될 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span>  
+   <span class="k">EXISTS</span> <span class="p">(</span>  
+      <span class="k">SELECT</span> <span class="mi">1</span>  
+      <span class="k">FROM</span> <span class="p">...</span>  
+      <span class="k">WHERE</span>  
+         <span class="p">...</span>  
+         <span class="k">AND</span> <span class="p">(</span>  
+         <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
+   <span class="p">)</span>
+</code></pre></div></div>
+
+<p>이 과정은 위에서 말씀 드린 IN의 단점을 상당 부분 해소합니다.  <code class="language-plaintext highlighter-rouge">SUB.event_param_index</code>  칼럼의 값들을 일일이 출력했던 것과 달리, 이번에는 조건을 만족하기만 하면 단순히 일괄적으로  <code class="language-plaintext highlighter-rouge">1</code>로만 구성된 칼럼을 메모리에 로드하게 됩니다. Data Type 측면에서 훨씬 메모리의 부담을 경감시킬 수 있습니다. (혹은 <code class="language-plaintext highlighter-rouge">1</code>이 아니라,  <code class="language-plaintext highlighter-rouge">True</code>나  <code class="language-plaintext highlighter-rouge">False</code>와 같은 Boolean 타입으로 출력하면 더 확실하게 경감시킬 수 있을 것 같네요.)</p>
+
+<h1 id="5-결론-무조건적-우월성은-없다">5. 결론: 무조건적 우월성은 없다.</h1>
+
+<p>자 이제 다시 최적화된 쿼리문 전체를 보시죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+   <span class="nb">datetime</span><span class="p">,</span>  
+   <span class="n">user_id</span><span class="p">,</span>  
+   <span class="n">session_id</span><span class="p">,</span>  
+   <span class="n">event_index</span><span class="p">,</span>  
+   <span class="n">event_param_index</span><span class="p">,</span>  
+   <span class="n">event_param_key</span><span class="p">,</span>  
+   <span class="n">event_param_value</span>  
+<span class="k">FROM</span>  
+   <span class="n">source_events</span> <span class="n">MAIN</span>  
+<span class="k">WHERE</span>  
+   <span class="k">EXISTS</span> <span class="p">(</span>  
+      <span class="k">SELECT</span> <span class="mi">1</span>  
+      <span class="k">FROM</span> <span class="n">source_events</span> <span class="n">SUB</span>  
+      <span class="k">WHERE</span>  
+         <span class="n">event_type</span> <span class="o">=</span> <span class="s1">'click_button'</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
+         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
+         <span class="k">AND</span> <span class="p">(</span>  
+            <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
+            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
+         <span class="p">)</span>  
+   <span class="p">)</span>
+</code></pre></div></div>
+
+<p>프로그래밍에는 반드시 “<strong>방법 A가 방법 B보다 우월하다.</strong>”라는 것은 존재하지 않은 것처럼, 각자의 환경에 따라 취사선택하며 최적화를 하는 것이 중요할 것입니다.</p>
+
+<p>WHERE Statement의 Subquery가 JOIN보다 반드시 우월한 것도 아니고, 경우에 따라 EXISTS가 IN보다 반드시 뛰어난 성능을 보이지 않을 수도 있습니다.</p>
+
+<p>또한, 일반적으로 Subquery와 EXISTS 문법은 SQL 초급 사용자 분들께는 살짝 팔로업하기 어려울 수 있으므로, 가독성 측면에서 추후 유지보수의 장애로 작용할 수도 있을 것입니다.</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/infinite-challenge.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://i.pinimg.com/736x/cd/c3/57/cdc35735e9efc721d26a0f3f780178a4.jpg">Source</a></p>
+</blockquote>
+
+<p>앞으로, 대용량의 데이터 소스를 다루시다가 SELF JOIN 때문에 트래픽 문제가 발생하신다면 위와 같은 사례로도 접근 가능하다는 점을 참고하시고, 각자 처한 환경에 따라 최적화하여 가성비 좋은 데이터 분석을 하시길 바랄게요. 부족한 글을 읽어주셔서 감사합니다!</p>
+
+<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/bye-guys.webp" alt="" /></p>
+<blockquote>
+  <p>퇴사하겠다는 의미가 아니라, 계속 쿼리 작성하러 가겠다는 의미</p>
+</blockquote>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="data_analytics" /><category term="sql" /><summary type="html"><![CDATA[대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.]]></summary></entry><entry><title type="html">Toastmasters Club Log #1</title><link href="http://localhost:4000/toastmasters-club-log-1/" rel="alternate" type="text/html" title="Toastmasters Club Log #1" /><published>2023-11-25T00:00:00+09:00</published><updated>2023-11-25T00:00:00+09:00</updated><id>http://localhost:4000/toastmasters-club-log-1</id><content type="html" xml:base="http://localhost:4000/toastmasters-club-log-1/"><![CDATA[<blockquote>
   <p>Having recently become a member of JBTM last month, today marked my inaugural participation in the weekly in-person meeting. This occasion introduced me to a diverse array of our old members and new guests.</p>
 </blockquote>
 
@@ -3068,518 +3316,4 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="blockchain" /><category term="on_chain_data" /><category term="data_analytics" /><summary type="html"><![CDATA[In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the DAU and MAU, but also with Stickiness, and Retention Rate, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!]]></summary></entry><entry><title type="html">Let’s Create the Sankey Chart</title><link href="http://localhost:4000/sankey-chart/" rel="alternate" type="text/html" title="Let’s Create the Sankey Chart" /><published>2023-05-21T00:00:00+09:00</published><updated>2023-05-21T00:00:00+09:00</updated><id>http://localhost:4000/sankey-chart</id><content type="html" xml:base="http://localhost:4000/sankey-chart/"><![CDATA[<blockquote>
-  <p>In this article, I’m going to tell you how you can create the Sankey Chart starting from GA4, BigQuery, and up to Redash.</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>Introduction</li>
-  <li><strong>Flatten</strong> the source table.</li>
-  <li>Make sure each <strong>user</strong> and <strong>session</strong> has the same properties(or parameters).</li>
-  <li>Delete the consecutive same <strong>page URL duplicates</strong> in the same <code class="language-plaintext highlighter-rouge">session_id</code>.</li>
-  <li>Label each page’s <strong>visiting order number</strong> for each session.</li>
-  <li><strong>Categorize</strong> all the pages.</li>
-  <li>Pivot each session’s journey up to <strong>10 steps</strong>.</li>
-  <li>Make the query result compatible with <strong>Redash</strong>.</li>
-  <li>Final Result</li>
-  <li>Conclusion</li>
-</ol>
-
-<hr />
-
-<p><img src="/assets/2023-05-21-sankey-chart/Data Pipeline from the website all the way up to Redash.webp" alt="" /></p>
-<blockquote>
-  <p>Data Pipeline from the website all the way up to Redash</p>
-</blockquote>
-
-<h1 id="1-introduction">1. Introduction</h1>
-
-<h2 id="11-what-is-sankey-chart">1.1. What is Sankey Chart?</h2>
-
-<p><img src="/assets/2023-05-21-sankey-chart/Sankey-Diagram.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.originlab.com/doc/Origin-Help/Sankey-Diagram">Source</a></p>
-</blockquote>
-
-<p><strong>Sankey Chart</strong>, oftentimes also called Sankey Diagram, is a type of flow visualization in which the width of the arrows is proportional to the flow rate of the depicted extensive property. [<a href="https://en.wikipedia.org/wiki/Sankey_diagram">Wikipedia</a>]</p>
-
-<h2 id="12-why-is-sankey-chart-important-in-data-analytics">1.2. Why is Sankey Chart Important in Data Analytics?</h2>
-
-<p>In the Data Analytics world, though, we can figure out how our visitors make their journey throughout our website pages or app screens. With the Sankey Chart, we can apply <strong>our strategies</strong> as shown below.</p>
-<ul>
-  <li>“Many purchasing visitors mainly make a journey starting from <code class="language-plaintext highlighter-rouge">page A</code>, <code class="language-plaintext highlighter-rouge">page B</code>, <code class="language-plaintext highlighter-rouge">page C</code>, and finally make their purchase. Therefore, we might be able to create a CTA button in order to drive the other visitors to this journey, so that we could make our revenue much higher.”</li>
-  <li>“<code class="language-plaintext highlighter-rouge">Page A</code> and <code class="language-plaintext highlighter-rouge">Page B</code> are the points where our visitors bounce off the most. Bet those two pages have some problems in terms of psychology or technology. Let’s now dive into specific user interviews or research to deal with this bounce-off rate.”</li>
-</ul>
-
-<h2 id="13-limitations-of-google-analytics-4">1.3. Limitations of Google Analytics 4</h2>
-
-<p>Although GA4 supports some custom visualizations and you can explore the path analysis to figure out how your visitors take their journey throughout the websites, it’s literally awful and much of a hassle if you’re eager to get some insights regarding that. (See below how awful it is.)</p>
-
-<p><img src="/assets/2023-05-21-sankey-chart/GA4’s Path Analysis.webp" alt="" /></p>
-
-<p>Now that hopefully you got deeply understood what is the Sankey Chart and why it’s important in product analytics, it’s time to show you <strong>how to create the Sankey Chart from A to Z</strong>. Let’s directly dive into it!</p>
-
-<h1 id="2-flatten-the-source-table">2. Flatten the source table.</h1>
-
-<p>Although it’s really handy to connect the GA4 events to BigQuery, there’s a complicated issue hard to handle; Some of the datatypes imported to BigQuery are <code class="language-plaintext highlighter-rouge">STRUCT</code> type. It’s regarded as an array type, or you can imagine this as a <code class="language-plaintext highlighter-rouge">STRUCT</code> type column that allows each row to have a multiple-dimensional value in it.</p>
-
-<p><img src="/assets/2023-05-21-sankey-chart/address_history.webp" alt="" />
-<img src="/assets/2023-05-21-sankey-chart/1. Flatten the Table.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://medium.com/google-cloud/how-to-work-with-array-and-structs-in-bigquery-9c0a2ea584a6">Source</a></p>
-</blockquote>
-
-<p>You can simply use <code class="language-plaintext highlighter-rouge">UNNEST</code> to flatten each <code class="language-plaintext highlighter-rouge">STRUCT</code> type column in advance of your main query.</p>
-
-<h2 id="21-the-entire-codes">2.1. The Entire Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
-<span class="n">CTE_flattened</span> <span class="k">AS</span> <span class="p">(</span>
-	<span class="k">SELECT</span>
-		<span class="n">event_date</span><span class="p">,</span>
-		<span class="n">event_timestamp</span><span class="p">,</span>
-		<span class="n">user_pseudo_id</span><span class="p">,</span>
-		<span class="n">ga_session_id</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">session_id</span><span class="p">,</span>
-		<span class="n">ga_session_number</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">session_number</span><span class="p">,</span>
-		<span class="n">event_name</span><span class="p">,</span>
-		<span class="n">page_location</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">page_location</span><span class="p">,</span>
-		<span class="n">ecommerce</span><span class="p">.</span><span class="n">purchase_revenue_in_usd</span> <span class="k">AS</span> <span class="n">revenue_usd</span><span class="p">,</span>
-		<span class="n">geo</span><span class="p">.</span><span class="n">country</span><span class="p">,</span>
-		<span class="n">device</span><span class="p">.</span><span class="n">category</span> <span class="k">AS</span> <span class="n">device</span><span class="p">,</span>
-		<span class="n">utm_campaign</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">utm_campaign</span><span class="p">,</span>  
-		<span class="n">utm_medium</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">utm_medium</span><span class="p">,</span>  
-		<span class="n">utm_source</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">utm_source</span><span class="p">,</span>  
-		<span class="n">page_referrer</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">page_referrer</span>  
-	<span class="k">FROM</span>
-		<span class="nv">`your_table.events_*`</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_id</span>
-		<span class="k">ON</span> <span class="n">ga_session_id</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_id'</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_number</span>
-		<span class="k">ON</span> <span class="n">ga_session_number</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_number'</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span>
-		<span class="k">ON</span> <span class="n">page_location</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">utm_campaign</span>
-		<span class="k">ON</span> <span class="n">utm_campaign</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'campaign'</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">utm_medium</span>
-		<span class="k">ON</span> <span class="n">utm_medium</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'medium'</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">utm_source</span>
-		<span class="k">ON</span> <span class="n">utm_source</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'source'</span>  
-	<span class="k">LEFT</span> <span class="k">JOIN</span>
-		<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_referrer</span>
-		<span class="k">ON</span> <span class="n">page_referrer</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'page_referrer'</span>  
-	<span class="k">WHERE</span>  
-		<span class="n">_table_suffix</span> <span class="k">BETWEEN</span>
-		<span class="n">FORMAT_DATE</span><span class="p">(</span>
-			<span class="s1">'%Y%m%d'</span><span class="p">,</span>
-			<span class="n">DATE_SUB</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="mi">90</span> <span class="k">DAY</span><span class="p">)</span>
-		<span class="p">)</span>
-		<span class="k">AND</span>
-		<span class="n">FORMAT_DATE</span><span class="p">(</span>
-			<span class="s1">'%Y%m%d'</span><span class="p">,</span>
-			<span class="k">CURRENT_DATE</span><span class="p">()</span>
-		<span class="p">)</span>
-		<span class="k">AND</span> <span class="n">ga_session_number</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="o">=</span> <span class="mi">1</span>  
-		<span class="k">AND</span> <span class="n">user_pseudo_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
-		<span class="k">AND</span> <span class="n">ga_session_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h2 id="22-detailed-explanation-of-key-codes">2.2. Detailed Explanation of Key Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_id</span>
-	<span class="k">ON</span> <span class="n">ga_session_id</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="n">ga_session_id</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Each <code class="language-plaintext highlighter-rouge">event</code> may have <code class="language-plaintext highlighter-rouge">ga_session_id</code> in its parameters, and we have to grab it in order to follow through each user session’s journey based on the <code class="language-plaintext highlighter-rouge">ga_session_id</code>.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_number</span>
-	<span class="k">ON</span> <span class="n">ga_session_number</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="n">ga_session_number</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Each <code class="language-plaintext highlighter-rouge">event</code> may have <code class="language-plaintext highlighter-rouge">ga_session_number</code> in its parameters, and we have to look through it in order to know if each <code class="language-plaintext highlighter-rouge">session</code> is the <strong>first visiting user’s</strong> or <strong>returning user’s</strong> session.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span>
-	<span class="k">ON</span> <span class="n">page_location</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="n">page_location</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Most of each <code class="language-plaintext highlighter-rouge">event</code> has <code class="language-plaintext highlighter-rouge">page_location</code> in its parameters, and of course, we have to know <code class="language-plaintext highlighter-rouge">page_location</code> in order to follow through with their journey based on the <strong>page URL</strong>.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">utm_campaign</span>
-	<span class="k">ON</span> <span class="n">utm_campaign</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="n">campaign</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Many times, each <code class="language-plaintext highlighter-rouge">session</code> has a totally different shape of the journey depending on what kind of <strong>campaign channel</strong> the session has started from. Therefore, let’s also query <code class="language-plaintext highlighter-rouge">utm_campaign</code> just in case.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">utm_medium</span>
-	<span class="k">ON</span> <span class="n">utm_medium</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="n">medium</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Many times, each <code class="language-plaintext highlighter-rouge">session</code> has a totally different shape of the journey depending on what kind of <strong>medium channel</strong> the session has started from. Therefore, let’s also query <code class="language-plaintext highlighter-rouge">utm_medium</code> just in case.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">utm_source</span>
-	<span class="k">ON</span> <span class="n">utm_source</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="k">source</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Many times, each <code class="language-plaintext highlighter-rouge">session</code> has a totally different shape of the journey depending on what kind of <strong>source channel</strong> the session has started from. Therefore, let’s also query <code class="language-plaintext highlighter-rouge">utm_source</code> just in case.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">LEFT</span> <span class="k">JOIN</span>
-	<span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_referrer</span>
-	<span class="k">ON</span> <span class="n">page_referrer</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="err">‘</span><span class="n">page_referrer</span><span class="err">’</span>
-</code></pre></div></div>
-<ul>
-  <li>Many times, each <code class="language-plaintext highlighter-rouge">session</code> has a totally different shape of the journey depending on exactly what <strong>previous page URL</strong> the session has started from. Therefore, let’s also query <code class="language-plaintext highlighter-rouge">page_referrer</code> just in case.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">AND</span> <span class="n">ga_session_number</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="o">=</span> <span class="mi">1</span>  
-<span class="k">AND</span> <span class="n">user_pseudo_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
-<span class="k">AND</span> <span class="n">ga_session_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
-</code></pre></div></div>
-<ul>
-  <li>Here, I wanted to know specifically about the <strong>first visiting users’ journey</strong>, and that’s why I try to query with <code class="language-plaintext highlighter-rouge">ga_session_number</code> only as <code class="language-plaintext highlighter-rouge">1</code>.</li>
-  <li>We basically have to track the <code class="language-plaintext highlighter-rouge">user_pseudo_id</code> and <code class="language-plaintext highlighter-rouge">ga_session_id</code> in order to <strong>make sure each user journey has been there from the same user and same session</strong>. That’s why I dropped all the missing <code class="language-plaintext highlighter-rouge">user_pseudo_id</code> and <code class="language-plaintext highlighter-rouge">ga_session_id</code> instances.</li>
-</ul>
-
-<h1 id="3-make-sure-each-user-and-session-has-the-same-propertiesor-parameters">3. Make sure each user and session has the same properties(or parameters).</h1>
-
-<p>Sometimes, even though it’s rooted in the same <code class="language-plaintext highlighter-rouge">session_id</code>, some events have their parameters fully, but others don’t. That’s why we make duplicates for the parameters throughout the same <code class="language-plaintext highlighter-rouge">user_pseudo_id</code> and <code class="language-plaintext highlighter-rouge">session_id</code>.</p>
-
-<p><img src="/assets/2023-05-21-sankey-chart/ This is a real BigQuery table appended from GA4, and look only one event has the medium value.webp" alt="" /></p>
-<blockquote>
-  <p>This is a real <strong>BigQuery</strong> table appended from GA4, and you can look only one event has the medium value.</p>
-</blockquote>
-
-<h2 id="31-the-entire-codes">3.1. The Entire Codes</h2>
-
-<p>You can use <code class="language-plaintext highlighter-rouge">FIRST_VALUE</code> and <code class="language-plaintext highlighter-rouge">LAST_VALUE</code> functions to make the duplicates.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_properties_spread</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>  
-        <span class="n">event_date</span><span class="p">,</span>
-        <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span>
-        <span class="n">session_id</span><span class="p">,</span>
-        <span class="n">session_number</span><span class="p">,</span>  
-        <span class="n">event_name</span><span class="p">,</span> 
-        <span class="n">REGEXP_REPLACE</span><span class="p">(</span>
-	        <span class="n">REGEXP_REPLACE</span><span class="p">(</span>
-		        <span class="k">LOWER</span><span class="p">(</span><span class="n">page_location</span><span class="p">),</span> 
-		        <span class="n">r</span><span class="s1">'(</span><span class="se">\?</span><span class="s1">.*)$'</span><span class="p">,</span> <span class="s1">''</span>
-	        <span class="p">),</span>
-	        <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span><span class="p">,</span>
-        <span class="n">revenue_usd</span><span class="p">,</span>  
-        <span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">country</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">country</span><span class="p">,</span>  
-        <span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">device</span><span class="p">,</span>  
-        <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">utm_campaign</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">utm_campaign</span><span class="p">,</span>  
-        <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">utm_medium</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">utm_medium</span><span class="p">,</span>  
-        <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">utm_source</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">utm_source</span><span class="p">,</span>  
-        <span class="n">LAST_VALUE</span><span class="p">(</span>
-	        <span class="n">REGEXP_REPLACE</span><span class="p">(</span>
-		        <span class="n">REGEXP_REPLACE</span><span class="p">(</span>
-			        <span class="k">LOWER</span><span class="p">(</span><span class="n">page_referrer</span><span class="p">),</span> 
-			        <span class="n">r</span><span class="s1">'(</span><span class="se">\?</span><span class="s1">.*)$'</span><span class="p">,</span> <span class="s1">''</span>
-		        <span class="p">),</span> 
-		        <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span>
-	        <span class="p">)</span>
-        <span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span> 
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">page_referrer</span>  
-    <span class="k">FROM</span>
-	    <span class="n">CTE_flattened</span> 
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h2 id="32-detailed-explanation-of-key-codes">3.2. Detailed Explanation of Key Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">REGEXP_REPLACE</span><span class="p">(</span>
-	<span class="n">REGEXP_REPLACE</span><span class="p">(</span>
-		<span class="k">LOWER</span><span class="p">(</span><span class="n">page_location</span><span class="p">),</span> 
-		<span class="n">r</span><span class="s1">'(</span><span class="se">\?</span><span class="s1">.*)$'</span><span class="p">,</span> <span class="s1">''</span>
-	<span class="p">),</span>
-	<span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span>
-<span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span><span class="p">,</span>
-</code></pre></div></div>
-<ul>
-  <li>Many times, the <strong>page URL</strong> has different shapes even though it drives the visitors to the exact same page.</li>
-  <li>The four URLs below have different values, but they direct you to the same Google main page anyways.
-    <ul>
-      <li><a href="https://google.com/">https://google.com</a></li>
-      <li><a href="https://google.com/">https://google.com/</a></li>
-      <li><a href="https://google.com?utm_source=medium">https://google.com?utm_source=medium</a></li>
-      <li><a href="https://google.com/?utm_source=medium">https://google.com/?utm_source=medium</a></li>
-    </ul>
-  </li>
-  <li>That’s why I use the <code class="language-plaintext highlighter-rouge">REGEXP_REPLACE</code> function to <strong>drop the useless letters</strong> in data analytics.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">country</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	<span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-<span class="p">)</span> <span class="k">AS</span> <span class="n">country</span>
-</code></pre></div></div>
-<ul>
-  <li>Because of some technical problems, one user and session might have multiple countries. (I’m guessing some users might have moved overseas, changed IP Address through VPNs, or GA4’s tech issue itself.) Regarding this issue, I would make a decision to <strong>grab the very first country value</strong> to know where the <code class="language-plaintext highlighter-rouge">user</code> and <code class="language-plaintext highlighter-rouge">session</code> have started.</li>
-  <li>Let’s assume a visitor is aboard a plane, and when he/she starts the session the plane is located in the <strong>US</strong>, but when visiting the following page, the plane has just entered the <strong>Canada</strong> area. In this extreme case, we’d rather think of this visitor as starting from the <strong>US</strong>.</li>
-</ul>
-
-<h1 id="4-delete-the-consecutive-same-page-url-duplicates-in-the-same-session_id">4. Delete the consecutive same page URL duplicates in the same <code class="language-plaintext highlighter-rouge">session_id</code>.</h1>
-
-<p>In most cases, if a visitor lands on page A, multiple events can happen.</p>
-<ul>
-  <li>i.e., <code class="language-plaintext highlighter-rouge">session_start</code>, <code class="language-plaintext highlighter-rouge">page_view</code>, <code class="language-plaintext highlighter-rouge">user_engagement</code>, <code class="language-plaintext highlighter-rouge">scroll</code>, and whatnot</li>
-</ul>
-
-<p>We need to delete all the same Page URLs triggered consecutively in one session, but <strong>only with the unique page URL</strong>.</p>
-
-<h2 id="41-the-entire-codes">4.1. The Entire Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_unique_pages</span> <span class="k">AS</span> <span class="p">(</span>
-	<span class="k">SELECT</span>  
-        <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">session_number</span><span class="p">,</span>  
-        <span class="n">event_name</span><span class="p">,</span>  
-        <span class="n">page_location</span><span class="p">,</span>          
-        <span class="n">LAG</span><span class="p">(</span><span class="n">page_location</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span> 
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">previous_page_location</span><span class="p">,</span>  
-        <span class="n">LEAD</span><span class="p">(</span><span class="n">page_location</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span> 
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">next_page_location</span><span class="p">,</span>  
-        <span class="n">revenue_usd</span><span class="p">,</span>  
-        <span class="n">country</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>  
-        <span class="n">utm_campaign</span><span class="p">,</span> <span class="n">utm_medium</span><span class="p">,</span> <span class="n">utm_source</span><span class="p">,</span> <span class="n">page_referrer</span>      
-    <span class="k">FROM</span> <span class="p">(</span>  
-        <span class="k">SELECT</span>  
-            <span class="o">*</span><span class="p">,</span>  
-            <span class="k">CASE</span>  
-	            <span class="k">WHEN</span> <span class="c1">-- Previous URL IS NULL  </span>
-                    <span class="n">previous_page_location</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">THEN</span> <span class="s1">'remain'</span>  
-                <span class="k">WHEN</span> <span class="c1">-- Previous URL &lt;&gt; Current URL  </span>
-                    <span class="n">previous_page_location</span> <span class="o">&lt;&gt;</span> <span class="n">page_location</span> <span class="k">THEN</span> <span class="s1">'remain'</span>  
-                <span class="k">WHEN</span> <span class="c1">-- Previous URL = Current URL  </span>
-                    <span class="n">previous_page_location</span> <span class="o">=</span> <span class="n">page_location</span> 
-                    <span class="k">AND</span> <span class="n">page_location</span> <span class="o">&lt;&gt;</span> <span class="n">next_page_location</span> <span class="k">THEN</span> <span class="s1">'del'</span>  
-            <span class="k">END</span> <span class="k">AS</span> <span class="n">remain_or_del</span>  
-        <span class="k">FROM</span> <span class="p">(</span>  
-            <span class="k">SELECT</span>  
-                <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-                <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">session_number</span><span class="p">,</span>  
-                <span class="n">event_name</span><span class="p">,</span>
-                <span class="n">page_location</span><span class="p">,</span>          
-                <span class="n">LAG</span><span class="p">(</span><span class="n">page_location</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	                <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span>
-	                <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-                <span class="p">)</span> <span class="k">AS</span> <span class="n">previous_page_location</span><span class="p">,</span>  
-                <span class="n">LEAD</span><span class="p">(</span><span class="n">page_location</span><span class="p">)</span> <span class="n">OVER</span><span class="p">(</span>
-	                <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span> 
-	                <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-                <span class="p">)</span> <span class="k">AS</span> <span class="n">next_page_location</span><span class="p">,</span>  
-                <span class="n">revenue_usd</span><span class="p">,</span>  
-                <span class="n">country</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>  
-                <span class="n">utm_campaign</span><span class="p">,</span> <span class="n">utm_medium</span><span class="p">,</span> <span class="n">utm_source</span><span class="p">,</span> <span class="n">page_referrer</span>  
-            <span class="k">FROM</span> <span class="n">CTE_properties_spread</span>  
-        <span class="p">)</span>  
-    <span class="p">)</span>  
-    <span class="k">WHERE</span>
-	    <span class="n">remain_or_del</span> <span class="o">=</span> <span class="s1">'remain'</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span> 
-	    <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">event_timestamp</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<p>Here in the query above, I used <code class="language-plaintext highlighter-rouge">LAG</code> and <code class="language-plaintext highlighter-rouge">LEAD</code> window functions <strong>to know whether to delete duplicates</strong> based on the previous page URL and the next page URL.</p>
-
-<h1 id="5-label-each-pages-visiting-order-number-for-each-session">5. Label each page’s visiting order number for each session.</h1>
-
-<p>We can Label <code class="language-plaintext highlighter-rouge">visit_order</code> for each page URL based on the <code class="language-plaintext highlighter-rouge">event_timestamp</code> <strong>in ascending order</strong>.</p>
-<ul>
-  <li>Here, I used the <code class="language-plaintext highlighter-rouge">ROW_NUMBER</code> window function to do it.</li>
-</ul>
-
-<h2 id="51-the-entire-codes">5.1. The Entire Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_visit_orders</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>  
-        <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span>  
-        <span class="n">page_location</span><span class="p">,</span>
-        <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span><span class="p">(</span>
-	        <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span> 
-	        <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">visit_order</span><span class="p">,</span>  
-        <span class="n">country</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>  
-        <span class="n">utm_campaign</span><span class="p">,</span> <span class="n">utm_medium</span><span class="p">,</span> <span class="n">utm_source</span><span class="p">,</span> <span class="n">page_referrer</span>  
-    <span class="k">FROM</span>
-	    <span class="n">CTE_unique_pages</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span> 
-	    <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">visit_order</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="6-categorize-all-the-pages">6. Categorize all the pages.</h1>
-
-<p>The page URL itself looks dirty since it’s not that human-readable, so here I wanted to <strong>categorize all the pages</strong> existing in the whole domain to <strong>make them literally human-readable</strong>.</p>
-
-<h2 id="61-the-entire-codes">6.1. The Entire Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_page_groups</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>  
-        <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span>  
-        <span class="n">page_location</span><span class="p">,</span>   
-        <span class="k">CASE</span>  
-            <span class="k">WHEN</span> <span class="n">page_location</span> <span class="o">=</span> <span class="s1">'https://google.com'</span> <span class="k">THEN</span> <span class="s1">'Google Home'</span>  
-            <span class="k">WHEN</span> <span class="n">page_location</span> <span class="o">=</span> <span class="s1">'https://google.com/joshua'</span> <span class="k">THEN</span> <span class="s1">'Joshua Intro'</span>  
-            <span class="k">WHEN</span> <span class="n">page_location</span> <span class="o">=</span> <span class="s1">'https://google.com/andrew'</span> <span class="k">THEN</span> <span class="s1">'Andrew Intro'</span>  
-            <span class="k">WHEN</span> <span class="n">page_location</span> <span class="o">=</span> <span class="s1">'https://google.com/amber'</span> <span class="k">THEN</span> <span class="s1">'Amber Intro'</span>  
-            <span class="k">WHEN</span> <span class="n">CONTAINS_SUBSTR</span><span class="p">(</span><span class="n">page_location</span><span class="p">,</span> <span class="s1">'https://google.com/policy'</span><span class="p">)</span> <span class="o">=</span> <span class="k">True</span> <span class="k">THEN</span> <span class="s1">'Policy Pages'</span>  
-            <span class="k">WHEN</span> <span class="n">CONTAINS_SUBSTR</span><span class="p">(</span><span class="n">page_location</span><span class="p">,</span> <span class="s1">'https://google.com/events'</span><span class="p">)</span> <span class="o">=</span> <span class="k">True</span> <span class="k">THEN</span> <span class="s1">'Event Pages'</span>  
-            <span class="k">ELSE</span> <span class="s1">'ETC'</span>  
-        <span class="k">END</span> <span class="k">AS</span> <span class="n">page_group</span><span class="p">,</span>  
-        <span class="n">visit_order</span><span class="p">,</span>  
-        <span class="n">country</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span>  
-        <span class="n">utm_campaign</span><span class="p">,</span> <span class="n">utm_medium</span><span class="p">,</span> <span class="n">utm_source</span><span class="p">,</span> <span class="n">page_referrer</span>  
-    <span class="k">FROM</span>
-	    <span class="n">CTE_visit_orders</span>
-    <span class="k">ORDER</span> <span class="k">BY</span> 
-	    <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">visit_order</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="7-pivot-each-sessions-journey-up-to-10-steps">7. Pivot each session’s journey up to 10 steps.</h1>
-
-<h2 id="71-the-entire-codes">7.1. The Entire Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_journeys</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span>
-        <span class="n">country</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> 
-        <span class="n">utm_campaign</span><span class="p">,</span> <span class="n">utm_medium</span><span class="p">,</span> <span class="n">utm_source</span><span class="p">,</span> <span class="n">page_referrer</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step01</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">2</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step02</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step03</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">4</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step04</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">5</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step05</span><span class="p">,</span>          
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">6</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step06</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">7</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step07</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">8</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step08</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">9</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step09</span><span class="p">,</span>  
-        <span class="k">MAX</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">page_group</span> <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">SUB</span>  
-            <span class="k">WHERE</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span> <span class="k">AND</span> <span class="n">visit_order</span> <span class="o">=</span> <span class="mi">10</span><span class="p">))</span> <span class="k">AS</span> <span class="n">step10</span>  
-    <span class="k">FROM</span> <span class="n">CTE_page_groups</span> <span class="n">MAIN</span>  
-    <span class="k">GROUP</span> <span class="k">BY</span>
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> 
-        <span class="n">country</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> 
-        <span class="n">utm_campaign</span><span class="p">,</span> <span class="n">utm_medium</span><span class="p">,</span> <span class="n">utm_source</span><span class="p">,</span> <span class="n">page_referrer</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span>  
-        <span class="n">step01</span><span class="p">,</span> <span class="n">step02</span><span class="p">,</span> <span class="n">step03</span><span class="p">,</span> <span class="n">step04</span><span class="p">,</span> <span class="n">step05</span><span class="p">,</span> 
-        <span class="n">step06</span><span class="p">,</span> <span class="n">step07</span><span class="p">,</span> <span class="n">step08</span><span class="p">,</span> <span class="n">step09</span><span class="p">,</span> <span class="n">step10</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="8-make-the-query-result-compatible-with-redash">8. Make the query result compatible with Redash.</h1>
-
-<p>Since <strong>Redash Sankey Chart</strong> has its expected framework and naming rules of the query result, we need to make the final query result in order to fit the rule.</p>
-
-<p><img src="/assets/2023-05-21-sankey-chart/Redash Sankey Visualization’s Constraints.webp" alt="" /></p>
-<blockquote>
-  <p>Redash Sankey Chart’s Constraints</p>
-</blockquote>
-
-<h2 id="81-the-entire-codes">8.1. The Entire Codes</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">step01</span> <span class="k">AS</span> <span class="n">stage1</span><span class="p">,</span>
-    <span class="n">step02</span> <span class="k">AS</span> <span class="n">stage2</span><span class="p">,</span> 
-    <span class="n">step03</span> <span class="k">AS</span> <span class="n">stage3</span><span class="p">,</span> 
-    <span class="n">step04</span> <span class="k">AS</span> <span class="n">stage4</span><span class="p">,</span> 
-    <span class="n">step05</span> <span class="k">AS</span> <span class="n">stage5</span><span class="p">,</span>  
-    <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="n">value</span>  
-<span class="k">FROM</span> 
-	<span class="n">CTE_sankey</span>  
-<span class="k">GROUP</span> <span class="k">BY</span> 
-	<span class="n">step01</span><span class="p">,</span> <span class="n">step02</span><span class="p">,</span> <span class="n">step03</span><span class="p">,</span> <span class="n">step04</span><span class="p">,</span> <span class="n">step05</span>  
-<span class="k">HAVING</span> 
-	<span class="n">step01</span> <span class="o">=</span> <span class="s1">'Google Home'</span> 
-	<span class="k">AND</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">100</span>  
-<span class="k">ORDER</span> <span class="k">BY</span> 
-	<span class="n">value</span> <span class="k">DESC</span>
-<span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="82-detailed-explanation-of-key-codes">8.2. Detailed Explanation of Key Codes</h2>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">HAVING</span>
-	<span class="n">step01</span> <span class="o">=</span> <span class="err">‘</span><span class="n">Google</span> <span class="n">Home</span><span class="err">’</span> 
-	<span class="k">AND</span> <span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">100</span>
-</code></pre></div></div>
-
-<ul>
-  <li>I just wanted to see how the users make their journey who is <strong>starting from Google Home</strong>.</li>
-  <li>To make the visualization look simple and not distracting, I ordered the query to show me <strong>the types of user journeys of at least 100 users</strong>.</li>
-</ul>
-
-<h1 id="9-final-result">9. Final Result</h1>
-
-<p><img src="/assets/2023-05-21-sankey-chart/Redash returns this kind of Sankey Chart.webp" alt="" /></p>
-<blockquote>
-  <p>Redash returns this kind of Sankey Chart.</p>
-</blockquote>
-
-<h1 id="10-conclusion">10. Conclusion</h1>
-
-<ul>
-  <li><strong>Redash Sankey Chart</strong> is much more valuable specifically when you try to figure out how the users make their journey depending on their countries, devices, UTM parameters, referrer pages, and stuff like that.</li>
-  <li>It’s superbly complicated to query, but once you make the whole framework queries to return the Sankey table, I believe you can generate more value to do as many actions as possible which wouldn’t have been possible to do before.</li>
-  <li>Nevertheless, <strong>Redash Sankey Chart</strong> only supports up to <code class="language-plaintext highlighter-rouge">5 steps</code>, which by that means if your website or app has too many pages and screens, it wouldn’t be enough to look through only 5 steps.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="bigquery" /><category term="redash" /><category term="data_visualization" /><summary type="html"><![CDATA[In this article, I’m going to tell you how you can create the Sankey Chart starting from GA4, BigQuery, and up to Redash.]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="blockchain" /><category term="on_chain_data" /><category term="data_analytics" /><summary type="html"><![CDATA[In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the DAU and MAU, but also with Stickiness, and Retention Rate, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!]]></summary></entry></feed>
