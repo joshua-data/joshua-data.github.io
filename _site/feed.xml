@@ -1,4 +1,425 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-13T09:12:36+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)</title><link href="http://localhost:4000/finding-nfts/" rel="alternate" type="text/html" title="Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)" /><published>2023-10-08T00:00:00+09:00</published><updated>2023-10-08T00:00:00+09:00</updated><id>http://localhost:4000/finding-nfts</id><content type="html" xml:base="http://localhost:4000/finding-nfts/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-13T10:12:12+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Intro to Encoding &amp;amp; Decoding Ethereum Contract Functions</title><link href="http://localhost:4000/encoding-and-decoding-ethereum-contract-functions/" rel="alternate" type="text/html" title="Intro to Encoding &amp;amp; Decoding Ethereum Contract Functions" /><published>2023-10-16T00:00:00+09:00</published><updated>2023-10-16T00:00:00+09:00</updated><id>http://localhost:4000/encoding-and-decoding-ethereum-contract-functions</id><content type="html" xml:base="http://localhost:4000/encoding-and-decoding-ethereum-contract-functions/"><![CDATA[<blockquote>
+  <p>In this article, I will briefly explore the Ethereum ABI Specification and show you how to decode contract functions when conducting on-chain data analysis. Additionally, I will demonstrate a simple data extraction and analysis case about “Who are the Top 10 Recipients of USDT approve Functions?” using DuneSQL while handling ABIs.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>Argument Types Key Content
+    <ul>
+      <li>1.1. Elementary Types</li>
+      <li>1.2. Fixed-size Types</li>
+      <li>1.3. Dynamic-size Types</li>
+    </ul>
+  </li>
+  <li>Key Points of Argument Padding to 32 Bytes Rules</li>
+  <li>A Contract Example
+    <ul>
+      <li>3.1. How to Call <code class="language-plaintext highlighter-rouge">baz(uint32 x, bool y)</code></li>
+      <li>3.2. How to Call <code class="language-plaintext highlighter-rouge">bar(bytes3[2])</code></li>
+      <li>3.3. How to Call <code class="language-plaintext highlighter-rouge">sam(bytes, bool, uint[])</code></li>
+    </ul>
+  </li>
+  <li>Case Study: Who are the Top 10 Recipients of USDT <code class="language-plaintext highlighter-rouge">approve</code> Functions?
+    <ul>
+      <li>4.1. Function Selector</li>
+      <li>4.2. Extract only the transactions that have called the <code class="language-plaintext highlighter-rouge">approve</code> function on the USDT Contract.</li>
+      <li>4.3. Extract the first argument value, <code class="language-plaintext highlighter-rouge">address</code>, from the functions.</li>
+      <li>4.4. Now, aggregate the number of unique addresses that executed <code class="language-plaintext highlighter-rouge">approve</code> function, grouped by each <code class="language-plaintext highlighter-rouge">approve</code> recipient, over the past week.</li>
+      <li>4.5. Label the <code class="language-plaintext highlighter-rouge">approve</code> recipient addresses based on Dune Tables regarding “address labeling”.</li>
+      <li>4.6. The Final Query Results</li>
+    </ul>
+  </li>
+  <li>Let’s Conclude!</li>
+  <li>References</li>
+</ol>
+
+<hr />
+
+<h1 id="1-argument-types-key-content">1. Argument Types Key Content</h1>
+
+<p>Before diving into the Ethereum ABI specification, let’s take a quick look at the argument data types of Ethereum contracts. Ethereum contract functions can have various parameter data types, and among them, I have listed some of the important types and summarize their key characteristics.</p>
+
+<h2 id="11-elementary-types">1.1. Elementary Types</h2>
+
+<p><code class="language-plaintext highlighter-rouge">uint</code></p>
+<ul>
+  <li>Same as  <code class="language-plaintext highlighter-rouge">uint256</code>,</li>
+  <li>which means it should be considered as  <code class="language-plaintext highlighter-rouge">uint256</code>  type during encoding.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">int</code></p>
+<ul>
+  <li>Same as  <code class="language-plaintext highlighter-rouge">int256</code>,</li>
+  <li>which means it should be considered as  <code class="language-plaintext highlighter-rouge">int256</code>  type during encoding.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">bool</code></p>
+<ul>
+  <li>Same as  <code class="language-plaintext highlighter-rouge">uint8</code>,</li>
+  <li>which means only 0 or 1 can be assigned to it.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">bytes{n}</code></p>
+<ul>
+  <li>Binary type with a length of n bytes (0 &lt; n ≤ 32)</li>
+</ul>
+
+<h2 id="12-fixed-size-types">1.2. Fixed-size Types</h2>
+
+<p><code class="language-plaintext highlighter-rouge">{type_name}[{n}]</code></p>
+<ul>
+  <li>An array with n elements (n ≥ 0)</li>
+</ul>
+
+<h2 id="13-dynamic-size-types">1.3. Dynamic-size Types</h2>
+
+<p><code class="language-plaintext highlighter-rouge">bytes</code></p>
+<ul>
+  <li>Binary type with a dynamic length of bytes</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">string</code></p>
+<ul>
+  <li>A dynamically sized string (assuming it’s UTF-8 encoded)</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">{type_name}[]</code></p>
+<ul>
+  <li>An array with a dynamic number of elements</li>
+</ul>
+
+<h1 id="2-key-points-of-argument-padding-to-32-bytes-rules">2. Key Points of Argument Padding to 32 Bytes Rules</h1>
+
+<p>When calling Ethereum contract functions, you need to encode each argument and input them concatenated. In this process, there are rules regarding “length.” To avoid confusion, I’ve summarized the key rules for you in advance.</p>
+
+<p><code class="language-plaintext highlighter-rouge">uint{n}</code></p>
+<ul>
+  <li>Padding with preceding 0 to achieve a length of 32 bytes</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">int{n}</code></p>
+<ul>
+  <li>Padding with preceding 0 to achieve a length of 32 bytes</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">bytes{n}</code></p>
+<ul>
+  <li>Padding with trailing 0 to achieve a length of 32 bytes</li>
+</ul>
+
+<h1 id="3-a-contract-example">3. A Contract Example</h1>
+
+<p>The following example has been taken from  <a href="https://docs.soliditylang.org/en/develop/abi-spec.html#examples">Contract ABI Specification Docs</a>. Let me explain this in simpler terms.</p>
+
+<p><strong>Given the Contract:</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4</span><span class="p">.</span><span class="mi">16</span><span class="p">;</span>  
+  
+<span class="nx">contract</span> <span class="nx">Foo</span> <span class="p">{</span>  
+  <span class="kd">function</span> <span class="nf">baz</span><span class="p">(</span><span class="nx">uint32</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">y</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">pure</span> <span class="nf">returns </span><span class="p">(</span><span class="nx">bool</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">&gt;</span> <span class="mi">32</span> <span class="o">||</span> <span class="nx">y</span><span class="p">;</span> <span class="p">}</span>  
+  <span class="kd">function</span> <span class="nf">bar</span><span class="p">(</span><span class="nx">bytes3</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="kr">public</span> <span class="nx">pure</span> <span class="p">{}</span>  
+  <span class="kd">function</span> <span class="nf">sam</span><span class="p">(</span><span class="nx">bytes</span><span class="p">,</span> <span class="nx">bool</span><span class="p">,</span> <span class="nx">uint</span><span class="p">[])</span> <span class="kr">public</span> <span class="nx">pure</span> <span class="p">{}</span>  
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="31-how-to-call-bazuint32-x-bool-y">3.1. How to Call <code class="language-plaintext highlighter-rouge">baz(uint32 x, bool y)</code></h2>
+
+<p>Let’s say you’re calling the function in the format of:  <code class="language-plaintext highlighter-rouge">baz(69, true)</code></p>
+
+<p><strong>Function Selector</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">baz(uint32,bool)</code>  → Keccak-256 Hash
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xcdcd77c0992ec5bbfc459984220f8c45084cc24d9b6efed1fae540db8de801d2</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Slice the left 4 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xcdcd77c0</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Parameter 1:</strong>  <code class="language-plaintext highlighter-rouge">69</code></p>
+<ul>
+  <li>Convert it to hexadecimal.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x45</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Left pad it to a length of 32 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000045</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Parameter 2:</strong>  <code class="language-plaintext highlighter-rouge">true</code></p>
+<ul>
+  <li>Convert it to uint8.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Left pad it to a length of 32 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>The Final Encoding with Concatenating All</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xcdcd77c0</span> <span class="c1"># Function Selector  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000045</span> <span class="c1"># 69  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="c1"># true  
+</span>  
+<span class="c1"># Concat  
+</span><span class="mh">0xdcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001</span>
+</code></pre></div></div>
+
+<h2 id="32-how-to-call-barbytes32">3.2. How to Call <code class="language-plaintext highlighter-rouge">bar(bytes3[2])</code></h2>
+
+<p>Let’s say you’re calling the function in the format of:  <code class="language-plaintext highlighter-rouge">baz("abc", "def")</code></p>
+
+<p><strong>Function Selector</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">bar(bytes3[2])</code>  → Keccak-256 Hash
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xfce353f601a3db60cb33e4b6ef4f91e4465eaf93c292b64fcde1bf4ba6819b6a</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Slice the left 4 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xfce353f6</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Parameter 1:</strong>  <code class="language-plaintext highlighter-rouge">“abc”</code></p>
+<ul>
+  <li>Convert it to utf-8 bytes (<a href="https://onlinetools.com/utf8/convert-utf8-to-bytes">String to UTF-8 Bytes Convertor</a>)
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">616263</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Right pad it to a length of 32 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x6162630000000000000000000000000000000000000000000000000000000000</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Parameter 2</strong>:  <code class="language-plaintext highlighter-rouge">“def”</code></p>
+<ul>
+  <li>Convert it to utf-8 bytes (<a href="https://onlinetools.com/utf8/convert-utf8-to-bytes">String to UTF-8 Bytes Convertor</a>)
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">646566</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Right pad it to a length of 32 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x6465660000000000000000000000000000000000000000000000000000000000</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>The Final Encoding with Concatenating All</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xfce353f6</span> <span class="c1"># Function Selector  
+</span><span class="mi">6162630000000000000000000000000000000000000000000000000000000000</span> <span class="c1"># "abc"  
+</span><span class="mi">6465660000000000000000000000000000000000000000000000000000000000</span> <span class="c1"># "def"  
+</span>  
+<span class="c1"># Concat  
+</span><span class="mh">0xfce353f661626300000000000000000000000000000000000000000000000000000000006465660000000000000000000000000000000000000000000000000000000000</span>
+</code></pre></div></div>
+
+<h2 id="33-how-to-call-sambytes-bool-uint">3.3. How to Call <code class="language-plaintext highlighter-rouge">sam(bytes, bool, uint[])</code></h2>
+
+<p>Let’s say you’re calling the function in the format of:  <code class="language-plaintext highlighter-rouge">sam(“dave”, true, [1, 2, 3])</code></p>
+
+<p><strong>Function Selector</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sam(bytes,bool,uint256[])</code>  → Keccak-256 Hash</li>
+  <li>Note that  <code class="language-plaintext highlighter-rouge">uint</code>  is replaced with its canonical representation  <code class="language-plaintext highlighter-rouge">uint256</code>.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xa5643bf27e2786816613d3eeb0b62650200b5a98766dfcfd4428f296fb56d043</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Slice the left 4 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xa5643bf2</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><strong>Parameters</strong></p>
+<ul>
+  <li>In the order of: “<strong>iLoc &gt; Len &gt; Value</strong>”</li>
+</ul>
+
+<p><img src="/assets/2023-10-16-encoding-and-decoding-ethereum-contract-functions/parameters.webp" alt="" /></p>
+<blockquote>
+  <p>made by Joshua</p>
+</blockquote>
+
+<p><strong>The Final Encoding with Concatenating All</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xa5643bf2</span> <span class="c1"># Function Selector  
+</span>  
+<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000060</span> <span class="c1"># 1st Param iLoc : 96 bytes  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="c1"># 2nd Param Value : true   
+</span><span class="mh">0x00000000000000000000000000000000000000000000000000000000000000a0</span> <span class="c1"># 3rd Param iLoc : 160 bytes  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000004</span> <span class="c1"># 1st Param Len : 4 bytes  
+</span><span class="mh">0x6461766500000000000000000000000000000000000000000000000000000000</span> <span class="c1"># 1sst Param Value : "dave"  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000003</span> <span class="c1"># 3rd Params Len : 3 items  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="c1"># 3rd Param Value (item 0) : 1  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000002</span> <span class="c1"># 3rd Param Value (item 1) : 2  
+</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000003</span> <span class="c1"># 3rd Param Value (item 2) : 3  
+</span>  
+<span class="c1"># Concat  
+</span><span class="mh">0xa5643bf20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003</span>
+</code></pre></div></div>
+
+<h1 id="4-case-study-who-are-the-top-10-recipients-of-usdt-approve-functions">4. Case Study: Who are the Top 10 Recipients of USDT <code class="language-plaintext highlighter-rouge">approve</code> Functions?</h1>
+
+<p>According to  <a href="https://docs.openzeppelin.com/contracts/2.x/api/token/erc20">ERC-20 Interface</a>, it is possible to delegate the permission to use a specific token (the authority to transfer the token, specifically) to a particular account using the <code class="language-plaintext highlighter-rouge">approve</code> function. This permission is frequently requested, particularly in DeFi platforms. In this case study, I aim to aggregate and analyze the top 10 accounts that people commonly delegate their USDT through <code class="language-plaintext highlighter-rouge">approve</code> function.</p>
+
+<h2 id="41-function-selector">4.1. Function Selector</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">approve(address,uint256)</code>  → Keccak-256 Hash
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x095ea7b334ae44009aa867bfb386f5c3b4b443ac6f0ee573fa91c4608fbadfba</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Slice the left 4 bytes.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x095ea7b3</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="42-extract-only-the-transactions-that-have-called-the-approve-function-on-the-usdt-contract">4.2. Extract only the transactions that have called the <code class="language-plaintext highlighter-rouge">approve</code> function on the USDT Contract.</h2>
+
+<ul>
+  <li>For more info about <code class="language-plaintext highlighter-rouge">BYTEARRAY_STARTS_WITH</code> Function, click  <a href="https://dune.com/docs/query/DuneSQL-reference/Functions-and-operators/varbinary/#bytearray_starts_with">here</a>.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="o">*</span>  
+<span class="k">FROM</span>  
+    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+<span class="k">WHERE</span>  
+    <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
+    <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call</span>
+</code></pre></div></div>
+
+<h2 id="43-extract-the-first-argument-value-address-from-the-functions">4.3. Extract the first argument value, <code class="language-plaintext highlighter-rouge">address</code>, from the functions.</h2>
+
+<ul>
+  <li>For more info about <code class="language-plaintext highlighter-rouge">BYTEARRAY_SUBSTRING</code> Function, click  <a href="https://dune.com/docs/query/DuneSQL-reference/Functions-and-operators/varbinary/#bytearray_substring">here</a>.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span>  
+        <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  
+        <span class="mi">13</span><span class="p">,</span>  
+        <span class="mi">20</span>  
+    <span class="p">)</span> <span class="k">AS</span> <span class="n">approved_to</span>  
+<span class="k">FROM</span>  
+    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+<span class="k">WHERE</span>  
+    <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
+    <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call</span>
+</code></pre></div></div>
+
+<h2 id="44-now-aggregate-the-number-of-unique-addresses-that-executed-approve-function-grouped-by-each-approve-recipient-over-the-past-week">4.4. Now, aggregate the number of unique addresses that executed <code class="language-plaintext highlighter-rouge">approve</code> function, grouped by each <code class="language-plaintext highlighter-rouge">approve</code> recipient, over the past week.</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span>  
+        <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  
+        <span class="mi">13</span><span class="p">,</span>  
+        <span class="mi">20</span>  
+    <span class="p">)</span> <span class="k">AS</span> <span class="n">approved_to</span><span class="p">,</span>  
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="nv">"from"</span><span class="p">)</span> <span class="k">AS</span> <span class="n">approved_from_cnt</span>  
+<span class="k">FROM</span>  
+    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+<span class="k">WHERE</span>  
+    <span class="k">CAST</span><span class="p">(</span><span class="n">block_date</span> <span class="k">AS</span> <span class="nb">DATE</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="c1">-- Recent 7 Days  </span>
+    <span class="k">AND</span> <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
+    <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call  </span>
+<span class="k">GROUP</span> <span class="k">BY</span>  
+    <span class="mi">1</span>
+</code></pre></div></div>
+
+<h2 id="45-label-the-approve-recipient-addresses-based-on-dune-tables-regarding-address-labeling">4.5. Label the <code class="language-plaintext highlighter-rouge">approve</code> recipient addresses based on Dune Tables regarding “address labeling”.</h2>
+
+<ul>
+  <li>Looking at the original address values alone does not provide any meaningful information, as y’all know here.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+<span class="n">CTE_approves</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span>  
+            <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  
+            <span class="mi">13</span><span class="p">,</span>  
+            <span class="mi">20</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">approved_to</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="nv">"from"</span><span class="p">)</span> <span class="k">AS</span> <span class="n">approved_from_cnt</span>  
+    <span class="k">FROM</span>  
+        <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
+    <span class="k">WHERE</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="n">block_date</span> <span class="k">AS</span> <span class="nb">DATE</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="c1">-- Recent 7 Days  </span>
+        <span class="k">AND</span> <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
+        <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call  </span>
+    <span class="k">GROUP</span> <span class="k">BY</span>  
+        <span class="mi">1</span>  
+<span class="p">)</span>  
+  
+<span class="k">SELECT</span>  
+    <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span><span class="p">,</span>  
+    <span class="n">COALESCE</span><span class="p">(</span>  
+        <span class="n">SUB1</span><span class="p">.</span><span class="n">dex_name</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB1</span><span class="p">.</span><span class="n">distinct_name</span><span class="p">,</span>  
+        <span class="n">SUB2</span><span class="p">.</span><span class="n">project</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB2</span><span class="p">.</span><span class="n">project_type</span><span class="p">,</span>  
+        <span class="n">SUB3</span><span class="p">.</span><span class="n">bridge_name</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB3</span><span class="p">.</span><span class="n">description</span><span class="p">,</span>  
+        <span class="n">SUB4</span><span class="p">.</span><span class="n">cex_name</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB4</span><span class="p">.</span><span class="n">distinct_name</span><span class="p">,</span>  
+        <span class="s1">'Unknown'</span>  
+    <span class="p">)</span> <span class="k">AS</span> <span class="n">name</span><span class="p">,</span>  
+    <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_from_cnt</span> <span class="k">AS</span> <span class="n">addresses_cnt</span>  
+<span class="k">FROM</span>  
+    <span class="n">CTE_approves</span> <span class="n">MAIN</span>  
+<span class="k">LEFT</span> <span class="k">JOIN</span>  
+    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">dex</span> <span class="n">SUB1</span> <span class="c1">-- DEX named addresses  </span>
+    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB1</span><span class="p">.</span><span class="n">address</span>  
+<span class="k">LEFT</span> <span class="k">JOIN</span>  
+    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">defi</span> <span class="n">SUB2</span> <span class="c1">-- DeFi named addresses  </span>
+    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB2</span><span class="p">.</span><span class="n">address</span>  
+<span class="k">LEFT</span> <span class="k">JOIN</span>  
+    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">bridges</span> <span class="n">SUB3</span> <span class="c1">-- Bridge named addresses  </span>
+    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB3</span><span class="p">.</span><span class="n">address</span>  
+<span class="k">LEFT</span> <span class="k">JOIN</span>  
+    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">cex</span> <span class="n">SUB4</span> <span class="c1">-- CEX named addresses  </span>
+    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB4</span><span class="p">.</span><span class="n">address</span>  
+<span class="k">ORDER</span> <span class="k">BY</span>  
+    <span class="mi">3</span> <span class="k">DESC</span>  
+<span class="k">LIMIT</span>  
+    <span class="mi">10</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="46-the-final-query-results">4.6. The Final Query Results</h2>
+
+<p><img src="/assets/2023-10-16-encoding-and-decoding-ethereum-contract-functions/query-results.webp" alt="" /></p>
+<blockquote>
+  <p>Dune Analytics</p>
+</blockquote>
+
+<h1 id="5-lets-conclude">5. Let’s Conclude!</h1>
+
+<p>So far, we have delved into <strong>the Ethereum’s ABI Specification</strong>, learned how data is encoded when transactions call contract functions, and understood how to extract meaningful insights by decoding specific function names and arguments from Ethereum transactions data.</p>
+
+<p>In fact, Dune Analytics, Etherscan, and many other on-chain data platforms all incorporate these decoding processes internally.</p>
+
+<p>Hopefully this article will serve as an excellent foundation for your future, more detailed and complex on-chain data analysis endeavors.</p>
+
+<h1 id="6-references">6. References</h1>
+
+<ul>
+  <li><a href="https://docs.soliditylang.org/en/develop/abi-spec.html#function-selector-and-argument-encoding">Contract ABI Specification</a></li>
+  <li><a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc721">OpenZeppelin Docs</a></li>
+  <li><a href="https://dune.com/joshua_web3">Dune Analytics</a></li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="blockchain" /><category term="on_chain_data" /><category term="sql" /><summary type="html"><![CDATA[In this article, I will briefly explore the Ethereum ABI Specification and show you how to decode contract functions when conducting on-chain data analysis. Additionally, I will demonstrate a simple data extraction and analysis case about “Who are the Top 10 Recipients of USDT approve Functions?” using DuneSQL while handling ABIs.]]></summary></entry><entry><title type="html">Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)</title><link href="http://localhost:4000/finding-nfts/" rel="alternate" type="text/html" title="Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)" /><published>2023-10-08T00:00:00+09:00</published><updated>2023-10-08T00:00:00+09:00</updated><id>http://localhost:4000/finding-nfts</id><content type="html" xml:base="http://localhost:4000/finding-nfts/"><![CDATA[<blockquote>
   <p>Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua’s expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don’t miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.</p>
 </blockquote>
 
@@ -4294,440 +4715,4 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="amplitude" /><category term="data_analytics" /><summary type="html"><![CDATA[이번 아티클에서 다룰 이야기는 바로 Amplitude(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.]]></summary></entry><entry><title type="html">탈중앙화: 개념과 측정 방법, 그리고 한계</title><link href="http://localhost:4000/measuring-decentralization/" rel="alternate" type="text/html" title="탈중앙화: 개념과 측정 방법, 그리고 한계" /><published>2022-07-12T00:00:00+09:00</published><updated>2022-07-12T00:00:00+09:00</updated><id>http://localhost:4000/measuring-decentralization</id><content type="html" xml:base="http://localhost:4000/measuring-decentralization/"><![CDATA[<blockquote>
-  <p>“블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다.”</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>탈중앙화의 개념</li>
-  <li>탈중앙화의 측정
-    <ul>
-      <li>2.1. 준비: 데이터 수집</li>
-      <li>2.2. 유형별 측정</li>
-      <li>2.3. Recap</li>
-    </ul>
-  </li>
-  <li>결론: “탈중앙화와 빈부격차는 다르다!”</li>
-</ol>
-
-<hr />
-
-<h1 id="1-탈중앙화의-개념">1. 탈중앙화의 개념</h1>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/blockchain-trilemma.webp" alt="Blockchain Trilemma" /></p>
-<blockquote>
-  <p>블록체인 트릴레마(Trilemma)</p>
-</blockquote>
-
-<p>블록체인 트릴레마(Trilemma)란, 확장성(Scalability), 보안성(Security), 탈중앙화(Decentralization) 세 가지 지표를 동시에 모두 향상시키기 어려운 블록체인의 기술적 성격을 의미한다. 즉, 블록체인 네트워크를 설계하는 과정에서 특정 두 가지 지표를 향상시키고자 할 경우, 나머지 하나는 반드시 약화될 수밖에 없다는 것이다.</p>
-
-<p>아직까지 이러한 트릴레마를 극복한 뚜렷한 사례가 없는 가운데, 세 가지 지표 중 하나인 탈중앙화에 대한 여러 가지 측정 방법들이 제시되고 있다. 이번 시간에는 탈중앙화를 정량화할 수 있는 여러 가지 방법들에 대해 소개하고, 각 체인 별로 측정을 해보고자 한다.</p>
-
-<p>탈중앙화는 조직이나 집단의 의사결정권이나 참여도가 얼마나 분산되었는지를 의미하는 용어이다. 특히, 블록체인 네트워크에서의 탈중앙화란 블록 생성과 합의에 대한 의사결정권이나 보상청구권이 얼마나 분산화되었는지를 의미한다. 구체적으로 의미를 파헤치자면, 작업증명(Proof of Work)과 지분증명(Proof of Stake)의 경우 탈중앙화는 각각 다음과 같은 의미를 지닐 것이다.</p>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/consensus-mechanisms.webp" alt="Consensus Mechanisms" /></p>
-<blockquote>
-  <p>Consensus Mechanism</p>
-</blockquote>
-
-<ul>
-  <li><strong>작업증명 기반 네트워크에서의 탈중앙화</strong>: 해시레이트(Hashrate) 혹은 연산 능력(Computing Power)이 얼마나 골고루 분산 되어 있는가</li>
-  <li><strong>지분증명 기반 네트워크에서의 탈중앙화</strong>: 스테이킹 자산(Staked Assets)으로 표현되는 지분량이 얼마나 골고루 분산 되어 있는가</li>
-</ul>
-
-<h1 id="2-탈중앙화의-측정">2. 탈중앙화의 측정</h1>
-
-<h2 id="21-준비-데이터-수집">2.1. 준비: 데이터 수집</h2>
-
-<hr />
-
-<p>다음 10개의 네트워크를 선정하고, 탈중앙화 정도를 측정하기 위한 데이터를 수집하였다.</p>
-<ul>
-  <li><a href="https://blockchair.com/ethereum/charts/hashrate-distribution">Ethereum (ETH)</a>: 해시레이트(Hashrate) 분포</li>
-  <li><a href="https://bscscan.com/validators">Binance Smart Chain</a>: 의사결정권(Voting Power) 분포</li>
-  <li><a href="https://explorer-xp.avax.network/validators">Avalanche (AVAX)</a>: 지분량(Staked Assets) 분포</li>
-  <li><a href="https://solanabeach.io/validators">Solana (SOL)</a>: 지분량(Staked Assets) 분포</li>
-  <li><a href="https://explorer.fantom.network/staking">Fantom (FTM)</a>: 지분량(Staked Assets) 분포</li>
-  <li><a href="https://polygonscan.com/stat/miner?range=14&amp;blocktype=blocks">Polygon (MATIC)</a>: 블록 검증 횟수(Number of Blocks Validated) 분포</li>
-  <li><a href="https://tronscan.org/#/sr/votes">Tron (TRX)</a>: 의사결정권(Voting Power) 분포</li>
-  <li><a href="https://crypto.org/explorer/validators">Cronos (CRO)</a>: 지분량(Staked Assets) 분포</li>
-  <li><a href="https://scope.klaytn.com/">Klaytn (KLAY)</a>: 블록 생성 횟수(Total Proposed Blocks) 분포</li>
-  <li><a href="https://celo.org/validators/explore">Celo (CELO)</a>: 지분량(Staked Assets) 분포</li>
-</ul>
-
-<p>이상적으로는 해시레이트나 지분량 데이터를 수집하는 것이 가장 바람직하지만, 블록체인 익스플로러들의 제공 데이터 한계로 인해 가능한 한 “의사결정권이나 보상청구권”의 의미와 직접적으로 연관되는 데이터를 대체 수집하였다. 가령, 다음의 데이터들이 있다.</p>
-
-<ul>
-  <li><strong>의사결정권(Voting Power) 분포</strong>: 해시레이트나 지분량에 비례하여 Voting Power를 행사할 것이므로, 탈중앙화를 측정하기 위한 수단으로 대체 활용 가능</li>
-  <li><strong>블록 검증 횟수(Number of Blocks Validated) 분포</strong>: 해시레이트나 지분량에 비례하여 검증 기회를 부여 받을 것이므로, 탈중앙화를 측정하기 위한 수단으로 대체 활용 가능</li>
-  <li><strong>블록 생성 횟수(Total Proposed Blocks) 분포</strong>: 해시레이트나 지분량에 비례하여 블록 생성 기회를 부여 받을 것이므로, 탈중앙화를 측정하기 위한 수단으로 대체 활용 가능</li>
-</ul>
-
-<p>데이터를 수집한 후, Pie Chart로 각 분포를 시각화한 결과는 다음과 같다.
-<img src="/assets/2022-07-12-measuring-decentralization/Utilized Seaborn Library in Python 3.webp" alt="Utilized Seaborn Library in Python 3" /></p>
-<blockquote>
-  <p>Utilized Seaborn Library in Python 3</p>
-</blockquote>
-
-<h2 id="22-유형별-측정">2.2. 유형별 측정</h2>
-
-<hr />
-
-<p><strong>(1) 허핀달-허쉬만 지수 (HHI, Herfindal-Hershman Index)</strong></p>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/hhi.webp" alt="HHI 공식" /></p>
-<blockquote>
-  <p>HHI 공식</p>
-</blockquote>
-
-<p>HHI 공식허핀달-허쉬만 지수(이하 HHI)는 특정 시장의 집중도를 평가할 때 사용되는 지표로서, 시장 내 모든 사업자들의 각 시장 점유율(%)을 제곱하여 합한 값을 말한다. 시장의 독과점에 대한 공정거래법을 적용하는 척도로 사용되기도 하는데, HHI는 다음과 같은 특징을 지니고 있다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>HHI</strong></th>
-      <th><strong>Value</strong></th>
-      <th><strong>탈중앙화 정도</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Minimum</td>
-      <td><code class="language-plaintext highlighter-rouge">0.0000</code></td>
-      <td>완전 탈중앙화</td>
-    </tr>
-    <tr>
-      <td>Maximum</td>
-      <td><code class="language-plaintext highlighter-rouge">1.0000</code></td>
-      <td>완전 중앙화</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>특정 상위 N개 주체의 점유율뿐만 아니라, 모든 주체들의 점유율을 반영할 수 있다.</li>
-  <li><a href="https://www.ftc.go.kr/callPop.do?url=%2FjargonSearchView.do%3Fkey%3D451&amp;dicseq=428&amp;titl=%ED%97%88%ED%95%80%EB%8B%AC-%ED%97%88%EC%89%AC%EB%A7%8C+%EC%A7%80%EC%88%98%28Herfindal-Hershman+Index%29">HHI의 역수는 이론상 당해 시장 내에 똑같은 규모를 갖는 기업들이 존재한다고 가정할 때 얼마나 많은 기업이 존재할 것인가를 나타내며 그 수효가 많으면 많을수록 그 시장은 보다 경쟁적이라는 것을 시사한다.</a></li>
-  <li><a href="https://www.ftc.go.kr/callPop.do?url=/jargonSearchView.do?key=451&amp;dicseq=428&amp;titl=%ED%97%88%ED%95%80%EB%8B%AC-%ED%97%88%EC%89%AC%EB%A7%8C%20%EC%A7%80%EC%88%98(Herfindal-Hershman%20Index)">미국은 합병 심사 시 시장집중 측정지표로 HHI를 다음과 같이 평가하고 있다.</a></li>
-</ul>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>HHI</strong></th>
-      <th><strong>Class</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">0.0000 &lt; HHI &lt;= 0.1000</code></td>
-      <td>비집중적인 시장</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">0.1000 &lt; HHI &lt;= 0.1800</code></td>
-      <td>어느 정도 집중적인 시장</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">0.1800 &lt; HHI &lt;= 1.0000</code></td>
-      <td>고도로 집중적인 시장</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># User-defined Function to get HHI in Python 3
-</span><span class="k">def</span> <span class="nf">getHHI</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>
-	<span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
-	<span class="n">series_perc</span> <span class="o">=</span> <span class="n">series</span> <span class="o">/</span> <span class="nf">float</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
-	<span class="n">HHI</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">series_perc</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-	<span class="k">return</span> <span class="n">HHI</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/hhi-by-blockchain.webp" alt="(좌) 중앙화 ↑ (우) 탈중앙화 ↑" /></p>
-<blockquote>
-  <p>(좌) 중앙화 ↑ (우) 탈중앙화 ↑</p>
-</blockquote>
-
-<p><strong>(2)지니 계수 (Gini Coefficient)</strong></p>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/gini.webp" alt="Gini Coefficient" /></p>
-<blockquote>
-  <p><a href="https://ko.wikipedia.org/wiki/%EC%A7%80%EB%8B%88_%EA%B3%84%EC%88%98">Source</a></p>
-</blockquote>
-
-<p>Source지니 계수(이하 Gini)는 경제적 불평등 및 빈부 격차의 정도를 계수화한 지표로, 한 국가 내애서의 소득 불평등 정도를 측정하기 위해 가장 널리 사용된다. 위 그림에서는 직각삼각형의 넓이 중 색칠된 영역의 넓이가 차지하는 비율로 산출된다. Gini는 다음과 같은 특징을 지닌다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Gini</strong></th>
-      <th><strong>Value</strong></th>
-      <th><strong>탈중앙화 정도</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Minimum</td>
-      <td><code class="language-plaintext highlighter-rouge">0.0000</code></td>
-      <td>완전 탈중앙화</td>
-    </tr>
-    <tr>
-      <td>Maximum</td>
-      <td><code class="language-plaintext highlighter-rouge">1.0000</code></td>
-      <td>완전 중앙화</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>각 주체의 점유율(%)을 오름차순으로 정렬한 후, 좌표평면(X축은 각 주체의 누적 수, Y축은 각 주체의 누적 점유율) 상에 표현한 것이 로렌츠 곡선(Lorenz Curve)이다.</li>
-  <li>경제적으로 완전히 평등할 경우, 로렌츠 곡선이 45도 각도의 직선 형태가 될 것이고, 불평등할수록 하방 굴곡도가 높아질 것이다.</li>
-  <li>Gini는 시장 전체의 분배 상태를 하나의 수치로 나타내므로, 특정 소수의 영향력에 대해서는 정보가 누락될 가능성이 있다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># User-defined Function to get Gini Coefficient in Python 3
-</span><span class="k">def</span> <span class="nf">getGini</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>  
-	<span class="n">series_sorted</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>  
-	<span class="n">height</span><span class="p">,</span> <span class="n">area</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>  
-	<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">series_sorted</span><span class="p">:</span>  
-		<span class="n">height</span> <span class="o">+=</span> <span class="n">value</span>  
-		<span class="n">area</span> <span class="o">+=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">value</span> <span class="o">/</span> <span class="mf">2.</span>  
-	<span class="n">fair_area</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="nf">len</span><span class="p">(</span><span class="n">series</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span>  
-	<span class="n">Gini</span> <span class="o">=</span> <span class="p">(</span><span class="n">fair_area</span> <span class="o">-</span> <span class="n">area</span><span class="p">)</span> <span class="o">/</span> <span class="n">fair_area</span>  
-	<span class="k">return</span> <span class="n">Gini</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/gini-by-blockchain.webp" alt="(좌) 중앙화 ↑ (우) 탈중앙화 ↑" /></p>
-<blockquote>
-  <p>(좌) 중앙화 ↑ (우) 탈중앙화 ↑</p>
-</blockquote>
-
-<p><strong>(3) 엔트로피 (Entropy)</strong></p>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/entropy.webp" alt="Entropy" /></p>
-<blockquote>
-  <p>Entropy 공식</p>
-</blockquote>
-
-<p>엔트로피는 자연과학이나 정보이론에서 중요하게 다뤄지는 지표로, 확률변수의 불확실성이나 데이터의 혼잡도를 측정하기 위해 사용된다. 엔트로피는 다음과 같은 특징을 지닌다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Entropy</strong></th>
-      <th><strong>Value</strong></th>
-      <th><strong>탈중앙화 정도</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Minimum</td>
-      <td><code class="language-plaintext highlighter-rouge">0.0000</code></td>
-      <td>완전 중앙화</td>
-    </tr>
-    <tr>
-      <td>Maximum</td>
-      <td><code class="language-plaintext highlighter-rouge">Infinite</code></td>
-      <td>완전 탈중앙화</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>주어진 데이터 집합 내에서 서로 다른 종류의 항목들(Datapoints)이 많을 수록 엔트로피가 높고, 같은 종류의 항목들(Datapoints)이 많을 수록 엔트로피가 낮다.</li>
-  <li>블록체인의 탈중앙화 지수로 활용할 경우, 엔트로피가 높을 수록 의사결정권이 잘 분산되어 있고, 엔트로피가 낮을 수록 의사결정권이 특정 소수에 집중되어 있다고 판단해볼 수 있다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># User-defined Function to get Entropy in Python 3
-</span><span class="k">def</span> <span class="nf">getEntropy</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>
-	<span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
-	<span class="n">series_perc</span> <span class="o">=</span> <span class="n">series</span> <span class="o">/</span> <span class="nf">float</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
-	<span class="n">series_perc</span> <span class="o">=</span> <span class="n">series_perc</span><span class="p">[</span><span class="n">series_perc</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
-	<span class="n">series_perc_list</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">series_perc</span><span class="p">)</span>
-	<span class="n">Entropy</span> <span class="o">=</span> <span class="mi">0</span>
-	<span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">series_perc_list</span><span class="p">:</span>
-		<span class="n">Entropy</span> <span class="o">+=</span> <span class="n">np</span><span class="p">.</span><span class="nf">log2</span><span class="p">(</span><span class="n">each</span><span class="p">)</span> <span class="o">*</span> <span class="n">each</span>
-	<span class="n">Entropy</span> <span class="o">=</span> <span class="o">-</span><span class="n">Entropy</span>
-	<span class="k">return</span> <span class="n">Entropy</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/entropy-by-blockchain.webp" alt="(좌) 중앙화 ↑ (우) 탈중앙화 ↑" /></p>
-<blockquote>
-  <p>(좌) 중앙화 ↑ (우) 탈중앙화 ↑</p>
-</blockquote>
-
-<p><strong>(4) 검열저항성 DQ (Censorship Resistance, Decentralization Quotient)</strong></p>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/entropy-by-blockchain.webp" alt="DQ 공식 (PoW 기반 네트워크" /></p>
-<blockquote>
-  <p>DQ 공식 (PoW 기반 네트워크)</p>
-</blockquote>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/entropy-by-blockchain.webp" alt="DQ 공식 (PoS 기반 네트워크" /></p>
-<blockquote>
-  <p>DQ 공식 (PoS 기반 네트워크)</p>
-</blockquote>
-
-<p>DQ는 검열저항성(Censorship Resistance)에 기반한 탈중앙화 지수로, 특정 소수 노드의 허위 블록 생성이나 프론트러닝(Front-running) 등 악의적 행위에 대한 저항성을 의미한다. DQ는 다음과 같은 특징을 지닌다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>DQ</strong></th>
-      <th><strong>Value</strong></th>
-      <th><strong>탈중앙화 정도</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Minimum</td>
-      <td><code class="language-plaintext highlighter-rouge">0.0000</code></td>
-      <td>완전 탈중앙화</td>
-    </tr>
-    <tr>
-      <td>Maximum</td>
-      <td><code class="language-plaintext highlighter-rouge">1.0000</code></td>
-      <td>완전 중앙화</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>위의 산식을 자세히 살펴보면, Herfindal-Hershman Index(HHI)로부터 입력값을 받아 변형된 형태임을 알 수 있다. (따라서 HHI로 측정하는 경우와 동일한 비교 우위 결과가 나올 것이다.)</li>
-  <li>작업증명(PoW) 기반 네트워크에서는 각 노드의 해시레이트 비율(%)로 계산된 HHI가 수식의 입력값이 된다.</li>
-  <li>지분증명(PoS) 기반 네트워크에서는 각 노드의 스테이킹 자산 비율(%)로 계산된 HHI가 수식의 입력값이 된다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># User-defined Function to get Decentralization Quotient in Python 3
-</span><span class="k">def</span> <span class="nf">getDQ</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>
-	<span class="n">DQ</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">-</span> <span class="nf">getHHI</span><span class="p">(</span><span class="n">series</span><span class="p">))</span>
-	<span class="k">return</span> <span class="n">DQ</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2022-07-12-measuring-decentralization/entropy-by-blockchain.webp" alt="(좌) 중앙화 ↑ (우) 탈중앙화 ↑" /></p>
-<blockquote>
-  <p>(좌) 중앙화 ↑ (우) 탈중앙화 ↑</p>
-</blockquote>
-
-<p><strong>(5) Recap</strong></p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Network</strong></th>
-      <th><strong>HHI 탈중앙화 순위</strong></th>
-      <th><strong>Gini 탈중앙화 순위</strong></th>
-      <th><strong>Entropy 탈중앙화 순위</strong></th>
-      <th><strong>DQ 탈중앙화 순위</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Ethereum</td>
-      <td><code class="language-plaintext highlighter-rouge">10</code></td>
-      <td><code class="language-plaintext highlighter-rouge">8</code></td>
-      <td><code class="language-plaintext highlighter-rouge">10</code></td>
-      <td><code class="language-plaintext highlighter-rouge">10</code></td>
-    </tr>
-    <tr>
-      <td>Binance Smart Chain</td>
-      <td><code class="language-plaintext highlighter-rouge">6</code></td>
-      <td><code class="language-plaintext highlighter-rouge">1</code></td>
-      <td><code class="language-plaintext highlighter-rouge">8</code></td>
-      <td><code class="language-plaintext highlighter-rouge">6</code></td>
-    </tr>
-    <tr>
-      <td>Avalanche</td>
-      <td><code class="language-plaintext highlighter-rouge">1</code></td>
-      <td><code class="language-plaintext highlighter-rouge">9</code></td>
-      <td><code class="language-plaintext highlighter-rouge">2</code></td>
-      <td><code class="language-plaintext highlighter-rouge">1</code></td>
-    </tr>
-    <tr>
-      <td>Solana</td>
-      <td><code class="language-plaintext highlighter-rouge">2</code></td>
-      <td><code class="language-plaintext highlighter-rouge">4</code></td>
-      <td><code class="language-plaintext highlighter-rouge">1</code></td>
-      <td><code class="language-plaintext highlighter-rouge">2</code></td>
-    </tr>
-    <tr>
-      <td>Fantom</td>
-      <td><code class="language-plaintext highlighter-rouge">9</code></td>
-      <td><code class="language-plaintext highlighter-rouge">6</code></td>
-      <td><code class="language-plaintext highlighter-rouge">6</code></td>
-      <td><code class="language-plaintext highlighter-rouge">9</code></td>
-    </tr>
-    <tr>
-      <td>Polygon</td>
-      <td><code class="language-plaintext highlighter-rouge">8</code></td>
-      <td><code class="language-plaintext highlighter-rouge">7</code></td>
-      <td><code class="language-plaintext highlighter-rouge">7</code></td>
-      <td><code class="language-plaintext highlighter-rouge">8</code></td>
-    </tr>
-    <tr>
-      <td>Tron</td>
-      <td><code class="language-plaintext highlighter-rouge">4</code></td>
-      <td><code class="language-plaintext highlighter-rouge">10</code></td>
-      <td><code class="language-plaintext highlighter-rouge">5</code></td>
-      <td><code class="language-plaintext highlighter-rouge">4</code></td>
-    </tr>
-    <tr>
-      <td>Cronos</td>
-      <td><code class="language-plaintext highlighter-rouge">5</code></td>
-      <td><code class="language-plaintext highlighter-rouge">5</code></td>
-      <td><code class="language-plaintext highlighter-rouge">4</code></td>
-      <td><code class="language-plaintext highlighter-rouge">5</code></td>
-    </tr>
-    <tr>
-      <td>Klaytn</td>
-      <td><code class="language-plaintext highlighter-rouge">7</code></td>
-      <td><code class="language-plaintext highlighter-rouge">3</code></td>
-      <td><code class="language-plaintext highlighter-rouge">9</code></td>
-      <td><code class="language-plaintext highlighter-rouge">7</code></td>
-    </tr>
-    <tr>
-      <td>Celo</td>
-      <td><code class="language-plaintext highlighter-rouge">3</code></td>
-      <td><code class="language-plaintext highlighter-rouge">2</code></td>
-      <td><code class="language-plaintext highlighter-rouge">3</code></td>
-      <td><code class="language-plaintext highlighter-rouge">3</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<h1 id="3-결론">3. 결론</h1>
-
-<p>탈중앙화 개념에 대해 정량적으로 접근하는 방법에는 상술한 네 가지 방법 외에도 수많은 아이디어들이 있다. 이더리움 창시자 비탈릭 부테린이 2017년 처음으로 탈중앙화 개념을 추상적으로 제안한 이후, 여러 가지 측면에서 탈중앙화 지수가 등장했다.</p>
-
-<p><strong>그러나 본 아티클에서 다룬 4가지 측정 방법들은 다음 측면에서 중대한 문제점이 있다.</strong></p>
-<ol>
-  <li><strong>노드의 수(Total Absolute Number of Nodes in the Network)를 고려하지 않아, 네트워크 참여나 활성화 정도를 고려하지 않았다.</strong></li>
-  <li><strong>노드 참여에 대한 자격 요건(Prerequisite)을 배제한 채 실험이 진행되었다.</strong></li>
-</ol>
-
-<p>노드의 수와 자격 요건 등을 고려하지 않은 채 실험을 진행한 결과, Klaytn과 Solana가 Ethereum보다 탈중앙성이 더욱 높은 결과가 도출되었다. 가령, Klaytn의 경우 재단과 파트너십 관계에 있는 약 30개의 노드들만 선정되었고 일반인이 운영하는 노드의 자유로운 Entry/Exit이 불가능한 Governance를 지니고 있고, Solana의 경우 노드에 참여하기 위한 Resource Requirements가 매우 높은 편이다. 결국, Klaytn과 Solana가 Ethereum보다 높은 탈중앙성을 지니고 있다고 말하는 것은 선뜻 상식에 부합되기 어려워 보인다. 따라서, <strong>탈중앙화 측정을 위해 소개한 4가지 방법들은 탈중앙화를 측정한다기보다는, 단순히 “현재 노드들 간의 빈부격차” 정도로만 해석하는 것이 바람직할 것으로 보인다.</strong></p>
-
-<p><strong>노드들 간의 빈부격차 뿐만 아니라, 노드의 수와 노드 참여에 대한 자격 요건 등 더욱 많은 현황을 Input Data로 활용할 수 있는 종합 측정 방법이 필요할 것이다.</strong> 학계와 업계 내에서 탈중앙화 측정에 대한 연구가 지속적으로 진행 중인 만큼, 탈중앙화에 특화된 더욱 정교한 Valuation 방법이 나오길 기대해본다.</p>
-
-<h2 id="references">References</h2>
-<ul>
-  <li><a href="https://www.researchgate.net/figure/The-Blockchain-Trilemma_fig2_352284073">Blockchain Trilemma Image</a></li>
-  <li><a href="https://www.researchgate.net/figure/PoW-and-PoS-consensus-mechanisms-comparison_fig2_334061880">PoW and PoS consensus mechanisms comparison</a></li>
-  <li><a href="https://blockchair.com/ethereum/charts/hashrate-distribution">Ethereum On-chain Data</a></li>
-  <li><a href="https://bscscan.com/validators">Binance Smart Chain On-chain Data</a></li>
-  <li><a href="https://explorer-xp.avax.network/validators">Avalanche On-chain Data</a></li>
-  <li><a href="https://solanabeach.io/validators">Solana On-chain Data</a></li>
-  <li><a href="https://explorer.fantom.network/staking">Fantom On-chain Data</a></li>
-  <li><a href="https://polygonscan.com/stat/miner?range=14&amp;blocktype=blocks">Polygon On-chain Data</a></li>
-  <li><a href="https://tronscan.org/#/sr/votes">Tron On-chain Data</a></li>
-  <li><a href="https://crypto.org/explorer/validators">Cronos On-chain Data</a></li>
-  <li><a href="https://scope.klaytn.com/">Klaytn On-chain Data</a></li>
-  <li><a href="https://celo.org/validators/explore">Celo On-chain Data</a></li>
-  <li><a href="https://www.ftc.go.kr/callPop.do?url=%2FjargonSearchView.do%3Fkey%3D451&amp;dicseq=428&amp;titl=%ED%97%88%ED%95%80%EB%8B%AC-%ED%97%88%EC%89%AC%EB%A7%8C+%EC%A7%80%EC%88%98%28Herfindal-Hershman+Index%29">공정거래위원회: 허핀달-허쉬만 지수</a></li>
-  <li><a href="https://ko.wikipedia.org/wiki/%EC%A7%80%EB%8B%88_%EA%B3%84%EC%88%98">Wikipedia: 지니 계수</a></li>
-  <li><a href="https://www.sciencedirect.com/science/article/pii/S2405959521000977">DQ: Two approaches to measure the degree of decentralization of blockchain</a></li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="blockchain" /><category term="statistics" /><summary type="html"><![CDATA[“블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다.”]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="amplitude" /><category term="data_analytics" /><summary type="html"><![CDATA[이번 아티클에서 다룰 이야기는 바로 Amplitude(앰플리튜드)다. 데이터 분석 포지션으로 입사를 한 후, 가장 먼저 접한 것이 Amplitude였는데, 새싹(🍀) 처럼 초심이 가득했던 마음으로 하나하나 익혀간 덕분에 애정이 각별한 툴이다. 개발팀, 마케팅팀 등 디센트와 함께 심장이 활활 타오르며 일하는 팀원 분들과 함께 하나하나 세팅하면서 익힌 Amplitude를 톺아보도록 하겠다.]]></summary></entry></feed>
