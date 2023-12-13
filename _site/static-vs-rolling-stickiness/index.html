@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>데이터 분석가의 SQL 최적화 일기: Static vs. Rolling Stickiness – Joshua Kim – Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
+
+" />
+    <meta property="og:description" content="
+  대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="데이터 분석가의 SQL 최적화 일기: Static vs. Rolling Stickiness" />
+    <meta property="twitter:title" content="데이터 분석가의 SQL 최적화 일기: Static vs. Rolling Stickiness" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+  <body>
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>데이터 분석가의 SQL 최적화 일기: Static vs. Rolling Stickiness</h1>
+
+  <div>
+    <span class="date">
+      2023-11-19
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#korean">
+          korean
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#data_analytics">
+          data_analytics
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#sql">
+          sql
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#date_warehouse">
+          date_warehouse
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>들어가는 글</li>
+  <li>Rolling MAU vs. 30일 이동평균선</li>
+  <li>Static MAU</li>
+  <li>Stickiness 지표</li>
+  <li>Rolling Stickiness</li>
+  <li>Static Stickiness</li>
+  <li>Data Mart를 통해 Rolling MAU 도입하기</li>
+  <li>결론: Query Cost vs Data Freshness</li>
+</ol>
+
+<hr />
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>본 자료는 작성자 본인의 견해일 뿐이며, 실제 데이터베이스의 환경에 따라 적합하지 않을 수 있습니다. 이미지 출처를 제외한 모든 쿼리문과 내용은 본인의 경험에 의해 작성되었습니다. 작성된 쿼리문은 샘플로 작성한 것이며, 본인의 과거 및 현재 재직 회사의 업무 현황과 무관합니다.</p>
+</blockquote>
+
+<h1 id="1-들어가는-글">1. 들어가는 글</h1>
+
+<p><img src="/assets/2023-11-19-static-vs-rolling-stickiness/unfinished-work.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://datasciencedojo.com/blog/data-science-memes/">Source</a></p>
+</blockquote>
+
+<p>안녕하세요. 저는 위 아이 처럼 데이터 분석가로 근무하고 있는 Joshua라고 합니다.</p>
+
+<p>저는 일반적인 B2C 기업에서 데이터 분석가로 근무하며, GA4, Amplitude, BigQuery, Redash 등을 활용하여 A/B 테스트, 지표 모니터링 등을 수행하며 회사의 등대 역할을 하며 지냈습니다. 다른 분들과 비슷한 역할을 수행했던 것이죠.</p>
+
+<p>또한 GA4, Amplitude 등과 같은 B2B 데이터 분석 플랫폼 서비스를 만드는 경험도 살짝 했는데요. 그러다보니 저의 R&amp;R은 서비스 자체의 데이터 분석 업무 외에도, 고객들에게 데이터를 서빙하기 위한 데이터 마트 설계와 최적화 업무에 집중되기도 했습니다. 제 타이틀을 멋있게 가공하면 최근에 떠오르는 포지션인 Analytics Engineer, 반쪽 짜리 데이터 엔지니어, 아니면 대충 쿼리 머신 혹은 분지니어(?)인 것 같기도 합니다. 😅</p>
+
+<p>아무튼 대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.</p>
+
+<p>(SQL 전문가 분들이 많이 계시는 만큼, 제 글을 비판적으로 고찰해주시면 감사하겠습니다! 😄)</p>
+
+<h1 id="2-rolling-mau-vs-30일-이동평균선">2. Rolling MAU vs. 30일 이동평균선</h1>
+
+<p>Rolling MAU란 마치 30일 이동평균선 인디케이터 등과 유사하게, 각 시점마다 최근 30일 동안의 MAU를 측정하는 지표입니다. 아래 GA4의 리포트는 WAU와 MAU를 모두 Rolling 방식으로 집계하고 있는 대표적인 사례라고 할 수 있을 것 같아서 가져와봤어요!</p>
+
+<p><img src="/assets/2023-11-19-static-vs-rolling-stickiness/user-activity-over-time.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://measureschool.com/ga4-active-users/">Source</a></p>
+</blockquote>
+
+<p>하지만, 30일 이동평균선 인디케이터와 Rolling MAU의 연산 방식에는 중대한 차이점이 있습니다.</p>
+
+<p><img src="/assets/2023-11-19-static-vs-rolling-stickiness/trading-view.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.tradingwithrayner.com/20-30-day-moving-average/">Source</a></p>
+</blockquote>
+
+<p>먼저 30일 이동평균선을 SQL스럽게 작성해본다면, 단순히  <code class="language-plaintext highlighter-rouge">AVG Window Functions</code>를 통해 즉각적으로 연산할 수 있습니다. Window Functions는 이미 출력된  <code class="language-plaintext highlighter-rouge">price</code>  칼럼 자체를 통해 연산하므로,  <code class="language-plaintext highlighter-rouge">daily_prices</code>  테이블을 중복으로 불러오지 않아 연산량이 기하급수적으로 증가하지 않습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_ma_30d</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="nb">date</span><span class="p">,</span>
+      <span class="n">price</span><span class="p">,</span>
+      <span class="k">AVG</span><span class="p">(</span><span class="n">price</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+         <span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">date</span>
+         <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="mi">29</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="k">CURRENT</span> <span class="k">ROW</span>
+      <span class="p">)</span> <span class="k">AS</span> <span class="n">ma_30d</span>
+   <span class="k">FROM</span>
+      <span class="n">daily_prices</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">CTE_ma_30d</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>반면, Rolling MAU의 연산 방식은 중대한 문제점이 있습니다. 즉, Window Functions를 통해 연산하는 것이 어렵다는 점입니다. 아래 쿼리문을 살펴보면,  <code class="language-plaintext highlighter-rouge">SELECT Statement</code>  내 서브쿼리를 통해 Outer Table의 각  <code class="language-plaintext highlighter-rouge">date</code>마다 일일이 Inner Table의 가변적인 기간마다 모든  <code class="language-plaintext highlighter-rouge">user_id</code>  고유값 개수를  <code class="language-plaintext highlighter-rouge">COUNT</code>하게 됩니다. 즉,  <code class="language-plaintext highlighter-rouge">session_starts</code>  테이블 내의  <code class="language-plaintext highlighter-rouge">date</code>  고유값 개수가 365개라면, 각  <code class="language-plaintext highlighter-rouge">rolling_mau</code>  칼럼의 값을 계산하기 위해서는 동일한 테이블을 365번이나 메모리에 올려야 하는 것이죠.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_rolling_mau</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+      <span class="p">(</span>
+         <span class="k">SELECT</span>
+            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span>
+         <span class="k">FROM</span>
+            <span class="n">session_starts</span> <span class="n">SUB</span>
+         <span class="k">WHERE</span>
+            <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span>
+            <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="o">&lt;=</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
+      <span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span> <span class="n">MAIN</span>
+   <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">CTE_rolling_mau</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>결국, 30일 이동평균선과 달리 Rolling MAU의 경우 단순한 집계로 가능한 영역이 아니라,  <code class="language-plaintext highlighter-rouge">COUNT(DISTINCT user_id)</code>를 수행하기 위한 테이블 재탐색이 각 Row마다 중복 발생해야 하는 영역입니다. 따라서 이는 쿼리문의 성능과 비용 관리에 매우 부정적인 영향을 끼치게 됩니다.</p>
+
+<h1 id="3-static-mau">3. Static MAU</h1>
+
+<p>Static MAU는 제가 직접 마음대로 지어본 용어인데요. 😅 Rolling MAU에서 겪은 문제점에 대해 다음과 같은 방식으로 타협을 해봤습니다.</p>
+
+<p><img src="/assets/2023-11-19-static-vs-rolling-stickiness/cat.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.reddit.com/r/ProgrammerHumor/comments/szxooa/the_difference_between_dynamic_vs_static_ip/?rdt=33714">Source</a></p>
+</blockquote>
+
+<p><strong>“어쩔 수 없네. 그럼, MAU는 Rolling 방식이 아닌 각 월 별로 Static하게 집계해보자!”</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_static_mau</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="k">month</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">static_mau</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span>
+   <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">CTE_static_mau</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>Static MAU는 Rolling MAU에 비해 다음과 같은 장/단점이 존재할 것 같습니다.</p>
+<ul>
+  <li><strong>장점</strong>: 쿼리 비용이 크게 절감되고 연산 속도가 빨라집니다.</li>
+  <li><strong>단점</strong>: 쿼리가 실행되는 시점 당월의 경우, 월말이 도래하기 전까지는 MAU가 과소평가되어 데이터 분석의 Freshness가 저하됩니다. 즉, 오늘이 1월 2일이라면 1월의 MAU는 1월 1일부터 1월 2일까지만 집계되겠죠.</li>
+</ul>
+
+<h1 id="4-stickiness-지표">4. Stickiness 지표</h1>
+
+<p>한편, 흔히 <code class="language-plaintext highlighter-rouge">DAU➗MAU</code>로 표현되는 Stickiness(사용자 고착도)를 측정하는 경우에는 Static과 Rolling 방식 사이의 고민이 더욱 깊어지게 됩니다.</p>
+
+<p>Stickiness 지표는 토스, Instagram, YouTube, TikTok, 블라인드 등 활성 사용자들이 습관적으로 앱에 방문함으로써 광고 노출 효과 등을 극대화해야 하는 서비스에서 매우 중요한 지표입니다. 나쁘게 말하면, 사용자의 중독도를 파악하기 위한 지표인 것이죠. 😂</p>
+
+<p><img src="/assets/2023-11-19-static-vs-rolling-stickiness/facebook.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://velog.io/@datarian/retention4">Source</a></p>
+</blockquote>
+
+<h1 id="5-rolling-stickiness">5. Rolling Stickiness</h1>
+
+<p>Stickiness도 마찬가지로, Rolling Stickiness와 Static Stickiness로 구분하여 연산할 수 있는데요. (Static Stickiness도 제가 마음대로 지어본 용어입니다.) 먼저 Rolling Stickiness 지표 산출을 위한 쿼리문은 다음과 같습니다.
+(참고로, 분모가 0이 되는 케이스의 경우, 0으로 반환되도록  <code class="language-plaintext highlighter-rouge">COALSECE(TRY(…), 0)</code> 함수를 사용했습니다. 혼동이 없으시길 바랄게요! 🙃)</p>
+
+<p>이 경우 Rolling MAU 연산 방식과 마찬가지로, Outer Table의 각  <code class="language-plaintext highlighter-rouge">date</code>마다 일일이 Inner Table의 모든  <code class="language-plaintext highlighter-rouge">user_id</code>  고유값 개수를  <code class="language-plaintext highlighter-rouge">COUNT</code>하게 됩니다. 즉, 메모리 사용량과 트래픽 수준이 급격하게 상승할 것입니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_rolling_stickiness</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+      <span class="n">COALESCE</span><span class="p">(</span>
+         <span class="n">TRY</span><span class="p">(</span>
+            <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span>
+            <span class="o">/</span>
+            <span class="p">(</span>
+               <span class="k">SELECT</span>
+                  <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span>
+               <span class="k">FROM</span>
+                  <span class="n">session_start</span> <span class="n">SUB</span>
+               <span class="k">WHERE</span>
+                  <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">29</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span>
+                  <span class="k">AND</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="o">&lt;=</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
+            <span class="p">)</span>
+         <span class="p">),</span>
+         <span class="mi">0</span>
+      <span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_stickiness</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span> <span class="n">MAIN</span>
+   <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">CTE_rolling_stickiness</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="6-static-stickiness">6. Static Stickiness</h1>
+
+<p>그러나 Static Stickiness 방식으로 접근할 경우 쿼리문은 다음과 같습니다. DAU와 Static MAU를 Inline View로 먼저 계산한 후, 각 일자 별  <code class="language-plaintext highlighter-rouge">dau</code>를 고정된 월의  <code class="language-plaintext highlighter-rouge">mau</code>로 나누어주는 방식입니다. 이 경우, 쿼리 비용과 연산 속도를 크게 개선할 수 있게 됩니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_dau</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="nb">date</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span>
+   <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">),</span>
+<span class="n">CTE_static_mau</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="k">month</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">static_mau</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span>
+   <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">),</span>
+<span class="n">CTE_static_stickiness</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">dau</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+      <span class="n">COALESCE</span><span class="p">(</span>
+         <span class="n">TRY</span><span class="p">(</span><span class="n">dau</span><span class="p">.</span><span class="n">dau</span> <span class="o">/</span> <span class="n">static_mau</span><span class="p">.</span><span class="n">static_mau</span><span class="p">),</span>
+         <span class="mi">0</span>
+      <span class="p">)</span> <span class="k">AS</span> <span class="n">static_stickiness</span>
+   <span class="k">FROM</span>
+      <span class="n">dau</span>
+   <span class="k">LEFT</span> <span class="k">JOIN</span>
+      <span class="n">static_mau</span>
+      <span class="k">ON</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="n">dau</span><span class="p">.</span><span class="nb">date</span><span class="p">)</span> <span class="o">=</span> <span class="n">static_mau</span><span class="p">.</span><span class="k">month</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">CTE_static_stickiness</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>물론, Static Stickiness는 Rolling Stickiness에 비해 다음과 같은 장/단점이 존재합니다.</p>
+<ul>
+  <li><strong>장점</strong>: 쿼리 비용이 크게 절감되고 연산 속도가 빨라집니다.</li>
+  <li><strong>단점</strong>: 당월의 경우, 월말이 도래하기 전까지는 MAU가 과소평가되어 Stickiness가 비정상적으로 높은 값으로 측정됩니다. 즉, 오늘이 1월 1일이라면,  <code class="language-plaintext highlighter-rouge">DAU=MAU</code>  이므로  <code class="language-plaintext highlighter-rouge">Stickiness=100%</code>인 말도 안되는 수치가 대시보드에 표시될 것입니다.😨</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Stickiness=100%</code>  로 표현되면, 사내 구성원들에게 잘못된 의사결정의 근거를 전달하게 될 위험성이 존재합니다. 따라서, Static Stickiness 방식을 사내에 도입하게 될 경우, 매월 초 자정에만 Appending되도록 하는 스케줄링을 두어야 할 것입니다. 즉, 1월 1일부터 1월 31일까지의 Stickiness 지표는 2월 1일이 되어야만 대시보드에 표현되는 것이죠. 그렇다면, Stickiness 지표는 최대 30일 이상 지연되어 서비스의 신속한 Action Item을 실행하기가 어려워질 것입니다. Stickiness는 Data Freshness가 중요한 지표 중 하나인데도 불구하고 말이죠.</p>
+
+<h1 id="7-data-mart를-통해-rolling-mau-도입하기">7. Data Mart를 통해 Rolling MAU 도입하기</h1>
+
+<p>그러면 대안이 없을까요? 없으면 제가 이 글을 안 썼겠죠.🤭 Data Mart 내에 Incremental Strategy를 적용한 <code class="language-plaintext highlighter-rouge">rolling_mau</code>  테이블 스케줄링을 구축한다면 앞서 언급한 Rolling Stickiness의 치명적인 단점을 개선할 수 있습니다. 가령, 다음과 같이 매일 자정에 Appending되는  <code class="language-plaintext highlighter-rouge">fact_rolling_mau</code>  테이블을 생성한다고 가정해보겠습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">fact_rolling_mau</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span>
+   <span class="k">WHERE</span>
+      <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">date</span>
+      <span class="k">AND</span> <span class="nb">date</span> <span class="o">&lt;=</span> <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">fact_rolling_mau</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>즉 다음과 같이,  <code class="language-plaintext highlighter-rouge">fact_rolling_mau</code>  테이블은 중복 연산 문제를 벗어난 채 매일 새로운  <code class="language-plaintext highlighter-rouge">rolling_mau</code>  값을 업데이트하게 됩니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>date</strong></th>
+      <th><strong>rolling_mau</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2023-01-01</td>
+      <td>100,000</td>
+    </tr>
+    <tr>
+      <td>2023-01-01</td>
+      <td>101,000</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>2023-01-01</td>
+      <td>99,700</td>
+    </tr>
+    <tr>
+      <td>2023-01-01</td>
+      <td>110,000</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>이제 이미 생성된  <code class="language-plaintext highlighter-rouge">fact_rolling_mau</code>  테이블을 통해 Rolling Stickiness를 계산하는 쿼리문을 작성하면 다음과 같습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_dau</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="nb">date</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">dau</span>
+   <span class="k">FROM</span>
+      <span class="n">session_starts</span>
+   <span class="k">GROUP</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">),</span>
+<span class="n">CTE_rolling_stickiness</span> <span class="k">AS</span> <span class="p">(</span>
+   <span class="k">SELECT</span>
+      <span class="n">dau</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+      <span class="n">COALESCE</span><span class="p">(</span>
+         <span class="n">TRY</span><span class="p">(</span><span class="n">dau</span><span class="p">.</span><span class="n">dau</span> <span class="o">/</span> <span class="n">fact_rolling_mau</span><span class="p">.</span><span class="n">rolling_mau</span><span class="p">),</span>
+         <span class="mi">0</span>
+      <span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_stickiness</span>
+   <span class="k">FROM</span>
+      <span class="n">CTE_dau</span>
+   <span class="k">LEFT</span> <span class="k">JOIN</span>
+      <span class="n">fact_rolling_mau</span>
+      <span class="k">ON</span> <span class="n">dau</span><span class="p">.</span><span class="nb">date</span> <span class="o">=</span> <span class="n">rolling_mau</span><span class="p">.</span><span class="nb">date</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+   <span class="o">*</span>
+<span class="k">FROM</span>
+   <span class="n">CTE_rolling_stickiness</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="8-결론-query-cost-vs-data-freshness">8. 결론: Query Cost vs Data Freshness</h1>
+
+<p>결국 Rolling MAU, Rolling Stickiness 지표에 대한 이야기를 다루다보니 자연스럽게 Data Mart의 필요성으로 귀결되는 것 같습니다. Data Mart는 단순히 쿼리 결과의 정확성이나 일관성만을 위해 필요한 것이 아니라, 이처럼 Query Cost vs Data Freshness 사이의 상충 관계를 극복하기 위해서도 필요하다고 할 수 있습니다. 특히, 서비스의 사용 규모에 따라 소스 테이블의 사이즈가 방대해질수록 Data Mart의 활용은 필수적일 것입니다. 부족한 글을 읽어주셔서 감사합니다!</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/near-protocol/">
+            &#xE000; Near Protocol: Account Model and Transaction Story
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+  <li><a href="mailto:joshuajkim413@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M101.3 141.6v228.9h0.3 308.4 0.8V141.6H101.3zM375.7 167.8l-119.7 91.5 -119.6-91.5H375.7zM127.6 194.1l64.1 49.1 -64.1 64.1V194.1zM127.8 344.2l84.9-84.9 43.2 33.1 43-32.9 84.7 84.7L127.8 344.2 127.8 344.2zM384.4 307.8l-64.4-64.4 64.4-49.3V307.8z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>© Joshua Kim</p>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
