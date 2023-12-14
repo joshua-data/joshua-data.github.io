@@ -8,9 +8,13 @@ permalink: /about/
 
 ![]({{ site.baseurl }}/assets/profile/joshua-cook.png)
 
+---
+
 ### Discover Joshua
 
-* Primarily an introverted individual, he's scattered with occasional extroverted and proactive traits. It seems like he has numerous personas within him.
+Primarily an introverted individual, he's scattered with occasional extroverted and proactive traits. It seems like he has numerous personas within him.
+
+---
 
 ### He's Passionate About
 
@@ -22,23 +26,31 @@ permalink: /about/
 * cats
 * cold brew
 
+---
+
 ### Education
 
-* Master of Engineering in **AI Big Data**
-* Bachelor of Business Administration in **Finance**
-* Bachelor of Arts in **Philosophy**
+* Master of Engineering in `AI Big Data`
+* Bachelor of Business Administration in `Finance`
+* Bachelor of Arts in `Philosophy`
+
+---
 
 ### Languages
 
-* Korean (Native)
-* English (Full Professional Proficiency)
-* Mandarin Chinese (Lower-intermediate)
+* `Korean` (Native)
+* `English` (Full Professional Proficiency)
+* `Mandarin Chinese` (Lower-intermediate)
+
+---
 
 ### Locations
 
-* Seoul, South Korea
-* Austin, Texas, United States
-* New Taipei City, Taiwan
+* 🇰🇷 Seoul, South Korea
+* 🇺🇸 Austin, Texas, United States
+* 🇹🇼 New Taipei City, Taiwan 
+
+---
 
 ### Contact Me
 
@@ -47,3 +59,9 @@ permalink: /about/
 * [Medium](https://joshua-data.medium.com)
 * [GiHub](https://github.com/joshua-data)
 * [Kaggle](https://www.kaggle.com/joshuajsk)
+
+---
+
+### Content Usage Policy
+
+All materials within this blog cannot be used for commercial purposes. For non-commercial purposes, proper attribution is mandatory. Please contact me directly for more details.
