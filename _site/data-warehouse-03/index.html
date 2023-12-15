@@ -12,7 +12,7 @@
     gtag('config', 'G-K04Y972F7E');
   </script>
 
-  <title>Data Warehouse #01-02 – Joshua Kim – Data Analyst</title>
+  <title>Data Warehouse #03 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -23,16 +23,14 @@
     <meta name="description" content="
   In this article, I’ll summarize key takeaways from:
   
-    SECTION 01. Introduction
-    SECTION 02. Data Warehouse Basics
+    SECTION 03. Data Warehouse Architecture
   
 
 " />
     <meta property="og:description" content="
   In this article, I’ll summarize key takeaways from:
   
-    SECTION 01. Introduction
-    SECTION 02. Data Warehouse Basics
+    SECTION 03. Data Warehouse Architecture
   
 
 " />
@@ -40,8 +38,8 @@
     <meta name="author" content="Joshua Kim" />
 
     
-    <meta property="og:title" content="Data Warehouse #01-02" />
-    <meta property="twitter:title" content="Data Warehouse #01-02" />
+    <meta property="og:title" content="Data Warehouse #03" />
+    <meta property="twitter:title" content="Data Warehouse #03" />
     
   <!-- Async font loading -->
 <script>
@@ -131,7 +129,7 @@
 
     <div id="main" role="main" class="container">
       <article class="post">
-  <h1>Data Warehouse #01-02</h1>
+  <h1>Data Warehouse #03</h1>
 
   <div>
     <span class="date">
@@ -165,8 +163,7 @@
     <blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
+    <li>SECTION 03. Data Warehouse Architecture</li>
   </ul>
 </blockquote>
 
@@ -176,66 +173,108 @@
   <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
 <blockquote>
   <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-<h1 id="what-will-you-learn">What Will You Learn?</h1>
+<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
+
+<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
+
+<h3 id="pentaho">Pentaho</h3>
 
 <ul>
-  <li>Data Warehouse Basics</li>
-  <li>Data Warehouse Architecture</li>
-  <li>Dimensional Modeling</li>
-  <li>Fact Tables</li>
-  <li>Dimension Tables</li>
-  <li>Slowly Changing Dimensions</li>
-  <li>ETL Process</li>
-  <li>ETL Tools</li>
-  <li>Case Study: Create a Data Warehouse</li>
-  <li>ETL vs. ELT</li>
-  <li>Using a Data Warehouse</li>
-  <li>Optimizing a Data Warehouse</li>
-  <li>The Modern Data Warehouse</li>
+  <li><strong>ETL Tool</strong></li>
+  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
+  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
+  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
 </ul>
 
-<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
+<h3 id="postgresql">PostgreSQL</h3>
 
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
-
-<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
-
-<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
 <ul>
-  <li>User-friendly</li>
-  <li>Fast query performance</li>
-  <li>Enabling data analysis</li>
+  <li><strong>Database Management System</strong></li>
+  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
+  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
 </ul>
 
-<h1 id="etl">ETL</h1>
+<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
 
+<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
+
+<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
 <ul>
-  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
+  <li><strong>“The Landing Zone Extracted Data”</strong>
+    <ul>
+      <li>Data in Tables and on a Separate Database</li>
+      <li>As little “toughing” as possible</li>
+      <li>We don’t charge the source systems.</li>
+      <li>Temporary or Persistent Staging Layers</li>
+    </ul>
+  </li>
+  <li>Short Time on the Source Systems</li>
+  <li>Quickly Extracted</li>
+  <li>Move the Data into Relational Database</li>
+  <li>Start Transformations from There</li>
+  <li>Minimal Transformation</li>
 </ul>
 
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
-
-<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
+<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
 <ul>
-  <li>Centralized and Consistent Location for Data</li>
-  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
-  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
-  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
-  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
 </ul>
 
-<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
-
-<h1 id="business-intelligence">Business Intelligence</h1>
+<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
 <ul>
-  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
+  <li><strong>“Core”</strong>
+    <ul>
+      <li>Business Logic</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
+<ul>
+  <li><strong>“Data Mart”</strong>
+    <ul>
+      <li>Subset of a Data Warehouse</li>
+      <li>Dimensional Model</li>
+      <li>Can be Further Aggregated.</li>
+      <li>Usability + Acceptance</li>
+      <li>Performance</li>
+    </ul>
+  </li>
+  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
+</ul>
+
+<h1 id="in-memory-databases">In-memory Databases</h1>
+
+<h3 id="traditional-databases">Traditional Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
+
+<h3 id="in-memory-databases-1">In-memory Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
+
+<ul>
+  <li>Highly Optimized for Query Performance</li>
+  <li>Good for Analytics &amp; High Query Volume</li>
+  <li>Usually Used for Data Marts</li>
+  <li>Relational &amp; Non-relational</li>
+  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
+</ul>
+
+<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
+<ul>
+  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
+  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
 </ul>
 
 <hr />
@@ -248,17 +287,11 @@
   <div class="pagination">
     
       <span class="prev" >
-          <a href="http://localhost:4000/mastering-ethereum/">
-            &#xE000; 『마스터링 이더리움』 중요한 내용 모조리 요약
+          <a href="http://localhost:4000/data-warehouse-01-02/">
+            &#xE000; Data Warehouse #01-02
           </a>
       </span>
     
-    
-      <span class="next" >
-          <a href="http://localhost:4000/data-warehouse-03/">
-            Data Warehouse #03 &#xE001;
-          </a>
-      </span>
     
   </div>
 
