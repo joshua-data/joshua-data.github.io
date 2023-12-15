@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>Data Warehouse #05 – Joshua Kim – Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 05. Facts
+  
+
+" />
+    <meta property="og:description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 05. Facts
+  
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="Data Warehouse #05" />
+    <meta property="twitter:title" content="Data Warehouse #05" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Data Warehouse #05</h1>
+
+  <div>
+    <span class="date">
+      2023-12-06
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#english">
+          english
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#sql">
+          sql
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#data_warehouse">
+          data_warehouse
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 05. Facts</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="additivity-in-facts">Additivity in Facts</h1>
+
+<p><strong>1. Fully Additive Facts</strong></p>
+<ul>
+  <li>Can be added across  <strong>all dimensions</strong></li>
+  <li>Most Flexible &amp; Useful</li>
+  <li><strong>Most fact tables</strong>  are fully additive!</li>
+</ul>
+
+<p><strong>2. Semi-additive Facts</strong></p>
+<ul>
+  <li>Can be added across  <strong>a few dimensions</strong></li>
+  <li>Less Flexible &amp; Used Carefully</li>
+  <li><strong>Averaging</strong>  might be an alternative! (i.e.,  <strong>Balance</strong>)</li>
+</ul>
+
+<p><strong>3. Non-additive Facts</strong></p>
+<ul>
+  <li>Can  <strong>NOT</strong>  be added across  <strong>any dimensions</strong></li>
+  <li>Limited Analytical</li>
+  <li>Store the  <strong>underlying values</strong>  instead! (i.e.,  <strong>Ratio</strong>,  <strong>Percentage</strong>,  <strong>Price</strong>, etc.)</li>
+</ul>
+
+<h3 id="1-fully-additive-facts">1. Fully Additive Facts</h3>
+<ul>
+  <li>Given the tables below:</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/fully-additive-facts-1.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">units</code>  are  <strong>additive</strong>.</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/fully-additive-facts-2.webp" alt="" /></p>
+
+<h3 id="2-semi-additive-facts">2. Semi-additive Facts</h3>
+
+<ul>
+  <li>Given the tables below:</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/semi-additive-facts-1.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">balance</code>  is  <strong>semi-additive</strong>.</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/semi-additive-facts-2.webp" alt="" /></p>
+
+<h3 id="3-non-additive-facts">3. Non-additive Facts</h3>
+
+<ul>
+  <li>Given the tables below:</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/non-additive-facts-1.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">price</code>  is  <strong>non-additive</strong>.</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/non-additive-facts-2.webp" alt="" /></p>
+
+<h1 id="year-to-date-in-facts">Year-to-Date in Facts</h1>
+
+<p><strong>Month-to-Date, Quarter-to-Date, Year-to-Date</strong></p>
+<ul>
+  <li>Often requested by business users</li>
+  <li>Tempted to store them in columns</li>
+  <li><strong>DO NOT store them in Fact Tables!</strong>
+    <ul>
+      <li>Instead, better store  <strong>the underlying values</strong>  in Fact Tables!</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="types-of-fact-tables">Types of Fact Tables</h1>
+
+<p><strong>1. Transactional Fact Tables</strong>
+<strong>2. Periodic Snapshot Fact Tables</strong>
+<strong>3. Accumulating Snapshot Fact Tables</strong></p>
+
+<h3 id="1-transactional-fact-tables">1. Transactional Fact Tables</h3>
+
+<ul>
+  <li>1 Row = Measurement of 1 Event/Transaction</li>
+  <li>It takes place at a specific time.</li>
+  <li>One transaction defines the lowest grain.</li>
+</ul>
+
+<p><strong>Characteristics</strong></p>
+<ul>
+  <li>Most Common &amp; Very Flexible</li>
+  <li>Typically Additive</li>
+  <li>Other dimension tables associated ⬆️</li>
+  <li>Size ⬆️⬆️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/transactional-fact-tables.webp" alt="" /></p>
+
+<h3 id="2-periodic-snapshot-fact-tables">2. Periodic Snapshot Fact Tables</h3>
+
+<ul>
+  <li>1 Row = Summarizes Measurement of Many Events/Transactions</li>
+  <li>Summarized of standard period (i.e., 1 day, 1 week, etc.)</li>
+  <li>One period defines the lowest grain.</li>
+</ul>
+
+<p><strong>Characteristics</strong></p>
+<ul>
+  <li>No Events = NULL or 0</li>
+  <li>Typically Additive</li>
+  <li>Other fact tables associated ⬆️ / Other dimension tables associated ⬇️</li>
+  <li>Size ⬇️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/periodic-snapshot-fact-tables.webp" alt="" /></p>
+
+<h3 id="3-accumulating-snapshot-fact-tables">3. Accumulating Snapshot Fact Tables</h3>
+
+<ul>
+  <li>1 Row = Summarizes Measurement of Many Events/Transactions</li>
+  <li>Summarized of the lifespan of 1 process (i.e., order fulfillment)</li>
+  <li>Definite beginning &amp; Definite ending (with steps)</li>
+</ul>
+
+<p><strong>Characteristics</strong></p>
+<ul>
+  <li>Least Common</li>
+  <li>Workflow or Process Analysis</li>
+  <li>Multiple Datetime Foreign Keys (for each process step)</li>
+  <li>Other Datetime dimension tables associated ⬆️⬆️⬆️</li>
+  <li>Size ⬇️⬇️⬇️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/accumulating-snapshot-fact-tables.webp" alt="" /></p>
+
+<h1 id="steps-to-create-a-fact-table">Steps to Create a Fact Table</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/steps-to-create-a-fact-table.webp" alt="" /></p>
+
+<h3 id="4-key-decisions">4 Key Decisions</h3>
+
+<p><strong>1. Identify a business process for analysis.</strong></p>
+<ul>
+  <li>Examples: Sales, Order processing</li>
+</ul>
+
+<p><strong>2. Declare the grain.</strong></p>
+<ul>
+  <li>Examples: Transaction, Order, Order lines, Daily, Location</li>
+</ul>
+
+<p><strong>3. Identify relevant dimensions.</strong></p>
+<ul>
+  <li>“Filtering &amp; Grouping”</li>
+  <li>“Soul” for Analysis</li>
+  <li>Examples: Time, Locations, Product Category, Users</li>
+</ul>
+
+<p><strong>4. Identify facts for measurement.</strong></p>
+<ul>
+  <li>Defined by the grain! (Not by specific use cases)</li>
+  <li>Examples: Revenue, Order Amount</li>
+</ul>
+
+<h1 id="factless-fact-tables">Factless Fact Tables</h1>
+
+<p>Only dimensional aspects of an event are recorded.</p>
+<ul>
+  <li>How many employees have been registered last month?</li>
+  <li>How many employees have been registered in a certain region?</li>
+</ul>
+
+<p>There are no measurement columns in the Factless Fact Tables.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/factless-fact-tables.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://learn.microsoft.com/ko-kr/power-bi/guidance/star-schema#factless-fact-tables">Source</a></p>
+</blockquote>
+
+<h1 id="natural-vs-surrogate-key">Natural vs. Surrogate Key</h1>
+
+<h3 id="natural-key">Natural Key</h3>
+<ul>
+  <li>Comes out of the source system</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/natural-keys.webp" alt="" /></p>
+
+<h3 id="surrogate-key">Surrogate Key</h3>
+<ul>
+  <li>Artificial Keys</li>
+  <li>Integer Number</li>
+  <li><code class="language-plaintext highlighter-rouge">_PK</code> or <code class="language-plaintext highlighter-rouge">_FK</code> suffixes</li>
+  <li>Created by the Database or ETL Tool</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/surrogate-keys.webp" alt="" /></p>
+
+<p><strong>Benefits of Surrogate Key</strong></p>
+<ul>
+  <li>Improve performance (Storage ⬇️, Easy Joins ⬆️)</li>
+  <li>Handle dummy values such as NULLs or Missing Values (using 999 or -1)</li>
+  <li>Integrate multiple source systems</li>
+  <li>Easier Administration &amp; Updates</li>
+  <li>Sometimes there are even NO Natural Keys available.</li>
+</ul>
+
+<p><strong>Practical Guidelines of Surrogate Key</strong></p>
+<ul>
+  <li>Always use Surrogate Keys in tables as Main PK and FK</li>
+  <li>Use Surrogate Keys both for Fact &amp; Dimension Tables (Except the Date Dimension Tables)</li>
+  <li>Optionally keep the Natural Keys</li>
+</ul>
+
+<h1 id="case-study-e-commerce">Case Study: E-commerce</h1>
+
+<h3 id="data-collection">Data Collection</h3>
+<ul>
+  <li>Shopping Cart Checkouts</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/data-collection-1.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/data-collection-2.webp" alt="" /></p>
+
+<h3 id="goals">Goals</h3>
+<ul>
+  <li>Maximizing Profits (profit margins, sales volume, product cost, promotions, and discounts)</li>
+</ul>
+
+<h3 id="1-identify-a-business-process-for-analysis">1. Identify a business process for analysis.</h3>
+<ul>
+  <li>Which products have been sold?</li>
+  <li>How much is the sales profit?</li>
+  <li>How much is the sales profit for each website?</li>
+  <li>How much is the performance on each different day?</li>
+  <li>What does the sales trend look like over time?</li>
+</ul>
+
+<h3 id="2-declare-the-grain">2. Declare the grain.</h3>
+<ul>
+  <li>The grains should have the most analytical values</li>
+  <li>The grains should have the highest dimensionalities.</li>
+  <li>In this case:  <code class="language-plaintext highlighter-rouge">order_id</code>  and  <code class="language-plaintext highlighter-rouge">product_id</code></li>
+</ul>
+
+<h3 id="3-identify-relevant-dimensions">3. Identify relevant dimensions.</h3>
+<ul>
+  <li>Dimensions should be the descriptive aspects of measures.</li>
+  <li>Dimensions should be naturally derived after the grains are defined.</li>
+  <li>In this case:  <code class="language-plaintext highlighter-rouge">customers</code>,  <code class="language-plaintext highlighter-rouge">products</code>,  <code class="language-plaintext highlighter-rouge">promotions</code>,  <code class="language-plaintext highlighter-rouge">datetimes</code>,  <code class="language-plaintext highlighter-rouge">websites</code></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/identify-relevant-dimensions.webp" alt="" /></p>
+
+<h3 id="4-identify-facts-for-measurement">4. Identify facts for measurement.</h3>
+<ul>
+  <li>The facts must comply with the grains that we have defined above.</li>
+  <li><code class="language-plaintext highlighter-rouge">discount</code>: additive vs. non-additive</li>
+  <li><code class="language-plaintext highlighter-rouge">profit</code> : also complies with the grain</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/identify-facts-for-measurement.webp" alt="" /></p>
+
+<h3 id="5-final-results">5. Final Results</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/final-results.webp" alt="" /></p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/data-warehouse-04/">
+            &#xE000; Data Warehouse #04
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+  <li><a href="mailto:joshuajkim413@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M101.3 141.6v228.9h0.3 308.4 0.8V141.6H101.3zM375.7 167.8l-119.7 91.5 -119.6-91.5H375.7zM127.6 194.1l64.1 49.1 -64.1 64.1V194.1zM127.8 344.2l84.9-84.9 43.2 33.1 43-32.9 84.7 84.7L127.8 344.2 127.8 344.2zM384.4 307.8l-64.4-64.4 64.4-49.3V307.8z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>© Joshua Kim</p>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
