@@ -10,6 +10,9 @@ tags:
 
 > In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the  **DAU**  and  **MAU,** but also with  **Stickiness**, and  **Retention Rate**, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!
 
+<iframe src="https://www.youtube.com/embed/jxn1v_5Wfew?si=OU5V3raafTlM0HL3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+> Presentation Video
+
 ### CONTENTS
 1.  Introduction
 2.  DAU, MAU, and Stickiness (All the Transactions)

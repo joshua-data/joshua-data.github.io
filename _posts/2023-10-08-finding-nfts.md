@@ -9,6 +9,9 @@ tags:
 
 > Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua's expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don't miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.
 
+<iframe src="https://www.youtube.com/embed/Z1hwVUyR6Ic?si=-yfpWfDDFOZ6onSl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+> Presentation Video
+
 ### CONTENTS
 1. Contract = Functions + Events
 2. ERC721 Interface
