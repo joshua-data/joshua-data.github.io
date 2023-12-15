@@ -1,4 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-15T15:20:06+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-15T15:35:03+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 01. Introduction</li>
+    <li>SECTION 02. Data Warehouse Basics</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-will-you-learn">What Will You Learn?</h1>
+
+<ul>
+  <li>Data Warehouse Basics</li>
+  <li>Data Warehouse Architecture</li>
+  <li>Dimensional Modeling</li>
+  <li>Fact Tables</li>
+  <li>Dimension Tables</li>
+  <li>Slowly Changing Dimensions</li>
+  <li>ETL Process</li>
+  <li>ETL Tools</li>
+  <li>Case Study: Create a Data Warehouse</li>
+  <li>ETL vs. ELT</li>
+  <li>Using a Data Warehouse</li>
+  <li>Optimizing a Data Warehouse</li>
+  <li>The Modern Data Warehouse</li>
+</ul>
+
+<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
+
+<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
+
+<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
+<ul>
+  <li>User-friendly</li>
+  <li>Fast query performance</li>
+  <li>Enabling data analysis</li>
+</ul>
+
+<h1 id="etl">ETL</h1>
+
+<ul>
+  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
+
+<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
+<ul>
+  <li>Centralized and Consistent Location for Data</li>
+  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
+  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
+  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
+  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
+</ul>
+
+<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
+
+<h1 id="business-intelligence">Business Intelligence</h1>
+<ul>
+  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="data_warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
   <p>개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “<strong>마스터링 이더리움 완독하고 정리하기</strong>”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.</p>
 </blockquote>
 
@@ -3127,548 +3206,4 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="python" /><summary type="html"><![CDATA[파이썬 파일을 실행하기 위해서는 파이썬의 High-level 언어를 Low-level로 변환해주는 Interpreter가 필요하고, 또 파이썬 파일 내에서 Load해야 하는 모듈 역시 함께 사전에 설치되어야 하는데요. pyinstaller는 이러한 Interpreter와 모듈을 함께 동봉한 채로 파이썬 파일을 패키징하여 하나의 실행 파일로 만들어주는 역할을 하는 것이죠.]]></summary></entry><entry><title type="html">The Last Click Attribution Model Using BigQuery</title><link href="http://localhost:4000/last-click-attribution/" rel="alternate" type="text/html" title="The Last Click Attribution Model Using BigQuery" /><published>2023-07-09T00:00:00+09:00</published><updated>2023-07-09T00:00:00+09:00</updated><id>http://localhost:4000/last-click-attribution</id><content type="html" xml:base="http://localhost:4000/last-click-attribution/"><![CDATA[<blockquote>
-  <p>In this article, you will explore how to easily aggregate the Last Click Attribution Model using BigQuery.</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>Introduction</li>
-  <li>Enable the export of Google Analytics 4 data to BigQuery.</li>
-  <li>Flatten Table</li>
-  <li>Standardize the session UTM values for all events within each session.</li>
-  <li>Replace NULL session UTM values with the value “<code class="language-plaintext highlighter-rouge">(direct)</code>”.</li>
-  <li>Extract only the necessary columns for calculating attribution.</li>
-  <li>Assign journey numbers to each user’s purchase event.</li>
-  <li>Assign Priorities to indicate the order of events for applying the Last Click Attribution Model.</li>
-  <li>The <code class="language-plaintext highlighter-rouge">session_campaign</code> with the highest priority will be attributed to 100% of the revenue.</li>
-  <li>Now, let’s perform the Last Click Attribution aggregation for each channel.</li>
-  <li>Let’s create a dashboard using Redash.</li>
-</ol>
-
-<hr />
-
-<h1 id="1--introduction">1.  Introduction</h1>
-
-<p>When you go to the Attribution Settings of Google Analytics 4, you can easily choose the Attribution Model that you love.</p>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/attribution-settings.webp" alt="" /></p>
-<blockquote>
-  <p>Google Analytics 4 &gt; Settings &gt; Attribution Settings</p>
-</blockquote>
-
-<p><strong>Data Driven</strong></p>
-<ul>
-  <li>It does not explicitly specify what kind of model is being used, and I think it’s a little risky when it comes to making a marketing decision.</li>
-</ul>
-
-<p><strong>Last Click</strong></p>
-<ul>
-  <li>The channel that immediately precedes the purchase is considered to have a 100% contribution.</li>
-</ul>
-
-<p><strong>First Click</strong></p>
-<ul>
-  <li>The channel that initially brings in the user is considered to have a 100% contribution.</li>
-</ul>
-
-<p><strong>Linear</strong></p>
-<ul>
-  <li>All channels, from the user’s initial acquisition channel to the channel immediately preceding the purchase, are considered to have an equal contribution of 1/N, where N represents the total number of channels.</li>
-</ul>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/user-acquisition.webp" alt="" /></p>
-<blockquote>
-  <p>Google Analytics 4 &gt; Acquisition &gt; User Acquisition</p>
-</blockquote>
-
-<p>However, due to the post hoc nature of Attribution Settings in Google Analytics 4, there is a limitation where if the marketing strategy changes, you would need to aggregate the data again from the beginning.</p>
-
-<p>Therefore, considering alternatives outside of Google Analytics 4, I have started contemplating using BigQuery to apply Attribution Models more flexibly and regularly monitor them.</p>
-
-<p>In this article, you will explore how to easily aggregate the Last Click Attribution Model using BigQuery.</p>
-
-<h1 id="2-enable-the-export-of-google-analytics-4-data-to-bigquery">2. Enable the export of Google Analytics 4 data to BigQuery.</h1>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/bigquery-links.webp" alt="" /></p>
-<blockquote>
-  <p>Google Analytics 4 &gt; Settings &gt; BigQuery Links</p>
-</blockquote>
-
-<p>For detailed info and how to, refer to  <a href="https://support.google.com/analytics/answer/9358801?hl=en">here</a>.</p>
-
-<h1 id="3-flatten-table">3. Flatten Table</h1>
-
-<p>Unlike Bigtable, a column-wide store NoSQL database, BigQuery is a data warehouse. However, BigQuery still offers a lot of nested columns to handle future additions or deletions of schema, events, parameters, and more. For analytical purposes, it’s necessary to flatten tables composed of these columns to simplify queries.</p>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/flatten-table.webp" alt="" /></p>
-<blockquote>
-  <p>BigQuery table has nested columns that look like this.</p>
-</blockquote>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
-<span class="n">CTE_flattened</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>    
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Datetime]  </span>
-        <span class="c1">-- ==========================================================  </span>
-        <span class="n">event_date</span><span class="p">,</span> <span class="c1">-- Event Date  </span>
-        <span class="n">event_timestamp</span><span class="p">,</span> <span class="c1">-- Event Timestamp  </span>
-        <span class="n">user_first_touch_timestamp</span><span class="p">,</span> <span class="c1">-- User's First Visit Timestamp  </span>
-
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [User &amp; Session ID]  </span>
-        <span class="c1">-- ==========================================================    </span>
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="c1">-- User ID  </span>
-        <span class="n">ga_session_id</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">ga_session_id</span><span class="p">,</span> <span class="c1">-- Session ID  </span>
-        <span class="n">ga_session_number</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">ga_session_number</span><span class="p">,</span> <span class="c1">-- User's Session Index (starting from 1)  </span>
-
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Event Name]  </span>
-        <span class="c1">-- ==========================================================    </span>
-        <span class="n">event_name</span><span class="p">,</span>  
-
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Geography &amp; Device]  </span>
-        <span class="c1">-- ==========================================================    </span>
-        <span class="n">geo</span><span class="p">.</span><span class="n">country</span><span class="p">,</span> <span class="c1">-- Country  </span>
-        <span class="n">device</span><span class="p">.</span><span class="n">category</span> <span class="k">AS</span> <span class="n">device_category</span><span class="p">,</span> <span class="c1">-- Device Category  </span>
-        <span class="n">device</span><span class="p">.</span><span class="n">operating_system</span> <span class="k">AS</span> <span class="n">device_os</span><span class="p">,</span> <span class="c1">-- Device OS  </span>
-  
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Acquisition]  </span>
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- Landing Info  </span>
-        <span class="n">entrances</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">entrances</span><span class="p">,</span> <span class="c1">-- If it's the first landing page of this session (page_view Event only)  </span>
-        <span class="k">REPLACE</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">LOWER</span><span class="p">(</span><span class="n">page_referrer</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span><span class="p">),</span> <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="s1">'https://'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_referrer</span><span class="p">,</span>  
-        <span class="c1">-- Session UTM  </span>
-        <span class="n">campaign</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">session_campaign</span><span class="p">,</span> <span class="c1">-- UTM Campaign (Session-based)  </span>
-        <span class="n">medium</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">session_medium</span><span class="p">,</span> <span class="c1">-- UTM Medium (Session-based)  </span>
-        <span class="k">source</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">session_source</span><span class="p">,</span> <span class="c1">-- UTM Source (Session-based)  </span>
-        <span class="n">term</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">session_term</span><span class="p">,</span> <span class="c1">-- UTM Term (Session-based)  </span>
-        <span class="c1">-- First UTM  </span>
-        <span class="n">traffic_source</span><span class="p">.</span><span class="n">name</span> <span class="k">AS</span> <span class="n">first_campaign</span><span class="p">,</span> <span class="c1">-- UTM Campaign (First-based)  </span>
-        <span class="n">traffic_source</span><span class="p">.</span><span class="n">medium</span> <span class="k">AS</span> <span class="n">first_medium</span><span class="p">,</span> <span class="c1">-- UTM Medium (First-based)  </span>
-        <span class="n">traffic_source</span><span class="p">.</span><span class="k">source</span> <span class="k">AS</span> <span class="n">first_source</span><span class="p">,</span> <span class="c1">-- UTM Source (First-based)  </span>
-        <span class="c1">-- Manual UTM  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">manual_campaign_id</span> <span class="k">AS</span> <span class="n">manual_campaign_id</span><span class="p">,</span> <span class="c1">-- UTM Campaign ID (Manual-based)  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">manual_campaign_name</span> <span class="k">AS</span> <span class="n">manual_campaign</span><span class="p">,</span> <span class="c1">-- UTM Campaign (Manual-based)  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">manual_medium</span> <span class="k">AS</span> <span class="n">manual_medium</span><span class="p">,</span> <span class="c1">-- UTM Medium (Manual-based)  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">manual_source</span> <span class="k">AS</span> <span class="n">manual_source</span><span class="p">,</span> <span class="c1">-- UTM Source (Manual-based)  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">manual_term</span> <span class="k">AS</span> <span class="n">manual_term</span><span class="p">,</span> <span class="c1">-- UTM Term (Manual-based)  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">manual_content</span> <span class="k">AS</span> <span class="n">manual_content</span><span class="p">,</span> <span class="c1">-- UTM Content (Manual-based)  </span>
-        <span class="c1">-- Ads Identifiers  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">gclid</span> <span class="k">AS</span> <span class="n">manual_gclid</span><span class="p">,</span> <span class="c1">-- Google Click Identifier  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">dclid</span> <span class="k">AS</span> <span class="n">manual_dclid</span><span class="p">,</span> <span class="c1">-- Google Marketing Platform Identifier  </span>
-        <span class="n">collected_traffic_source</span><span class="p">.</span><span class="n">srsltid</span> <span class="k">AS</span> <span class="n">manual_srsltid</span><span class="p">,</span> <span class="c1">-- Google Merchant Center Identifier  </span>
-  
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Page]  </span>
-        <span class="c1">-- ==========================================================  </span>
-        <span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">LOWER</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">web_info</span><span class="p">.</span><span class="n">hostname</span><span class="p">),</span> <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hostname</span><span class="p">,</span> <span class="c1">-- Domain or Subdomain  </span>
-        <span class="k">REPLACE</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">LOWER</span><span class="p">(</span><span class="n">page_location</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span><span class="p">),</span> <span class="n">r</span><span class="s1">'(</span><span class="se">\?</span><span class="s1">.*)$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="s1">'https://'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span><span class="p">,</span> <span class="c1">-- Current Page URL  </span>
-  
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Engagement]  </span>
-        <span class="c1">-- ==========================================================  </span>
-        <span class="n">session_engaged</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">session_engaged</span><span class="p">,</span> <span class="c1">-- If the session is engaged (session_start Event only)  </span>
-        <span class="n">engagement_time_msec</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">engagement_time_msec</span><span class="p">,</span> <span class="c1">-- session engagement time (msec)  </span>
-  
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Click Event]  </span>
-        <span class="c1">-- ==========================================================  </span>
-        <span class="n">outbound</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">outbound</span><span class="p">,</span> <span class="c1">-- If the click Event is outbound from the current domain  </span>
-        <span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">LOWER</span><span class="p">(</span><span class="n">link_domain</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span><span class="p">),</span> <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="n">link_domain</span><span class="p">,</span> <span class="c1">-- Domain from the click Event  </span>
-        <span class="k">REPLACE</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="k">LOWER</span><span class="p">(</span><span class="n">link_url</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span><span class="p">),</span> <span class="n">r</span><span class="s1">'(</span><span class="se">\?</span><span class="s1">.*)$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span> <span class="s1">'https://'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span> <span class="k">AS</span> <span class="n">link_url</span><span class="p">,</span> <span class="c1">-- Page URL from the click Event  </span>
-  
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Scroll Event]  </span>
-        <span class="c1">-- ==========================================================  </span>
-        <span class="n">percent_scrolled</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">percent_scrolled</span><span class="p">,</span> <span class="c1">-- Scroll Percentage (default = 90 only)  </span>
-  
-        <span class="c1">-- ==========================================================  </span>
-        <span class="c1">-- [Ecommerce Event]  </span>
-        <span class="c1">-- ==========================================================    </span>
-        <span class="c1">-- View Item ~  </span>
-        <span class="n">ecomm_pagetype</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">ecomm_pagetype</span><span class="p">,</span> <span class="c1">-- Type of the Page (product, cart) (view_item, add_to_cart, begin_checkout Event)   </span>
-        <span class="n">ecomm_prodid</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">ecomm_prodid</span><span class="p">,</span> <span class="c1">-- Product ID (view_item, begin_checkout, add_to_cart Event)  </span>
-        <span class="n">ecommerce</span><span class="p">.</span><span class="n">total_item_quantity</span> <span class="k">AS</span> <span class="n">ecommerce_total_item_quantity</span><span class="p">,</span> <span class="c1">-- Amount of Total Items purchased (view_item, add_to_cart, begin_checkout, purchase Event)   </span>
-        <span class="n">ecommerce</span><span class="p">.</span><span class="n">unique_items</span> <span class="k">AS</span> <span class="n">ecommerce_unique_items</span><span class="p">,</span> <span class="c1">-- Amount of Unique Items purchased (view_item, add_to_cart, begin_checkout, purchase Event)  </span>
-        <span class="c1">-- Add to Cart ~  </span>
-        <span class="n">ecomm_totalvalue</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">ecomm_totalvalue</span><span class="p">,</span> <span class="c1">-- Total Value of Items (add_to_cart, begin_checkout Event)  </span>
-        <span class="n">currency</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">AS</span> <span class="n">currency</span><span class="p">,</span> <span class="c1">-- Currency (add_to_cart, begin_checkout, add_payment_info, purchase Event)    </span>
-        <span class="c1">-- Add Payment Info ~    </span>
-        <span class="n">total</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">AS</span> <span class="n">total</span><span class="p">,</span> <span class="c1">-- Total Value (add_payment_info Event only)  </span>
-        <span class="c1">-- Purchase ~  </span>
-        <span class="n">ecommerce</span><span class="p">.</span><span class="n">transaction_id</span> <span class="k">AS</span> <span class="n">ecommerce_transaction_id</span><span class="p">,</span> <span class="c1">-- Transaction ID (purchase Event only)  </span>
-        <span class="n">event_value_in_usd</span><span class="p">,</span> <span class="c1">-- Total value of purchase (purchase Event only)  </span>
-        <span class="n">ecommerce</span><span class="p">.</span><span class="n">shipping_value_in_usd</span> <span class="k">AS</span> <span class="n">ecommerce_shipping_value_in_usd</span><span class="p">,</span> <span class="c1">-- shipping fee (purchase Event only)  </span>
-        <span class="c1">-- Lifetime Value  </span>
-        <span class="n">user_ltv</span><span class="p">.</span><span class="n">revenue</span> <span class="k">AS</span> <span class="n">user_ltv_revenue</span><span class="p">,</span> <span class="c1">-- User's Lifetime Value  </span>
-        <span class="n">user_ltv</span><span class="p">.</span><span class="n">currency</span> <span class="k">AS</span> <span class="n">user_ltv_currency</span><span class="p">,</span> <span class="c1">-- User's Lifetime Value Currency  </span>
-  
-    <span class="k">FROM</span> <span class="nv">`iotrust-data.analytics_123456789.events_*`</span> <span class="n">MAIN</span>  
-  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_id</span> <span class="k">ON</span> <span class="n">ga_session_id</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_id'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_number</span> <span class="k">ON</span> <span class="n">ga_session_number</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_number'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">session_engaged</span> <span class="k">ON</span> <span class="n">session_engaged</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'session_engaged'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">engagement_time_msec</span> <span class="k">ON</span> <span class="n">engagement_time_msec</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'engagement_time_msec'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">percent_scrolled</span> <span class="k">ON</span> <span class="n">percent_scrolled</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'percent_scrolled'</span>  
-  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span> <span class="k">ON</span> <span class="n">page_location</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span>  
-  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">entrances</span> <span class="k">ON</span> <span class="n">entrances</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'entrances'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_referrer</span> <span class="k">ON</span> <span class="n">page_referrer</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'page_referrer'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">campaign</span> <span class="k">ON</span> <span class="n">campaign</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'campaign'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">medium</span> <span class="k">ON</span> <span class="n">medium</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'medium'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="k">source</span> <span class="k">ON</span> <span class="k">source</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'source'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">term</span> <span class="k">ON</span> <span class="n">term</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'term'</span>  
-      
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">outbound</span> <span class="k">ON</span> <span class="n">outbound</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'outbound'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">link_domain</span> <span class="k">ON</span> <span class="n">link_domain</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'link_domain'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">link_url</span> <span class="k">ON</span> <span class="n">link_url</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'link_url'</span>  
-      
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">transaction_id</span> <span class="k">ON</span> <span class="n">transaction_id</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'transaction_id'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ecomm_prodid</span> <span class="k">ON</span> <span class="n">ecomm_prodid</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ecomm_prodid'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ecomm_pagetype</span> <span class="k">ON</span> <span class="n">ecomm_pagetype</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ecomm_pagetype'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">currency</span> <span class="k">ON</span> <span class="n">currency</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'currency'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ecomm_totalvalue</span> <span class="k">ON</span> <span class="n">ecomm_totalvalue</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'ecomm_totalvalue'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">total</span> <span class="k">ON</span> <span class="n">total</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'total'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">value</span> <span class="k">ON</span> <span class="n">value</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'value'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">shipping</span> <span class="k">ON</span> <span class="n">shipping</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'shipping'</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tax</span> <span class="k">ON</span> <span class="n">tax</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="s1">'tax'</span>  
-  
-    <span class="k">WHERE</span>  
-        <span class="n">_table_suffix</span> <span class="k">BETWEEN</span> 
-            <span class="n">FORMAT_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="s1">'yyyy-mm-dd'</span><span class="p">)</span>
-            <span class="k">AND</span> <span class="n">FORMAT_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="s1">'yyyy-mm-dd'</span><span class="p">)</span>  
-        <span class="k">AND</span> <span class="n">user_pseudo_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
-        <span class="k">AND</span> <span class="n">ga_session_id</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
-        <span class="k">AND</span> <span class="n">ga_session_number</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="4-standardize-the-session-utm-values-for-all-events-within-each-session">4. Standardize the session UTM values for all events within each session.</h1>
-
-<p>For some reason that is not entirely clear, due to the inaccuracies in GA4, there are cases where the UTM values that contributed to the acquisition of specific sessions are occasionally lost.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>User ID</strong></th>
-      <th><strong>Session ID</strong></th>
-      <th><strong>Event Name</strong></th>
-      <th><strong>Session Campaign</strong></th>
-      <th><strong>Session Medium</strong></th>
-      <th><strong>Session Source</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Joshua</td>
-      <td>12345</td>
-      <td><code class="language-plaintext highlighter-rouge">session_start</code></td>
-      <td>(n/a)</td>
-      <td>(n/a)</td>
-      <td>(n/a)</td>
-    </tr>
-    <tr>
-      <td>Joshua</td>
-      <td>12345</td>
-      <td><code class="language-plaintext highlighter-rouge">page_view</code></td>
-      <td>summer-event</td>
-      <td>owned-media</td>
-      <td>facebook</td>
-    </tr>
-    <tr>
-      <td>Joshua</td>
-      <td>12345</td>
-      <td><code class="language-plaintext highlighter-rouge">user_engagement</code></td>
-      <td>summer-event</td>
-      <td>owned-media</td>
-      <td>facebook</td>
-    </tr>
-    <tr>
-      <td>Joshua</td>
-      <td>12345</td>
-      <td><code class="language-plaintext highlighter-rouge">scroll</code></td>
-      <td>(n/a)</td>
-      <td>(n/a)</td>
-      <td>(n/a)</td>
-    </tr>
-    <tr>
-      <td>Joshua</td>
-      <td>12345</td>
-      <td><code class="language-plaintext highlighter-rouge">begin_checkout</code></td>
-      <td>summer-event</td>
-      <td>owned-media</td>
-      <td>facebook</td>
-    </tr>
-    <tr>
-      <td>Joshua</td>
-      <td>12345</td>
-      <td><code class="language-plaintext highlighter-rouge">add_payment_info</code></td>
-      <td>summer-event</td>
-      <td>owned-media</td>
-      <td>facebook</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>I have encountered several weird cases like this.</p>
-
-<p>Therefore, in such cases, if there are session UTM values within the same session, the UTM values from the first event that occurred should be propagated to all the other events within the same session, ensuring they have the same values.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_session_campaign_sequence</span> <span class="k">AS</span> <span class="p">(</span>
-    <span class="k">SELECT</span>
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">ga_session_id</span><span class="p">,</span>
-        <span class="n">session_campaign</span><span class="p">,</span>
-        <span class="n">session_medium</span><span class="p">,</span>
-        <span class="n">session_source</span><span class="p">,</span>
-        <span class="n">session_term</span><span class="p">,</span>
-        <span class="k">CASE</span>
-            <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">THEN</span>
-                <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
-                    <span class="k">PARTITION</span> <span class="k">BY</span>
-                        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">ga_session_id</span><span class="p">,</span>
-                        <span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span>
-                    <span class="k">ORDER</span> <span class="k">BY</span>
-                        <span class="n">event_timestamp</span>
-                <span class="p">)</span>
-            <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">THEN</span>
-                <span class="mi">1</span>
-        <span class="k">END</span> <span class="k">AS</span> <span class="n">row_num</span>
-    <span class="k">FROM</span>
-        <span class="n">CTE_flattened</span>
-<span class="p">),</span>
-
-<span class="n">CTE_utm_spread</span> <span class="k">AS</span> <span class="p">(</span> <span class="c1">-- spread session utm parameters throughout each user &amp; session  </span>
-    <span class="k">SELECT</span>  
-        <span class="n">MAIN</span><span class="p">.</span><span class="o">*</span> <span class="k">EXCEPT</span> <span class="p">(</span><span class="n">session_campaign</span><span class="p">,</span> <span class="n">session_medium</span><span class="p">,</span> <span class="n">session_source</span><span class="p">,</span> <span class="n">session_term</span><span class="p">),</span>  
-        <span class="n">SUB</span><span class="p">.</span><span class="n">real_session_campaign</span> <span class="k">AS</span> <span class="n">session_campaign</span><span class="p">,</span>  
-        <span class="n">SUB</span><span class="p">.</span><span class="n">real_session_medium</span> <span class="k">AS</span> <span class="n">session_medium</span><span class="p">,</span>  
-        <span class="n">SUB</span><span class="p">.</span><span class="n">real_session_source</span> <span class="k">AS</span> <span class="n">session_source</span><span class="p">,</span>  
-        <span class="n">SUB</span><span class="p">.</span><span class="n">real_session_term</span> <span class="k">AS</span> <span class="n">session_term</span>  
-    <span class="k">FROM</span> 
-        <span class="n">CTE_flattened</span> <span class="n">MAIN</span>  
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="p">(</span>  
-        <span class="k">SELECT</span>  
-            <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">ga_session_id</span><span class="p">,</span>  
-            <span class="k">MAX</span><span class="p">(</span><span class="n">session_campaign</span><span class="p">)</span> <span class="k">AS</span> <span class="n">real_session_campaign</span><span class="p">,</span>  
-            <span class="k">MAX</span><span class="p">(</span><span class="n">session_medium</span><span class="p">)</span> <span class="k">AS</span> <span class="n">real_session_medium</span><span class="p">,</span>  
-            <span class="k">MAX</span><span class="p">(</span><span class="n">session_source</span><span class="p">)</span> <span class="k">AS</span> <span class="n">real_session_source</span><span class="p">,</span>  
-            <span class="k">MAX</span><span class="p">(</span><span class="n">session_term</span><span class="p">)</span> <span class="k">AS</span> <span class="n">real_session_term</span>  
-        <span class="k">FROM</span>
-            <span class="n">CTE_session_campaign_sequence</span>
-        <span class="k">WHERE</span>
-            <span class="n">row_num</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">GROUP</span> <span class="k">BY</span>
-            <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">ga_session_id</span>
-    <span class="p">)</span> <span class="n">SUB</span>
-    <span class="k">ON</span> 
-        <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_pseudo_id</span> 
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">ga_session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">ga_session_id</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span>  
-        <span class="n">MAIN</span><span class="p">.</span><span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">ga_session_id</span><span class="p">,</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_timestamp</span>
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="5--replace-null-session-utm-values-with-the-value-direct">5.  Replace NULL session UTM values with the value “<code class="language-plaintext highlighter-rouge">(direct)</code>”.</h1>
-
-<p>Personally, I tend to consider the “<code class="language-plaintext highlighter-rouge">(direct)</code>” values more as “unknown” rather than the direct traffic. Nevertheless, to ensure that calculations are not affected by NULL values during the aggregation process, here I proceeded with replacing all NULL values with “<code class="language-plaintext highlighter-rouge">(direct)</code>”.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_fill_na</span> <span class="k">AS</span> <span class="p">(</span> <span class="c1">-- Replace NULL session_utms with (direct)</span>
-    <span class="k">SELECT</span>  
-        <span class="o">*</span> <span class="k">EXCEPT</span> <span class="p">(</span><span class="n">session_campaign</span><span class="p">,</span> <span class="n">session_medium</span><span class="p">,</span> <span class="n">session_source</span><span class="p">,</span> <span class="n">session_term</span><span class="p">),</span>  
-        <span class="n">IFNULL</span><span class="p">(</span><span class="n">session_campaign</span><span class="p">,</span> <span class="s1">'(direct)'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">session_campaign</span><span class="p">,</span>  
-        <span class="n">IFNULL</span><span class="p">(</span><span class="n">session_medium</span><span class="p">,</span> <span class="s1">'(none)'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">session_medium</span><span class="p">,</span>  
-        <span class="n">IFNULL</span><span class="p">(</span><span class="n">session_source</span><span class="p">,</span> <span class="s1">'(direct)'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">session_source</span><span class="p">,</span>  
-        <span class="n">IFNULL</span><span class="p">(</span><span class="n">session_term</span><span class="p">,</span> <span class="s1">'(direct)'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">session_term</span>  
-    <span class="k">FROM</span> <span class="n">CTE_utm_spread</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="6-extract-only-the-necessary-columns-for-calculating-attribution">6. Extract only the necessary columns for calculating attribution.</h1>
-
-<p>You only need the following columns:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">user_pseudo_id</code></li>
-  <li><code class="language-plaintext highlighter-rouge">event_date</code></li>
-  <li><code class="language-plaintext highlighter-rouge">event_timestamp</code></li>
-  <li><code class="language-plaintext highlighter-rouge">session_campaign</code></li>
-  <li><code class="language-plaintext highlighter-rouge">session_medium</code></li>
-  <li><code class="language-plaintext highlighter-rouge">session_source</code></li>
-  <li><code class="language-plaintext highlighter-rouge">conversion</code> (whether they have made their purchase or not)</li>
-  <li><code class="language-plaintext highlighter-rouge">revenue</code> (total value of purchase)</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_user_sessions_channel_conversion</span> <span class="k">AS</span> <span class="p">(</span>    
-    <span class="k">SELECT</span>
-        <span class="n">user_pseudo_id</span><span class="p">,</span>  
-        <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">session_campaign</span><span class="p">,</span> <span class="n">session_medium</span><span class="p">,</span> <span class="n">session_source</span><span class="p">,</span>  
-        <span class="k">CASE</span>  
-            <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'session_start'</span> <span class="k">THEN</span> <span class="mi">0</span>  
-            <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'purchase'</span> <span class="k">THEN</span> <span class="mi">1</span>  
-        <span class="k">END</span> <span class="k">AS</span> <span class="k">conversion</span><span class="p">,</span>  
-        <span class="n">event_value_in_usd</span> <span class="k">AS</span> <span class="n">revenue</span>  
-    <span class="k">FROM</span>
-        <span class="n">CTE_fill_na</span>  
-    <span class="k">WHERE</span>  
-        <span class="n">event_name</span> <span class="k">IN</span> <span class="p">(</span>
-            <span class="s1">'session_start'</span><span class="p">,</span> 
-            <span class="s1">'purchase'</span>
-        <span class="p">)</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">event_timestamp</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="7-assign-journey-numbers-to-each-users-purchase-event">7. Assign journey numbers to each user’s purchase event.</h1>
-
-<p>Since a user may make multiple purchases, it’s necessary to recalculate attribution after the first purchase event.</p>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/joshua-flowchart-1.webp" alt="" /></p>
-
-<p>You’ll need to separate each journey when it comes to calculating Joshua’s attribution model.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_purchase_journey</span> <span class="k">AS</span> <span class="p">(</span>    
-    <span class="k">SELECT</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span>  
-        <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">session_campaign</span><span class="p">,</span> <span class="n">session_medium</span><span class="p">,</span> <span class="n">session_source</span><span class="p">,</span>  
-        <span class="k">conversion</span><span class="p">,</span>  
-        <span class="n">revenue</span><span class="p">,</span>  
-        <span class="n">COALESCE</span><span class="p">(</span><span class="n">cumsum_conversion</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">AS</span> <span class="n">purchase_journey</span>  
-    <span class="k">FROM</span>  
-    <span class="p">(</span>  
-        <span class="k">SELECT</span>  
-            <span class="o">*</span><span class="p">,</span>  
-            <span class="k">SUM</span><span class="p">(</span><span class="k">conversion</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>  
-                <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span>  
-                <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>  
-                <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="mi">1</span> <span class="k">PRECEDING</span>  
-            <span class="p">)</span> <span class="k">AS</span> <span class="n">cumsum_conversion</span>  
-        <span class="k">FROM</span>
-            <span class="n">CTE_user_sessions_channel_conversion</span>  
-    <span class="p">)</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">event_timestamp</span>  
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="8-assign-priorities-to-indicate-the-order-of-events-for-applying-the-last-click-attribution-model">8. Assign Priorities to indicate the order of events for applying the Last Click Attribution Model.</h1>
-
-<p>When applying Last Click Attribution mechanically, there is a high possibility of incorrect attribution in cases like the following:</p>
-<ul>
-  <li>Joshua was initially acquired through the Summer Event campaign, then explored other information, and later started a new session through a Google search before making a purchase.</li>
-  <li>In this case, it should be considered that Joshua made the purchase not primarily due to the effectiveness of our Google SEO strategy, as he was already aware of our website. Instead, it can be attributed to the appeal of the Summer Event, which influenced his decision to make the purchase.</li>
-</ul>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/joshua-flowchart-2.webp" alt="" /></p>
-
-<p>Therefore, I have assigned priorities based on the session_campaign as follows:</p>
-<ul>
-  <li>1 &lt; <code class="language-plaintext highlighter-rouge">direct</code> &lt; 2</li>
-  <li>2 &lt; <code class="language-plaintext highlighter-rouge">organic</code> &lt; 3</li>
-  <li>3 &lt; <code class="language-plaintext highlighter-rouge">referral</code> &lt; 4</li>
-  <li>4 &lt; <code class="language-plaintext highlighter-rouge">identified campaign</code></li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_attribution_priority</span> <span class="k">AS</span> <span class="p">(</span> <span class="c1">-- Adjusted Last Click Model</span>
-    <span class="k">SELECT</span>  
-        <span class="o">*</span><span class="p">,</span>  
-        <span class="k">CASE</span>  
-            <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(direct)'</span>
-                <span class="k">THEN</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
-                    <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">purchase_journey</span>
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-                <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>  
-            <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(organic)'</span>
-                <span class="k">THEN</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
-                    <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">purchase_journey</span> 
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-                <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>  
-            <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(referral)'</span>
-                <span class="k">THEN</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
-                    <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">purchase_journey</span>
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-                <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>  
-            <span class="k">ELSE</span> 
-                <span class="mi">4</span> <span class="o">+</span> <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
-                    <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">purchase_journey</span> 
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span>
-                <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>  
-        <span class="k">END</span> <span class="k">AS</span> <span class="n">attribution_priority</span>  
-    <span class="k">FROM</span>
-        <span class="n">CTE_purchase_journey</span>
-    <span class="k">ORDER</span> <span class="k">BY</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">event_timestamp</span>    
-<span class="p">),</span>
-</code></pre></div></div>
-
-<h1 id="9--the-session_campaign-with-the-highest-priority-will-be-attributed-to-100-of-the-revenue">9.  The <code class="language-plaintext highlighter-rouge">session_campaign</code> with the highest priority will be attributed to 100% of the revenue.</h1>
-
-<p>I have assigned priority classes based on the campaigns such as direct, organic, referral, and identifiable campaigns. However, within the same class, the attribution will be applied based on the most recent event, following the Last Click Attribution Model. Now, you can call this approach “<strong>Joshua’s Adjusted Last Click Attribution Model</strong>”. 😄</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CTE_revenue_attribution</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span>  
-        <span class="n">event_date</span><span class="p">,</span> <span class="n">event_timestamp</span><span class="p">,</span>  
-        <span class="n">session_campaign</span><span class="p">,</span> <span class="n">session_medium</span><span class="p">,</span> <span class="n">session_source</span><span class="p">,</span>  
-        <span class="k">conversion</span><span class="p">,</span>  
-        <span class="n">revenue</span><span class="p">,</span>  
-        <span class="n">purchase_journey</span><span class="p">,</span>  
-        <span class="k">CASE</span>  
-            <span class="k">WHEN</span> <span class="n">attribution_priority</span> <span class="o">=</span> <span class="k">MAX</span><span class="p">(</span><span class="n">attribution_priority</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
-                <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">purchase_journey</span>
-            <span class="p">)</span>  
-                <span class="k">THEN</span> <span class="k">MAX</span><span class="p">(</span><span class="n">revenue</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
-                    <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">purchase_journey</span>
-                <span class="p">)</span>  
-            <span class="k">ELSE</span> 
-                <span class="k">NULL</span>  
-        <span class="k">END</span> <span class="k">AS</span> <span class="n">revenue_attribution</span>  
-    <span class="k">FROM</span>
-        <span class="n">CTE_attribution_priority</span>  
-    <span class="k">ORDER</span> <span class="k">BY</span>  
-        <span class="n">user_pseudo_id</span><span class="p">,</span> <span class="n">event_timestamp</span>  
-<span class="p">)</span>
-</code></pre></div></div>
-
-<h1 id="10-now-lets-perform-the-last-click-attribution-aggregation-for-each-channel">10. Now, let’s perform the Last Click Attribution aggregation for each channel.</h1>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="k">CASE</span>  
-        <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(organic)'</span> <span class="k">THEN</span> <span class="s1">'Search Engine'</span>  
-        <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(direct)'</span> <span class="k">THEN</span> <span class="s1">'Direct or Unknown'</span>  
-        <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(referral)'</span> <span class="k">THEN</span> <span class="s1">'Social Media, Blogs, etc. (without UTM)'</span>  
-        <span class="k">ELSE</span> <span class="n">session_campaign</span>  
-    <span class="k">END</span> <span class="k">AS</span> <span class="n">session_campaign_edited</span><span class="p">,</span>  
-    <span class="k">CASE</span>  
-        <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(organic)'</span> <span class="k">THEN</span> <span class="n">session_source</span>  
-        <span class="k">WHEN</span> <span class="n">session_campaign</span> <span class="o">=</span> <span class="s1">'(referral)'</span> <span class="k">THEN</span> <span class="n">session_source</span>  
-        <span class="k">ELSE</span> <span class="k">NULL</span>  
-    <span class="k">END</span> <span class="k">AS</span> <span class="n">session_source</span><span class="p">,</span>  
-    <span class="k">SUM</span><span class="p">(</span><span class="n">revenue_attribution</span><span class="p">)</span> <span class="k">AS</span> <span class="n">revenue</span><span class="p">,</span>  
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_pseudo_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">acquisition_user_cnt</span><span class="p">,</span>  
-    <span class="k">SUM</span><span class="p">(</span><span class="n">revenue_attribution</span><span class="p">)</span> <span class="o">/</span> <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_pseudo_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">avg_revenue_per_user</span><span class="p">,</span>  
-    <span class="k">COUNT</span><span class="p">(</span><span class="n">revenue_attribution</span><span class="p">)</span> <span class="k">AS</span> <span class="n">purchase_cnt</span><span class="p">,</span>  
-    <span class="k">SUM</span><span class="p">(</span><span class="n">revenue_attribution</span><span class="p">)</span> <span class="o">/</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">revenue_attribution</span><span class="p">)</span> <span class="k">AS</span> <span class="n">avg_revenue_per_purchase</span>  
-<span class="k">FROM</span> 
-    <span class="n">CTE_revenue_attribution</span>  
-<span class="k">GROUP</span> <span class="k">BY</span> 
-    <span class="n">session_campaign_edited</span><span class="p">,</span> <span class="n">session_source</span>  
-<span class="k">ORDER</span> <span class="k">BY</span> 
-    <span class="n">revenue</span> <span class="k">DESC</span>
-<span class="p">;</span>
-</code></pre></div></div>
-
-<h1 id="10-lets-create-a-dashboard-using-redash">10. Let’s create a dashboard using Redash.</h1>
-
-<p><img src="/assets/2023-07-09-last-click-attribution/redash.webp" alt="" /></p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="data_analytics" /><category term="sql" /><category term="bigquery" /><summary type="html"><![CDATA[In this article, you will explore how to easily aggregate the Last Click Attribution Model using BigQuery.]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="python" /><summary type="html"><![CDATA[파이썬 파일을 실행하기 위해서는 파이썬의 High-level 언어를 Low-level로 변환해주는 Interpreter가 필요하고, 또 파이썬 파일 내에서 Load해야 하는 모듈 역시 함께 사전에 설치되어야 하는데요. pyinstaller는 이러한 Interpreter와 모듈을 함께 동봉한 채로 파이썬 파일을 패키징하여 하나의 실행 파일로 만들어주는 역할을 하는 것이죠.]]></summary></entry></feed>
