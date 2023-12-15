@@ -5,7 +5,7 @@ tags:
   - korean
   - data_analytics
   - sql
-  - date_warehouse
+  - data_warehouse
 ---
 
 > 대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
