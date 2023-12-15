@@ -2,10 +2,9 @@
 layout: post
 title: "Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)"
 tags:
-  - english
-  - blockchain
-  - on_chain_data
-  - sql
+  - Blockchain
+  - On-chain Data
+  - SQL
 ---
 
 > Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua's expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don't miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.

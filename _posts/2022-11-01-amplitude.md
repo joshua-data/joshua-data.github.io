@@ -2,9 +2,8 @@
 layout: post
 title: "Amplitude 톺아보기"
 tags:
-  - korean
-  - amplitude
-  - data_analytics
+  - Amplitude
+  - Data Analysis
 mermaid: true
 ---
 

@@ -2,10 +2,9 @@
 layout: post
 title: "Intro to Encoding & Decoding Ethereum Contract Functions"
 tags:
-  - english
-  - blockchain
-  - on_chain_data
-  - sql
+  - Blockchain
+  - On-chain Data
+  - SQL
 ---
 
 > In this article, I will briefly explore the Ethereum ABI Specification and show you how to decode contract functions when conducting on-chain data analysis. Additionally, I will demonstrate a simple data extraction and analysis case about “Who are the Top 10 Recipients of USDT approve Functions?” using DuneSQL while handling ABIs.

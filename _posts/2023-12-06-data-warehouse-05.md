@@ -2,9 +2,8 @@
 layout: post
 title: "Data Warehouse #05"
 tags:
-  - english
-  - sql
-  - data_warehouse
+  - SQL
+  - Data Warehouse
 ---
 
 > In this article, I’ll summarize key takeaways from:

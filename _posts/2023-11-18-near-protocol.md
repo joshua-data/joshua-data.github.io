@@ -2,8 +2,7 @@
 layout: post
 title: "Near Protocol: Account Model and Transaction Story"
 tags:
-  - english
-  - blockchain
+  - Blockchain
 ---
 
 > Dive into the intricate world of blockchain with Joshua. Uncover the complexities of Near Protocol's account model, transaction stories, and personal insights. This article offers a captivating exploration of addresses, private keys, and the execution flow of transactions, providing a unique perspective on user experience and protocol design. Join me on this insightful journey, backed by personal research and a wealth of references from the blockchain realm.

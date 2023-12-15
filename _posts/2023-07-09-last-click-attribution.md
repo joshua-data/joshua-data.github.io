@@ -2,10 +2,9 @@
 layout: post
 title: "The Last Click Attribution Model Using BigQuery"
 tags:
-  - english
-  - data_analytics
-  - sql
-  - bigquery
+  - Data Analysis
+  - SQL
+  - BigQuery
 ---
 
 > In this article, you will explore how to easily aggregate the Last Click Attribution Model using BigQuery.

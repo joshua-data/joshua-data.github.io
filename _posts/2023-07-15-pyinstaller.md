@@ -2,8 +2,7 @@
 layout: post
 title: "데이터 분석가의 파이썬 클라이언트 개발기 feat. pyinstaller"
 tags:
-  - korean
-  - python
+  - Python
 ---
 
 > 파이썬 파일을 실행하기 위해서는 파이썬의 High-level 언어를 Low-level로 변환해주는 **Interpreter**가 필요하고, 또 파이썬 파일 내에서 Load해야 하는 **모듈** 역시 함께 사전에 설치되어야 하는데요.  `pyinstaller`는 이러한 Interpreter와 모듈을 함께 동봉한 채로 파이썬 파일을 패키징하여 하나의 실행 파일로 만들어주는 역할을 하는 것이죠.

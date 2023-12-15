@@ -2,13 +2,12 @@
 layout: post
 title: "Harnessing the Power of BigQuery and Python: Overcoming Google Optimize A/B Testing Limitations"
 tags:
-  - english
-  - statistics
-  - data_analytics
-  - sql
-  - python
-  - bigquery
-  - data_visualization
+  - Statistics
+  - Data Analysis
+  - SQL
+  - Python
+  - BigQuery
+  - Data Visualization
 ---
 
 > By connecting to BigQuery (where the experiment data is loaded) from Python and creating automated code, the analysis time can be significantly reduced, and it becomes easier to quickly determine the direction for further analysis when needed.

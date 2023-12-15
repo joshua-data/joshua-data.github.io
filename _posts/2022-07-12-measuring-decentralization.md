@@ -2,9 +2,8 @@
 layout: post
 title: "탈중앙화: 개념과 측정 방법, 그리고 한계"
 tags:
-  - korean
-  - blockchain
-  - statistics
+  - Blockchain
+  - Statistics
 ---
 
 > "블록체인 트릴레마를 구성하는 요소 중 하나인 탈중앙화(Decentralization)를 측정할 수 있는 여러 가지 방법론이 제시되고 있다. 이번 아티클에서는 탈중앙화를 측정할 수 있는 4가지 방법을 토대로 실험을 진행한 후, 각 방법들의 한계점에 대해 진단하고자 한다."

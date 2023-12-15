@@ -2,9 +2,7 @@
 layout: post
 title: "Toastmasters Club Log #1"
 tags:
-  - english
-  - public_speaking
-  - toastmasters
+  - Public Speaking
 ---
 
 > Having recently become a member of JBTM last month, today marked my inaugural participation in the weekly in-person meeting. This occasion introduced me to a diverse array of our old members and new guests.

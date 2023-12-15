@@ -2,9 +2,8 @@
 layout: post
 title: "OpenSea에서 발생한 트랜잭션 데이터 구조"
 tags:
-  - korean
-  - blockchain
-  - on_chain_data
+  - Blockchain
+  - On-chain Data
 ---
 
 > 안녕하세요. 저는 블록체인 기반 서비스 기업에서 데이터 분석을 담당하고 있는 Joshua라고 합니다. 이번 아티클에서는 OpenSea에서 NFT Transfer가 발생했을 때, EVM 계열 블록체인의 온체인 상에 데이터가 어떤 모습으로 남아 있는지 파헤쳐 보도록 하겠습니다.
