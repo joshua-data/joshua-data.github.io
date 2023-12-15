@@ -2,11 +2,10 @@
 layout: post
 title: "Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention"
 tags:
-  - english
-  - sql
-  - blockchain
-  - on_chain_data
-  - data_analytics
+  - SQL
+  - Blockchain
+  - On-chain Data
+  - Data Analysis
 ---
 
 > In this article, I’m going to deep dive into Ethereum On-chain Data Analysis not just with the  **DAU**  and  **MAU,** but also with  **Stickiness**, and  **Retention Rate**, which are the basic metrics when it comes to data analysis. Let’s directly dive into it!

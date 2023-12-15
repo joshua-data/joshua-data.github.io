@@ -2,11 +2,10 @@
 layout: post
 title: "Let’s Create the Sankey Chart"
 tags:
-  - english
-  - sql
-  - bigquery
-  - redash
-  - data_visualization
+  - SQL
+  - BigQuery
+  - Redash
+  - Data Visualization
 ---
 
 > In this article, I’m going to tell you how you can create the Sankey Chart starting from GA4, BigQuery, and up to Redash.

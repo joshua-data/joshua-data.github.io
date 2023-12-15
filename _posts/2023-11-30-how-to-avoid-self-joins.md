@@ -2,9 +2,8 @@
 layout: post
 title: "데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법"
 tags:
-  - korean
-  - data_analytics
-  - sql
+  - Data Analysis
+  - SQL
 ---
 
 > 대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다. 

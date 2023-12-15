@@ -2,10 +2,9 @@
 layout: post
 title: "It’s Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery"
 tags:
-  - english
-  - sql
-  - data_analytics
-  - bigquery
+  - SQL
+  - Data Analysis
+  - BigQuery
 ---
 
 > In this article, I’m going to talk about how to extract DAU separating new users and existing users directly from BigQuery. I prepared an insightful example to share some intuition with you, so that you can better understand.

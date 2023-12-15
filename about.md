@@ -4,7 +4,7 @@ title: Who is Joshua?
 permalink: /about/
 ---
 
-> "He is a Data Analyst on a Never-Ending Thirst for Learning through Computers, Books, and People!"
+> "He is a `Data Analyst` on a Never-Ending Thirst for Learning through Computers, Books, and People!"
 
 ![]({{ site.baseurl }}/assets/profile/joshua-cook.png)
 
