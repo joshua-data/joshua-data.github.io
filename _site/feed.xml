@@ -1,4 +1,281 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-15T15:59:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-15T16:29:12+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 04. Dimensional Modeling</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
+
+<p><strong>Dimensional Modeling</strong></p>
+<ul>
+  <li>Unique Technique of Structuring Data</li>
+  <li>Commonly Used in Data Warehouse</li>
+  <li>Optimized for Faster Data Regrieval</li>
+  <li>Performance &amp; Usability Oriented</li>
+  <li>Designed Reporting &amp; OLAP</li>
+</ul>
+
+<p><strong>Details</strong></p>
+<ul>
+  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
+  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
+    <ul>
+      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
+      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
+
+<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
+
+<ul>
+  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
+
+<h1 id="facts">Facts</h1>
+
+<p><strong>Facts</strong> usually…</p>
+<ul>
+  <li>Aggregatable (with Numeric Values)</li>
+  <li>Measurable</li>
+  <li>Event or Transactional Data</li>
+  <li>Date or Time in a Fact Table</li>
+  <li>Foundation of Data Warehouse</li>
+  <li>Key Measurements</li>
+  <li>Aggregated and Analyzed</li>
+</ul>
+
+<h1 id="dimensions">Dimensions</h1>
+
+<p><strong>Dimensions</strong> usually…</p>
+<ul>
+  <li>Non-aggregatable</li>
+  <li>Descriptive</li>
+  <li>More Static than Facts</li>
+  <li>Categorizes Facts</li>
+  <li>Supportive &amp; Descriptive</li>
+  <li>Filtering, Grouping, and Labeling</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
+</blockquote>
+
+<p><strong>Star Schema</strong></p>
+<ul>
+  <li>Most Common Schema in Data Mart</li>
+  <li>Simplest Form (vs. Snowflake Schema)</li>
+  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
+  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
+</ul>
+
+<p><strong>Denormalized</strong> (= Star Schema)</p>
+<ul>
+  <li>Data Redundancy ⬆️</li>
+  <li>Optimized to get data out ⬆️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
+  <li>User Experience ⬆️</li>
+</ul>
+
+<p><strong>Normalized</strong> (= Snowflake Schema)</p>
+<ul>
+  <li>Data Redundancy ⬇️</li>
+  <li>Storage ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+  <li>Number of Tables ⬆️</li>
+  <li>Joins Necessary ⬆️</li>
+</ul>
+
+<h1 id="snowflake-schema">Snowflake Schema</h1>
+
+<p><strong>Advantages</strong></p>
+<ul>
+  <li>Storage Cost ⬇️</li>
+  <li>Data Redundancy ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+</ul>
+
+<p><strong>Disadvantages</strong></p>
+<ul>
+  <li>Complex Queries with Joins</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
+</ul>
+
+<p><strong>Star Schema vs. Snowflake Schema</strong></p>
+<ul>
+  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
+  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
+</ul>
+
+<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
+
+<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
+
+<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
+
+<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
+    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
+    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
+    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
+    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
+
+<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
+
+<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
+
+<p>(6) Run the code block to see if your data has been imported.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
+
+<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="k">DISTINCT</span> <span class="n">category</span>  
+<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
+
+<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
+    <span class="n">category</span>  
+<span class="k">INTO</span> <span class="n">categories</span>  
+<span class="k">FROM</span> <span class="p">(</span>  
+    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
+    <span class="k">FROM</span> <span class="n">products</span>  
+<span class="p">)</span> <span class="n">SUB</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="data_warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 01. Introduction</li>
+    <li>SECTION 02. Data Warehouse Basics</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-will-you-learn">What Will You Learn?</h1>
+
+<ul>
+  <li>Data Warehouse Basics</li>
+  <li>Data Warehouse Architecture</li>
+  <li>Dimensional Modeling</li>
+  <li>Fact Tables</li>
+  <li>Dimension Tables</li>
+  <li>Slowly Changing Dimensions</li>
+  <li>ETL Process</li>
+  <li>ETL Tools</li>
+  <li>Case Study: Create a Data Warehouse</li>
+  <li>ETL vs. ELT</li>
+  <li>Using a Data Warehouse</li>
+  <li>Optimizing a Data Warehouse</li>
+  <li>The Modern Data Warehouse</li>
+</ul>
+
+<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
+
+<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
+
+<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
+<ul>
+  <li>User-friendly</li>
+  <li>Fast query performance</li>
+  <li>Enabling data analysis</li>
+</ul>
+
+<h1 id="etl">ETL</h1>
+
+<ul>
+  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
+
+<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
+<ul>
+  <li>Centralized and Consistent Location for Data</li>
+  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
+  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
+  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
+  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
+</ul>
+
+<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
+
+<h1 id="business-intelligence">Business Intelligence</h1>
+<ul>
+  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="data_warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 03. Data Warehouse Architecture</li>
@@ -118,86 +395,7 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="data_warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-will-you-learn">What Will You Learn?</h1>
-
-<ul>
-  <li>Data Warehouse Basics</li>
-  <li>Data Warehouse Architecture</li>
-  <li>Dimensional Modeling</li>
-  <li>Fact Tables</li>
-  <li>Dimension Tables</li>
-  <li>Slowly Changing Dimensions</li>
-  <li>ETL Process</li>
-  <li>ETL Tools</li>
-  <li>Case Study: Create a Data Warehouse</li>
-  <li>ETL vs. ELT</li>
-  <li>Using a Data Warehouse</li>
-  <li>Optimizing a Data Warehouse</li>
-  <li>The Modern Data Warehouse</li>
-</ul>
-
-<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
-
-<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
-
-<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
-<ul>
-  <li>User-friendly</li>
-  <li>Fast query performance</li>
-  <li>Enabling data analysis</li>
-</ul>
-
-<h1 id="etl">ETL</h1>
-
-<ul>
-  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
-
-<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
-<ul>
-  <li>Centralized and Consistent Location for Data</li>
-  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
-  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
-  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
-  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
-</ul>
-
-<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
-
-<h1 id="business-intelligence">Business Intelligence</h1>
-<ul>
-  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="data_warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="sql" /><category term="data_warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
   <p>개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “<strong>마스터링 이더리움 완독하고 정리하기</strong>”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.</p>
 </blockquote>
 
@@ -2920,198 +3118,4 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="blockchain" /><category term="on_chain_data" /><category term="sql" /><summary type="html"><![CDATA[Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua’s expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don’t miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.]]></summary></entry><entry><title type="html">OpenSea에서 발생한 트랜잭션 데이터 구조</title><link href="http://localhost:4000/opensea-transaction/" rel="alternate" type="text/html" title="OpenSea에서 발생한 트랜잭션 데이터 구조" /><published>2023-09-18T00:00:00+09:00</published><updated>2023-09-18T00:00:00+09:00</updated><id>http://localhost:4000/opensea-transaction</id><content type="html" xml:base="http://localhost:4000/opensea-transaction/"><![CDATA[<blockquote>
-  <p>안녕하세요. 저는 블록체인 기반 서비스 기업에서 데이터 분석을 담당하고 있는 Joshua라고 합니다. 이번 아티클에서는 OpenSea에서 NFT Transfer가 발생했을 때, EVM 계열 블록체인의 온체인 상에 데이터가 어떤 모습으로 남아 있는지 파헤쳐 보도록 하겠습니다.</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>오늘의 토픽</li>
-  <li>바쁘신 분들을 위한 두괄식 결론</li>
-  <li>상세 내용 파헤치기
-    <ul>
-      <li>3.1. TransactionReceipt</li>
-      <li>3.2. OpenSea의 Wyvern 컨트랙트로부터 발생한 Internal TXs</li>
-      <li>3.3. <code class="language-plaintext highlighter-rouge">atomicMatch_</code> 함수로부터 발생한 Events</li>
-    </ul>
-  </li>
-  <li>정리하기</li>
-</ol>
-
-<hr />
-
-<h1 id="1-오늘의-토픽">1. 오늘의 토픽</h1>
-
-<p>먼저 오늘 사례로 살펴볼 NFT는 <strong>Bored Ape Yacht Club</strong>의 <code class="language-plaintext highlighter-rouge">tokenId</code> = <code class="language-plaintext highlighter-rouge">3238</code>인 NFT입니다.</p>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/bayc.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/3238">Source</a></p>
-</blockquote>
-
-<p>이 NFT의 활동 내역을 보면 Transfers 히스토리가 많이 남아 있는데요. 그 중에서, <code class="language-plaintext highlighter-rouge">wizmo</code> 계정으로부터 <code class="language-plaintext highlighter-rouge">LGHTWRK</code> 계정으로의 Transfer 내역을 뜯어보도록 할게요.</p>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/bayc-transfers.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://opensea.io/assets/ethereum/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/3238">Source</a></p>
-</blockquote>
-
-<p>이 Transfer 내역의 우측 바로가기 버튼을 클릭하면 아래와 같이 Etherscan의 <code class="language-plaintext highlighter-rouge">Transaction Receipt</code> 페이지가 팝업합니다. 하지만 안타깝게도 일반적인 ETH 송금과 달리, 트랜잭션이 상당히 난해하여 도대체 어떤 구조와 절차를 통해 실행된 것인지 알기란 참 어려워요. 특히, 블록체인 초심자라면 더욱 난감하겠죠.</p>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/etherscan-overview.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://etherscan.io/tx/0xe769c002eb1a13e9384d8b62270c963188a686068f2833a9c1b07b160468e80c">Source</a></p>
-</blockquote>
-
-<h1 id="2-바쁘신-분들을-위한-두괄식-결론">2. 바쁘신 분들을 위한 두괄식 결론</h1>
-
-<blockquote>
-  <p><strong><code class="language-plaintext highlighter-rouge">wizmo</code>의 NFT 경매에 대하여 <code class="language-plaintext highlighter-rouge">LGHTWRK</code>의 Offer가 수락되어, <code class="language-plaintext highlighter-rouge">wizmo</code>가 <code class="language-plaintext highlighter-rouge">LGHTWRK</code>에게 NFT를 전송하는 거래가 성사되었다.</strong></p>
-</blockquote>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/flowchart.webp" alt="" /></p>
-<blockquote>
-  <p>Joshua가 작성한 Flowchart</p>
-</blockquote>
-
-<h1 id="3-상세-내용-파헤치기">3. 상세 내용 파헤치기</h1>
-
-<h2 id="31-transactionreceipt">3.1. TransactionReceipt</h2>
-
-<p>우선, 크게 다음과 같은 내용을 알 수 있습니다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>파라미터</strong></th>
-      <th><strong>값</strong></th>
-      <th><strong>참고내용</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>from</strong></td>
-      <td>0x869c…Bf89</td>
-      <td><code class="language-plaintext highlighter-rouge">LGHTWRK</code>의 주소</td>
-    </tr>
-    <tr>
-      <td><strong>to</strong></td>
-      <td>0x7Be8…D12b</td>
-      <td><code class="language-plaintext highlighter-rouge">OpenSea: Wyvern Exchange v1</code>의 주소</td>
-    </tr>
-    <tr>
-      <td><strong>value</strong></td>
-      <td>2.1000 ETH</td>
-      <td>0.1050 ETH + 1.9950 ETH</td>
-    </tr>
-    <tr>
-      <td><strong>tx fee</strong></td>
-      <td>0.0084 ETH</td>
-      <td>-</td>
-    </tr>
-    <tr>
-      <td><strong>data</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">atomicMatch_</code></td>
-      <td>함수 호출</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>즉, 이 트랜잭션의 기본 골격은 다음과 같습니다.</p>
-<blockquote>
-  <p><strong><code class="language-plaintext highlighter-rouge">LGHTWRK</code>로부터 <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>를 향해 <code class="language-plaintext highlighter-rouge">2.1000</code> ETH를 송금함과 동시에 해당 컨트랙트의 ABI에 정의되어 있는  <code class="language-plaintext highlighter-rouge">atomicMatch_</code>  함수를 실행하는 것을 목표로 한다.</strong></p>
-</blockquote>
-
-<p>참고로, 제가 <code class="language-plaintext highlighter-rouge">2.1000</code> ETH를 <code class="language-plaintext highlighter-rouge">0.1050</code> ETH + <code class="language-plaintext highlighter-rouge">1.9950</code> ETH 로 쪼개어 표현했는데요. 제가 왜 그랬을까요? 바로 아래를 보시죠.</p>
-
-<h2 id="32-opensea의-wyvern-컨트랙트로부터-발생한-internal-txs">3.2. OpenSea의 Wyvern 컨트랙트로부터 발생한 Internal TXs</h2>
-
-<p><code class="language-plaintext highlighter-rouge">LGHTWRK</code>가 <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>를 향해 송금하게 되면서, 컨트랙트로부터 총 2개의 트랜잭션이 파생적으로 발생했습니다. 바로, NFT를 구매하고 싶은 <code class="language-plaintext highlighter-rouge">LGHTWRK</code>가 OpenSea에 수수료를 납부하고, NFT 소유자인 <code class="language-plaintext highlighter-rouge">wizmo</code>에게 제시한 가격을 지불해야 하는 내용인 것이죠.</p>
-
-<p><strong>1. <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>가  <code class="language-plaintext highlighter-rouge">OpenSea 수수료 전용 EOA</code>에 <code class="language-plaintext highlighter-rouge">0.1050</code> ETH를 송금한다.</strong></p>
-<ul>
-  <li><strong>from</strong>  = 0x7Be8…D12b (<code class="language-plaintext highlighter-rouge">OpenSea: Wyvern Exchange v1</code>)</li>
-  <li><strong>to</strong>  = 0x5b32…1073 (<code class="language-plaintext highlighter-rouge">OpenSea: Wallet</code>)</li>
-</ul>
-
-<p><strong>2. <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>가  <code class="language-plaintext highlighter-rouge">wizmo</code>에게 <code class="language-plaintext highlighter-rouge">1.9950</code> ETH를 송금한다.</strong></p>
-<ul>
-  <li><strong>from</strong>  = 0x7Be8…D12b (<code class="language-plaintext highlighter-rouge">OpenSea: Wyvern Exchange v1</code>)</li>
-  <li><strong>to</strong>  = 0xc4CB…9B26 (<code class="language-plaintext highlighter-rouge">wizmo</code>)</li>
-</ul>
-
-<p>참고로, Etherscan의 Transaction Receipt 페이지에서 <strong>Internal Txns 탭</strong>을 클릭하면 위 내용을 확인하실 수 있는데요. 블록체인 데이터 측면에서는 이러한 <strong>Internal TX</strong>를 흔히 <code class="language-plaintext highlighter-rouge">Trace</code>라고도 표현합니다.</p>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/ethersacn-internal-tx.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://etherscan.io/tx/0xe769c002eb1a13e9384d8b62270c963188a686068f2833a9c1b07b160468e80c#internal">Source</a></p>
-</blockquote>
-
-<h2 id="33-atomicmatch_-함수로부터-발생한-events">3.3. <code class="language-plaintext highlighter-rouge">atomicMatch_</code> 함수로부터 발생한 Events</h2>
-
-<p><code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>에게 Input Data로 적어준  <strong>_atomicMatch__</strong>  함수를 통해,  <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>  에서는 총 3개의 Events가 발생(emit)하게 됩니다.</p>
-
-<p>사실, <strong>_atomicMatch__</strong> 함수를 통해 어떤 Events가 실행되는지 명확하게 알기 위해서는 아래와 같이  <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>의 코드를 분석해야 하는데요. 이것까지 살펴보려면 분량이 너무 길어질 것 같으니, 오늘은 생략할게요.</p>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/etherscan-source-code.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://etherscan.io/address/0x7be8076f4ea4a4ad08075c2508e481d6c946d12b#code">Source</a></p>
-</blockquote>
-
-<p><strong>1. Approval 이벤트</strong></p>
-<ul>
-  <li>ERC-721 ABI의 <code class="language-plaintext highlighter-rouge">Approval</code> 이벤트와 파라미터 구조가 똑같습니다. ERC-721 ABI의 <code class="language-plaintext highlighter-rouge">Approval</code> 이벤트는 “특정 Address가 소유자를 대신하여 NFT를 사용할 수 있는 권한을 주게는” 것을 의미합니다.</li>
-  <li>Approval 이벤트는 ERC-721 ABI의 <code class="language-plaintext highlighter-rouge">approve</code> 함수를 통해 발생하게 되는데, 이번 아티클에서 소개 드리고 있는 트랜잭션에서는 approve 함수가 실행된 적이 없는 것으로 보아, 아마 소유자인  <code class="language-plaintext highlighter-rouge">wizmo</code>가 자신의 NFT를 경매에 올린 시점에 오프체인 상에서 Signed된 트랜잭션 메시지를 본 트랜잭션과 묶음 단위로 브로드캐스트했기 때문이지 않을까 추측해봅니다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">owner</span> <span class="o">=</span> <span class="mh">0xc4cb</span><span class="err">…</span><span class="mi">9</span><span class="n">b26</span> <span class="c1"># wizmo
-</span><span class="n">approved</span> <span class="o">=</span> <span class="mh">0x0000</span><span class="err">…</span><span class="mi">0000</span>  
-<span class="n">tokenId</span> <span class="o">=</span> <span class="mi">3238</span>
-</code></pre></div></div>
-
-<p><strong>2. Transfer 이벤트</strong></p>
-<ul>
-  <li>NFT의 소유권이 <code class="language-plaintext highlighter-rouge">wizmo</code>로부터 <code class="language-plaintext highlighter-rouge">LGHTWRK</code>로 넘어가게 되는 이벤트입니다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">from</span> <span class="o">=</span> <span class="mh">0xc4cb</span><span class="err">…</span><span class="mi">9</span><span class="n">b26</span> <span class="c1"># wizmo  
-</span><span class="n">to</span> <span class="o">=</span> <span class="mh">0x869c</span><span class="err">…</span><span class="n">bf89</span> <span class="c1"># LGHTWRK
-</span><span class="n">tokenId</span> <span class="o">=</span> <span class="mi">3238</span>
-</code></pre></div></div>
-
-<p><strong>3. OrdersMatched 이벤트</strong></p>
-<ul>
-  <li>정확히 어떤 것을 의미하는지 알기 위해서는  <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>  의 코드를 분석해야 하겠지만, 우선 경매를 통해 성사된 거래 내역이 기록된 것이라고 생각하고 넘어가봅시다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">maker</span> <span class="o">=</span> <span class="mh">0xc4cb</span><span class="err">…</span><span class="mi">9</span><span class="n">b26</span> <span class="c1"># wizmo (OpenSea 경매 시장의 Maker)
-</span><span class="n">taker</span> <span class="o">=</span> <span class="mh">0x869c</span><span class="err">…</span><span class="n">bf89</span> <span class="c1"># LGHTWRK (OpenSea 경매 시장의 Taker)
-</span><span class="n">metadata</span> <span class="o">=</span> <span class="mh">0x0000</span><span class="err">…</span><span class="mi">0000</span> <span class="c1"># data  
-</span><span class="n">buyHash</span> <span class="o">=</span> <span class="mi">0000</span><span class="err">…</span><span class="mi">0000</span>  
-<span class="n">sellHash</span> <span class="o">=</span> <span class="n">A7B1</span><span class="err">…</span><span class="mi">297</span><span class="n">F</span>  
-<span class="n">price</span> <span class="o">=</span> <span class="mf">2.1000</span> <span class="c1"># ETH
-</span></code></pre></div></div>
-
-<h1 id="4-정리하기">4. 정리하기</h1>
-
-<p>지금까지 가벼운 마음으로(?) 아래 내용을 데이터적으로 뜯어보았습니다.</p>
-
-<blockquote>
-  <p><strong><code class="language-plaintext highlighter-rouge">wizmo</code>의 NFT 경매에 대하여 <code class="language-plaintext highlighter-rouge">LGHTWRK</code>의 Offer가 수락되어, <code class="language-plaintext highlighter-rouge">wizmo</code>가 <code class="language-plaintext highlighter-rouge">LGHTWRK</code>에게 NFT를 전송하는 거래가 성사되었다.</strong></p>
-</blockquote>
-
-<p><img src="/assets/2023-09-18-opensea-transaction/flowchart.webp" alt="" /></p>
-<blockquote>
-  <p>Joshua가 작성한 Flowchart</p>
-</blockquote>
-
-<p>ETH, ERC-20의 송금과 달리, ERC-721은 좀 더 다양한 메타데이터를 지니고 있고, 심지어 OpenSea는 자체적으로 컨트랙트를 구현하여 ERC-721 토큰의 경매가 자동으로 성사될 수 있도록 프로토콜을 구현했습니다. <code class="language-plaintext highlighter-rouge">OpenSea의 Wyvern 컨트랙트</code>는 사실 최근에는 사용 빈도가 줄어들게 되었는데요. 그럼에도 불구하고, OpenSea와 같은 NFT Marketplace에서 발생한 NFT 매매 과정이 온체인 상에 어떻게 기록되어 있는지 조회하기에 좋은 예시라고 생각합니다.</p>
-
-<p>참고로, OpenSea는 경매 과정의 각 특정 행위가 발생할 때마다 매번 온체인 상에 기록하는 것이 아니라, 오프체인 상에서 서명이 완료된 트랜잭션 메시지를 보관하고 있다가, 한꺼번에 Bulk 단위로 온체인 상에 메시지를 브로드캐스트하는 방식을 사용하곤 합니다. 이는 최종 사용자 측면에서 TX Fee의 부담을 줄여 사업의 P&amp;L을 최적화하기 위한 작업으로 보이지만, 블록체인의 트릴레마 항목 중 하나인 “탈중앙화” 훼손 논란의 여지가 있어 보이기도 합니다.</p>
-
-<p>읽어주셔서 감사합니다.</p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="korean" /><category term="blockchain" /><category term="on_chain_data" /><summary type="html"><![CDATA[안녕하세요. 저는 블록체인 기반 서비스 기업에서 데이터 분석을 담당하고 있는 Joshua라고 합니다. 이번 아티클에서는 OpenSea에서 NFT Transfer가 발생했을 때, EVM 계열 블록체인의 온체인 상에 데이터가 어떤 모습으로 남아 있는지 파헤쳐 보도록 하겠습니다.]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="english" /><category term="blockchain" /><category term="on_chain_data" /><category term="sql" /><summary type="html"><![CDATA[Embark on a journey through blockchain data with Joshua. Explore the intricacies of smart contracts, ERC721, and data analysis techniques. Joshua’s expertise shines as he guides you through interpreting transfer events using tools like Dune Analytics. Don’t miss the case study featuring Binance 7 EOA addresses. Verify insights with Etherscan for a deeper understanding of on-chain data architecture.]]></summary></entry></feed>
