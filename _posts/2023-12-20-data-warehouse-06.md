@@ -79,11 +79,11 @@ Combination: Year-quarter, Year-Month, etc.
 ### Star Schema
 -   **Denormalized** & **Flattened**
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-2.png)
+![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-2.png)
 
 ### Consider combinations if helpful!
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-3.png)
+![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-3.png)
 
 # Conformed Dimensions
 
