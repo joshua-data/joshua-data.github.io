@@ -12,7 +12,7 @@ tags:
 ### DISCLAIMER
 > This article is a compilation of key takeaways after completing [Data Warehouse — The Ultimate Guide](https://www.udemy.com/course/data-warehouse-the-ultimate-guide/) on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/data-warehouse.webp)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/data-warehouse.webp)
 > [Source](https://www.udemy.com/course/data-warehouse-the-ultimate-guide/)
 
 # Dimension Tables
@@ -25,7 +25,7 @@ tags:
     -   Number of Rows ⬇️
     -   Number of Columns ⬆️ (with descriptive attributes)
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/dimension-tables.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/dimension-tables.png)
 
 # Date Dimensions
 
@@ -39,7 +39,7 @@ Combination: Year-quarter, Year-Month, etc.
 -   Surrogate Key: **`YYYYMMDD`** (Integer Type)
     -   The recommended way to fill null values: `NULL` dates in Source → `19000101` in Dimensions
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/date-dimensions.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/date-dimensions.png)
 
 -   Date Dimensions can be populated in advance. (for the next 5 or 10 years, for example.)    
 -   Don’t combine time with date!
@@ -59,13 +59,13 @@ Combination: Year-quarter, Year-Month, etc.
 ### `promotion_FK`
 -   `NULL` values must be avoided so that they can **appear in JOINs**!
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-1.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/nulls-in-dimensions-1.png)
 
 ### Replace Nulls with descriptive values!
 -   More understandable for business users
 -   Values appear in aggregations in BI tools
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-2.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/nulls-in-dimensions-2.png)
 
 # Hierarchies in Dimensions
 
@@ -74,29 +74,29 @@ Combination: Year-quarter, Year-Month, etc.
     -   👍 Good for “**Normalization**”
     -   👎 Bad for “**Query Performance (Read)**”
     
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-1.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-1.png)
 
 ### Star Schema
 -   **Denormalized** & **Flattened**
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-2.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-2.png)
 
 ### Consider combinations if helpful!
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-3.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-3.png)
 
 # Conformed Dimensions
 
 **A Confirmed Dimension is a dimension shared by multiple fact tables or stars.**
 * Used to compare facts across different fact tables.
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/conformed-dimensions-1.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/conformed-dimensions-1.png)
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/conformed-dimensions-2.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/conformed-dimensions-2.png)
 
 **The same granularity is not necessary, and a different scope of FK can be possible!**
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/conformed-dimensions-3.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/conformed-dimensions-3.png)
 
 # Degenerate Dimensions
 
@@ -106,7 +106,7 @@ Combination: Year-quarter, Year-Month, etc.
 -   Examples: invoice number, billing number, order id, etc.
 -   with a suffix of **`_DD`**
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/degenerate-dimensions.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/degenerate-dimensions.png)
 
 # Junk Dimensions
 
@@ -116,13 +116,13 @@ Combination: Year-quarter, Year-Month, etc.
 
 > 💡 `Junk Dimension` is a concept in data warehousing that involves **combining low-cardinality fields or attributes into a single-dimension table**. These low-cardinality fields may represent different categories or flags that have a limited number of possible values. By consolidating these attributes into a single table, a Junk Dimension reduces the number of dimension tables in a data warehouse. [(Source)](https://www.dremio.com/wiki/junk-dimension/)
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/junk-dimensions.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/junk-dimensions.png)
 
 # Role-playing Dimensions
 
 **A Role-playing Dimension is a dimension that is referenced multiple times by a fact table.**
 
-![]({{ site.baseurl }}/assets/2023-12-20-data-warehouse-06/role-playing-dimensions.png)
+![]({{ site.baseurl }}/assets/2023-12-19-data-warehouse-06/role-playing-dimensions.png)
 
 **What are Role-playing Dimensions?**
 * Role-playing Dimensions are dimensions that are used more than once in a fact table, each time with a different meaning or role.
