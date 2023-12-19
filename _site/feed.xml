@@ -1,4 +1,644 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-16T00:30:22+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-20T00:33:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #06</title><link href="http://localhost:4000/data-warehouse-06/" rel="alternate" type="text/html" title="Data Warehouse #06" /><published>2023-12-20T00:00:00+09:00</published><updated>2023-12-20T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-06</id><content type="html" xml:base="http://localhost:4000/data-warehouse-06/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 06. Dimensions</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="dimension-tables">Dimension Tables</h1>
+
+<ul>
+  <li>A role of “<strong>group &amp; filter</strong>”</li>
+  <li>Always has a <strong>PK(Primary Key)</strong>.
+    <ul>
+      <li>Recommended to iuse a <strong>Surrogate Key</strong>!
+        <ul>
+          <li>because a Natural Key may or may not have null values.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Number of Rows &amp; Columns (compared to Fact Tables)
+    <ul>
+      <li>Number of Rows ⬇️</li>
+      <li>Number of Columns ⬆️ (with descriptive attributes)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/dimension-tables.png" alt="" /></p>
+
+<h1 id="date-dimensions">Date Dimensions</h1>
+
+<ul>
+  <li>One of the most common &amp; important dimensions</li>
+  <li>Contains date-related features
+    <pre><code class="language-plain">Year, Quarter, Month(Name &amp; Number), Week, Day, Weekday(Name &amp; Number), etc.
+Combination: Year-quarter, Year-Month, etc.
+</code></pre>
+  </li>
+  <li>Surrogate Key: <strong><code class="language-plaintext highlighter-rouge">YYYYMMDD</code></strong> (Integer Type)
+    <ul>
+      <li>The recommended way to fill null values: <code class="language-plaintext highlighter-rouge">NULL</code> dates in Source → <code class="language-plaintext highlighter-rouge">19000101</code> in Dimensions</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/date-dimensions.png" alt="" /></p>
+
+<ul>
+  <li>Date Dimensions can be populated in advance. (for the next 5 or 10 years, for example.)</li>
+  <li>Don’t combine time with date!
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Time</code> should be a separate dimension from <code class="language-plaintext highlighter-rouge">Date</code>.</li>
+    </ul>
+  </li>
+  <li>Date Feature Examples</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Type</strong></th>
+      <th><strong>Examples</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Number &amp; Text</td>
+      <td>January / 1</td>
+    </tr>
+    <tr>
+      <td>Long &amp; Abbreviated</td>
+      <td>January / Jan / Monday / Mon</td>
+    </tr>
+    <tr>
+      <td>Combinations of Features</td>
+      <td>Q1 / 2022-Q1</td>
+    </tr>
+    <tr>
+      <td>Fiscal Dates</td>
+      <td>Fiscal Year, etc.</td>
+    </tr>
+    <tr>
+      <td>Flags</td>
+      <td>Weekend, Holiday, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="nulls-in-dimensions">Nulls in Dimensions</h1>
+
+<h3 id="promotion_fk"><code class="language-plaintext highlighter-rouge">promotion_FK</code></h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">NULL</code> values must be avoided so that they can <strong>appear in JOINs</strong>!</li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-1.png" alt="" /></p>
+
+<h3 id="replace-nulls-with-descriptive-values">Replace Nulls with descriptive values!</h3>
+<ul>
+  <li>More understandable for business users</li>
+  <li>Values appear in aggregations in BI tools</li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-2.png" alt="" /></p>
+
+<h1 id="hierarchies-in-dimensions">Hierarchies in Dimensions</h1>
+
+<h3 id="snowflake-schema">Snowflake Schema</h3>
+<ul>
+  <li>Should be avoided in Data Mart
+    <ul>
+      <li>👍 Good for “<strong>Normalization</strong>”</li>
+      <li>👎 Bad for “<strong>Query Performance (Read)</strong>”</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-1.png" alt="" /></p>
+
+<h3 id="star-schema">Star Schema</h3>
+<ul>
+  <li><strong>Denormalized</strong> &amp; <strong>Flattened</strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-2.png" alt="" /></p>
+
+<h3 id="consider-combinations-if-helpful">Consider combinations if helpful!</h3>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-3.png" alt="" /></p>
+
+<h1 id="conformed-dimensions">Conformed Dimensions</h1>
+
+<p><strong>A Confirmed Dimension is a dimension shared by multiple fact tables or stars.</strong></p>
+<ul>
+  <li>Used to compare facts across different fact tables.</li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-1.png" alt="" /></p>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-2.png" alt="" /></p>
+
+<p><strong>The same granularity is not necessary, and a different scope of FK can be possible!</strong></p>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-3.png" alt="" /></p>
+
+<h1 id="degenerate-dimensions">Degenerate Dimensions</h1>
+
+<p><strong>A Degenerate Dimension is a dimension that has no attributes or descriptive information, but only a single identifier or key.</strong></p>
+<ul>
+  <li>Used to simplify fact tables by eliminating the need for a separate dimension table.</li>
+  <li>It can be still useful in the future, so we don’t just drop it.</li>
+  <li>Examples: invoice number, billing number, order id, etc.</li>
+  <li>with a suffix of <strong><code class="language-plaintext highlighter-rouge">_DD</code></strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/degenerate-dimensions.png" alt="" /></p>
+
+<h1 id="junk-dimensions">Junk Dimensions</h1>
+
+<p><strong>A Junk Dimension is a dimension with various flags or indicators with low cardinality.</strong></p>
+<ul>
+  <li>We call it <code class="language-plaintext highlighter-rouge">Junk Dimension</code> only internally. When talking to business users, we can refer to it as the “<strong>Transactional Indicator Dimension</strong>”.</li>
+  <li>If there are too many combination cases for the attributes, extract only existing combinations of the fact table.</li>
+</ul>
+
+<blockquote>
+  <p>💡 <code class="language-plaintext highlighter-rouge">Junk Dimension</code> is a concept in data warehousing that involves <strong>combining low-cardinality fields or attributes into a single-dimension table</strong>. These low-cardinality fields may represent different categories or flags that have a limited number of possible values. By consolidating these attributes into a single table, a Junk Dimension reduces the number of dimension tables in a data warehouse. <a href="https://www.dremio.com/wiki/junk-dimension/">(Source)</a></p>
+</blockquote>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/junk-dimensions.png" alt="" /></p>
+
+<h1 id="role-playing-dimensions">Role-playing Dimensions</h1>
+
+<p><strong>A Role-playing Dimension is a dimension that is referenced multiple times by a fact table.</strong></p>
+
+<p><img src="/assets/2023-12-20-data-warehouse-06/role-playing-dimensions.png" alt="" /></p>
+
+<p><strong>What are Role-playing Dimensions?</strong></p>
+<ul>
+  <li>Role-playing Dimensions are dimensions that are used more than once in a fact table, each time with a different meaning or role.</li>
+  <li>They are typically derived from the same source dimension table, but with different aliases or prefixes to indicate their role.
+    <ul>
+      <li>For example, a date dimension table can be used to create <code class="language-plaintext highlighter-rouge">order_date</code>, <code class="language-plaintext highlighter-rouge">ship_date</code>, and <code class="language-plaintext highlighter-rouge">delivery_date</code> dimensions in a fact table that records product sales.</li>
+      <li>Each of these dimensions has the same structure and attributes, such as <code class="language-plaintext highlighter-rouge">year</code>, <code class="language-plaintext highlighter-rouge">month</code>, <code class="language-plaintext highlighter-rouge">quarter</code>, <code class="language-plaintext highlighter-rouge">day</code>, etc., but they represent different aspects of the sales process.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Why are Role-playing Dimensions challenging?</strong></p>
+<ul>
+  <li>(1) Increase the complexity and size of the fact table.
+    <ul>
+      <li>Each Role-playing Dimension adds more columns and joins to the fact table.</li>
+    </ul>
+  </li>
+  <li>(2) Create confusion and inconsistency among users and analysts.
+    <ul>
+      <li>Different roles may have different meanings or interpretations for the same dimension attribute.</li>
+    </ul>
+  </li>
+  <li>(3) Difficult to maintain and update.
+    <ul>
+      <li>Any change in the source dimension table may affect multiple Role-playing Dimensions and fact tables.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>How do you design Role-playing Dimensions?</strong></p>
+<ul>
+  <li>(1) Use a single-dimension table for each Role-playing Dimension and join it to the fact table using different foreign keys.
+    <ul>
+      <li><strong>Example</strong>: a date dimension table can be joined to a sales fact table using <code class="language-plaintext highlighter-rouge">order_date_key</code>, <code class="language-plaintext highlighter-rouge">ship_date_key</code>, and <code class="language-plaintext highlighter-rouge">delivery_date_key</code> as foreign keys.</li>
+      <li><strong>Pros</strong>: simplicity and consistency</li>
+      <li><strong>Cons</strong>: redundancy and performance issues (The same dimension table is duplicated and joined multiple times to the fact table.)</li>
+    </ul>
+  </li>
+  <li>(2) Use a single dimension table for each Role-playing Dimension, but with different views or aliases to indicate their role.
+    <ul>
+      <li><strong>Example</strong>: a date dimension table can be viewed or aliased as <code class="language-plaintext highlighter-rouge">order_date</code>, <code class="language-plaintext highlighter-rouge">ship_date</code>, and <code class="language-plaintext highlighter-rouge">delivery_date</code> in the data warehouse schema, and joined to the fact table using the appropriate view or alias name.</li>
+      <li><strong>Pros</strong>: reducing redundancy and improving performance (The same dimension table is not duplicated and joined multiple times to the fact table.)</li>
+      <li><strong>Cons</strong>: complexity and dependency (The views or aliases need to be created and maintained in the data warehouse schema.)</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p><a href="https://www.linkedin.com/advice/3/how-do-you-deal-changing-business-requirements">Source</a></p>
+</blockquote>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 04. Dimensional Modeling</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
+
+<p><strong>Dimensional Modeling</strong></p>
+<ul>
+  <li>Unique Technique of Structuring Data</li>
+  <li>Commonly Used in Data Warehouse</li>
+  <li>Optimized for Faster Data Regrieval</li>
+  <li>Performance &amp; Usability Oriented</li>
+  <li>Designed Reporting &amp; OLAP</li>
+</ul>
+
+<p><strong>Details</strong></p>
+<ul>
+  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
+  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
+    <ul>
+      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
+      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
+
+<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
+
+<ul>
+  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
+
+<h1 id="facts">Facts</h1>
+
+<p><strong>Facts</strong> usually…</p>
+<ul>
+  <li>Aggregatable (with Numeric Values)</li>
+  <li>Measurable</li>
+  <li>Event or Transactional Data</li>
+  <li>Date or Time in a Fact Table</li>
+  <li>Foundation of Data Warehouse</li>
+  <li>Key Measurements</li>
+  <li>Aggregated and Analyzed</li>
+</ul>
+
+<h1 id="dimensions">Dimensions</h1>
+
+<p><strong>Dimensions</strong> usually…</p>
+<ul>
+  <li>Non-aggregatable</li>
+  <li>Descriptive</li>
+  <li>More Static than Facts</li>
+  <li>Categorizes Facts</li>
+  <li>Supportive &amp; Descriptive</li>
+  <li>Filtering, Grouping, and Labeling</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
+</blockquote>
+
+<p><strong>Star Schema</strong></p>
+<ul>
+  <li>Most Common Schema in Data Mart</li>
+  <li>Simplest Form (vs. Snowflake Schema)</li>
+  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
+  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
+</ul>
+
+<p><strong>Denormalized</strong> (= Star Schema)</p>
+<ul>
+  <li>Data Redundancy ⬆️</li>
+  <li>Optimized to get data out ⬆️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
+  <li>User Experience ⬆️</li>
+</ul>
+
+<p><strong>Normalized</strong> (= Snowflake Schema)</p>
+<ul>
+  <li>Data Redundancy ⬇️</li>
+  <li>Storage ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+  <li>Number of Tables ⬆️</li>
+  <li>Joins Necessary ⬆️</li>
+</ul>
+
+<h1 id="snowflake-schema">Snowflake Schema</h1>
+
+<p><strong>Advantages</strong></p>
+<ul>
+  <li>Storage Cost ⬇️</li>
+  <li>Data Redundancy ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+</ul>
+
+<p><strong>Disadvantages</strong></p>
+<ul>
+  <li>Complex Queries with Joins</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
+</ul>
+
+<p><strong>Star Schema vs. Snowflake Schema</strong></p>
+<ul>
+  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
+  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
+</ul>
+
+<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
+
+<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
+
+<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
+
+<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
+    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
+    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
+    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
+    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
+
+<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
+
+<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
+
+<p>(6) Run the code block to see if your data has been imported.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
+
+<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="k">DISTINCT</span> <span class="n">category</span>  
+<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
+
+<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
+    <span class="n">category</span>  
+<span class="k">INTO</span> <span class="n">categories</span>  
+<span class="k">FROM</span> <span class="p">(</span>  
+    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
+    <span class="k">FROM</span> <span class="n">products</span>  
+<span class="p">)</span> <span class="n">SUB</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 03. Data Warehouse Architecture</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
+
+<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
+
+<h3 id="pentaho">Pentaho</h3>
+
+<ul>
+  <li><strong>ETL Tool</strong></li>
+  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
+  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
+  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
+</ul>
+
+<h3 id="postgresql">PostgreSQL</h3>
+
+<ul>
+  <li><strong>Database Management System</strong></li>
+  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
+  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
+</ul>
+
+<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
+
+<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
+  <li><strong>“The Landing Zone Extracted Data”</strong>
+    <ul>
+      <li>Data in Tables and on a Separate Database</li>
+      <li>As little “toughing” as possible</li>
+      <li>We don’t charge the source systems.</li>
+      <li>Temporary or Persistent Staging Layers</li>
+    </ul>
+  </li>
+  <li>Short Time on the Source Systems</li>
+  <li>Quickly Extracted</li>
+  <li>Move the Data into Relational Database</li>
+  <li>Start Transformations from There</li>
+  <li>Minimal Transformation</li>
+</ul>
+
+<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
+</ul>
+
+<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
+<ul>
+  <li><strong>“Core”</strong>
+    <ul>
+      <li>Business Logic</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
+<ul>
+  <li><strong>“Data Mart”</strong>
+    <ul>
+      <li>Subset of a Data Warehouse</li>
+      <li>Dimensional Model</li>
+      <li>Can be Further Aggregated.</li>
+      <li>Usability + Acceptance</li>
+      <li>Performance</li>
+    </ul>
+  </li>
+  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
+</ul>
+
+<h1 id="in-memory-databases">In-memory Databases</h1>
+
+<h3 id="traditional-databases">Traditional Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
+
+<h3 id="in-memory-databases-1">In-memory Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
+
+<ul>
+  <li>Highly Optimized for Query Performance</li>
+  <li>Good for Analytics &amp; High Query Volume</li>
+  <li>Usually Used for Data Marts</li>
+  <li>Relational &amp; Non-relational</li>
+  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
+</ul>
+
+<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
+<ul>
+  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
+  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 01. Introduction</li>
+    <li>SECTION 02. Data Warehouse Basics</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-will-you-learn">What Will You Learn?</h1>
+
+<ul>
+  <li>Data Warehouse Basics</li>
+  <li>Data Warehouse Architecture</li>
+  <li>Dimensional Modeling</li>
+  <li>Fact Tables</li>
+  <li>Dimension Tables</li>
+  <li>Slowly Changing Dimensions</li>
+  <li>ETL Process</li>
+  <li>ETL Tools</li>
+  <li>Case Study: Create a Data Warehouse</li>
+  <li>ETL vs. ELT</li>
+  <li>Using a Data Warehouse</li>
+  <li>Optimizing a Data Warehouse</li>
+  <li>The Modern Data Warehouse</li>
+</ul>
+
+<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
+
+<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
+
+<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
+<ul>
+  <li>User-friendly</li>
+  <li>Fast query performance</li>
+  <li>Enabling data analysis</li>
+</ul>
+
+<h1 id="etl">ETL</h1>
+
+<ul>
+  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
+
+<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
+<ul>
+  <li>Centralized and Consistent Location for Data</li>
+  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
+  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
+  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
+  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
+</ul>
+
+<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
+
+<h1 id="business-intelligence">Business Intelligence</h1>
+<ul>
+  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 05. Facts</li>
@@ -289,404 +929,7 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 03. Data Warehouse Architecture</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
-
-<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
-
-<h3 id="pentaho">Pentaho</h3>
-
-<ul>
-  <li><strong>ETL Tool</strong></li>
-  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
-  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
-  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
-</ul>
-
-<h3 id="postgresql">PostgreSQL</h3>
-
-<ul>
-  <li><strong>Database Management System</strong></li>
-  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
-  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
-</ul>
-
-<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
-
-<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
-  <li><strong>“The Landing Zone Extracted Data”</strong>
-    <ul>
-      <li>Data in Tables and on a Separate Database</li>
-      <li>As little “toughing” as possible</li>
-      <li>We don’t charge the source systems.</li>
-      <li>Temporary or Persistent Staging Layers</li>
-    </ul>
-  </li>
-  <li>Short Time on the Source Systems</li>
-  <li>Quickly Extracted</li>
-  <li>Move the Data into Relational Database</li>
-  <li>Start Transformations from There</li>
-  <li>Minimal Transformation</li>
-</ul>
-
-<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
-</ul>
-
-<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
-<ul>
-  <li><strong>“Core”</strong>
-    <ul>
-      <li>Business Logic</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
-<ul>
-  <li><strong>“Data Mart”</strong>
-    <ul>
-      <li>Subset of a Data Warehouse</li>
-      <li>Dimensional Model</li>
-      <li>Can be Further Aggregated.</li>
-      <li>Usability + Acceptance</li>
-      <li>Performance</li>
-    </ul>
-  </li>
-  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
-</ul>
-
-<h1 id="in-memory-databases">In-memory Databases</h1>
-
-<h3 id="traditional-databases">Traditional Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
-
-<h3 id="in-memory-databases-1">In-memory Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
-
-<ul>
-  <li>Highly Optimized for Query Performance</li>
-  <li>Good for Analytics &amp; High Query Volume</li>
-  <li>Usually Used for Data Marts</li>
-  <li>Relational &amp; Non-relational</li>
-  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
-</ul>
-
-<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
-<ul>
-  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
-  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-will-you-learn">What Will You Learn?</h1>
-
-<ul>
-  <li>Data Warehouse Basics</li>
-  <li>Data Warehouse Architecture</li>
-  <li>Dimensional Modeling</li>
-  <li>Fact Tables</li>
-  <li>Dimension Tables</li>
-  <li>Slowly Changing Dimensions</li>
-  <li>ETL Process</li>
-  <li>ETL Tools</li>
-  <li>Case Study: Create a Data Warehouse</li>
-  <li>ETL vs. ELT</li>
-  <li>Using a Data Warehouse</li>
-  <li>Optimizing a Data Warehouse</li>
-  <li>The Modern Data Warehouse</li>
-</ul>
-
-<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
-
-<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
-
-<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
-<ul>
-  <li>User-friendly</li>
-  <li>Fast query performance</li>
-  <li>Enabling data analysis</li>
-</ul>
-
-<h1 id="etl">ETL</h1>
-
-<ul>
-  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
-
-<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
-<ul>
-  <li>Centralized and Consistent Location for Data</li>
-  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
-  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
-  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
-  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
-</ul>
-
-<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
-
-<h1 id="business-intelligence">Business Intelligence</h1>
-<ul>
-  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 04. Dimensional Modeling</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
-
-<p><strong>Dimensional Modeling</strong></p>
-<ul>
-  <li>Unique Technique of Structuring Data</li>
-  <li>Commonly Used in Data Warehouse</li>
-  <li>Optimized for Faster Data Regrieval</li>
-  <li>Performance &amp; Usability Oriented</li>
-  <li>Designed Reporting &amp; OLAP</li>
-</ul>
-
-<p><strong>Details</strong></p>
-<ul>
-  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
-  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
-    <ul>
-      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
-      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
-
-<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
-
-<ul>
-  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
-
-<h1 id="facts">Facts</h1>
-
-<p><strong>Facts</strong> usually…</p>
-<ul>
-  <li>Aggregatable (with Numeric Values)</li>
-  <li>Measurable</li>
-  <li>Event or Transactional Data</li>
-  <li>Date or Time in a Fact Table</li>
-  <li>Foundation of Data Warehouse</li>
-  <li>Key Measurements</li>
-  <li>Aggregated and Analyzed</li>
-</ul>
-
-<h1 id="dimensions">Dimensions</h1>
-
-<p><strong>Dimensions</strong> usually…</p>
-<ul>
-  <li>Non-aggregatable</li>
-  <li>Descriptive</li>
-  <li>More Static than Facts</li>
-  <li>Categorizes Facts</li>
-  <li>Supportive &amp; Descriptive</li>
-  <li>Filtering, Grouping, and Labeling</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
-</blockquote>
-
-<p><strong>Star Schema</strong></p>
-<ul>
-  <li>Most Common Schema in Data Mart</li>
-  <li>Simplest Form (vs. Snowflake Schema)</li>
-  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
-  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
-</ul>
-
-<p><strong>Denormalized</strong> (= Star Schema)</p>
-<ul>
-  <li>Data Redundancy ⬆️</li>
-  <li>Optimized to get data out ⬆️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
-  <li>User Experience ⬆️</li>
-</ul>
-
-<p><strong>Normalized</strong> (= Snowflake Schema)</p>
-<ul>
-  <li>Data Redundancy ⬇️</li>
-  <li>Storage ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-  <li>Number of Tables ⬆️</li>
-  <li>Joins Necessary ⬆️</li>
-</ul>
-
-<h1 id="snowflake-schema">Snowflake Schema</h1>
-
-<p><strong>Advantages</strong></p>
-<ul>
-  <li>Storage Cost ⬇️</li>
-  <li>Data Redundancy ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-</ul>
-
-<p><strong>Disadvantages</strong></p>
-<ul>
-  <li>Complex Queries with Joins</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
-</ul>
-
-<p><strong>Star Schema vs. Snowflake Schema</strong></p>
-<ul>
-  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
-  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
-</ul>
-
-<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
-
-<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
-
-<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
-
-<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
-    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
-    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
-    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
-    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
-<span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
-
-<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
-
-<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
-
-<p>(6) Run the code block to see if your data has been imported.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
-
-<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="k">DISTINCT</span> <span class="n">category</span>  
-<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
-
-<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
-    <span class="n">category</span>  
-<span class="k">INTO</span> <span class="n">categories</span>  
-<span class="k">FROM</span> <span class="p">(</span>  
-    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
-    <span class="k">FROM</span> <span class="n">products</span>  
-<span class="p">)</span> <span class="n">SUB</span>  
-<span class="p">;</span>
-</code></pre></div></div>
-
-<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
   <p>개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “<strong>마스터링 이더리움 완독하고 정리하기</strong>”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.</p>
 </blockquote>
 
@@ -2572,425 +2815,4 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Blockchain" /><summary type="html"><![CDATA[Dive into the intricate world of blockchain with Joshua. Uncover the complexities of Near Protocol’s account model, transaction stories, and personal insights. This article offers a captivating exploration of addresses, private keys, and the execution flow of transactions, providing a unique perspective on user experience and protocol design. Join me on this insightful journey, backed by personal research and a wealth of references from the blockchain realm.]]></summary></entry><entry><title type="html">Intro to Encoding &amp;amp; Decoding Ethereum Contract Functions</title><link href="http://localhost:4000/encoding-and-decoding-ethereum-contract-functions/" rel="alternate" type="text/html" title="Intro to Encoding &amp;amp; Decoding Ethereum Contract Functions" /><published>2023-10-16T00:00:00+09:00</published><updated>2023-10-16T00:00:00+09:00</updated><id>http://localhost:4000/encoding-and-decoding-ethereum-contract-functions</id><content type="html" xml:base="http://localhost:4000/encoding-and-decoding-ethereum-contract-functions/"><![CDATA[<blockquote>
-  <p>In this article, I will briefly explore the Ethereum ABI Specification and show you how to decode contract functions when conducting on-chain data analysis. Additionally, I will demonstrate a simple data extraction and analysis case about “Who are the Top 10 Recipients of USDT approve Functions?” using DuneSQL while handling ABIs.</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>Argument Types Key Content
-    <ul>
-      <li>1.1. Elementary Types</li>
-      <li>1.2. Fixed-size Types</li>
-      <li>1.3. Dynamic-size Types</li>
-    </ul>
-  </li>
-  <li>Key Points of Argument Padding to 32 Bytes Rules</li>
-  <li>A Contract Example
-    <ul>
-      <li>3.1. How to Call <code class="language-plaintext highlighter-rouge">baz(uint32 x, bool y)</code></li>
-      <li>3.2. How to Call <code class="language-plaintext highlighter-rouge">bar(bytes3[2])</code></li>
-      <li>3.3. How to Call <code class="language-plaintext highlighter-rouge">sam(bytes, bool, uint[])</code></li>
-    </ul>
-  </li>
-  <li>Case Study: Who are the Top 10 Recipients of USDT <code class="language-plaintext highlighter-rouge">approve</code> Functions?
-    <ul>
-      <li>4.1. Function Selector</li>
-      <li>4.2. Extract only the transactions that have called the <code class="language-plaintext highlighter-rouge">approve</code> function on the USDT Contract.</li>
-      <li>4.3. Extract the first argument value, <code class="language-plaintext highlighter-rouge">address</code>, from the functions.</li>
-      <li>4.4. Now, aggregate the number of unique addresses that executed <code class="language-plaintext highlighter-rouge">approve</code> function, grouped by each <code class="language-plaintext highlighter-rouge">approve</code> recipient, over the past week.</li>
-      <li>4.5. Label the <code class="language-plaintext highlighter-rouge">approve</code> recipient addresses based on Dune Tables regarding “address labeling”.</li>
-      <li>4.6. The Final Query Results</li>
-    </ul>
-  </li>
-  <li>Let’s Conclude!</li>
-  <li>References</li>
-</ol>
-
-<hr />
-
-<h1 id="1-argument-types-key-content">1. Argument Types Key Content</h1>
-
-<p>Before diving into the Ethereum ABI specification, let’s take a quick look at the argument data types of Ethereum contracts. Ethereum contract functions can have various parameter data types, and among them, I have listed some of the important types and summarize their key characteristics.</p>
-
-<h2 id="11-elementary-types">1.1. Elementary Types</h2>
-
-<p><code class="language-plaintext highlighter-rouge">uint</code></p>
-<ul>
-  <li>Same as  <code class="language-plaintext highlighter-rouge">uint256</code>,</li>
-  <li>which means it should be considered as  <code class="language-plaintext highlighter-rouge">uint256</code>  type during encoding.</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">int</code></p>
-<ul>
-  <li>Same as  <code class="language-plaintext highlighter-rouge">int256</code>,</li>
-  <li>which means it should be considered as  <code class="language-plaintext highlighter-rouge">int256</code>  type during encoding.</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">bool</code></p>
-<ul>
-  <li>Same as  <code class="language-plaintext highlighter-rouge">uint8</code>,</li>
-  <li>which means only 0 or 1 can be assigned to it.</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">bytes{n}</code></p>
-<ul>
-  <li>Binary type with a length of n bytes (0 &lt; n ≤ 32)</li>
-</ul>
-
-<h2 id="12-fixed-size-types">1.2. Fixed-size Types</h2>
-
-<p><code class="language-plaintext highlighter-rouge">{type_name}[{n}]</code></p>
-<ul>
-  <li>An array with n elements (n ≥ 0)</li>
-</ul>
-
-<h2 id="13-dynamic-size-types">1.3. Dynamic-size Types</h2>
-
-<p><code class="language-plaintext highlighter-rouge">bytes</code></p>
-<ul>
-  <li>Binary type with a dynamic length of bytes</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">string</code></p>
-<ul>
-  <li>A dynamically sized string (assuming it’s UTF-8 encoded)</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">{type_name}[]</code></p>
-<ul>
-  <li>An array with a dynamic number of elements</li>
-</ul>
-
-<h1 id="2-key-points-of-argument-padding-to-32-bytes-rules">2. Key Points of Argument Padding to 32 Bytes Rules</h1>
-
-<p>When calling Ethereum contract functions, you need to encode each argument and input them concatenated. In this process, there are rules regarding “length.” To avoid confusion, I’ve summarized the key rules for you in advance.</p>
-
-<p><code class="language-plaintext highlighter-rouge">uint{n}</code></p>
-<ul>
-  <li>Padding with preceding 0 to achieve a length of 32 bytes</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">int{n}</code></p>
-<ul>
-  <li>Padding with preceding 0 to achieve a length of 32 bytes</li>
-</ul>
-
-<p><code class="language-plaintext highlighter-rouge">bytes{n}</code></p>
-<ul>
-  <li>Padding with trailing 0 to achieve a length of 32 bytes</li>
-</ul>
-
-<h1 id="3-a-contract-example">3. A Contract Example</h1>
-
-<p>The following example has been taken from  <a href="https://docs.soliditylang.org/en/develop/abi-spec.html#examples">Contract ABI Specification Docs</a>. Let me explain this in simpler terms.</p>
-
-<p><strong>Given the Contract:</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4</span><span class="p">.</span><span class="mi">16</span><span class="p">;</span>  
-  
-<span class="nx">contract</span> <span class="nx">Foo</span> <span class="p">{</span>  
-  <span class="kd">function</span> <span class="nf">baz</span><span class="p">(</span><span class="nx">uint32</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">y</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">pure</span> <span class="nf">returns </span><span class="p">(</span><span class="nx">bool</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">&gt;</span> <span class="mi">32</span> <span class="o">||</span> <span class="nx">y</span><span class="p">;</span> <span class="p">}</span>  
-  <span class="kd">function</span> <span class="nf">bar</span><span class="p">(</span><span class="nx">bytes3</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="kr">public</span> <span class="nx">pure</span> <span class="p">{}</span>  
-  <span class="kd">function</span> <span class="nf">sam</span><span class="p">(</span><span class="nx">bytes</span><span class="p">,</span> <span class="nx">bool</span><span class="p">,</span> <span class="nx">uint</span><span class="p">[])</span> <span class="kr">public</span> <span class="nx">pure</span> <span class="p">{}</span>  
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="31-how-to-call-bazuint32-x-bool-y">3.1. How to Call <code class="language-plaintext highlighter-rouge">baz(uint32 x, bool y)</code></h2>
-
-<p>Let’s say you’re calling the function in the format of:  <code class="language-plaintext highlighter-rouge">baz(69, true)</code></p>
-
-<p><strong>Function Selector</strong></p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">baz(uint32,bool)</code>  → Keccak-256 Hash
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xcdcd77c0992ec5bbfc459984220f8c45084cc24d9b6efed1fae540db8de801d2</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Slice the left 4 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xcdcd77c0</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Parameter 1:</strong>  <code class="language-plaintext highlighter-rouge">69</code></p>
-<ul>
-  <li>Convert it to hexadecimal.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x45</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Left pad it to a length of 32 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000045</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Parameter 2:</strong>  <code class="language-plaintext highlighter-rouge">true</code></p>
-<ul>
-  <li>Convert it to uint8.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Left pad it to a length of 32 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>The Final Encoding with Concatenating All</strong></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xcdcd77c0</span> <span class="c1"># Function Selector  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000045</span> <span class="c1"># 69  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="c1"># true  
-</span>  
-<span class="c1"># Concat  
-</span><span class="mh">0xdcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001</span>
-</code></pre></div></div>
-
-<h2 id="32-how-to-call-barbytes32">3.2. How to Call <code class="language-plaintext highlighter-rouge">bar(bytes3[2])</code></h2>
-
-<p>Let’s say you’re calling the function in the format of:  <code class="language-plaintext highlighter-rouge">baz("abc", "def")</code></p>
-
-<p><strong>Function Selector</strong></p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">bar(bytes3[2])</code>  → Keccak-256 Hash
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xfce353f601a3db60cb33e4b6ef4f91e4465eaf93c292b64fcde1bf4ba6819b6a</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Slice the left 4 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xfce353f6</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Parameter 1:</strong>  <code class="language-plaintext highlighter-rouge">“abc”</code></p>
-<ul>
-  <li>Convert it to utf-8 bytes (<a href="https://onlinetools.com/utf8/convert-utf8-to-bytes">String to UTF-8 Bytes Convertor</a>)
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">616263</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Right pad it to a length of 32 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x6162630000000000000000000000000000000000000000000000000000000000</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Parameter 2</strong>:  <code class="language-plaintext highlighter-rouge">“def”</code></p>
-<ul>
-  <li>Convert it to utf-8 bytes (<a href="https://onlinetools.com/utf8/convert-utf8-to-bytes">String to UTF-8 Bytes Convertor</a>)
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">646566</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Right pad it to a length of 32 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x6465660000000000000000000000000000000000000000000000000000000000</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>The Final Encoding with Concatenating All</strong></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xfce353f6</span> <span class="c1"># Function Selector  
-</span><span class="mi">6162630000000000000000000000000000000000000000000000000000000000</span> <span class="c1"># "abc"  
-</span><span class="mi">6465660000000000000000000000000000000000000000000000000000000000</span> <span class="c1"># "def"  
-</span>  
-<span class="c1"># Concat  
-</span><span class="mh">0xfce353f661626300000000000000000000000000000000000000000000000000000000006465660000000000000000000000000000000000000000000000000000000000</span>
-</code></pre></div></div>
-
-<h2 id="33-how-to-call-sambytes-bool-uint">3.3. How to Call <code class="language-plaintext highlighter-rouge">sam(bytes, bool, uint[])</code></h2>
-
-<p>Let’s say you’re calling the function in the format of:  <code class="language-plaintext highlighter-rouge">sam(“dave”, true, [1, 2, 3])</code></p>
-
-<p><strong>Function Selector</strong></p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">sam(bytes,bool,uint256[])</code>  → Keccak-256 Hash</li>
-  <li>Note that  <code class="language-plaintext highlighter-rouge">uint</code>  is replaced with its canonical representation  <code class="language-plaintext highlighter-rouge">uint256</code>.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xa5643bf27e2786816613d3eeb0b62650200b5a98766dfcfd4428f296fb56d043</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Slice the left 4 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xa5643bf2</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>Parameters</strong></p>
-<ul>
-  <li>In the order of: “<strong>iLoc &gt; Len &gt; Value</strong>”</li>
-</ul>
-
-<p><img src="/assets/2023-10-16-encoding-and-decoding-ethereum-contract-functions/parameters.webp" alt="" /></p>
-<blockquote>
-  <p>made by Joshua</p>
-</blockquote>
-
-<p><strong>The Final Encoding with Concatenating All</strong></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0xa5643bf2</span> <span class="c1"># Function Selector  
-</span>  
-<span class="mh">0x0000000000000000000000000000000000000000000000000000000000000060</span> <span class="c1"># 1st Param iLoc : 96 bytes  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="c1"># 2nd Param Value : true   
-</span><span class="mh">0x00000000000000000000000000000000000000000000000000000000000000a0</span> <span class="c1"># 3rd Param iLoc : 160 bytes  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000004</span> <span class="c1"># 1st Param Len : 4 bytes  
-</span><span class="mh">0x6461766500000000000000000000000000000000000000000000000000000000</span> <span class="c1"># 1sst Param Value : "dave"  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000003</span> <span class="c1"># 3rd Params Len : 3 items  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000001</span> <span class="c1"># 3rd Param Value (item 0) : 1  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000002</span> <span class="c1"># 3rd Param Value (item 1) : 2  
-</span><span class="mh">0x0000000000000000000000000000000000000000000000000000000000000003</span> <span class="c1"># 3rd Param Value (item 2) : 3  
-</span>  
-<span class="c1"># Concat  
-</span><span class="mh">0xa5643bf20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000464617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003</span>
-</code></pre></div></div>
-
-<h1 id="4-case-study-who-are-the-top-10-recipients-of-usdt-approve-functions">4. Case Study: Who are the Top 10 Recipients of USDT <code class="language-plaintext highlighter-rouge">approve</code> Functions?</h1>
-
-<p>According to  <a href="https://docs.openzeppelin.com/contracts/2.x/api/token/erc20">ERC-20 Interface</a>, it is possible to delegate the permission to use a specific token (the authority to transfer the token, specifically) to a particular account using the <code class="language-plaintext highlighter-rouge">approve</code> function. This permission is frequently requested, particularly in DeFi platforms. In this case study, I aim to aggregate and analyze the top 10 accounts that people commonly delegate their USDT through <code class="language-plaintext highlighter-rouge">approve</code> function.</p>
-
-<h2 id="41-function-selector">4.1. Function Selector</h2>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">approve(address,uint256)</code>  → Keccak-256 Hash
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x095ea7b334ae44009aa867bfb386f5c3b4b443ac6f0ee573fa91c4608fbadfba</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Slice the left 4 bytes.
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mh">0x095ea7b3</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h2 id="42-extract-only-the-transactions-that-have-called-the-approve-function-on-the-usdt-contract">4.2. Extract only the transactions that have called the <code class="language-plaintext highlighter-rouge">approve</code> function on the USDT Contract.</h2>
-
-<ul>
-  <li>For more info about <code class="language-plaintext highlighter-rouge">BYTEARRAY_STARTS_WITH</code> Function, click  <a href="https://dune.com/docs/query/DuneSQL-reference/Functions-and-operators/varbinary/#bytearray_starts_with">here</a>.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="o">*</span>  
-<span class="k">FROM</span>  
-    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
-<span class="k">WHERE</span>  
-    <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
-    <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call</span>
-</code></pre></div></div>
-
-<h2 id="43-extract-the-first-argument-value-address-from-the-functions">4.3. Extract the first argument value, <code class="language-plaintext highlighter-rouge">address</code>, from the functions.</h2>
-
-<ul>
-  <li>For more info about <code class="language-plaintext highlighter-rouge">BYTEARRAY_SUBSTRING</code> Function, click  <a href="https://dune.com/docs/query/DuneSQL-reference/Functions-and-operators/varbinary/#bytearray_substring">here</a>.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span>  
-        <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  
-        <span class="mi">13</span><span class="p">,</span>  
-        <span class="mi">20</span>  
-    <span class="p">)</span> <span class="k">AS</span> <span class="n">approved_to</span>  
-<span class="k">FROM</span>  
-    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
-<span class="k">WHERE</span>  
-    <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
-    <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call</span>
-</code></pre></div></div>
-
-<h2 id="44-now-aggregate-the-number-of-unique-addresses-that-executed-approve-function-grouped-by-each-approve-recipient-over-the-past-week">4.4. Now, aggregate the number of unique addresses that executed <code class="language-plaintext highlighter-rouge">approve</code> function, grouped by each <code class="language-plaintext highlighter-rouge">approve</code> recipient, over the past week.</h2>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span>  
-        <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  
-        <span class="mi">13</span><span class="p">,</span>  
-        <span class="mi">20</span>  
-    <span class="p">)</span> <span class="k">AS</span> <span class="n">approved_to</span><span class="p">,</span>  
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="nv">"from"</span><span class="p">)</span> <span class="k">AS</span> <span class="n">approved_from_cnt</span>  
-<span class="k">FROM</span>  
-    <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
-<span class="k">WHERE</span>  
-    <span class="k">CAST</span><span class="p">(</span><span class="n">block_date</span> <span class="k">AS</span> <span class="nb">DATE</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="c1">-- Recent 7 Days  </span>
-    <span class="k">AND</span> <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
-    <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call  </span>
-<span class="k">GROUP</span> <span class="k">BY</span>  
-    <span class="mi">1</span>
-</code></pre></div></div>
-
-<h2 id="45-label-the-approve-recipient-addresses-based-on-dune-tables-regarding-address-labeling">4.5. Label the <code class="language-plaintext highlighter-rouge">approve</code> recipient addresses based on Dune Tables regarding “address labeling”.</h2>
-
-<ul>
-  <li>Looking at the original address values alone does not provide any meaningful information, as y’all know here.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
-<span class="n">CTE_approves</span> <span class="k">AS</span> <span class="p">(</span>  
-    <span class="k">SELECT</span>  
-        <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span>  
-            <span class="n">BYTEARRAY_SUBSTRING</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>  
-            <span class="mi">13</span><span class="p">,</span>  
-            <span class="mi">20</span>  
-        <span class="p">)</span> <span class="k">AS</span> <span class="n">approved_to</span><span class="p">,</span>  
-        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="nv">"from"</span><span class="p">)</span> <span class="k">AS</span> <span class="n">approved_from_cnt</span>  
-    <span class="k">FROM</span>  
-        <span class="n">ethereum</span><span class="p">.</span><span class="n">transactions</span>  
-    <span class="k">WHERE</span>  
-        <span class="k">CAST</span><span class="p">(</span><span class="n">block_date</span> <span class="k">AS</span> <span class="nb">DATE</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">DATE_ADD</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="c1">-- Recent 7 Days  </span>
-        <span class="k">AND</span> <span class="nv">"to"</span> <span class="o">=</span> <span class="mi">0</span><span class="n">xdAC17F958D2ee523a2206206994597C13D831ec7</span> <span class="c1">-- USDT ERC-20 Contract  </span>
-        <span class="k">AND</span> <span class="n">BYTEARRAY_STARTS_WITH</span><span class="p">(</span><span class="k">data</span><span class="p">,</span> <span class="mi">0</span><span class="n">x095ea7b3</span><span class="p">)</span> <span class="c1">-- approve(address,uint256) Function Call  </span>
-    <span class="k">GROUP</span> <span class="k">BY</span>  
-        <span class="mi">1</span>  
-<span class="p">)</span>  
-  
-<span class="k">SELECT</span>  
-    <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span><span class="p">,</span>  
-    <span class="n">COALESCE</span><span class="p">(</span>  
-        <span class="n">SUB1</span><span class="p">.</span><span class="n">dex_name</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB1</span><span class="p">.</span><span class="n">distinct_name</span><span class="p">,</span>  
-        <span class="n">SUB2</span><span class="p">.</span><span class="n">project</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB2</span><span class="p">.</span><span class="n">project_type</span><span class="p">,</span>  
-        <span class="n">SUB3</span><span class="p">.</span><span class="n">bridge_name</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB3</span><span class="p">.</span><span class="n">description</span><span class="p">,</span>  
-        <span class="n">SUB4</span><span class="p">.</span><span class="n">cex_name</span> <span class="o">||</span> <span class="s1">' - '</span> <span class="o">||</span> <span class="n">SUB4</span><span class="p">.</span><span class="n">distinct_name</span><span class="p">,</span>  
-        <span class="s1">'Unknown'</span>  
-    <span class="p">)</span> <span class="k">AS</span> <span class="n">name</span><span class="p">,</span>  
-    <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_from_cnt</span> <span class="k">AS</span> <span class="n">addresses_cnt</span>  
-<span class="k">FROM</span>  
-    <span class="n">CTE_approves</span> <span class="n">MAIN</span>  
-<span class="k">LEFT</span> <span class="k">JOIN</span>  
-    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">dex</span> <span class="n">SUB1</span> <span class="c1">-- DEX named addresses  </span>
-    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB1</span><span class="p">.</span><span class="n">address</span>  
-<span class="k">LEFT</span> <span class="k">JOIN</span>  
-    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">defi</span> <span class="n">SUB2</span> <span class="c1">-- DeFi named addresses  </span>
-    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB2</span><span class="p">.</span><span class="n">address</span>  
-<span class="k">LEFT</span> <span class="k">JOIN</span>  
-    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">bridges</span> <span class="n">SUB3</span> <span class="c1">-- Bridge named addresses  </span>
-    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB3</span><span class="p">.</span><span class="n">address</span>  
-<span class="k">LEFT</span> <span class="k">JOIN</span>  
-    <span class="n">addresses_ethereum</span><span class="p">.</span><span class="n">cex</span> <span class="n">SUB4</span> <span class="c1">-- CEX named addresses  </span>
-    <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">approved_to</span> <span class="o">=</span> <span class="n">SUB4</span><span class="p">.</span><span class="n">address</span>  
-<span class="k">ORDER</span> <span class="k">BY</span>  
-    <span class="mi">3</span> <span class="k">DESC</span>  
-<span class="k">LIMIT</span>  
-    <span class="mi">10</span>  
-<span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="46-the-final-query-results">4.6. The Final Query Results</h2>
-
-<p><img src="/assets/2023-10-16-encoding-and-decoding-ethereum-contract-functions/query-results.webp" alt="" /></p>
-<blockquote>
-  <p>Dune Analytics</p>
-</blockquote>
-
-<h1 id="5-lets-conclude">5. Let’s Conclude!</h1>
-
-<p>So far, we have delved into <strong>the Ethereum’s ABI Specification</strong>, learned how data is encoded when transactions call contract functions, and understood how to extract meaningful insights by decoding specific function names and arguments from Ethereum transactions data.</p>
-
-<p>In fact, Dune Analytics, Etherscan, and many other on-chain data platforms all incorporate these decoding processes internally.</p>
-
-<p>Hopefully this article will serve as an excellent foundation for your future, more detailed and complex on-chain data analysis endeavors.</p>
-
-<h1 id="6-references">6. References</h1>
-
-<ul>
-  <li><a href="https://docs.soliditylang.org/en/develop/abi-spec.html#function-selector-and-argument-encoding">Contract ABI Specification</a></li>
-  <li><a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc721">OpenZeppelin Docs</a></li>
-  <li><a href="https://dune.com/joshua_web3">Dune Analytics</a></li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Blockchain" /><category term="On-chain Data" /><category term="SQL" /><summary type="html"><![CDATA[In this article, I will briefly explore the Ethereum ABI Specification and show you how to decode contract functions when conducting on-chain data analysis. Additionally, I will demonstrate a simple data extraction and analysis case about “Who are the Top 10 Recipients of USDT approve Functions?” using DuneSQL while handling ABIs.]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Blockchain" /><summary type="html"><![CDATA[Dive into the intricate world of blockchain with Joshua. Uncover the complexities of Near Protocol’s account model, transaction stories, and personal insights. This article offers a captivating exploration of addresses, private keys, and the execution flow of transactions, providing a unique perspective on user experience and protocol design. Join me on this insightful journey, backed by personal research and a wealth of references from the blockchain realm.]]></summary></entry></feed>
