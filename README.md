@@ -32,3 +32,12 @@
         * `utm_campaign=post-{yyyymmdd}`
         * `utm_medium=owned_media`
         * `utm_source=medium`
+* Job Application
+    * Notion
+        * `utm_campaign=job-application`
+        * `utm_medium=resume`
+        * `utm_source=notion`
+    * PDF Files
+        * `utm_campaign=job-application`
+        * `utm_medium=resume`
+        * `utm_source=pdf-file`
