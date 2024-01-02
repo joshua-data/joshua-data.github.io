@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-03T04:37:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #07</title><link href="http://localhost:4000/data-warehouse-07/" rel="alternate" type="text/html" title="Data Warehouse #07" /><published>2024-01-02T00:00:00+09:00</published><updated>2024-01-02T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-07</id><content type="html" xml:base="http://localhost:4000/data-warehouse-07/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-03T04:46:38+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #07</title><link href="http://localhost:4000/data-warehouse-07/" rel="alternate" type="text/html" title="Data Warehouse #07" /><published>2024-01-02T00:00:00+09:00</published><updated>2024-01-02T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-07</id><content type="html" xml:base="http://localhost:4000/data-warehouse-07/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 07. Slowly Changing Dimensions</li>
@@ -389,14 +389,22 @@
 <span class="c1">-- 1. 사용자들의 "참여" (회원가입 및 로그인 이벤트) 소스 테이블을 불러온다.  </span>
 <span class="c1">-- (단, 현재 시점 기준으로 7개월 전의 월초부터 1개월 전의 월말까지 항목만)  </span>
 <span class="n">CTE_engagements</span> <span class="k">AS</span> <span class="p">(</span>  
-<span class="k">SELECT</span>  
-<span class="n">user_id</span><span class="p">,</span>  
-<span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span>  <span class="nb">date</span>  
-<span class="k">FROM</span>  
-  
-  
-<span class="k">GROUP</span>  <span class="k">BY</span>  
-<span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">user_id</span><span class="p">,</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span>  <span class="nb">date</span>  
+    <span class="k">FROM</span>
+        <span class="k">source</span><span class="p">.</span><span class="n">signups_logins</span>
+    <span class="nv">"if is_incremental()"</span>
+    <span class="k">WHERE</span>  
+        <span class="c1">-- 현재 시점 기준으로 7개월 전의 월초부터 ~  </span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span>  <span class="n">INTERVAL</span>  <span class="s1">'7'</span>  <span class="k">MONTH</span>  
+        <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span>  
+        <span class="c1">-- ~ 현재 시점 기준으로 1개월 전의 월말까지  </span>
+        <span class="k">AND</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span>  
+        <span class="o">&lt;=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span>  <span class="n">INTERVAL</span>  <span class="s1">'1'</span>  <span class="k">DAY</span>  
+    <span class="nv">"endif"</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>  
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
 <span class="p">),</span>
 </code></pre></div></div>
 
@@ -502,13 +510,29 @@
 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 7. 중복되지 않은 신규 항목들만 Insert할 수 있도록 조건화한다.  </span>
 <span class="n">CTE_monthly_retention_inserted</span> <span class="k">AS</span> <span class="p">(</span>  
-<span class="k">SELECT</span>  
-<span class="o">*</span>  
-<span class="k">FROM</span>  
-<span class="n">CTE_monthly_retention</span>  
-  
-<span class="k">ORDER</span>  <span class="k">BY</span>  
-<span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+    <span class="k">SELECT</span>  
+        <span class="o">*</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_monthly_retention</span>  
+    <span class="nv">"if is_incremental()"</span>
+    <span class="k">WHERE</span>  
+        <span class="c1">-- 현재 시점 기준으로 1개월 전의 코호트: Month 0 리텐션 값만 Insert한다.  </span>
+        <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'1'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>  
+        <span class="c1">-- 현재 시점 기준으로 2개월 전의 코호트: Month 1 리텐션 값만 Insert한다.  </span>
+        <span class="k">OR</span> <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'2'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>  
+        <span class="c1">-- 현재 시점 기준으로 3개월 전의 코호트: Month 2 리텐션 값만 Insert한다.  </span>
+        <span class="k">OR</span> <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'3'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>  
+        <span class="c1">-- 현재 시점 기준으로 4개월 전의 코호트: Month 3 리텐션 값만 Insert한다.  </span>
+        <span class="k">OR</span> <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'4'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>  
+        <span class="c1">-- 현재 시점 기준으로 5개월 전의 코호트: Month 4 리텐션 값만 Insert한다.  </span>
+        <span class="k">OR</span> <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'5'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>  
+        <span class="c1">-- 현재 시점 기준으로 6개월 전의 코호트: Month 5 리텐션 값만 Insert한다.  </span>
+        <span class="k">OR</span> <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'6'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>  
+        <span class="c1">-- 현재 시점 기준으로 7개월 전의 코호트: Month 6 리텐션 값만 Insert한다.  </span>
+        <span class="k">OR</span> <span class="p">(</span><span class="n">cohort_yyyymm</span> <span class="o">=</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="k">CURRENT_DATE</span><span class="p">)</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'7'</span> <span class="k">MONTH</span> <span class="k">AND</span> <span class="n">month_n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>  
+    <span class="nv">"endif"</span>
+    <span class="k">ORDER</span> <span class="k">BY</span>  
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
 <span class="p">)</span>
 </code></pre></div></div>
 

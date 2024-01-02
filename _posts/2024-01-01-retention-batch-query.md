@@ -232,22 +232,22 @@ WITH
 -- 1. 사용자들의 "참여" (회원가입 및 로그인 이벤트) 소스 테이블을 불러온다.  
 -- (단, 현재 시점 기준으로 7개월 전의 월초부터 1개월 전의 월말까지 항목만)  
 CTE_engagements AS (  
-SELECT  
-user_id,  
-DATE_TRUNC('DAY', datetime) AS  date  
-FROM  
-{{ ref('source', 'signups_logins') }}  
-{% if is_incremental() %}  
-WHERE  
--- 현재 시점 기준으로 7개월 전의 월초부터 ~  
-DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '7'  MONTH  
-<= DATE_TRUNC('DAY', datetime)  
--- ~ 현재 시점 기준으로 1개월 전의 월말까지  
-AND DATE_TRUNC('DAY', datetime)  
-<= DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '1'  DAY  
-{% endif %}  
-GROUP  BY  
-1, 2  
+    SELECT  
+        user_id,  
+        DATE_TRUNC('DAY', datetime) AS  date  
+    FROM
+        source.signups_logins
+    "if is_incremental()"
+    WHERE  
+        -- 현재 시점 기준으로 7개월 전의 월초부터 ~  
+        DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '7'  MONTH  
+        <= DATE_TRUNC('DAY', datetime)  
+        -- ~ 현재 시점 기준으로 1개월 전의 월말까지  
+        AND DATE_TRUNC('DAY', datetime)  
+        <= DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '1'  DAY  
+    "endif"
+    GROUP BY  
+        1, 2  
 ),
 ```
 
@@ -355,29 +355,29 @@ CTE_monthly_retention AS (
 ```sql
 -- 7. 중복되지 않은 신규 항목들만 Insert할 수 있도록 조건화한다.  
 CTE_monthly_retention_inserted AS (  
-SELECT  
-*  
-FROM  
-CTE_monthly_retention  
-{% if is_incremental() %}  
-WHERE  
--- 현재 시점 기준으로 1개월 전의 코호트: Month 0 리텐션 값만 Insert한다.  
-(cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '1'  MONTH  AND month_n =  0)  
--- 현재 시점 기준으로 2개월 전의 코호트: Month 1 리텐션 값만 Insert한다.  
-OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '2'  MONTH  AND month_n =  1)  
--- 현재 시점 기준으로 3개월 전의 코호트: Month 2 리텐션 값만 Insert한다.  
-OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '3'  MONTH  AND month_n =  2)  
--- 현재 시점 기준으로 4개월 전의 코호트: Month 3 리텐션 값만 Insert한다.  
-OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '4'  MONTH  AND month_n =  3)  
--- 현재 시점 기준으로 5개월 전의 코호트: Month 4 리텐션 값만 Insert한다.  
-OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '5'  MONTH  AND month_n =  4)  
--- 현재 시점 기준으로 6개월 전의 코호트: Month 5 리텐션 값만 Insert한다.  
-OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '6'  MONTH  AND month_n =  5)  
--- 현재 시점 기준으로 7개월 전의 코호트: Month 6 리텐션 값만 Insert한다.  
-OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '7'  MONTH  AND month_n =  6)  
-{% endif %}  
-ORDER  BY  
-1, 2  
+    SELECT  
+        *  
+    FROM  
+        CTE_monthly_retention  
+    "if is_incremental()"
+    WHERE  
+        -- 현재 시점 기준으로 1개월 전의 코호트: Month 0 리텐션 값만 Insert한다.  
+        (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '1' MONTH AND month_n = 0)  
+        -- 현재 시점 기준으로 2개월 전의 코호트: Month 1 리텐션 값만 Insert한다.  
+        OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '2' MONTH AND month_n = 1)  
+        -- 현재 시점 기준으로 3개월 전의 코호트: Month 2 리텐션 값만 Insert한다.  
+        OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '3' MONTH AND month_n = 2)  
+        -- 현재 시점 기준으로 4개월 전의 코호트: Month 3 리텐션 값만 Insert한다.  
+        OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '4' MONTH AND month_n = 3)  
+        -- 현재 시점 기준으로 5개월 전의 코호트: Month 4 리텐션 값만 Insert한다.  
+        OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '5' MONTH AND month_n = 4)  
+        -- 현재 시점 기준으로 6개월 전의 코호트: Month 5 리텐션 값만 Insert한다.  
+        OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '6' MONTH AND month_n = 5)  
+        -- 현재 시점 기준으로 7개월 전의 코호트: Month 6 리텐션 값만 Insert한다.  
+        OR (cohort_yyyymm = DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '7' MONTH AND month_n = 6)  
+    "endif"
+    ORDER BY  
+        1, 2  
 )
 ```
 
