@@ -1,4 +1,406 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-20T00:49:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #06</title><link href="http://localhost:4000/data-warehouse-06/" rel="alternate" type="text/html" title="Data Warehouse #06" /><published>2023-12-20T00:00:00+09:00</published><updated>2023-12-20T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-06</id><content type="html" xml:base="http://localhost:4000/data-warehouse-06/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-02T20:11:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기</title><link href="http://localhost:4000/retention-batch-query/" rel="alternate" type="text/html" title="데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기" /><published>2024-01-01T00:00:00+09:00</published><updated>2024-01-01T00:00:00+09:00</updated><id>http://localhost:4000/retention-batch-query</id><content type="html" xml:base="http://localhost:4000/retention-batch-query/"><![CDATA[<blockquote>
+  <p>코호트 리텐션의 의미와 중요성에 대해 말씀드리고, Batch Query를 사용하여 회원가입 월 코호트 별로 Monthly Range Retention을 계산하는 방법을 제시해드릴게요.</p>
+</blockquote>
+
+<h3 id="contents">CONTENTS</h3>
+<ol>
+  <li>코호트 리텐션의 의미와 중요성
+    <ul>
+      <li>1.1. 리텐션</li>
+      <li>1.2. 코호트</li>
+      <li>1.3. 코호트 리텐션</li>
+      <li>1.4. 코호트 리텐션의 중요성</li>
+    </ul>
+  </li>
+  <li>쿼리 작업 목표</li>
+  <li>일회성 쿼리문
+    <ul>
+      <li>3.1. 쿼리문 보기</li>
+      <li>3.2. 문제점</li>
+    </ul>
+  </li>
+  <li>해결 아이디어</li>
+  <li>Batch Query를 통해 접근하기</li>
+  <li>결론</li>
+</ol>
+
+<hr />
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<p>본 아티클은 필자의 전/현 재직 기업의 데이터 분석 현황과 관련이 없으며, 단지 평소에 문제 의식을 지녔던 점에 대한 해결 방법을 스스로 도출해본 내용입니다. 쿼리문 작성에 다른 외부 레퍼런스를 참고하지 않았으며, 분석 환경에 따라 본 내용이 적합하지 않을 수 있으므로 반드시 비판적 고찰을 해주시면 감사드리겠습니다.</p>
+
+<h1 id="1-코호트-리텐션의-의미와-중요성">1. 코호트 리텐션의 의미와 중요성</h1>
+
+<h3 id="11-리텐션">1.1. 리텐션</h3>
+
+<p>먼저, 리텐션은 “시간이 흐름에 따라 얼마나 많은 사용자들이 우리 프로덕트에 재참여하는지”를 나타내는 지표입니다. 이미 많은 분들이 아시듯 리텐션은 PMF를 달성하기 위해 분석해야 할 중요한 지표입니다. 이 정의가 꽤나 간단해보이지만, 측정하는 과정에서 실상은 그렇지 않습니다. “재참여”를 “재”와 “참여”로 나누어 각각의 사전 정의가 이루어져야 하기 때문입니다.</p>
+
+<p><strong>“참여” 개념 정의하기</strong></p>
+
+<p>사용자가 우리 프로덕트에 “참여”한다는 것이 정확히 어떤 순간인지 정의해야 합니다. 예를 들어, 접속, 30초 이상 세션 유지, 특정 퍼널 단계 도달 등 여러 이벤트 중 하나가 “참여”로 간주될 수 있습니다. 저는 개인적으로 아래 3가지 측면 정의를 모두 사전에 준비하여 Target Metric에 따라 적시적소에 모니터링하는 것이 필요하다고 느꼈습니다.</p>
+
+<p>(1) “접속”을 하는 것만으로 참여한 것으로 간주하자!</p>
+<ul>
+  <li>DAU, WAU, MAU, Stickiness 등의 지표와 직접적으로 연관된 정의 방법이며, 광고 노출 효과를 극대화하는 경우 유용합니다.</li>
+</ul>
+
+<p>(2) “구매”까지 해야 참여한 것으로 간주하자!</p>
+<ul>
+  <li>재구매율 등의 지표와 직접적으로 연관된 정의 방법이며, Recurring Revenue가 중요한 프로덕트에서 중요합니다.</li>
+</ul>
+
+<p>(3) “아하 모먼트”에 도달해야 참여한 것으로 간주하자!</p>
+<ul>
+  <li><a href="https://www.youtube.com/watch?v=0KgOCKJ1PG4">토스의 이승건 대표님에 따르면</a>, 아하 모먼트란 프로덕트의 핵심 가치의 경험하는 순간을 의미합니다.</li>
+  <li>X, Y, Z의 조합으로 이루어진 여러 가지 “X 이벤트를 Y 기간 내에 Z번 수행한다” 중 리텐션이 극명하게 높은(가령, 95%) 항목을 사전에 발견하여, 빠르게 PMF를 달성해야 할 때 유용합니다.</li>
+</ul>
+
+<p><strong>“재” 개념 정의하기</strong></p>
+
+<p>사용자가 복귀했다는 것을 어떻게 계산할 것인가에 대한 정의가 필요합니다. <a href="https://product.kyobobook.co.kr/detail/S000001766457">양승화님의 그로스해킹에 따르면</a>, Classic Retention, Range Retention, Rolling Retention 중 프로덕트의 특성에 따라 적절한 방법을 선택할 수 있습니다.</p>
+
+<p>(1) Classic Retention: 사용자가 최초로 “참여”한 Day 0 이후, 각 Day N 별로 한 번 더 “참여”했는지 계산합니다.</p>
+
+<p>(2) Range Retention: Day N이 아니라 Week N, Bi-week N, Month N 별로 한 번 더 “참여”했는지 계산합니다.</p>
+
+<p>(3) Rolling Retention: Day N 이후에 한 번이라도 “참여”한 경우를 계산합니다. (이탈률의 반대 개념)</p>
+
+<p><strong>이러한 정의와 측정 방법을 통해 효과적인 리텐션 지표 측정이 가능해질 것입니다.</strong></p>
+
+<h3 id="12-코호트">1.2. 코호트</h3>
+
+<p>코호트의 개념을 두 가지로 혼용하는 경향이 있습니다.</p>
+<ol>
+  <li><em>“코호트는 세그먼트다. 즉, 사용자가 지닌 여러 가지 Feature 조합을 통해 그룹화된 클러스터다.”</em></li>
+  <li><em>“코호트는 세그먼트의 일부로서, 특정 이벤트의 최초 수행일시를 기준으로 그룹화된 클러스터다.” (최초 프로덕트 방문일, 회원가입일, 최초 결제일 등)</em></li>
+</ol>
+
+<p>개인적으로는 세그먼트와의 혼동을 줄이기 위해 2번의 개념을 선호하지만, 코호트를 융통성 있게 설정하기 위해 1번 개념에서 언급한 다른 Feature 조합도 선택적으로 추가할 수 있는 “열린 개념”으로 받아들이고 있습니다.</p>
+
+<ul>
+  <li>예시 1) 사용자를 최초 프로덕트 방문일 기준으로 그룹화한다. → 코호트 O</li>
+  <li>예시 2) 사용자를 최초 접속 국가 기준으로 그룹화한다. → 코호트 X</li>
+  <li>예시 3) 사용자를 최초 프로덕트 방문일 및 접속 국가 기준으로 그룹화한다. → 코호트 O</li>
+</ul>
+
+<p>이렇게 하면 특정 이벤트의 최초 수행일시를 중심으로 하면서도 다양한 특성을 고려할 수 있어서 코호트를 보다 유연하게 활용할 수 있을 것입니다.</p>
+
+<h3 id="13-코호트-리텐션">1.3. 코호트 리텐션</h3>
+
+<p>코호트 리텐션이란, 기존의 리텐션 개념을 코호트에 따라 시리즈를 달리하여 계산한 지표를 의미합니다. 예를 들면, 최초 프로덕트 방문일을 기준으로 사용자들의 리텐션이 상승 추세인지, 혹은 하락 추세인지를 알 수 있는 것이죠.</p>
+
+<h3 id="14-코호트-리텐션의-중요성">1.4. 코호트 리텐션의 중요성</h3>
+
+<p>아래의 리텐션 지표를 통해 PMF 달성 여부를 확인할 수 있지만, 문제를 파악하거나 액션 포인트를 도출하는 데는 그다지 도움이 되지 않습니다.</p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/retention.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://mermaid.js.org/syntax/xyChart.html">mermaid</a>를 통해 필자가 직접 작성</p>
+</blockquote>
+
+<p>그러나 코호트 리텐션 값을 확인할 수 있다면, 프로덕트의 기능 업데이트나 캠페인 론칭 등에 따른 사후 효과를 확인하고, 리텐션 향상을 위해 우리가 어떤 액션에 좀 더 집중해야 하는지 확인하는 데 도움을 줄 수 있습니다.</p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/cohort-retention.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://mermaid.js.org/syntax/xyChart.html">mermaid</a>를 통해 필자가 직접 작성</p>
+</blockquote>
+
+<h1 id="2-쿼리-작업-목표">2. 쿼리 작업 목표</h1>
+
+<p>쿼리 작업 목표는 다음과 같습니다. 아래와 같은 테이블을 대시보드에 반영해보고자 합니다. 즉, 회원가입 연월(YYYY-MM) 코호트별 리텐션(Monthly Range)테이블을 배포하여 다양한 이해당사자 분들이 리텐션 지표의 시계열 추이를 확인하시는 데 도움을 드리려는 것입니다.</p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/task-goal.webp" alt="" /></p>
+<blockquote>
+  <p>제가 직접 샘플로 만들어본 위 테이블에서는 시간이 흐를수록 리텐션이 향상되는 추이를 보여주고 있군요.</p>
+</blockquote>
+
+<p>그런데, 위와 같은 테이블을 만들기 위해서는 SQL의 최후 출력 상태가 다음과 같은 Unpivoted한 형태가 되어야 합니다. 물론 Pivoted한 형태로 직접 출력하는 방법도 있지만, 오늘의 토픽인 “Batch Query 만들기”를 위해서는 Unpivoted한 형태가 되어야 합니다. Table을 Update를 방지하고, 오로지 Insert 작업만 수행함으로써 연산 부하를 방지하기 위함인데요. 지금부터 차차 읽어가시면 이해가 되실 겁니다.</p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/last-query-results.webp" alt="" /></p>
+<blockquote>
+  <p>필자가 직접 작성</p>
+</blockquote>
+
+<h1 id="3-일회성-쿼리문">3. 일회성 쿼리문</h1>
+
+<h3 id="31-쿼리문-보기">3.1. 쿼리문 보기</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+
+<span class="c1">-- 1. 사용자들의 "참여" (회원가입 및 로그인 이벤트) 소스 테이블을 불러온다.</span>
+<span class="n">CTE_engagements</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">user_id</span><span class="p">,</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span>
+    <span class="k">FROM</span>
+        <span class="n">signups_logins</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="p">),</span>
+
+<span class="c1">-- 2. 사용자들을 회원가입일 기준의 코호트로 Labeling해준다.</span>
+<span class="n">CTE_cohorts</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">user_id</span><span class="p">,</span>
+        <span class="k">MIN</span><span class="p">(</span><span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">cohort_date</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_engagements</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+<span class="p">),</span>
+
+<span class="c1">-- 3. 사용자들의 "참여" 테이블과 "코호트 Labeling" 테이블을 조인하여 "Day N"도 함께 표시해준다.</span>
+<span class="n">CTE_engagements_with_cohorts_daily</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">ENG</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+        <span class="n">ENG</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+        <span class="n">COH</span><span class="p">.</span><span class="n">cohort_date</span><span class="p">,</span>
+        <span class="n">DATE_DIFF</span><span class="p">(</span>
+            <span class="n">ENG</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+            <span class="n">COH</span><span class="p">.</span><span class="n">cohort_date</span><span class="p">,</span>
+            <span class="k">DAY</span>
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">day_n</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_engagements</span> <span class="n">ENG</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+        <span class="n">CTE_cohorts</span> <span class="n">COH</span>
+        <span class="k">USING</span> <span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+<span class="p">),</span>
+
+<span class="c1">-- 4. "Day N"을 "Month N"으로 변환해준다.</span>
+<span class="n">CTE_engagements_with_cohorts_monthly</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">user_id</span><span class="p">,</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">yyyymm</span><span class="p">,</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="n">cohort_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">cohort_yyyymm</span><span class="p">,</span>
+        <span class="n">DATE_DIFF</span><span class="p">(</span>
+            <span class="nb">date</span><span class="p">,</span>
+            <span class="n">cohort_date</span><span class="p">,</span>
+            <span class="k">MONTH</span>
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">month_n</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_engagements_with_cohorts_daily</span>
+<span class="p">),</span>
+
+<span class="c1">-- 5. 코호트 및 "Month N" 기준으로 사용자 수를 집계한다.</span>
+<span class="n">CTE_month_n_cnt</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">cohort_yyyymm</span><span class="p">,</span>
+        <span class="n">month_n</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">users_cnt</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_engagements_with_cohorts_monthly</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="p">),</span>
+
+<span class="c1">-- 6. 최종 리텐션을 계산한다.</span>
+<span class="n">CTE_monthly_retention</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">cohort_yyyymm</span><span class="p">,</span>
+        <span class="n">month_n</span><span class="p">,</span>
+        <span class="k">CAST</span><span class="p">(</span><span class="n">users_cnt</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span>
+        <span class="o">/</span>
+        <span class="k">CAST</span><span class="p">(</span><span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">users_cnt</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+            <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">cohort_yyyymm</span>
+            <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">month_n</span>
+            <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="n">UNBOUNDED</span> <span class="k">FOLLOWING</span>
+            <span class="p">)</span> <span class="k">AS</span> <span class="nb">DOUBLE</span>
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">monthly_retention</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_month_n_cnt</span>
+    <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="p">)</span>
+<span class="k">SELECT</span>
+    <span class="o">*</span>
+<span class="k">FROM</span>
+    <span class="n">CTE_monthly_retention</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="32-문제점">3.2. 문제점</h3>
+
+<p>위 쿼리문의 출력 결과는 앞서 잠깐 보여드린 아래와 같은 형태의 테이블을 출력합니다. 그런데, 매번 전체 소스 테이블을 메모리에 올려 리텐션을 계산하려면 연산량이 과도하게 많이 들어 리소스 낭비로 이어지게 됩니다.</p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/last-query-results.webp" alt="" /></p>
+<blockquote>
+  <p>필자가 직접 작성</p>
+</blockquote>
+
+<h1 id="4-해결-아이디어">4. 해결 아이디어</h1>
+
+<p>마침, Cohort 칼럼과 Month 칼럼이 시계열 형식을 지니고 있으므로 미래의 데이터가 과거의 데이터에 영향을 끼칠 수 없습니다. 또한, 출력된 테이블은  <a href="https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/periodic-snapshot-fact-table/">Periodic Snapshot Fact Table</a>의 유형에 해당합니다. 바로 이 점으로부터 우리는 Batch Query를 활용할 수 있는 여지를 발견할 수 있습니다. 즉, 아래와 같이 매월 1일 00:01 UTC마다 새롭게 획득한 리텐션 값들을 Insert할 수 있는 Batch Query를 작성할 수 있는 것입니다. 특히 이벤트 로그 데이터의 크기가 매우 큰 프로덕트를 운영하고 있다면, 굳이 매번 일회성 쿼리문을 실행할 필요가 없는 셈이죠.</p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/idea.webp" alt="" /></p>
+<blockquote>
+  <p>즉, 매월 초마다 좌측 테이블의 빨간색 영역들을 순차적으로 신규 계산하여 테이블 Insert 스케줄링을 구현할 수 있는 것이죠. (필자가 직접 작성)</p>
+</blockquote>
+
+<h1 id="5-batch-query를-통해-접근하기">5. Batch Query를 통해 접근하기</h1>
+
+<p><strong>STEP 1) 사용자들의 “참여” 소스 테이블을 불러온다. (단, 현재 시점 기준으로 7개월 전의 월초부터 1개월 전의 월말까지 항목만)</strong></p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/step1.webp" alt="" /></p>
+<blockquote>
+  <p>필자가 직접 작성</p>
+</blockquote>
+
+<ul>
+  <li>로그인했을 때 사용자가 “참여”했다고 가정 하에, 로그인 이벤트를 불러온다.</li>
+  <li>코호트는 “회원가입” 기준으로 정의할 것이므로, 회원가입 이벤트도 함께 불러온다.</li>
+  <li>Monthly Range Retention은 Month 0부터 Month 6까지만 계산한다.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>  
+  
+<span class="c1">-- 1. 사용자들의 "참여" (회원가입 및 로그인 이벤트) 소스 테이블을 불러온다.  </span>
+<span class="c1">-- (단, 현재 시점 기준으로 7개월 전의 월초부터 1개월 전의 월말까지 항목만)  </span>
+<span class="n">CTE_engagements</span> <span class="k">AS</span> <span class="p">(</span>  
+<span class="k">SELECT</span>  
+<span class="n">user_id</span><span class="p">,</span>  
+<span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'DAY'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span>  <span class="nb">date</span>  
+<span class="k">FROM</span>  
+  
+  
+<span class="k">GROUP</span>  <span class="k">BY</span>  
+<span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>STEP 2) 사용자들을 회원가입일 기준의 코호트로 Labeling해준다.</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 2. 사용자들을 회원가입일 기준의 코호트로 Labeling해준다.  </span>
+<span class="n">CTE_cohorts</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">user_id</span><span class="p">,</span>  
+        <span class="k">MIN</span><span class="p">(</span><span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">cohort_date</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_engagements</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span>  
+        <span class="mi">1</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>STEP 3) 사용자들의 “참여” 테이블과 “코호트 Labeling” 테이블을 조인하여 “Day N”도 함께 표시해준다.</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 3. 사용자들의 "참여" 테이블과 "코호트 Labeling" 테이블을 조인하여 "Day N"도 함께 표시해준다.  </span>
+<span class="n">CTE_engagements_with_cohorts_daily</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">ENG</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>  
+        <span class="n">ENG</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>  
+        <span class="n">COH</span><span class="p">.</span><span class="n">cohort_date</span><span class="p">,</span>  
+        <span class="n">DATE_DIFF</span><span class="p">(</span>  
+            <span class="n">ENG</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>  
+            <span class="n">COH</span><span class="p">.</span><span class="n">cohort_date</span><span class="p">,</span>  
+            <span class="k">DAY</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">day_n</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_engagements</span> <span class="n">ENG</span>  
+    <span class="k">LEFT</span> <span class="k">JOIN</span>  
+        <span class="n">CTE_cohorts</span> <span class="n">COH</span>  
+        <span class="k">USING</span> <span class="p">(</span><span class="n">user_id</span><span class="p">)</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>STEP 4) “Day N”을 “Month N”으로 변환해준다.</strong></p>
+<ul>
+  <li>Monthly Range Retention을 계산해야 하기 때문이다.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 4. "Day N"을 "Month N"으로 변환해준다.  </span>
+<span class="n">CTE_engagements_with_cohorts_monthly</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">user_id</span><span class="p">,</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">yyyymm</span><span class="p">,</span>  
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="n">cohort_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">cohort_yyyymm</span><span class="p">,</span>  
+        <span class="n">DATE_DIFF</span><span class="p">(</span>  
+            <span class="nb">date</span><span class="p">,</span>  
+            <span class="n">cohort_date</span><span class="p">,</span>  
+            <span class="k">MONTH</span>  
+        <span class="p">)</span> <span class="k">AS</span> <span class="n">month_n</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_engagements_with_cohorts_daily</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>STEP 5) 코호트 및 “Month N” 기준으로 사용자 수를 집계한다.</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 5. 코호트 및 "Month N" 기준으로 사용자 수를 집계한다.  </span>
+<span class="n">CTE_month_n_cnt</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">cohort_yyyymm</span><span class="p">,</span>  
+        <span class="n">month_n</span><span class="p">,</span>  
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">users_cnt</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_engagements_with_cohorts_monthly</span>  
+    <span class="k">GROUP</span> <span class="k">BY</span>  
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="p">),</span>
+</code></pre></div></div>
+
+<p><strong>STEP 6) 최종 리텐션을 계산한다.</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 6. 최종 리텐션을 계산한다.  </span>
+<span class="n">CTE_monthly_retention</span> <span class="k">AS</span> <span class="p">(</span>  
+    <span class="k">SELECT</span>  
+        <span class="n">cohort_yyyymm</span><span class="p">,</span>  
+        <span class="n">month_n</span><span class="p">,</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="n">users_cnt</span> <span class="k">AS</span> <span class="nb">DOUBLE</span><span class="p">)</span>  
+        <span class="o">/</span>  
+        <span class="k">CAST</span><span class="p">(</span><span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">users_cnt</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>  
+            <span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">cohort_yyyymm</span>  
+            <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">month_n</span>  
+            <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="n">UNBOUNDED</span> <span class="k">FOLLOWING</span>  
+        <span class="p">)</span>  
+        <span class="k">AS</span> <span class="n">monthly_retention</span>  
+    <span class="k">FROM</span>  
+        <span class="n">CTE_month_n_cnt</span>  
+    <span class="k">ORDER</span> <span class="k">BY</span>  
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>STEP 7) 중복되지 않은 신규 항목들만 Insert할 수 있도록 조건화한다.</strong></p>
+
+<p><img src="/assets/2024-01-01-retention-batch-query/step7.webp" alt="" /></p>
+<blockquote>
+  <p>필자가 직접 작성</p>
+</blockquote>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 7. 중복되지 않은 신규 항목들만 Insert할 수 있도록 조건화한다.  </span>
+<span class="n">CTE_monthly_retention_inserted</span> <span class="k">AS</span> <span class="p">(</span>  
+<span class="k">SELECT</span>  
+<span class="o">*</span>  
+<span class="k">FROM</span>  
+<span class="n">CTE_monthly_retention</span>  
+  
+<span class="k">ORDER</span>  <span class="k">BY</span>  
+<span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>STEP 8) 출력한다.</strong></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="o">*</span>  
+<span class="k">FROM</span>  
+    <span class="n">CTE_monthly_retention_inserted</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="6-결론">6. 결론</h1>
+
+<p>Data Mart나 Batch Query에 대한 이론은 누구나 쉽게 온라인에서 공부할 수 있지만, 실제 Metrics 별로 모범이 될 만한 레퍼런스를 찾기가 어려운 것 같습니다. 특히, 리텐션의 경우 분명히 일회성 쿼리의 문제점을 해결해야 할 필요성이 클 것임에도 불구하고 저는 개인적으로 구글링을 통해서 적절한 레퍼런스를 전혀 찾지 못했습니다. 그래서 이참에 퍼블릭 레퍼런스를 제가 한 번 만들어보자는 결심이 들어 이렇게 글을 적어봤습니다.</p>
+
+<p>그러나 저의 레퍼런스가 절대로 정답은 아닐 것입니다. Batch Query 모범 사례를 찾기 어렵다는 점은 그만큼 각 프로덕트의 도메인 특수성과 데이터의 형태가 극명하게 달라 절대불변의 정답이 없다는 의미일지도 모르겠습니다.</p>
+
+<p>그러므로, 저의 사례는 가볍게 참고만 해주시고, 독자 분들께서 처한 다양한 특수성에 따라 가장 효율적인 리텐션 측정 환경을 구축하시길 바라겠습니다. 물론, 저의 논리적 오류나 개선 방향에 대한 피드백도 언제나 감사히 받겠습니다. 읽어주셔서 감사합니다.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Data Analysis" /><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[코호트 리텐션의 의미와 중요성에 대해 말씀드리고, Batch Query를 사용하여 회원가입 월 코호트 별로 Monthly Range Retention을 계산하는 방법을 제시해드릴게요.]]></summary></entry><entry><title type="html">Data Warehouse #06</title><link href="http://localhost:4000/data-warehouse-06/" rel="alternate" type="text/html" title="Data Warehouse #06" /><published>2023-12-19T00:00:00+09:00</published><updated>2023-12-19T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-06</id><content type="html" xml:base="http://localhost:4000/data-warehouse-06/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 06. Dimensions</li>
@@ -10,7 +412,7 @@
   <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
 <blockquote>
   <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
@@ -36,7 +438,7 @@
   </li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/dimension-tables.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/dimension-tables.png" alt="" /></p>
 
 <h1 id="date-dimensions">Date Dimensions</h1>
 
@@ -54,7 +456,7 @@ Combination: Year-quarter, Year-Month, etc.
   </li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/date-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/date-dimensions.png" alt="" /></p>
 
 <ul>
   <li>Date Dimensions can be populated in advance. (for the next 5 or 10 years, for example.)</li>
@@ -104,7 +506,7 @@ Combination: Year-quarter, Year-Month, etc.
   <li><code class="language-plaintext highlighter-rouge">NULL</code> values must be avoided so that they can <strong>appear in JOINs</strong>!</li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-1.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/nulls-in-dimensions-1.png" alt="" /></p>
 
 <h3 id="replace-nulls-with-descriptive-values">Replace Nulls with descriptive values!</h3>
 <ul>
@@ -112,7 +514,7 @@ Combination: Year-quarter, Year-Month, etc.
   <li>Values appear in aggregations in BI tools</li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-2.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/nulls-in-dimensions-2.png" alt="" /></p>
 
 <h1 id="hierarchies-in-dimensions">Hierarchies in Dimensions</h1>
 
@@ -126,18 +528,18 @@ Combination: Year-quarter, Year-Month, etc.
   </li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-1.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-1.png" alt="" /></p>
 
 <h3 id="star-schema">Star Schema</h3>
 <ul>
   <li><strong>Denormalized</strong> &amp; <strong>Flattened</strong></li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-2.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-2.png" alt="" /></p>
 
 <h3 id="consider-combinations-if-helpful">Consider combinations if helpful!</h3>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-3.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-3.png" alt="" /></p>
 
 <h1 id="conformed-dimensions">Conformed Dimensions</h1>
 
@@ -146,13 +548,13 @@ Combination: Year-quarter, Year-Month, etc.
   <li>Used to compare facts across different fact tables.</li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-1.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/conformed-dimensions-1.png" alt="" /></p>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-2.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/conformed-dimensions-2.png" alt="" /></p>
 
 <p><strong>The same granularity is not necessary, and a different scope of FK can be possible!</strong></p>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-3.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/conformed-dimensions-3.png" alt="" /></p>
 
 <h1 id="degenerate-dimensions">Degenerate Dimensions</h1>
 
@@ -164,7 +566,7 @@ Combination: Year-quarter, Year-Month, etc.
   <li>with a suffix of <strong><code class="language-plaintext highlighter-rouge">_DD</code></strong></li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/degenerate-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/degenerate-dimensions.png" alt="" /></p>
 
 <h1 id="junk-dimensions">Junk Dimensions</h1>
 
@@ -178,13 +580,13 @@ Combination: Year-quarter, Year-Month, etc.
   <p>💡 <code class="language-plaintext highlighter-rouge">Junk Dimension</code> is a concept in data warehousing that involves <strong>combining low-cardinality fields or attributes into a single-dimension table</strong>. These low-cardinality fields may represent different categories or flags that have a limited number of possible values. By consolidating these attributes into a single table, a Junk Dimension reduces the number of dimension tables in a data warehouse. <a href="https://www.dremio.com/wiki/junk-dimension/">(Source)</a></p>
 </blockquote>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/junk-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/junk-dimensions.png" alt="" /></p>
 
 <h1 id="role-playing-dimensions">Role-playing Dimensions</h1>
 
 <p><strong>A Role-playing Dimension is a dimension that is referenced multiple times by a fact table.</strong></p>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/role-playing-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/role-playing-dimensions.png" alt="" /></p>
 
 <p><strong>What are Role-playing Dimensions?</strong></p>
 <ul>
@@ -241,205 +643,7 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 04. Dimensional Modeling</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
-
-<p><strong>Dimensional Modeling</strong></p>
-<ul>
-  <li>Unique Technique of Structuring Data</li>
-  <li>Commonly Used in Data Warehouse</li>
-  <li>Optimized for Faster Data Regrieval</li>
-  <li>Performance &amp; Usability Oriented</li>
-  <li>Designed Reporting &amp; OLAP</li>
-</ul>
-
-<p><strong>Details</strong></p>
-<ul>
-  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
-  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
-    <ul>
-      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
-      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
-
-<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
-
-<ul>
-  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
-
-<h1 id="facts">Facts</h1>
-
-<p><strong>Facts</strong> usually…</p>
-<ul>
-  <li>Aggregatable (with Numeric Values)</li>
-  <li>Measurable</li>
-  <li>Event or Transactional Data</li>
-  <li>Date or Time in a Fact Table</li>
-  <li>Foundation of Data Warehouse</li>
-  <li>Key Measurements</li>
-  <li>Aggregated and Analyzed</li>
-</ul>
-
-<h1 id="dimensions">Dimensions</h1>
-
-<p><strong>Dimensions</strong> usually…</p>
-<ul>
-  <li>Non-aggregatable</li>
-  <li>Descriptive</li>
-  <li>More Static than Facts</li>
-  <li>Categorizes Facts</li>
-  <li>Supportive &amp; Descriptive</li>
-  <li>Filtering, Grouping, and Labeling</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
-</blockquote>
-
-<p><strong>Star Schema</strong></p>
-<ul>
-  <li>Most Common Schema in Data Mart</li>
-  <li>Simplest Form (vs. Snowflake Schema)</li>
-  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
-  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
-</ul>
-
-<p><strong>Denormalized</strong> (= Star Schema)</p>
-<ul>
-  <li>Data Redundancy ⬆️</li>
-  <li>Optimized to get data out ⬆️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
-  <li>User Experience ⬆️</li>
-</ul>
-
-<p><strong>Normalized</strong> (= Snowflake Schema)</p>
-<ul>
-  <li>Data Redundancy ⬇️</li>
-  <li>Storage ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-  <li>Number of Tables ⬆️</li>
-  <li>Joins Necessary ⬆️</li>
-</ul>
-
-<h1 id="snowflake-schema">Snowflake Schema</h1>
-
-<p><strong>Advantages</strong></p>
-<ul>
-  <li>Storage Cost ⬇️</li>
-  <li>Data Redundancy ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-</ul>
-
-<p><strong>Disadvantages</strong></p>
-<ul>
-  <li>Complex Queries with Joins</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
-</ul>
-
-<p><strong>Star Schema vs. Snowflake Schema</strong></p>
-<ul>
-  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
-  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
-</ul>
-
-<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
-
-<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
-
-<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
-
-<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
-    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
-    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
-    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
-    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
-<span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
-
-<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
-
-<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
-
-<p>(6) Run the code block to see if your data has been imported.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
-
-<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="k">DISTINCT</span> <span class="n">category</span>  
-<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
-
-<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
-    <span class="n">category</span>  
-<span class="k">INTO</span> <span class="n">categories</span>  
-<span class="k">FROM</span> <span class="p">(</span>  
-    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
-    <span class="k">FROM</span> <span class="n">products</span>  
-<span class="p">)</span> <span class="n">SUB</span>  
-<span class="p">;</span>
-</code></pre></div></div>
-
-<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 03. Data Warehouse Architecture</li>
@@ -929,7 +1133,205 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 04. Dimensional Modeling</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
+
+<p><strong>Dimensional Modeling</strong></p>
+<ul>
+  <li>Unique Technique of Structuring Data</li>
+  <li>Commonly Used in Data Warehouse</li>
+  <li>Optimized for Faster Data Regrieval</li>
+  <li>Performance &amp; Usability Oriented</li>
+  <li>Designed Reporting &amp; OLAP</li>
+</ul>
+
+<p><strong>Details</strong></p>
+<ul>
+  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
+  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
+    <ul>
+      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
+      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
+
+<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
+
+<ul>
+  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
+
+<h1 id="facts">Facts</h1>
+
+<p><strong>Facts</strong> usually…</p>
+<ul>
+  <li>Aggregatable (with Numeric Values)</li>
+  <li>Measurable</li>
+  <li>Event or Transactional Data</li>
+  <li>Date or Time in a Fact Table</li>
+  <li>Foundation of Data Warehouse</li>
+  <li>Key Measurements</li>
+  <li>Aggregated and Analyzed</li>
+</ul>
+
+<h1 id="dimensions">Dimensions</h1>
+
+<p><strong>Dimensions</strong> usually…</p>
+<ul>
+  <li>Non-aggregatable</li>
+  <li>Descriptive</li>
+  <li>More Static than Facts</li>
+  <li>Categorizes Facts</li>
+  <li>Supportive &amp; Descriptive</li>
+  <li>Filtering, Grouping, and Labeling</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
+</blockquote>
+
+<p><strong>Star Schema</strong></p>
+<ul>
+  <li>Most Common Schema in Data Mart</li>
+  <li>Simplest Form (vs. Snowflake Schema)</li>
+  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
+  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
+</ul>
+
+<p><strong>Denormalized</strong> (= Star Schema)</p>
+<ul>
+  <li>Data Redundancy ⬆️</li>
+  <li>Optimized to get data out ⬆️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
+  <li>User Experience ⬆️</li>
+</ul>
+
+<p><strong>Normalized</strong> (= Snowflake Schema)</p>
+<ul>
+  <li>Data Redundancy ⬇️</li>
+  <li>Storage ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+  <li>Number of Tables ⬆️</li>
+  <li>Joins Necessary ⬆️</li>
+</ul>
+
+<h1 id="snowflake-schema">Snowflake Schema</h1>
+
+<p><strong>Advantages</strong></p>
+<ul>
+  <li>Storage Cost ⬇️</li>
+  <li>Data Redundancy ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+</ul>
+
+<p><strong>Disadvantages</strong></p>
+<ul>
+  <li>Complex Queries with Joins</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
+</ul>
+
+<p><strong>Star Schema vs. Snowflake Schema</strong></p>
+<ul>
+  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
+  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
+</ul>
+
+<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
+
+<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
+
+<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
+
+<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
+    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
+    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
+    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
+    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
+
+<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
+
+<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
+
+<p>(6) Run the code block to see if your data has been imported.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
+
+<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="k">DISTINCT</span> <span class="n">category</span>  
+<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
+
+<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
+    <span class="n">category</span>  
+<span class="k">INTO</span> <span class="n">categories</span>  
+<span class="k">FROM</span> <span class="p">(</span>  
+    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
+    <span class="k">FROM</span> <span class="n">products</span>  
+<span class="p">)</span> <span class="n">SUB</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
   <p>개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “<strong>마스터링 이더리움 완독하고 정리하기</strong>”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.</p>
 </blockquote>
 
@@ -2517,302 +2919,4 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Data Analysis" /><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.]]></summary></entry><entry><title type="html">Near Protocol: Account Model and Transaction Story</title><link href="http://localhost:4000/near-protocol/" rel="alternate" type="text/html" title="Near Protocol: Account Model and Transaction Story" /><published>2023-11-18T00:00:00+09:00</published><updated>2023-11-18T00:00:00+09:00</updated><id>http://localhost:4000/near-protocol</id><content type="html" xml:base="http://localhost:4000/near-protocol/"><![CDATA[<blockquote>
-  <p>Dive into the intricate world of blockchain with Joshua. Uncover the complexities of Near Protocol’s account model, transaction stories, and personal insights. This article offers a captivating exploration of addresses, private keys, and the execution flow of transactions, providing a unique perspective on user experience and protocol design. Join me on this insightful journey, backed by personal research and a wealth of references from the blockchain realm.</p>
-</blockquote>
-
-<iframe src="https://www.youtube.com/embed/Gr2jV_51JnU?si=O1tF3Ft5MTwkP5U1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
-<blockquote>
-  <p>Presentation Video</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>Account Model Story
-    <ul>
-      <li>1.1. Addresses</li>
-      <li>1.2. Private Keys</li>
-      <li>1.3. A Sample UX Case</li>
-    </ul>
-  </li>
-  <li>Transaction Story
-    <ul>
-      <li>2.1. Transactions</li>
-      <li>2.2. Actions</li>
-      <li>2.3. Receipts</li>
-      <li>2.4. A Sample Transactions Case</li>
-    </ul>
-  </li>
-  <li>Personal Thoughts</li>
-  <li>References</li>
-</ol>
-
-<hr />
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-<blockquote>
-  <p>This material is based on personal research and study; therefore, it may contain factual errors and cannot be relied upon for critical decision-making. Additionally, the opinions in the material are purely subjective and have no connection to any past or current companies that I have worked at.</p>
-</blockquote>
-
-<h1 id="1-account-model-story">1. Account Model Story</h1>
-
-<p><img src="/assets/2023-11-18-near-protocol/account-model-story.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://docs.near.org/concepts/basics/accounts/model">Source</a></p>
-</blockquote>
-
-<h2 id="11-addresses">1.1. Addresses</h2>
-
-<h3 id="there-are-two-types-of-accounts">There are Two Types of Accounts.</h3>
-
-<p><strong>1. Named Account</strong></p>
-<ul>
-  <li>i.e.,  <code class="language-plaintext highlighter-rouge">alice.near</code>,  <code class="language-plaintext highlighter-rouge">bob.near</code>,  <code class="language-plaintext highlighter-rouge">usa.near</code>,  <code class="language-plaintext highlighter-rouge">texas.usa.near</code></li>
-  <li>Formatically Same as DNS</li>
-  <li>🙆🏻‍♂️  <code class="language-plaintext highlighter-rouge">usa.near</code>  →  <code class="language-plaintext highlighter-rouge">texas.usa.near</code>  can be created.</li>
-  <li>🙅🏻‍♂️  <code class="language-plaintext highlighter-rouge">usa.near</code>  →  <code class="language-plaintext highlighter-rouge">texas.uk.near</code>  can NOT be created.</li>
-</ul>
-
-<p><strong>2. Implicit Account</strong></p>
-<ul>
-  <li>i.e.,  <code class="language-plaintext highlighter-rouge">98793cd91a3f870fb126f662858[...]</code></li>
-  <li>Formatically Similar to the Traditional Way to Create Addresses such as Bitcoin and Ethereum (64 letters)</li>
-</ul>
-
-<h3 id="personal-thoughts">Personal Thoughts</h3>
-
-<p><strong>1. Named Account</strong></p>
-<ul>
-  <li>Improves the end-user UX of the product because it’s easy to memorize!</li>
-  <li>While ENS is executed at the  <strong>contract layer</strong>, Near’s Named Account is executed at the  <strong>protocol layer</strong>.</li>
-</ul>
-
-<p><strong>2. Implicit Account</strong></p>
-<ul>
-  <li>For user groups that want to maintain pseudonymization!</li>
-  <li>For developers accustomed to traditional address systems, especially hardware wallet service companies</li>
-</ul>
-
-<h2 id="12-private-keys">1.2. Private Keys</h2>
-
-<h3 id="there-are-two-types-of-private-keys">There are Two Types of Private Keys.</h3>
-
-<p><img src="/assets/2023-11-18-near-protocol/private-keys.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.vitalpoint.ai/understanding-near-keys/">Source</a></p>
-</blockquote>
-
-<p><strong>1. Full Access Key</strong></p>
-<blockquote>
-  <p><strong>The address can be used to sign transactions of all types.</strong></p>
-</blockquote>
-
-<ul>
-  <li>The 8 Types of Transactions (<code class="language-plaintext highlighter-rouge">Transaction Actions</code>)
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transfer</span><span class="p">,</span> <span class="c1"># Transfer Tokens  
-</span><span class="n">CreateAccount</span><span class="p">,</span> <span class="c1"># Create Accounts  
-</span><span class="n">DeleteAccount</span><span class="p">,</span> <span class="c1"># Delete Accounts  
-</span><span class="n">DeployContract</span><span class="p">,</span> <span class="c1"># Deploy Contracts  
-</span><span class="n">FunctionCall</span><span class="p">,</span> <span class="c1"># Call Functions of Contracts  
-</span><span class="n">Stake</span><span class="p">,</span> <span class="c1"># Staking  
-</span><span class="n">AddKey</span><span class="p">,</span> <span class="c1"># Add Keys  
-</span><span class="n">DeleteKey</span> <span class="c1"># Delete Keys
-</span></code></pre></div>    </div>
-  </li>
-</ul>
-
-<p><strong>2. Function Call Key</strong></p>
-<blockquote>
-  <p><strong>The address can be used to sign the following restricted transactions.</strong></p>
-</blockquote>
-
-<ul>
-  <li>Transactions are restricted to  <strong>specific function(s)</strong>  within  <strong>a specific contract</strong>.</li>
-  <li>Sending Native Token, $NEAR, is NOT possible.
-    <ul>
-      <li>Gas Fees can be paid, however.</li>
-      <li>Of course, if you set it so that you can’t even pay Gas Fees, only functions related to View methods can be called.</li>
-    </ul>
-  </li>
-  <li>Purpose of Using Function Call Keys
-    <ul>
-      <li>By passing it to the dApp’s client, creating an environment where the dApp can immediately invoke contract calls with limited permissions.</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="parameters">Parameters</h3>
-
-<p><strong>1. Full Access Key</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">pub</span> <span class="kr">enum</span> <span class="nx">AccessKeyPermission</span> <span class="p">{</span>  
-    <span class="nc">FunctionCall</span><span class="p">(</span><span class="nx">FunctionCallPermission</span><span class="p">),</span>  
-    <span class="nx">FullAccess</span><span class="p">,</span>  
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><strong>2. Function Call Key</strong></p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">pub</span> <span class="nx">struct</span> <span class="nx">FunctionCallPermission</span> <span class="p">{</span>  
-    <span class="nx">pub</span> <span class="nx">receiver_id</span><span class="p">:</span> <span class="nx">AccountId</span><span class="p">,</span> <span class="c1">// a Specific Contract  </span>
-    <span class="nx">pub</span> <span class="nx">method_names</span><span class="p">:</span> <span class="nx">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// Specific Functions  </span>
-    <span class="nx">pub</span> <span class="nx">allowance</span><span class="p">:</span> <span class="nx">Option</span><span class="o">&lt;</span><span class="nx">Balance</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// Max Gas Fee Payment Amount  </span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="locked-account">Locked Account</h3>
-<ul>
-  <li>Simply remove all keys through the transaction of the  <code class="language-plaintext highlighter-rouge">DeleteKey</code>  action.</li>
-  <li>No one will be able to control the account.</li>
-  <li>In other words, after deploying the smart contract account itself, it can be made fully decentralized, allowing only internal transactions to occur.</li>
-</ul>
-
-<h2 id="13-a-sample-ux-case">1.3. A Sample UX Case</h2>
-
-<h3 id="typical-dapp-transaction-signing-architecture">Typical dApp Transaction Signing Architecture</h3>
-
-<p><img src="/assets/2023-11-18-near-protocol/Typical dApp Transaction Signing Architecture.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://docs.near.org/concepts/web3/near">Source</a></p>
-</blockquote>
-
-<ul>
-  <li>To execute a specific transaction within the dApp, the user must undergo repeated redirection between the wallet and the client.</li>
-  <li><strong>Advantage</strong>: Excellent  <strong>security</strong>  as the private key is not exposed to the client.</li>
-  <li><strong>Disadvantage</strong>: Repeated redirections can be annoying for  <strong>users</strong>.</li>
-</ul>
-
-<h3 id="dapp-transaction-signing-architecture-using-function-call-key">dApp Transaction Signing Architecture Using Function Call Key</h3>
-<blockquote>
-  <p>It is possible to address the Disadvantage without significantly compromising the Advantage.</p>
-</blockquote>
-
-<p><strong>1. Add Key</strong></p>
-
-<p><img src="/assets/2023-11-18-near-protocol/add-key.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://docs.near.org/concepts/web3/near">Source</a></p>
-</blockquote>
-
-<p><strong>2. Call a Specific Function within a dApp’s Contract</strong></p>
-
-<p><img src="/assets/2023-11-18-near-protocol/call a specific function within a dapps contract.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://docs.near.org/concepts/web3/near">Source</a></p>
-</blockquote>
-
-<h1 id="2-transaction-story">2. Transaction Story</h1>
-
-<p><strong>Overall Execution Flow of the Transactions</strong></p>
-
-<p><img src="/assets/2023-11-18-near-protocol/transaction-story.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.youtube.com/@NEARProtocol">Source</a></p>
-</blockquote>
-
-<p><strong>Important Terms</strong></p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">Transaction</code></li>
-  <li><code class="language-plaintext highlighter-rouge">Action</code></li>
-  <li><code class="language-plaintext highlighter-rouge">Receipt</code></li>
-</ul>
-
-<h2 id="21-transactions">2.1. Transactions</h2>
-<p><strong>A Transaction is:</strong></p>
-<ul>
-  <li>a set of  <code class="language-plaintext highlighter-rouge">actions</code>  that need to be performed on the receiving account.</li>
-  <li>🙅🏻‍♂️ In other words, a transaction is NOT the atomic unit driving state changes in Near Blockchain.</li>
-</ul>
-
-<h2 id="22-actions">2.2. Actions</h2>
-<p><strong>An Action is:</strong></p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">the unit of work</code>  that the virtual machine needs to process through a transaction.</li>
-  <li>There are a total of 8 types recognizable by the Near Protocol. (You have already checked them above!)</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transfer</span><span class="p">,</span> <span class="c1"># Transfer Tokens  
-</span><span class="n">CreateAccount</span><span class="p">,</span> <span class="c1"># Create Accounts  
-</span><span class="n">DeleteAccount</span><span class="p">,</span> <span class="c1"># Delete Accounts  
-</span><span class="n">DeployContract</span><span class="p">,</span> <span class="c1"># Deploy Contracts  
-</span><span class="n">FunctionCall</span><span class="p">,</span> <span class="c1"># Call Functions of Contracts  
-</span><span class="n">Stake</span><span class="p">,</span> <span class="c1"># Staking  
-</span><span class="n">AddKey</span><span class="p">,</span> <span class="c1"># Add Keys  
-</span><span class="n">DeleteKey</span> <span class="c1"># Delete Keys
-</span></code></pre></div></div>
-
-<h2 id="23-receipts">2.3. Receipts</h2>
-<p><strong>A Receipt is:</strong></p>
-<ul>
-  <li>the smallest unit executed by the virtual machine, in other words,  <code class="language-plaintext highlighter-rouge">the execution object</code>.</li>
-</ul>
-
-<h2 id="24-a-sample-transaction-case">2.4. A Sample Transaction Case</h2>
-
-<h3 id="a-randomly-chosen-transaction-case">A Randomly Chosen Transaction Case</h3>
-
-<p><strong>1. A Transaction Sending 0.02 NEAR</strong></p>
-
-<p><img src="/assets/2023-11-18-near-protocol/A Transaction Sending 0.02 NEAR.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nearblocks.io/txns/6aqjvabatzFkvoBzYmnpEZbAfnLbGo6PsUM6WdpUYxmG#">Source</a></p>
-</blockquote>
-
-<p><strong>2. Receipt Executions - (1) TRANSFER Action</strong></p>
-
-<p><img src="/assets/2023-11-18-near-protocol/Receipt Executions TRANSFER Action.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nearblocks.io/txns/6aqjvabatzFkvoBzYmnpEZbAfnLbGo6PsUM6WdpUYxmG#">Source</a></p>
-</blockquote>
-
-<p><strong>2. Receipt Executions - (2) Receiving a Refund for the difference between Gas Limit and Gas Used</strong></p>
-
-<p><img src="/assets/2023-11-18-near-protocol/Receipt Executions Receiving a Refund for the difference between Gas Limit and Gas Used.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nearblocks.io/txns/6aqjvabatzFkvoBzYmnpEZbAfnLbGo6PsUM6WdpUYxmG#">Source</a></p>
-</blockquote>
-
-<h1 id="3-personal-thoughts">3. Personal Thoughts</h1>
-
-<h3 id="1-protocolized-address-system-for-dns">1. Protocolized Address System for DNS</h3>
-
-<p>It seems that the computational burden on nodes has been compromised to become a user-friendly blockchain. (Due to the increased size of dtype…)</p>
-<ul>
-  <li>Wouldn’t there be a slowdown and an increase in gas fees then?</li>
-  <li>It seems that this has been addressed by dividing a block into multiple chunks to create the block.</li>
-  <li>Let me study deeper when I have more expertise to check out if there are any potential security drawbacks of this approach. 😁</li>
-</ul>
-
-<p><img src="/assets/2023-11-18-near-protocol/nightshade.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://near.org/papers/nightshade">Source</a></p>
-</blockquote>
-
-<h3 id="2-key-generation-structure-for-dapp-end-user-ux">2. Key Generation Structure for dApp End-User UX</h3>
-
-<p>Of course, in the initial Add Key situation, wallet redirection still occurs, so it may not be possible to completely alleviate user confusion.</p>
-<ul>
-  <li>🗣️<strong>Picky Users (say, Joshua)</strong>: “Earlier, my signature was required, but why are you executing things now without it?” 😠😡</li>
-</ul>
-
-<p><img src="/assets/2023-11-18-near-protocol/add-key.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://docs.near.org/concepts/web3/near">Source</a></p>
-</blockquote>
-
-<h1 id="4-references">4. References</h1>
-<ul>
-  <li><strong>Near</strong>  <strong>Whitepaper</strong>:  <a href="https://near.org/papers/nightshade">https://near.org/papers/nightshade</a></li>
-  <li><strong>Near Official Docs</strong>:  <a href="https://docs.near.org/">https://docs.near.org</a></li>
-  <li><strong>Near Official Dev Docs</strong>:  <a href="https://nomicon.io/">https://nomicon.io</a></li>
-  <li><strong>Near Official YouTube Channel</strong>:  <a href="https://www.youtube.com/@NEARProtocol">https://www.youtube.com/@NEARProtocol</a></li>
-  <li><strong>Blockchain Explorer (Nearblocks)</strong>:  <a href="https://nearblocks.io/">https://nearblocks.io</a></li>
-  <li><strong>Vital Point AI Content</strong>:  <a href="https://www.vitalpoint.ai/understanding-near-keys">https://www.vitalpoint.ai/understanding-near-keys</a></li>
-</ul>
-
-<p><img src="/assets/2023-11-18-near-protocol/near-logo.webp" alt="" /></p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Blockchain" /><summary type="html"><![CDATA[Dive into the intricate world of blockchain with Joshua. Uncover the complexities of Near Protocol’s account model, transaction stories, and personal insights. This article offers a captivating exploration of addresses, private keys, and the execution flow of transactions, providing a unique perspective on user experience and protocol design. Join me on this insightful journey, backed by personal research and a wealth of references from the blockchain realm.]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Data Analysis" /><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, Stickiness 지표 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.]]></summary></entry></feed>

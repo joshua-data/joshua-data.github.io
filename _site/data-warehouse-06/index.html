@@ -12,6 +12,11 @@
     gtag('config', 'G-K04Y972F7E');
   </script>
 
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
   <title>Data Warehouse #06 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
@@ -133,7 +138,7 @@
 
   <div>
     <span class="date">
-      2023-12-20
+      2023-12-19
     </span>
 
     <ul class="tag">
@@ -166,7 +171,7 @@
   <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
 <blockquote>
   <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
@@ -192,7 +197,7 @@
   </li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/dimension-tables.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/dimension-tables.png" alt="" /></p>
 
 <h1 id="date-dimensions">Date Dimensions</h1>
 
@@ -210,7 +215,7 @@ Combination: Year-quarter, Year-Month, etc.
   </li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/date-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/date-dimensions.png" alt="" /></p>
 
 <ul>
   <li>Date Dimensions can be populated in advance. (for the next 5 or 10 years, for example.)</li>
@@ -260,7 +265,7 @@ Combination: Year-quarter, Year-Month, etc.
   <li><code class="language-plaintext highlighter-rouge">NULL</code> values must be avoided so that they can <strong>appear in JOINs</strong>!</li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-1.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/nulls-in-dimensions-1.png" alt="" /></p>
 
 <h3 id="replace-nulls-with-descriptive-values">Replace Nulls with descriptive values!</h3>
 <ul>
@@ -268,7 +273,7 @@ Combination: Year-quarter, Year-Month, etc.
   <li>Values appear in aggregations in BI tools</li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/nulls-in-dimensions-2.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/nulls-in-dimensions-2.png" alt="" /></p>
 
 <h1 id="hierarchies-in-dimensions">Hierarchies in Dimensions</h1>
 
@@ -282,18 +287,18 @@ Combination: Year-quarter, Year-Month, etc.
   </li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-1.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-1.png" alt="" /></p>
 
 <h3 id="star-schema">Star Schema</h3>
 <ul>
   <li><strong>Denormalized</strong> &amp; <strong>Flattened</strong></li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-2.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-2.png" alt="" /></p>
 
 <h3 id="consider-combinations-if-helpful">Consider combinations if helpful!</h3>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/hierarchies-in-dimensions-3.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/hierarchies-in-dimensions-3.png" alt="" /></p>
 
 <h1 id="conformed-dimensions">Conformed Dimensions</h1>
 
@@ -302,13 +307,13 @@ Combination: Year-quarter, Year-Month, etc.
   <li>Used to compare facts across different fact tables.</li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-1.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/conformed-dimensions-1.png" alt="" /></p>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-2.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/conformed-dimensions-2.png" alt="" /></p>
 
 <p><strong>The same granularity is not necessary, and a different scope of FK can be possible!</strong></p>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/conformed-dimensions-3.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/conformed-dimensions-3.png" alt="" /></p>
 
 <h1 id="degenerate-dimensions">Degenerate Dimensions</h1>
 
@@ -320,7 +325,7 @@ Combination: Year-quarter, Year-Month, etc.
   <li>with a suffix of <strong><code class="language-plaintext highlighter-rouge">_DD</code></strong></li>
 </ul>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/degenerate-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/degenerate-dimensions.png" alt="" /></p>
 
 <h1 id="junk-dimensions">Junk Dimensions</h1>
 
@@ -334,13 +339,13 @@ Combination: Year-quarter, Year-Month, etc.
   <p>💡 <code class="language-plaintext highlighter-rouge">Junk Dimension</code> is a concept in data warehousing that involves <strong>combining low-cardinality fields or attributes into a single-dimension table</strong>. These low-cardinality fields may represent different categories or flags that have a limited number of possible values. By consolidating these attributes into a single table, a Junk Dimension reduces the number of dimension tables in a data warehouse. <a href="https://www.dremio.com/wiki/junk-dimension/">(Source)</a></p>
 </blockquote>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/junk-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/junk-dimensions.png" alt="" /></p>
 
 <h1 id="role-playing-dimensions">Role-playing Dimensions</h1>
 
 <p><strong>A Role-playing Dimension is a dimension that is referenced multiple times by a fact table.</strong></p>
 
-<p><img src="/assets/2023-12-20-data-warehouse-06/role-playing-dimensions.png" alt="" /></p>
+<p><img src="/assets/2023-12-19-data-warehouse-06/role-playing-dimensions.png" alt="" /></p>
 
 <p><strong>What are Role-playing Dimensions?</strong></p>
 <ul>
@@ -409,6 +414,12 @@ Combination: Year-quarter, Year-Month, etc.
           </a>
       </span>
     
+    
+      <span class="next" >
+          <a href="http://localhost:4000/retention-batch-query/">
+            데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기 &#xE001;
+          </a>
+      </span>
     
   </div>
 
