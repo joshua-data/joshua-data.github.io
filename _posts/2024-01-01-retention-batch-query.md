@@ -240,11 +240,11 @@ CTE_engagements AS (
     "if is_incremental()"
     WHERE  
         -- 현재 시점 기준으로 7개월 전의 월초부터 ~  
-        DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '7'  MONTH  
+        DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '7' MONTH  
         <= DATE_TRUNC('DAY', datetime)  
         -- ~ 현재 시점 기준으로 1개월 전의 월말까지  
         AND DATE_TRUNC('DAY', datetime)  
-        <= DATE_TRUNC('MONTH', CURRENT_DATE) -  INTERVAL  '1'  DAY  
+        <= DATE_TRUNC('MONTH', CURRENT_DATE) - INTERVAL '1' DAY  
     "endif"
     GROUP BY  
         1, 2  
