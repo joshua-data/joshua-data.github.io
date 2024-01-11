@@ -17,7 +17,7 @@
     crossorigin="anonymous">
   </script>
 
-  <title>Data Warehouse #07 – Joshua Kim – Data Analyst</title>
+  <title>Data Warehouse #08 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -43,8 +43,8 @@
     <meta name="author" content="Joshua Kim" />
 
     
-    <meta property="og:title" content="Data Warehouse #07" />
-    <meta property="twitter:title" content="Data Warehouse #07" />
+    <meta property="og:title" content="Data Warehouse #08" />
+    <meta property="twitter:title" content="Data Warehouse #08" />
     
   <!-- Async font loading -->
 <script>
@@ -134,11 +134,11 @@
 
     <div id="main" role="main" class="container">
       <article class="post">
-  <h1>Data Warehouse #07</h1>
+  <h1>Data Warehouse #08</h1>
 
   <div>
     <span class="date">
-      2024-01-02
+      2024-01-11
     </span>
 
     <ul class="tag">
@@ -176,114 +176,319 @@
   <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-<h1 id="slowly-changing-dimensions">Slowly Changing Dimensions</h1>
+<h1 id="understanding-the-etl-process">Understanding the ETL Process</h1>
 
-<p>Dimensions are rather static than Facts, but they do change in the real world.</p>
+<h3 id="the-layer-of-a-data-warehouse">The Layer of a Data Warehouse</h3>
 
-<p>Types of Slowly Changing Dimensions (SCDs)</p>
+<p><img src="/assets/2024-01-11-data-warehouse-08/1.png" alt="" /></p>
+
+<p><strong>ETL Setup</strong></p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">Type 0</code>: Retain Original</li>
-  <li><code class="language-plaintext highlighter-rouge">Type 1</code>: Overwrite</li>
-  <li><code class="language-plaintext highlighter-rouge">Type 2</code>: New Row
+  <li>1️⃣ Building Workflows
     <ul>
-      <li><code class="language-plaintext highlighter-rouge">Type 2'</code>: Administrative New Row</li>
+      <li>Staging Workflow</li>
+      <li>Core Workflow</li>
+      <li>Data Mart Workflow</li>
     </ul>
   </li>
-  <li><code class="language-plaintext highlighter-rouge">Type 3</code>: Additional Attributes</li>
-</ul>
-
-<h1 id="type-0-retain-original">Type 0: Retain Original</h1>
-<ul>
-  <li>No changes at all.</li>
-  <li>Very simple and easy to maintain.</li>
-  <li><code class="language-plaintext highlighter-rouge">Dates Table</code> is a great example.</li>
-</ul>
-
-<h1 id="type-1-overwrite">Type 1: Overwrite</h1>
-
-<p><img src="/assets/2024-01-02-data-warehouse-07/overwrite.png" alt="" /></p>
-
-<ul>
-  <li>Old attributes are just <strong>Overwritten</strong>.</li>
-  <li>Only the <strong>Current State</strong> is reflected.</li>
-  <li>👍 <strong>Advantages</strong>
+  <li>2️⃣ Jobs
     <ul>
-      <li>Very simple</li>
-      <li>Facts don’t need to be modified.</li>
-    </ul>
-  </li>
-  <li>👎 <strong>Disadvantages</strong>
-    <ul>
-      <li>History is lost.</li>
-      <li>Insignificant Changes ➡️ Do not affect existing queries.
-        <ul>
-          <li>i.e., product name</li>
-        </ul>
-      </li>
-      <li>Significant Changes ➡️ Affect or break existing queries.
-        <ul>
-          <li>i.e., category</li>
-        </ul>
-      </li>
+      <li>Run the Workflows</li>
+      <li>Scheduled based on Defined Rules</li>
     </ul>
   </li>
 </ul>
 
-<h1 id="type-2-new-row">Type 2: New Row</h1>
+<h1 id="extracting-data-sources--staging">Extracting (Data Sources → Staging)</h1>
 
-<p><img src="/assets/2024-01-02-data-warehouse-07/new-row.png" alt="" /></p>
+<p><img src="/assets/2024-01-11-data-warehouse-08/2.png" alt="" /></p>
 
 <ul>
-  <li>Perfectly partitions <strong>history</strong>.</li>
-  <li>Changes are reflected in <strong>history</strong>.</li>
-  <li>👎 <strong>Disadvantages</strong>
+  <li>Transient, most commonly.
     <ul>
-      <li>Difficult to calculate the total number of products in the current view.</li>
+      <li>All the data is copied and then deleted.</li>
+    </ul>
+  </li>
+  <li>Types of Extracting</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Initial Load</strong></th>
+      <th><strong>Delta Load</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>First (real) Run</td>
+      <td>Subsequent Runs</td>
+    </tr>
+    <tr>
+      <td>All Data</td>
+      <td>Only Additional Data</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="extracting-data-sources--staging-1️⃣-initial-load">Extracting (Data Sources → Staging): 1️⃣ Initial Load</h1>
+
+<ul>
+  <li>First Initial Extraction from Source Data</li>
+  <li>Followings should be discussed:
+    <ul>
+      <li>What data is needed?</li>
+      <li>When is a good time to load the data? (Night? Weekend?)</li>
+      <li>Test with smaller extractions.</li>
+      <li>All the transformation steps should have been designed. (up to Core and Data Marts)</li>
     </ul>
   </li>
 </ul>
 
-<h1 id="type-2-administrative-new-row">Type 2’: Administrative New Row</h1>
-
-<p><img src="/assets/2024-01-02-data-warehouse-07/administrative-new-row.png" alt="" /></p>
+<h1 id="extracting-data-sources--staging-2️⃣-delta-load">Extracting (Data Sources → Staging): 2️⃣ Delta Load</h1>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">effective_date</code> &amp; <code class="language-plaintext highlighter-rouge">expiration_date</code>
+  <li>Incremental Periodic Extraction &amp; Load</li>
+  <li><strong>Delta Column</strong>
     <ul>
-      <li>The period in which values are valid.</li>
-      <li><code class="language-plaintext highlighter-rouge">expiration_date</code>
-        <ul>
-          <li>Avoid <strong>Null</strong> values, and fill in a date far in the future instead.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Requires <strong>Surrogate Key</strong> instead of <strong>Natural Key</strong>.</li>
-  <li>Lookup from the Query
-    <ul>
-      <li>Step 1) Find the Natural Key. (<code class="language-plaintext highlighter-rouge">product_PK</code>)</li>
-      <li>Step 2) Then, find the Valid Period. (<code class="language-plaintext highlighter-rouge">effective_date</code> &amp; <code class="language-plaintext highlighter-rouge">expiration_date</code>)</li>
-      <li>Step 3) <code class="language-plaintext highlighter-rouge">is_current</code> column is optional.</li>
+      <li>Remember <code class="language-plaintext highlighter-rouge">MAX(sales_key)</code></li>
     </ul>
   </li>
 </ul>
 
-<h1 id="type-3-additional-attributes">Type 3: Additional Attributes</h1>
+<pre><code class="language-plain">Variable X = MAX(sales_key)
+Next Run: sales_key &gt; X
+</code></pre>
 
-<p><img src="/assets/2024-01-02-data-warehouse-07/additional-attributes.png" alt="" /></p>
+<p><img src="/assets/2024-01-11-data-warehouse-08/3.png" alt="" /></p>
+
+<p>What if there is no <strong>Delta Column</strong>?</p>
+<ul>
+  <li>Some tools can capture automatically which data has already been loaded.</li>
+  <li>Just full-load every time and compare the data with data that is already loaded.</li>
+  <li>Depending on the data volume → Performance Issue!</li>
+</ul>
+
+<h1 id="loading-staging--core-insert--update">Loading (Staging → Core): INSERT &amp; UPDATE</h1>
+
+<p><img src="/assets/2024-01-11-data-warehouse-08/4.png" alt="" /></p>
 
 <ul>
-  <li>Instead of adding a row, we <strong>add a column</strong>.</li>
-  <li>Enables to switch between historical &amp; current views.</li>
-  <li>It’s typically used for significant changes at a time.
+  <li><strong>INSERT or APPEND</strong>
     <ul>
-      <li>i.e., Restructuring in an organization</li>
+      <li>add new values</li>
     </ul>
   </li>
-  <li>👎 <strong>Disadvantages</strong>
+  <li><strong>UPDATE</strong>
     <ul>
-      <li>Minor Changes ➡️ Type 1 is better.</li>
-      <li>Frequent or Unpredictable Changes ➡️ Type 2 is better.</li>
+      <li>change the existing values</li>
+    </ul>
+  </li>
+  <li><strong>DELETE</strong>?
+    <ul>
+      <li>typically, we don’t delete data.</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="demo-extracting-data-sources--staging">[DEMO] Extracting (Data Sources → Staging)</h1>
+
+<h3 id="create-table">Create Table</h3>
+
+<p><img src="/assets/2024-01-11-data-warehouse-08/5.png" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dim_products</code> in Staging Layer</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>column</strong></th>
+      <th><strong>type</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">product_PK</code></td>
+      <td>Surrogate Key</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">product_id</code></td>
+      <td>Natural Key</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">product_name</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">category</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">subcategory</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="initial-load">Initial Load</h3>
+
+<p><img src="/assets/2024-01-11-data-warehouse-08/6.png" alt="" /></p>
+
+<ul>
+  <li>Table input
+    <ul>
+      <li>from <code class="language-plaintext highlighter-rouge">products</code> in Source</li>
+    </ul>
+  </li>
+  <li>Table output
+    <ul>
+      <li>to <code class="language-plaintext highlighter-rouge">dim_products</code> in Staging Layer</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="delta-load">Delta Load</h3>
+
+<p><img src="/assets/2024-01-11-data-warehouse-08/7.png" alt="" /></p>
+
+<ul>
+  <li>Table input
+    <ul>
+      <li>from <code class="language-plaintext highlighter-rouge">dim_products</code> in Staging Layer</li>
+      <li><code class="language-plaintext highlighter-rouge">SELECT MAX(product_id) FROM "Staging".dim_products</code></li>
+    </ul>
+  </li>
+  <li>Set variables
+    <ul>
+      <li>Save As <code class="language-plaintext highlighter-rouge">LastLoad</code></li>
+    </ul>
+  </li>
+  <li>Get variables
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">${LastLoad}</code></li>
+    </ul>
+  </li>
+  <li>Table input
+    <ul>
+      <li>from <code class="language-plaintext highlighter-rouge">products</code> in Source</li>
+      <li><code class="language-plaintext highlighter-rouge">SELECT * FROM "public".products WHERE product_id &gt; ${LastLoad}</code></li>
+    </ul>
+  </li>
+  <li>Table output
+    <ul>
+      <li>to <code class="language-plaintext highlighter-rouge">dim_products</code> in Staging Layer</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="transformations">Transformations</h1>
+
+<h3 id="basic">Basic</h3>
+
+<ul>
+  <li>
+    <p>Deduplication
+<img src="/assets/2024-01-11-data-warehouse-08/8.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Filtering Rows
+<img src="/assets/2024-01-11-data-warehouse-08/9.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Filtering Columns
+<img src="/assets/2024-01-11-data-warehouse-08/10.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Cleaning &amp; Mapping
+<img src="/assets/2024-01-11-data-warehouse-08/11.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Value Standardization
+<img src="/assets/2024-01-11-data-warehouse-08/12.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Key Generation
+<img src="/assets/2024-01-11-data-warehouse-08/13.png" alt="" /></p>
+  </li>
+</ul>
+
+<h3 id="advanced">Advanced</h3>
+
+<ul>
+  <li>
+    <p>Joining
+<img src="/assets/2024-01-11-data-warehouse-08/14.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Splitting
+<img src="/assets/2024-01-11-data-warehouse-08/15.png" alt="" /></p>
+  </li>
+  <li>Aggregating
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">SUM</code>, <code class="language-plaintext highlighter-rouge">COUNT</code>, <code class="language-plaintext highlighter-rouge">DISTINCT COUNT</code>, <code class="language-plaintext highlighter-rouge">AVERAGE</code>
+<img src="/assets/2024-01-11-data-warehouse-08/16.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Deriving New Values
+<img src="/assets/2024-01-11-data-warehouse-08/17.png" alt="" /></li>
+</ul>
+
+<h1 id="summary">Summary</h1>
+
+<p><img src="/assets/2024-01-11-data-warehouse-08/18.png" alt="" /></p>
+
+<ul>
+  <li><strong>Extract</strong>: Source → Staging
+    <ul>
+      <li>Add Surrogate Key</li>
+      <li>Delta Logic</li>
+    </ul>
+  </li>
+  <li><strong>Transform + Load</strong>: Staging → Core
+    <ul>
+      <li>Clean Data</li>
+      <li>Add Additional Columns</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="scheduling">Scheduling</h1>
+
+<h3 id="can-be-done-either">Can be done either:</h3>
+
+<ul>
+  <li>directly from the ETL Tool,</li>
+  <li>or using External Tool
+    <ul>
+      <li>e.g., Windows Task Scheduler, Server, etc.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="guidelines">Guidelines</h3>
+
+<ul>
+  <li>What are the requirements?
+    <ul>
+      <li>3 times a day?</li>
+      <li>1 time a day?</li>
+      <li>Every 30 mins?</li>
+    </ul>
+  </li>
+  <li>How long does it take?
+    <ul>
+      <li>5 mins?</li>
+      <li>1 hour?</li>
+    </ul>
+  </li>
+  <li>What is a good time?
+    <ul>
+      <li>Initial Load vs. Delta Load</li>
+      <li>Effect on the Productive System</li>
+      <li>Short Read Access</li>
+      <li>Night? Morning?</li>
     </ul>
   </li>
 </ul>
@@ -298,17 +503,11 @@
   <div class="pagination">
     
       <span class="prev" >
-          <a href="http://localhost:4000/retention-batch-query/">
-            &#xE000; 데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기
+          <a href="http://localhost:4000/data-warehouse-07/">
+            &#xE000; Data Warehouse #07
           </a>
       </span>
     
-    
-      <span class="next" >
-          <a href="http://localhost:4000/data-warehouse-08/">
-            Data Warehouse #08 &#xE001;
-          </a>
-      </span>
     
   </div>
 
