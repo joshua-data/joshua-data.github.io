@@ -7,7 +7,7 @@ tags:
 ---
 
 > In this article, I’ll summarize key takeaways from:
->  - SECTION 07. Slowly Changing Dimensions
+>  - SECTION 08. ETL Process
 
 ### DISCLAIMER
 > This article is a compilation of key takeaways after completing [Data Warehouse — The Ultimate Guide](https://www.udemy.com/course/data-warehouse-the-ultimate-guide/) on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.
