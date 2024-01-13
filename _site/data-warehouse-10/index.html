@@ -17,7 +17,7 @@
     crossorigin="anonymous">
   </script>
 
-  <title>Joshua Kim – Data Analyst</title>
+  <title>Data Warehouse #10 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -25,11 +25,26 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Data Analyst">
-    <meta property="og:description" content="Data Analyst" />
+    <meta name="description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 10. Case Study: Creating a Data Warehouse
+  
+
+" />
+    <meta property="og:description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 10. Case Study: Creating a Data Warehouse
+  
+
+" />
     
     <meta name="author" content="Joshua Kim" />
 
+    
+    <meta property="og:title" content="Data Warehouse #10" />
+    <meta property="twitter:title" content="Data Warehouse #10" />
     
   <!-- Async font loading -->
 <script>
@@ -118,229 +133,138 @@
 </div>
 
     <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Data Warehouse #10</h1>
+
+  <div>
+    <span class="date">
+      2024-01-13
+    </span>
+
+    <ul class="tag">
       
+      <li>
+        <a href="http://localhost:4000/tags#SQL">
+          SQL
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Data Warehouse">
+          Data Warehouse
+        </a>
+      </li>
+      
+    </ul>
+  </div>
 
-<div class="posts">
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-06/">Data Warehouse #06</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-19
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
+  <div class="entry">
+    <blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
-    <li>SECTION 06. Dimensions</li>
+    <li>SECTION 10. Case Study: Creating a Data Warehouse</li>
   </ul>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-06/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-05/">Data Warehouse #05</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-06
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 05. Facts</li>
-  </ul>
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-05/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-04/">Data Warehouse #04</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-06
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 04. Dimensional Modeling</li>
-  </ul>
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-      </div>
+<h1 id="guidelines">Guidelines</h1>
+<ol>
+  <li>Look at the problem and plan</li>
+  <li>Set up tables &amp; schema</li>
+  <li>Staging</li>
+  <li>Core (Dimension Tables)</li>
+  <li>Core (Fact Tables)</li>
+  <li>Set up Jobs &amp; Testing</li>
+</ol>
 
-      <a href="/data-warehouse-04/" class="read-more">Read More</a>
-    </article>
+<h1 id="fact-table-design">Fact Table Design</h1>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">date_FK</code></li>
+  <li><code class="language-plaintext highlighter-rouge">product_FK</code></li>
+  <li><code class="language-plaintext highlighter-rouge">payment_FK</code></li>
+  <li>Additional Columns:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">total_price</code></li>
+      <li><code class="language-plaintext highlighter-rouge">total_cost</code></li>
+      <li><code class="language-plaintext highlighter-rouge">profit</code></li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/assets/2024-01-13-data-warehouse-10/1.png" alt="" /></p>
+
+<h1 id="processing-order">Processing Order</h1>
+
+<p><img src="/assets/2024-01-13-data-warehouse-10/2.png" alt="" /></p>
+
+<h3 id="source--staging">Source → Staging</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Extract</code>
+    <ul>
+      <li>Add Surrogate Key</li>
+      <li>Delta Logic
+        <h3 id="staging--core">Staging → Core</h3>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Transform</code> + <code class="language-plaintext highlighter-rouge">Load</code>
+    <ul>
+      <li>Clean Data</li>
+      <li>Add Additional Columns</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="scheduling">Scheduling</h1>
+<ul>
+  <li>Jobs or Packages</li>
+  <li>Scheduling at:
+    <ul>
+      <li>Specific Times</li>
+      <li>Frequencies</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/data-warehouse-09/">
+            &#xE000; Data Warehouse #09
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
   
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-03/">Data Warehouse #03</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-06
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 03. Data Warehouse Architecture</li>
-  </ul>
-</blockquote>
-
-      </div>
-
-      <a href="/data-warehouse-03/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-01-02/">Data Warehouse #01-02</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-06
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
-  </ul>
-</blockquote>
-
-      </div>
-
-      <a href="/data-warehouse-01-02/" class="read-more">Read More</a>
-    </article>
-  
-</div>
-
-<div class="pagination">
-  
-    <span class="prev">
-      <a href="/" class="prev">
-        &#xE000; Previous
-      </a>
-    </span>
-  
-  
-    <span class="next">
-      <a href="/page3/" class="next">
-        Next &#xE001;
-      </a>
-    </span>
-  
-</div>
+</article>
 
     </div>
 
