@@ -1,4 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-13T19:33:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #10</title><link href="http://localhost:4000/data-warehouse-10/" rel="alternate" type="text/html" title="Data Warehouse #10" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-10</id><content type="html" xml:base="http://localhost:4000/data-warehouse-10/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-13T20:20:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #11</title><link href="http://localhost:4000/data-warehouse-11/" rel="alternate" type="text/html" title="Data Warehouse #11" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-11</id><content type="html" xml:base="http://localhost:4000/data-warehouse-11/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 11. ETL vs. ELT</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-is-elt">What is ELT?</h1>
+
+<p><img src="/assets/2024-01-13-data-warehouse-11/1.png" alt="" /></p>
+
+<h3 id="data-sources--data-warehouse">Data Sources → Data Warehouse</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Extract</code> + <code class="language-plaintext highlighter-rouge">Load</code>
+    <ul>
+      <li>Real-time ⬆️</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="data-warehouse--">Data Warehouse → …</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Transform</code>
+    <ul>
+      <li>Leverage Database</li>
+      <li>More Flexible!</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+    <span class="n">category</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">sales_amount</span><span class="p">)</span>
+<span class="k">FROM</span>
+    <span class="n">sales</span>
+<span class="k">GROUP</span> <span class="k">BY</span>
+    <span class="n">category</span>
+</code></pre></div></div>
+
+<h1 id="etl-vs-elt">ETL vs. ELT</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>ETL</strong></th>
+      <th><strong>ELT</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>More Stable with Defined Transformations</td>
+      <td>Requires High Performing DB</td>
+    </tr>
+    <tr>
+      <td>More Generic Use Cases</td>
+      <td>More Flexible</td>
+    </tr>
+    <tr>
+      <td>Security ⬆️</td>
+      <td>Transformations can be Changed Quickly!</td>
+    </tr>
+    <tr>
+      <td>Reporting</td>
+      <td>Real-time ⬆️</td>
+    </tr>
+    <tr>
+      <td>Easy to Use</td>
+      <td>Data Science, ML</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 11. ETL vs. ELT]]></summary></entry><entry><title type="html">Data Warehouse #10</title><link href="http://localhost:4000/data-warehouse-10/" rel="alternate" type="text/html" title="Data Warehouse #10" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-10</id><content type="html" xml:base="http://localhost:4000/data-warehouse-10/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 10. Case Study: Creating a Data Warehouse</li>
@@ -1285,7 +1370,206 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 03. Data Warehouse Architecture</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
+
+<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
+
+<h3 id="pentaho">Pentaho</h3>
+
+<ul>
+  <li><strong>ETL Tool</strong></li>
+  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
+  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
+  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
+</ul>
+
+<h3 id="postgresql">PostgreSQL</h3>
+
+<ul>
+  <li><strong>Database Management System</strong></li>
+  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
+  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
+</ul>
+
+<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
+
+<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
+  <li><strong>“The Landing Zone Extracted Data”</strong>
+    <ul>
+      <li>Data in Tables and on a Separate Database</li>
+      <li>As little “toughing” as possible</li>
+      <li>We don’t charge the source systems.</li>
+      <li>Temporary or Persistent Staging Layers</li>
+    </ul>
+  </li>
+  <li>Short Time on the Source Systems</li>
+  <li>Quickly Extracted</li>
+  <li>Move the Data into Relational Database</li>
+  <li>Start Transformations from There</li>
+  <li>Minimal Transformation</li>
+</ul>
+
+<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
+</ul>
+
+<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
+<ul>
+  <li><strong>“Core”</strong>
+    <ul>
+      <li>Business Logic</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
+<ul>
+  <li><strong>“Data Mart”</strong>
+    <ul>
+      <li>Subset of a Data Warehouse</li>
+      <li>Dimensional Model</li>
+      <li>Can be Further Aggregated.</li>
+      <li>Usability + Acceptance</li>
+      <li>Performance</li>
+    </ul>
+  </li>
+  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
+</ul>
+
+<h1 id="in-memory-databases">In-memory Databases</h1>
+
+<h3 id="traditional-databases">Traditional Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
+
+<h3 id="in-memory-databases-1">In-memory Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
+
+<ul>
+  <li>Highly Optimized for Query Performance</li>
+  <li>Good for Analytics &amp; High Query Volume</li>
+  <li>Usually Used for Data Marts</li>
+  <li>Relational &amp; Non-relational</li>
+  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
+</ul>
+
+<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
+<ul>
+  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
+  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 01. Introduction</li>
+    <li>SECTION 02. Data Warehouse Basics</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-will-you-learn">What Will You Learn?</h1>
+
+<ul>
+  <li>Data Warehouse Basics</li>
+  <li>Data Warehouse Architecture</li>
+  <li>Dimensional Modeling</li>
+  <li>Fact Tables</li>
+  <li>Dimension Tables</li>
+  <li>Slowly Changing Dimensions</li>
+  <li>ETL Process</li>
+  <li>ETL Tools</li>
+  <li>Case Study: Create a Data Warehouse</li>
+  <li>ETL vs. ELT</li>
+  <li>Using a Data Warehouse</li>
+  <li>Optimizing a Data Warehouse</li>
+  <li>The Modern Data Warehouse</li>
+</ul>
+
+<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
+
+<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
+
+<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
+<ul>
+  <li>User-friendly</li>
+  <li>Fast query performance</li>
+  <li>Enabling data analysis</li>
+</ul>
+
+<h1 id="etl">ETL</h1>
+
+<ul>
+  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
+
+<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
+<ul>
+  <li>Centralized and Consistent Location for Data</li>
+  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
+  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
+  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
+  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
+</ul>
+
+<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
+
+<h1 id="business-intelligence">Business Intelligence</h1>
+<ul>
+  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 05. Facts</li>
@@ -1576,401 +1860,4 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 04. Dimensional Modeling</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
-
-<p><strong>Dimensional Modeling</strong></p>
-<ul>
-  <li>Unique Technique of Structuring Data</li>
-  <li>Commonly Used in Data Warehouse</li>
-  <li>Optimized for Faster Data Regrieval</li>
-  <li>Performance &amp; Usability Oriented</li>
-  <li>Designed Reporting &amp; OLAP</li>
-</ul>
-
-<p><strong>Details</strong></p>
-<ul>
-  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
-  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
-    <ul>
-      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
-      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
-
-<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
-
-<ul>
-  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
-
-<h1 id="facts">Facts</h1>
-
-<p><strong>Facts</strong> usually…</p>
-<ul>
-  <li>Aggregatable (with Numeric Values)</li>
-  <li>Measurable</li>
-  <li>Event or Transactional Data</li>
-  <li>Date or Time in a Fact Table</li>
-  <li>Foundation of Data Warehouse</li>
-  <li>Key Measurements</li>
-  <li>Aggregated and Analyzed</li>
-</ul>
-
-<h1 id="dimensions">Dimensions</h1>
-
-<p><strong>Dimensions</strong> usually…</p>
-<ul>
-  <li>Non-aggregatable</li>
-  <li>Descriptive</li>
-  <li>More Static than Facts</li>
-  <li>Categorizes Facts</li>
-  <li>Supportive &amp; Descriptive</li>
-  <li>Filtering, Grouping, and Labeling</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
-</blockquote>
-
-<p><strong>Star Schema</strong></p>
-<ul>
-  <li>Most Common Schema in Data Mart</li>
-  <li>Simplest Form (vs. Snowflake Schema)</li>
-  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
-  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
-</ul>
-
-<p><strong>Denormalized</strong> (= Star Schema)</p>
-<ul>
-  <li>Data Redundancy ⬆️</li>
-  <li>Optimized to get data out ⬆️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
-  <li>User Experience ⬆️</li>
-</ul>
-
-<p><strong>Normalized</strong> (= Snowflake Schema)</p>
-<ul>
-  <li>Data Redundancy ⬇️</li>
-  <li>Storage ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-  <li>Number of Tables ⬆️</li>
-  <li>Joins Necessary ⬆️</li>
-</ul>
-
-<h1 id="snowflake-schema">Snowflake Schema</h1>
-
-<p><strong>Advantages</strong></p>
-<ul>
-  <li>Storage Cost ⬇️</li>
-  <li>Data Redundancy ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-</ul>
-
-<p><strong>Disadvantages</strong></p>
-<ul>
-  <li>Complex Queries with Joins</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
-</ul>
-
-<p><strong>Star Schema vs. Snowflake Schema</strong></p>
-<ul>
-  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
-  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
-</ul>
-
-<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
-
-<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
-
-<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
-
-<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
-    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
-    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
-    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
-    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
-<span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
-
-<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
-
-<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
-
-<p>(6) Run the code block to see if your data has been imported.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
-
-<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="k">DISTINCT</span> <span class="n">category</span>  
-<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
-
-<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
-    <span class="n">category</span>  
-<span class="k">INTO</span> <span class="n">categories</span>  
-<span class="k">FROM</span> <span class="p">(</span>  
-    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
-    <span class="k">FROM</span> <span class="n">products</span>  
-<span class="p">)</span> <span class="n">SUB</span>  
-<span class="p">;</span>
-</code></pre></div></div>
-
-<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-will-you-learn">What Will You Learn?</h1>
-
-<ul>
-  <li>Data Warehouse Basics</li>
-  <li>Data Warehouse Architecture</li>
-  <li>Dimensional Modeling</li>
-  <li>Fact Tables</li>
-  <li>Dimension Tables</li>
-  <li>Slowly Changing Dimensions</li>
-  <li>ETL Process</li>
-  <li>ETL Tools</li>
-  <li>Case Study: Create a Data Warehouse</li>
-  <li>ETL vs. ELT</li>
-  <li>Using a Data Warehouse</li>
-  <li>Optimizing a Data Warehouse</li>
-  <li>The Modern Data Warehouse</li>
-</ul>
-
-<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
-
-<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
-
-<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
-<ul>
-  <li>User-friendly</li>
-  <li>Fast query performance</li>
-  <li>Enabling data analysis</li>
-</ul>
-
-<h1 id="etl">ETL</h1>
-
-<ul>
-  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
-
-<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
-<ul>
-  <li>Centralized and Consistent Location for Data</li>
-  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
-  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
-  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
-  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
-</ul>
-
-<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
-
-<h1 id="business-intelligence">Business Intelligence</h1>
-<ul>
-  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 03. Data Warehouse Architecture</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
-
-<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
-
-<h3 id="pentaho">Pentaho</h3>
-
-<ul>
-  <li><strong>ETL Tool</strong></li>
-  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
-  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
-  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
-</ul>
-
-<h3 id="postgresql">PostgreSQL</h3>
-
-<ul>
-  <li><strong>Database Management System</strong></li>
-  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
-  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
-</ul>
-
-<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
-
-<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
-  <li><strong>“The Landing Zone Extracted Data”</strong>
-    <ul>
-      <li>Data in Tables and on a Separate Database</li>
-      <li>As little “toughing” as possible</li>
-      <li>We don’t charge the source systems.</li>
-      <li>Temporary or Persistent Staging Layers</li>
-    </ul>
-  </li>
-  <li>Short Time on the Source Systems</li>
-  <li>Quickly Extracted</li>
-  <li>Move the Data into Relational Database</li>
-  <li>Start Transformations from There</li>
-  <li>Minimal Transformation</li>
-</ul>
-
-<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
-</ul>
-
-<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
-<ul>
-  <li><strong>“Core”</strong>
-    <ul>
-      <li>Business Logic</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
-<ul>
-  <li><strong>“Data Mart”</strong>
-    <ul>
-      <li>Subset of a Data Warehouse</li>
-      <li>Dimensional Model</li>
-      <li>Can be Further Aggregated.</li>
-      <li>Usability + Acceptance</li>
-      <li>Performance</li>
-    </ul>
-  </li>
-  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
-</ul>
-
-<h1 id="in-memory-databases">In-memory Databases</h1>
-
-<h3 id="traditional-databases">Traditional Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
-
-<h3 id="in-memory-databases-1">In-memory Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
-
-<ul>
-  <li>Highly Optimized for Query Performance</li>
-  <li>Good for Analytics &amp; High Query Volume</li>
-  <li>Usually Used for Data Marts</li>
-  <li>Relational &amp; Non-relational</li>
-  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
-</ul>
-
-<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
-<ul>
-  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
-  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry></feed>

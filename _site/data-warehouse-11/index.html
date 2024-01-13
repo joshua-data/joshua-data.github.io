@@ -17,7 +17,7 @@
     crossorigin="anonymous">
   </script>
 
-  <title>Joshua Kim – Data Analyst</title>
+  <title>Data Warehouse #11 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -25,11 +25,26 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Data Analyst">
-    <meta property="og:description" content="Data Analyst" />
+    <meta name="description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 11. ETL vs. ELT
+  
+
+" />
+    <meta property="og:description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 11. ETL vs. ELT
+  
+
+" />
     
     <meta name="author" content="Joshua Kim" />
 
+    
+    <meta property="og:title" content="Data Warehouse #11" />
+    <meta property="twitter:title" content="Data Warehouse #11" />
     
   <!-- Async font loading -->
 <script>
@@ -118,222 +133,144 @@
 </div>
 
     <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Data Warehouse #11</h1>
+
+  <div>
+    <span class="date">
+      2024-01-13
+    </span>
+
+    <ul class="tag">
       
+      <li>
+        <a href="http://localhost:4000/tags#SQL">
+          SQL
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Data Warehouse">
+          Data Warehouse
+        </a>
+      </li>
+      
+    </ul>
+  </div>
 
-<div class="posts">
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-11/">Data Warehouse #11</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-13
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
+  <div class="entry">
+    <blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 11. ETL vs. ELT</li>
   </ul>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-11/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-10/">Data Warehouse #10</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-13
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 10. Case Study: Creating a Data Warehouse</li>
-  </ul>
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-10/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-09/">Data Warehouse #09</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-12
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 09. ETL Tools</li>
-  </ul>
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-      </div>
+<h1 id="what-is-elt">What is ELT?</h1>
 
-      <a href="/data-warehouse-09/" class="read-more">Read More</a>
-    </article>
+<p><img src="/assets/2024-01-13-data-warehouse-11/1.png" alt="" /></p>
+
+<h3 id="data-sources--data-warehouse">Data Sources → Data Warehouse</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Extract</code> + <code class="language-plaintext highlighter-rouge">Load</code>
+    <ul>
+      <li>Real-time ⬆️</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="data-warehouse--">Data Warehouse → …</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Transform</code>
+    <ul>
+      <li>Leverage Database</li>
+      <li>More Flexible!</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+    <span class="n">category</span><span class="p">,</span>
+    <span class="k">SUM</span><span class="p">(</span><span class="n">sales_amount</span><span class="p">)</span>
+<span class="k">FROM</span>
+    <span class="n">sales</span>
+<span class="k">GROUP</span> <span class="k">BY</span>
+    <span class="n">category</span>
+</code></pre></div></div>
+
+<h1 id="etl-vs-elt">ETL vs. ELT</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>ETL</strong></th>
+      <th><strong>ELT</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>More Stable with Defined Transformations</td>
+      <td>Requires High Performing DB</td>
+    </tr>
+    <tr>
+      <td>More Generic Use Cases</td>
+      <td>More Flexible</td>
+    </tr>
+    <tr>
+      <td>Security ⬆️</td>
+      <td>Transformations can be Changed Quickly!</td>
+    </tr>
+    <tr>
+      <td>Reporting</td>
+      <td>Real-time ⬆️</td>
+    </tr>
+    <tr>
+      <td>Easy to Use</td>
+      <td>Data Science, ML</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/data-warehouse-10/">
+            &#xE000; Data Warehouse #10
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
   
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-08/">Data Warehouse #08</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-11
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 08. ETL Process</li>
-  </ul>
-</blockquote>
-
-      </div>
-
-      <a href="/data-warehouse-08/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-07/">Data Warehouse #07</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-02
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 07. Slowly Changing Dimensions</li>
-  </ul>
-</blockquote>
-
-      </div>
-
-      <a href="/data-warehouse-07/" class="read-more">Read More</a>
-    </article>
-  
-</div>
-
-<div class="pagination">
-  
-  
-    <span class="next">
-      <a href="/page2/" class="next">
-        Next &#xE001;
-      </a>
-    </span>
-  
-</div>
+</article>
 
     </div>
 
