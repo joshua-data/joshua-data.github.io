@@ -17,7 +17,7 @@
     crossorigin="anonymous">
   </script>
 
-  <title>Joshua Kim – Data Analyst</title>
+  <title>Data Warehouse #09 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -25,11 +25,26 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Data Analyst">
-    <meta property="og:description" content="Data Analyst" />
+    <meta name="description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 09. ETL Tools
+  
+
+" />
+    <meta property="og:description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 09. ETL Tools
+  
+
+" />
     
     <meta name="author" content="Joshua Kim" />
 
+    
+    <meta property="og:title" content="Data Warehouse #09" />
+    <meta property="twitter:title" content="Data Warehouse #09" />
     
   <!-- Async font loading -->
 <script>
@@ -118,225 +133,129 @@
 </div>
 
     <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Data Warehouse #09</h1>
+
+  <div>
+    <span class="date">
+      2024-01-12
+    </span>
+
+    <ul class="tag">
       
+      <li>
+        <a href="http://localhost:4000/tags#SQL">
+          SQL
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Data Warehouse">
+          Data Warehouse
+        </a>
+      </li>
+      
+    </ul>
+  </div>
 
-<div class="posts">
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-09/">Data Warehouse #09</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-12
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
+  <div class="entry">
+    <blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 09. ETL Tools</li>
   </ul>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-09/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-08/">Data Warehouse #08</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-11
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 08. ETL Process</li>
-  </ul>
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-08/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-07/">Data Warehouse #07</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-02
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 07. Slowly Changing Dimensions</li>
-  </ul>
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-      </div>
+<h1 id="etl-tools">ETL Tools</h1>
 
-      <a href="/data-warehouse-07/" class="read-more">Read More</a>
-    </article>
+<table>
+  <thead>
+    <tr>
+      <th><strong>Enterprise</strong></th>
+      <th><strong>Open-source</strong></th>
+      <th><strong>Cloud-native</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alteryx</td>
+      <td>Talend Open Studio</td>
+      <td>Azure Data Factory</td>
+    </tr>
+    <tr>
+      <td>Informatica</td>
+      <td>Pentaho Data Integration</td>
+      <td>AWS Glue</td>
+    </tr>
+    <tr>
+      <td>Oracle Data Integrator</td>
+      <td>Hadoop</td>
+      <td>Google Cloud Data Flow</td>
+    </tr>
+    <tr>
+      <td>Microsoft SSIS</td>
+      <td>-</td>
+      <td>Stitch</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="chosing-etl-tools">Chosing ETL Tools</h1>
+
+<h3 id="1-evaluate-current-situation--needs">1. Evaluate Current Situation &amp; Needs</h3>
+<ul>
+  <li>What do you want to improve?</li>
+  <li>Data sources &amp; other tools?</li>
+  <li>Define your requirements.</li>
+  <li>Define responsibilities.</li>
+  <li>Who are the users?</li>
+</ul>
+
+<h3 id="2-evaluate-tools">2. Evaluate Tools</h3>
+<ul>
+  <li>Cost, Connectors, Capabilities, Ease of Use, Reviews, Support, and Extras</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/data-warehouse-08/">
+            &#xE000; Data Warehouse #08
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
   
-    <article class="post">
-      <h1>
-        <a href="/retention-batch-query/">데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-01
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Analysis">
-              Data Analysis
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>코호트 리텐션의 의미와 중요성에 대해 말씀드리고, Batch Query를 사용하여 회원가입 월 코호트 별로 Monthly Range Retention을 계산하는 방법을 제시해드릴게요.</p>
-</blockquote>
-
-      </div>
-
-      <a href="/retention-batch-query/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-06/">Data Warehouse #06</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-19
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 06. Dimensions</li>
-  </ul>
-</blockquote>
-
-      </div>
-
-      <a href="/data-warehouse-06/" class="read-more">Read More</a>
-    </article>
-  
-</div>
-
-<div class="pagination">
-  
-  
-    <span class="next">
-      <a href="/page2/" class="next">
-        Next &#xE001;
-      </a>
-    </span>
-  
-</div>
+</article>
 
     </div>
 

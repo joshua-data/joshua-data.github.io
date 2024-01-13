@@ -1,7 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-11T17:24:20+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #08</title><link href="http://localhost:4000/data-warehouse-08/" rel="alternate" type="text/html" title="Data Warehouse #08" /><published>2024-01-11T00:00:00+09:00</published><updated>2024-01-11T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-08</id><content type="html" xml:base="http://localhost:4000/data-warehouse-08/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-13T19:00:42+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #09</title><link href="http://localhost:4000/data-warehouse-09/" rel="alternate" type="text/html" title="Data Warehouse #09" /><published>2024-01-12T00:00:00+09:00</published><updated>2024-01-12T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-09</id><content type="html" xml:base="http://localhost:4000/data-warehouse-09/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
-    <li>SECTION 07. Slowly Changing Dimensions</li>
+    <li>SECTION 09. ETL Tools</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="etl-tools">ETL Tools</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Enterprise</strong></th>
+      <th><strong>Open-source</strong></th>
+      <th><strong>Cloud-native</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alteryx</td>
+      <td>Talend Open Studio</td>
+      <td>Azure Data Factory</td>
+    </tr>
+    <tr>
+      <td>Informatica</td>
+      <td>Pentaho Data Integration</td>
+      <td>AWS Glue</td>
+    </tr>
+    <tr>
+      <td>Oracle Data Integrator</td>
+      <td>Hadoop</td>
+      <td>Google Cloud Data Flow</td>
+    </tr>
+    <tr>
+      <td>Microsoft SSIS</td>
+      <td>-</td>
+      <td>Stitch</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="chosing-etl-tools">Chosing ETL Tools</h1>
+
+<h3 id="1-evaluate-current-situation--needs">1. Evaluate Current Situation &amp; Needs</h3>
+<ul>
+  <li>What do you want to improve?</li>
+  <li>Data sources &amp; other tools?</li>
+  <li>Define your requirements.</li>
+  <li>Define responsibilities.</li>
+  <li>Who are the users?</li>
+</ul>
+
+<h3 id="2-evaluate-tools">2. Evaluate Tools</h3>
+<ul>
+  <li>Cost, Connectors, Capabilities, Ease of Use, Reviews, Support, and Extras</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 09. ETL Tools]]></summary></entry><entry><title type="html">Data Warehouse #08</title><link href="http://localhost:4000/data-warehouse-08/" rel="alternate" type="text/html" title="Data Warehouse #08" /><published>2024-01-11T00:00:00+09:00</published><updated>2024-01-11T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-08</id><content type="html" xml:base="http://localhost:4000/data-warehouse-08/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 08. ETL Process</li>
   </ul>
 </blockquote>
 
@@ -335,7 +405,7 @@ Next Run: sales_key &gt; X
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 07. Slowly Changing Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #07</title><link href="http://localhost:4000/data-warehouse-07/" rel="alternate" type="text/html" title="Data Warehouse #07" /><published>2024-01-02T00:00:00+09:00</published><updated>2024-01-02T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-07</id><content type="html" xml:base="http://localhost:4000/data-warehouse-07/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 08. ETL Process]]></summary></entry><entry><title type="html">Data Warehouse #07</title><link href="http://localhost:4000/data-warehouse-07/" rel="alternate" type="text/html" title="Data Warehouse #07" /><published>2024-01-02T00:00:00+09:00</published><updated>2024-01-02T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-07</id><content type="html" xml:base="http://localhost:4000/data-warehouse-07/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 07. Slowly Changing Dimensions</li>
@@ -1136,7 +1206,404 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 04. Dimensional Modeling</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
+
+<p><strong>Dimensional Modeling</strong></p>
+<ul>
+  <li>Unique Technique of Structuring Data</li>
+  <li>Commonly Used in Data Warehouse</li>
+  <li>Optimized for Faster Data Regrieval</li>
+  <li>Performance &amp; Usability Oriented</li>
+  <li>Designed Reporting &amp; OLAP</li>
+</ul>
+
+<p><strong>Details</strong></p>
+<ul>
+  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
+  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
+    <ul>
+      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
+      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
+
+<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
+
+<ul>
+  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
+
+<h1 id="facts">Facts</h1>
+
+<p><strong>Facts</strong> usually…</p>
+<ul>
+  <li>Aggregatable (with Numeric Values)</li>
+  <li>Measurable</li>
+  <li>Event or Transactional Data</li>
+  <li>Date or Time in a Fact Table</li>
+  <li>Foundation of Data Warehouse</li>
+  <li>Key Measurements</li>
+  <li>Aggregated and Analyzed</li>
+</ul>
+
+<h1 id="dimensions">Dimensions</h1>
+
+<p><strong>Dimensions</strong> usually…</p>
+<ul>
+  <li>Non-aggregatable</li>
+  <li>Descriptive</li>
+  <li>More Static than Facts</li>
+  <li>Categorizes Facts</li>
+  <li>Supportive &amp; Descriptive</li>
+  <li>Filtering, Grouping, and Labeling</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
+</blockquote>
+
+<p><strong>Star Schema</strong></p>
+<ul>
+  <li>Most Common Schema in Data Mart</li>
+  <li>Simplest Form (vs. Snowflake Schema)</li>
+  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
+  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
+</ul>
+
+<p><strong>Denormalized</strong> (= Star Schema)</p>
+<ul>
+  <li>Data Redundancy ⬆️</li>
+  <li>Optimized to get data out ⬆️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
+  <li>User Experience ⬆️</li>
+</ul>
+
+<p><strong>Normalized</strong> (= Snowflake Schema)</p>
+<ul>
+  <li>Data Redundancy ⬇️</li>
+  <li>Storage ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+  <li>Number of Tables ⬆️</li>
+  <li>Joins Necessary ⬆️</li>
+</ul>
+
+<h1 id="snowflake-schema">Snowflake Schema</h1>
+
+<p><strong>Advantages</strong></p>
+<ul>
+  <li>Storage Cost ⬇️</li>
+  <li>Data Redundancy ⬇️</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
+</ul>
+
+<p><strong>Disadvantages</strong></p>
+<ul>
+  <li>Complex Queries with Joins</li>
+  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
+</ul>
+
+<p><strong>Star Schema vs. Snowflake Schema</strong></p>
+<ul>
+  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
+  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
+</ul>
+
+<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
+
+<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
+
+<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
+
+<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
+    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
+    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
+    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
+    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
+
+<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
+
+<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
+
+<p>(6) Run the code block to see if your data has been imported.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
+
+<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="k">DISTINCT</span> <span class="n">category</span>  
+<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
+
+<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
+    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
+    <span class="n">category</span>  
+<span class="k">INTO</span> <span class="n">categories</span>  
+<span class="k">FROM</span> <span class="p">(</span>  
+    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
+    <span class="k">FROM</span> <span class="n">products</span>  
+<span class="p">)</span> <span class="n">SUB</span>  
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 03. Data Warehouse Architecture</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
+
+<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
+
+<h3 id="pentaho">Pentaho</h3>
+
+<ul>
+  <li><strong>ETL Tool</strong></li>
+  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
+  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
+  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
+</ul>
+
+<h3 id="postgresql">PostgreSQL</h3>
+
+<ul>
+  <li><strong>Database Management System</strong></li>
+  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
+  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
+</ul>
+
+<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
+
+<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
+  <li><strong>“The Landing Zone Extracted Data”</strong>
+    <ul>
+      <li>Data in Tables and on a Separate Database</li>
+      <li>As little “toughing” as possible</li>
+      <li>We don’t charge the source systems.</li>
+      <li>Temporary or Persistent Staging Layers</li>
+    </ul>
+  </li>
+  <li>Short Time on the Source Systems</li>
+  <li>Quickly Extracted</li>
+  <li>Move the Data into Relational Database</li>
+  <li>Start Transformations from There</li>
+  <li>Minimal Transformation</li>
+</ul>
+
+<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
+</ul>
+
+<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
+<ul>
+  <li><strong>“Core”</strong>
+    <ul>
+      <li>Business Logic</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
+<ul>
+  <li><strong>“Data Mart”</strong>
+    <ul>
+      <li>Subset of a Data Warehouse</li>
+      <li>Dimensional Model</li>
+      <li>Can be Further Aggregated.</li>
+      <li>Usability + Acceptance</li>
+      <li>Performance</li>
+    </ul>
+  </li>
+  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
+</ul>
+
+<h1 id="in-memory-databases">In-memory Databases</h1>
+
+<h3 id="traditional-databases">Traditional Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
+
+<h3 id="in-memory-databases-1">In-memory Databases</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
+
+<ul>
+  <li>Highly Optimized for Query Performance</li>
+  <li>Good for Analytics &amp; High Query Volume</li>
+  <li>Usually Used for Data Marts</li>
+  <li>Relational &amp; Non-relational</li>
+  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
+</ul>
+
+<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
+<ul>
+  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
+  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 01. Introduction</li>
+    <li>SECTION 02. Data Warehouse Basics</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="what-will-you-learn">What Will You Learn?</h1>
+
+<ul>
+  <li>Data Warehouse Basics</li>
+  <li>Data Warehouse Architecture</li>
+  <li>Dimensional Modeling</li>
+  <li>Fact Tables</li>
+  <li>Dimension Tables</li>
+  <li>Slowly Changing Dimensions</li>
+  <li>ETL Process</li>
+  <li>ETL Tools</li>
+  <li>Case Study: Create a Data Warehouse</li>
+  <li>ETL vs. ELT</li>
+  <li>Using a Data Warehouse</li>
+  <li>Optimizing a Data Warehouse</li>
+  <li>The Modern Data Warehouse</li>
+</ul>
+
+<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
+
+<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
+
+<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
+<ul>
+  <li>User-friendly</li>
+  <li>Fast query performance</li>
+  <li>Enabling data analysis</li>
+</ul>
+
+<h1 id="etl">ETL</h1>
+
+<ul>
+  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
+
+<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
+<ul>
+  <li>Centralized and Consistent Location for Data</li>
+  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
+  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
+  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
+  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
+</ul>
+
+<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
+
+<h1 id="business-intelligence">Business Intelligence</h1>
+<ul>
+  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 05. Facts</li>
@@ -1427,404 +1894,7 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 03. Data Warehouse Architecture</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
-
-<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
-
-<h3 id="pentaho">Pentaho</h3>
-
-<ul>
-  <li><strong>ETL Tool</strong></li>
-  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
-  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
-  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
-</ul>
-
-<h3 id="postgresql">PostgreSQL</h3>
-
-<ul>
-  <li><strong>Database Management System</strong></li>
-  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
-  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
-</ul>
-
-<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
-
-<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
-  <li><strong>“The Landing Zone Extracted Data”</strong>
-    <ul>
-      <li>Data in Tables and on a Separate Database</li>
-      <li>As little “toughing” as possible</li>
-      <li>We don’t charge the source systems.</li>
-      <li>Temporary or Persistent Staging Layers</li>
-    </ul>
-  </li>
-  <li>Short Time on the Source Systems</li>
-  <li>Quickly Extracted</li>
-  <li>Move the Data into Relational Database</li>
-  <li>Start Transformations from There</li>
-  <li>Minimal Transformation</li>
-</ul>
-
-<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
-</ul>
-
-<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
-<ul>
-  <li><strong>“Core”</strong>
-    <ul>
-      <li>Business Logic</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
-<ul>
-  <li><strong>“Data Mart”</strong>
-    <ul>
-      <li>Subset of a Data Warehouse</li>
-      <li>Dimensional Model</li>
-      <li>Can be Further Aggregated.</li>
-      <li>Usability + Acceptance</li>
-      <li>Performance</li>
-    </ul>
-  </li>
-  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
-</ul>
-
-<h1 id="in-memory-databases">In-memory Databases</h1>
-
-<h3 id="traditional-databases">Traditional Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
-
-<h3 id="in-memory-databases-1">In-memory Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
-
-<ul>
-  <li>Highly Optimized for Query Performance</li>
-  <li>Good for Analytics &amp; High Query Volume</li>
-  <li>Usually Used for Data Marts</li>
-  <li>Relational &amp; Non-relational</li>
-  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
-</ul>
-
-<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
-<ul>
-  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
-  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-will-you-learn">What Will You Learn?</h1>
-
-<ul>
-  <li>Data Warehouse Basics</li>
-  <li>Data Warehouse Architecture</li>
-  <li>Dimensional Modeling</li>
-  <li>Fact Tables</li>
-  <li>Dimension Tables</li>
-  <li>Slowly Changing Dimensions</li>
-  <li>ETL Process</li>
-  <li>ETL Tools</li>
-  <li>Case Study: Create a Data Warehouse</li>
-  <li>ETL vs. ELT</li>
-  <li>Using a Data Warehouse</li>
-  <li>Optimizing a Data Warehouse</li>
-  <li>The Modern Data Warehouse</li>
-</ul>
-
-<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
-
-<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
-
-<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
-<ul>
-  <li>User-friendly</li>
-  <li>Fast query performance</li>
-  <li>Enabling data analysis</li>
-</ul>
-
-<h1 id="etl">ETL</h1>
-
-<ul>
-  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
-
-<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
-<ul>
-  <li>Centralized and Consistent Location for Data</li>
-  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
-  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
-  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
-  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
-</ul>
-
-<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
-
-<h1 id="business-intelligence">Business Intelligence</h1>
-<ul>
-  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry><entry><title type="html">Data Warehouse #04</title><link href="http://localhost:4000/data-warehouse-04/" rel="alternate" type="text/html" title="Data Warehouse #04" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-04</id><content type="html" xml:base="http://localhost:4000/data-warehouse-04/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 04. Dimensional Modeling</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-is-dimensional-modeling">What is Dimensional Modeling?</h1>
-
-<p><strong>Dimensional Modeling</strong></p>
-<ul>
-  <li>Unique Technique of Structuring Data</li>
-  <li>Commonly Used in Data Warehouse</li>
-  <li>Optimized for Faster Data Regrieval</li>
-  <li>Performance &amp; Usability Oriented</li>
-  <li>Designed Reporting &amp; OLAP</li>
-</ul>
-
-<p><strong>Details</strong></p>
-<ul>
-  <li>It is the  <strong>Method of Organizing Data</strong>  in a Data Warehouse.</li>
-  <li><code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Year</code>?  <code class="language-plaintext highlighter-rouge">Profit</code>  by  <code class="language-plaintext highlighter-rouge">Category</code>?
-    <ul>
-      <li><strong>Facts</strong>:  <strong>Measurements</strong>  like  <code class="language-plaintext highlighter-rouge">Profit</code></li>
-      <li><strong>Dimensions</strong>:  <strong>Contexts</strong>  like  <code class="language-plaintext highlighter-rouge">Period</code>  or  <code class="language-plaintext highlighter-rouge">Category</code></li>
-    </ul>
-  </li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-schema.webp" alt="" /></p>
-
-<h1 id="why-is-dimensional-modeling">Why is Dimensional Modeling?</h1>
-
-<ul>
-  <li>Dimensional Modeling → <code class="language-plaintext highlighter-rouge">Performance</code> ⬆️ / <code class="language-plaintext highlighter-rouge">Usability</code> ⬆️</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/dimensional-modeling.webp" alt="" /></p>
-
-<h1 id="facts">Facts</h1>
-
-<p><strong>Facts</strong> usually…</p>
-<ul>
-  <li>Aggregatable (with Numeric Values)</li>
-  <li>Measurable</li>
-  <li>Event or Transactional Data</li>
-  <li>Date or Time in a Fact Table</li>
-  <li>Foundation of Data Warehouse</li>
-  <li>Key Measurements</li>
-  <li>Aggregated and Analyzed</li>
-</ul>
-
-<h1 id="dimensions">Dimensions</h1>
-
-<p><strong>Dimensions</strong> usually…</p>
-<ul>
-  <li>Non-aggregatable</li>
-  <li>Descriptive</li>
-  <li>More Static than Facts</li>
-  <li>Categorizes Facts</li>
-  <li>Supportive &amp; Descriptive</li>
-  <li>Filtering, Grouping, and Labeling</li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/star-vs-snowflake.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://nidhig631.medium.com/star-schema-vs-snowflake-schema-78dc9424a8a2">Source</a></p>
-</blockquote>
-
-<p><strong>Star Schema</strong></p>
-<ul>
-  <li>Most Common Schema in Data Mart</li>
-  <li>Simplest Form (vs. Snowflake Schema)</li>
-  <li>Works Best for Specific Needs (Simple Queries vs. Complex Queries)</li>
-  <li>Usability + Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>)</li>
-</ul>
-
-<p><strong>Denormalized</strong> (= Star Schema)</p>
-<ul>
-  <li>Data Redundancy ⬆️</li>
-  <li>Optimized to get data out ⬆️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬆️</li>
-  <li>User Experience ⬆️</li>
-</ul>
-
-<p><strong>Normalized</strong> (= Snowflake Schema)</p>
-<ul>
-  <li>Data Redundancy ⬇️</li>
-  <li>Storage ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-  <li>Number of Tables ⬆️</li>
-  <li>Joins Necessary ⬆️</li>
-</ul>
-
-<h1 id="snowflake-schema">Snowflake Schema</h1>
-
-<p><strong>Advantages</strong></p>
-<ul>
-  <li>Storage Cost ⬇️</li>
-  <li>Data Redundancy ⬇️</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Write &amp; Update</code>) ⬆️</li>
-</ul>
-
-<p><strong>Disadvantages</strong></p>
-<ul>
-  <li>Complex Queries with Joins</li>
-  <li>Query Performance (<code class="language-plaintext highlighter-rouge">Read</code>) ⬇️</li>
-</ul>
-
-<p><strong>Star Schema vs. Snowflake Schema</strong></p>
-<ul>
-  <li><strong>Data Mart</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred!</li>
-  <li><strong>Core</strong>  →  <code class="language-plaintext highlighter-rouge">Star Schema</code>  is Preferred, but  <code class="language-plaintext highlighter-rouge">Snowflake Schema</code>  can be considered!</li>
-</ul>
-
-<h1 id="demo-product--category-dimensions-snowflake-schema">Demo: Product &amp; Category Dimensions (<code class="language-plaintext highlighter-rouge">Snowflake Schema</code>)</h1>
-
-<p>(1) With  <code class="language-plaintext highlighter-rouge">products.csv</code>, we are now trying to create a “<strong>Category Dimension</strong>” using PostgreSQL!</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/products-csv.webp" alt="" /></p>
-
-<p>(2) In PGAdmin, Click “<code class="language-plaintext highlighter-rouge">Query Tool</code>” on the  <strong>public schema</strong>.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/query-tool.webp" alt="" /></p>
-
-<p>(3) Run the code block to create  <code class="language-plaintext highlighter-rouge">products</code>  table, then you’ll see the table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="p">(</span>  
-    <span class="n">product_id</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>  
-    <span class="n">product_name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>  
-    <span class="n">category</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>  
-    <span class="n">subcategory</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  
-<span class="p">);</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/public.webp" alt="" /></p>
-
-<p>(4) Right-click on the  <code class="language-plaintext highlighter-rouge">products</code>  table, then click “<strong>Import/Export Data</strong>” button.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import-export-data.webp" alt="" /></p>
-
-<p>(5) Designate the  <strong>products.csv</strong>  file to import on  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/import.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/options.webp" alt="" /></p>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/columns.webp" alt="" /></p>
-
-<p>(6) Run the code block to see if your data has been imported.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output.webp" alt="" /></p>
-
-<p>(7) Run the code block to see what kind of unique  <strong>category</strong>  is in  <code class="language-plaintext highlighter-rouge">products</code>  table.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="k">DISTINCT</span> <span class="n">category</span>  
-<span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category.webp" alt="" /></p>
-
-<p>(8) Run the code block to create a dimension table named  <code class="language-plaintext highlighter-rouge">categories</code>.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-    <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">category</span><span class="p">)</span> <span class="k">AS</span> <span class="n">category_id</span><span class="p">,</span>  
-    <span class="n">category</span>  
-<span class="k">INTO</span> <span class="n">categories</span>  
-<span class="k">FROM</span> <span class="p">(</span>  
-    <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">category</span>  
-    <span class="k">FROM</span> <span class="n">products</span>  
-<span class="p">)</span> <span class="n">SUB</span>  
-<span class="p">;</span>
-</code></pre></div></div>
-
-<p>(9) See if the  <code class="language-plaintext highlighter-rouge">categories</code>  table has been created.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">categories</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p><img src="/assets/2023-12-06-data-warehouse-04/data-output-category-id.webp" alt="" /></p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 04. Dimensional Modeling]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry><entry><title type="html">『마스터링 이더리움』 중요한 내용 모조리 요약</title><link href="http://localhost:4000/mastering-ethereum/" rel="alternate" type="text/html" title="『마스터링 이더리움』 중요한 내용 모조리 요약" /><published>2023-12-05T00:00:00+09:00</published><updated>2023-12-05T00:00:00+09:00</updated><id>http://localhost:4000/mastering-ethereum</id><content type="html" xml:base="http://localhost:4000/mastering-ethereum/"><![CDATA[<blockquote>
   <p>개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “<strong>마스터링 이더리움 완독하고 정리하기</strong>”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.</p>
 </blockquote>
 
@@ -2741,252 +2811,4 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Blockchain" /><summary type="html"><![CDATA[개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “마스터링 이더리움 완독하고 정리하기”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.]]></summary></entry><entry><title type="html">데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법</title><link href="http://localhost:4000/how-to-avoid-self-joins/" rel="alternate" type="text/html" title="데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법" /><published>2023-11-30T00:00:00+09:00</published><updated>2023-11-30T00:00:00+09:00</updated><id>http://localhost:4000/how-to-avoid-self-joins</id><content type="html" xml:base="http://localhost:4000/how-to-avoid-self-joins/"><![CDATA[<blockquote>
-  <p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.</p>
-</blockquote>
-
-<h3 id="contents">CONTENTS</h3>
-<ol>
-  <li>들어가는 글</li>
-  <li>Python과 달리 거칠게 사고해야 하는 SQL</li>
-  <li>SELF JOIN을 하면 연산량이 제곱으로 늘어난다.</li>
-  <li>Subquery와 EXISTS 사용하기</li>
-  <li>결론: 무조건적 우월성은 없다.</li>
-</ol>
-
-<hr />
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<p>본 자료는 작성자 본인의 견해일 뿐이며, 실제 데이터베이스의 환경에 따라 적합하지 않을 수 있습니다. 이미지 출처를 제외한 모든 쿼리문과 내용은 본인의 경험에 의해 작성되었습니다. 작성된 쿼리문은 샘플로 작성한 것이며, 본인의 과거 및 현재 재직 회사의 업무 현황과 무관합니다.</p>
-
-<h1 id="1-들어가는-글">1. 들어가는 글</h1>
-
-<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/join-meme.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://miro.medium.com/v2/resize:fit:800/1*DTET9ngrx2Gzu6ZJk0G9BQ.jpeg">Source</a></p>
-</blockquote>
-
-<p>안녕하세요. 저는 친구들 얼굴을 보면 위와 같은 이상한 생각을 하는 데이터 분석가 Joshua라고 합니다.</p>
-
-<p>저는 일반적인 B2C 기업에서 데이터 분석가로 근무하며, GA4, Amplitude, BigQuery, Redash 등을 활용하여 A/B 테스트, 지표 모니터링 등을 수행하며 회사의 등대 역할을 하며 지냈습니다. 다른 분들과 비슷한 역할을 수행했던 것이죠.</p>
-
-<p>또한 GA4, Amplitude 등과 같은 B2B 데이터 분석 플랫폼 서비스를 만드는 경험도 살짝 했는데요. 그러다보니 저의 R&amp;R은 서비스 자체의 데이터 분석 업무 외에도, 고객들에게 데이터를 서빙하기 위한 데이터 마트 설계와 최적화 업무에 집중되기도 했습니다. 제 타이틀을 멋있게 가공하면 최근에 떠오르는 포지션인 Analytics Engineer, 반쪽 짜리 데이터 엔지니어, 아니면 대충 쿼리 머신 혹은 분지니어(?)인 것 같기도 합니다. 😅</p>
-
-<p>대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.
-(SQL 전문가 분들이 많이 계시는 만큼, 제 글을 비판적으로 고찰해주시면 감사하겠습니다! 😄)</p>
-
-<p>쿼리로 고통 받으며 눈동자에 비가 내렸던 경험 이야기, 시작합니다! (울지마~ 울지마~ 울지마~)</p>
-
-<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/crying-cat-meme.avif" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fwww.dailydot.com%2Fnews%2Fcat-crying-memes-explainer%2F&amp;psig=AOvVaw1JpDJ5k_6Tx93h2YT8in_Y&amp;ust=1702536707113000&amp;source=images&amp;cd=vfe&amp;opi=89978449&amp;ved=0CBMQjRxqFwoTCMC01dLpi4MDFQAAAAAdAAAAABAD">Source</a></p>
-</blockquote>
-
-<h1 id="2-python과-달리-거칠게-사고해야-하는-sql">2. Python과 달리 거칠게 사고해야 하는 SQL</h1>
-
-<p>SQL을 통해 OLAP(Online Analytical Processing)에 해당하는 데이터 웨어하우스를 구축하다보면, 종종  <strong>SELF JOIN</strong>이 필요합니다. 가령, 소스 테이블의 복사본인 Staging Table을 Pivoting 해야 하거나, 칼럼 A와 칼럼 B 간의 관계 규칙을 찾아 Data Cleaning을 해야 하는 경우에 특히 발생하는 것 같았어요.</p>
-
-<p>가령, Python의 Pandas Dataframe 환경에서는 메소드를 통해 너무나도 쉽게 Pivoting을 하거나, 반복문과 조건문을 통해 칼럼 사이의 관계 규칙을 고작 몇 줄 코드 만으로 Data Cleaning을 할 수 있을 것입니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pandas</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">.</span><span class="n">pivot</span>
-<span class="n">pandas</span><span class="p">.</span><span class="nf">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">value</span> <span class="k">if</span> <span class="n">condition</span> <span class="ow">is</span> <span class="n">true</span> <span class="k">if</span> <span class="n">x</span> <span class="n">condition</span> <span class="k">else</span> <span class="n">value</span> <span class="n">of</span> <span class="n">condition</span> <span class="ow">is</span> <span class="n">false</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>하지만 안타깝게도 SQL에서는 다소 거친 방법으로 쿼리문을 작성해야 하므로 좀 더 테이블 자체를 기반의 Logical Thinking을 하는 것이 중요합니다.</p>
-
-<p>가령 다음 기본적인 사례와 같이, 국가 별로 MAU를 집계할 경우에 SQL은 훨씬 거칠게 표현합니다.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-   <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="s1">'MONTH'</span><span class="p">,</span> <span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span> <span class="n">yyyymm</span><span class="p">,</span>  
-   <span class="n">country</span><span class="p">,</span>  
-   <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">mau</span>  
-<span class="k">FROM</span>  
-   <span class="n">source_events</span>  
-<span class="k">GROUP</span> <span class="k">BY</span>  
-   <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
-<span class="k">ORDER</span> <span class="k">BY</span>  
-   <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>  
-<span class="p">;</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source_events</span><span class="p">[</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">to_datetime</span><span class="p">(</span><span class="n">source_events</span><span class="p">[</span><span class="sh">'</span><span class="s">datetime</span><span class="sh">'</span><span class="p">]).</span><span class="n">dt</span><span class="p">.</span><span class="nf">to_period</span><span class="p">(</span><span class="sh">'</span><span class="s">M</span><span class="sh">'</span><span class="p">)</span>  
-<span class="n">result_df</span> <span class="o">=</span> <span class="n">source_events</span><span class="p">.</span><span class="nf">groupby</span><span class="p">([</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">country</span><span class="sh">'</span><span class="p">]).</span><span class="nf">agg</span><span class="p">(</span><span class="n">mau</span><span class="o">=</span><span class="p">(</span><span class="sh">'</span><span class="s">user_id</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">nunique</span><span class="sh">'</span><span class="p">)).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  
-<span class="n">result_df</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">.</span><span class="nf">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">yyyymm</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">country</span><span class="sh">'</span><span class="p">]).</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  
-<span class="nf">print</span><span class="p">(</span><span class="n">result_df</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p>즉, 파이썬의  <code class="language-plaintext highlighter-rouge">to_period</code>,  <code class="language-plaintext highlighter-rouge">groupby</code>,  <code class="language-plaintext highlighter-rouge">nunique</code>  등과 같은 내장 메소드의 연산 원리를 이해하여 이를  <code class="language-plaintext highlighter-rouge">DATE_TRUNC</code>,  <code class="language-plaintext highlighter-rouge">COUNT(DISTINCT …)</code>,  <code class="language-plaintext highlighter-rouge">GROUP BY</code>  등의 SQL 함수와 Statement로 표현해야 하는 것이죠.</p>
-
-<h1 id="3-self-join을-하면-연산량이-제곱으로-늘어난다">3. SELF JOIN을 하면 연산량이 제곱으로 늘어난다.</h1>
-
-<p>먼저 다음과 같은 쿼리문 사례를 살펴보도록 하죠.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span><span class="p">,</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span><span class="p">,</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span><span class="p">,</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_key</span><span class="p">,</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_value</span>  
-<span class="k">FROM</span>  
-   <span class="n">source_events</span> <span class="n">MAIN</span>  
-<span class="k">LEFT</span> <span class="k">JOIN</span>  
-   <span class="n">source_events</span> <span class="n">SUB</span>  
-   <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
-      <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
-      <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
-<span class="k">WHERE</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
-   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
-   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
-   <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>
-</code></pre></div></div>
-
-<p>위 사례는 가령 이런 상황으로 이해하시면 될 것 같습니다. 사용자의 이벤트 로그 소스 테이블에서 각 이벤트의 파라미터 key-value가 unnested된 상태로 존재하거나, 혹은 특정 파라미터의 index를 기준으로 인접한 파라미터 정보들만 추출해야 하는 상황에서 위와 같은 쿼리문 작성이 필요할 것입니다.</p>
-
-<p>SQL의 연산 과정은  <strong>FROM → XXX JOIN → WHERE → GROUP BY → SELECT → HAVING → ORDER BY</strong>  등의 순으로 진행되는데요. 위 쿼리문을 연산하는 과정에서 WHERE Statement에 진입하기 전에, 먼저 FROM과 LEFT JOIN을 통해 모든 Row를 메모리에 로드하게 됩니다.</p>
-
-<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/sql-processing.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://blog.kakaocdn.net/dn/ckOt66/btrjP1TVZsq/Ta9JdTTiEd9tddkKkFk2n1/img.png">Source</a></p>
-</blockquote>
-
-<p>가령,  <code class="language-plaintext highlighter-rouge">source_events</code>  테이블이 1,000,000개의 Row로 구성되어 있다면, 최대 1,000,000 * 1,000,000개의 Row가 메모리에 올라오게 되는 것이죠. 이는 쿼리 엔진의 메모리 및 트래픽 DevOps 환경이 중요한 경우 분명히 문제가 됩니다. 혹은 Usage Limit이 걸려 있을 경우에는 쿼리 실행이 몇 시간 동안 진행되다가 아침에 눈을 떠보면 트래픽 제한으로 인해 실행이 실패되었다는 매우 슬프고 참담한 상황에 마주하게 될 것입니다.</p>
-
-<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/crying-meme.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://res.heraldm.com/content/image/2021/07/16/20210716000671_0.jpg">Source</a></p>
-</blockquote>
-
-<p>그렇다면, 이런 상황에서 어떻게 쿼리를 최적화할 수 있을까요?</p>
-
-<h1 id="4-subquery와-exists-사용하기">4. Subquery와 EXISTS 사용하기</h1>
-
-<p>위에서 보셨던 쿼리문을 아래와 같이 수정해봤습니다.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-   <span class="nb">datetime</span><span class="p">,</span>  
-   <span class="n">user_id</span><span class="p">,</span>  
-   <span class="n">session_id</span><span class="p">,</span>  
-   <span class="n">event_index</span><span class="p">,</span>  
-   <span class="n">event_param_index</span><span class="p">,</span>  
-   <span class="n">event_param_key</span><span class="p">,</span>  
-   <span class="n">event_param_value</span>  
-<span class="k">FROM</span>  
-   <span class="n">source_events</span> <span class="n">MAIN</span>  
-<span class="k">WHERE</span>  
-   <span class="k">EXISTS</span> <span class="p">(</span>  
-      <span class="k">SELECT</span> <span class="mi">1</span>  
-      <span class="k">FROM</span> <span class="n">source_events</span> <span class="n">SUB</span>  
-      <span class="k">WHERE</span>  
-         <span class="n">event_type</span> <span class="o">=</span> <span class="s1">'click_button'</span>  
-         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
-         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
-         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
-         <span class="k">AND</span> <span class="p">(</span>  
-            <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
-            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
-            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
-            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
-         <span class="p">)</span>  
-   <span class="p">)</span>
-</code></pre></div></div>
-
-<p>자, 어떻게 달라졌는지 차근차근 살펴보도록 하죠.</p>
-
-<h3 id="1-먼저-left-join이-사라지고-where-statement의-subquery가-추가되었습니다">1. 먼저, LEFT JOIN이 사라지고, WHERE Statement의 Subquery가 추가되었습니다.</h3>
-
-<p>JOIN보다 Subquery가 반드시 모든 상황에서 성능이 우월하지는 않지만, 이 상황에서는 메모리 데이터의 사이즈는 상당 부분 해소되었습니다. 앞서 말씀 드린 것처럼, SQL은 WHERE Statement를 고려하기 전에 먼저 FROM과 LEFT JOIN을 먼저 실행하게 되는데, WHERE Statement의 Subquery로 옮김으로써 LEFT JOIN에서 실행되어야 하는 작업을 WHERE에서 동시에 연산하여 메모리에 올릴 수 있게 되었습니다.</p>
-
-<p>가령,  <code class="language-plaintext highlighter-rouge">source_events</code>  테이블의 Row 수가 1,000,000개 이고, WHERE를 통해 Filter out된 Row 수가 10,000개라면, 메모리에 올라가게 되는 Row 수는 이전의 최대 1,000,000 * 1,000,000개에서 1,000,000 * 10,000개로 1% 수준으로 급감하였습니다.</p>
-
-<h3 id="2-in보다-exists가-연산-속도가-더-빠릅니다">2. IN보다 EXISTS가 연산 속도가 더 빠릅니다.</h3>
-
-<p>IN과 EXISTS 모두 “<strong>XXX한 경우가 존재하니?</strong>”를 질문하는 과정으로 추상화할 수 있을 것 같은데요.</p>
-
-<p>만약 IN을 통해 Filter out하려고 하면 가령 아래와 같은 쿼리문을 작성해야 합니다.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span>  
-   <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span> <span class="k">FROM</span> <span class="p">...)</span>  
-   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">FROM</span> <span class="p">...)</span>  
-   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">FROM</span> <span class="p">...)</span>  
-   <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span> <span class="k">FROM</span> <span class="p">...)</span>  
-<span class="p">...</span>
-</code></pre></div></div>
-
-<p>위 과정은 한 가지 단점이 있습니다.  <code class="language-plaintext highlighter-rouge">SUB.event_param_index</code>  칼럼의 값들을 일일이 출력해야 하는데요. 즉, 다양한 값들로 구성된 칼럼을 메모리에 로드해야 한다는 것이죠.</p>
-
-<p>그러나 EXISTS를 통해 Filter out하려고 하면 아래와 같은 쿼리문으로 수정될 수 있습니다.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WHERE</span>  
-   <span class="k">EXISTS</span> <span class="p">(</span>  
-      <span class="k">SELECT</span> <span class="mi">1</span>  
-      <span class="k">FROM</span> <span class="p">...</span>  
-      <span class="k">WHERE</span>  
-         <span class="p">...</span>  
-         <span class="k">AND</span> <span class="p">(</span>  
-         <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
-         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
-         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
-         <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
-   <span class="p">)</span>
-</code></pre></div></div>
-
-<p>이 과정은 위에서 말씀 드린 IN의 단점을 상당 부분 해소합니다.  <code class="language-plaintext highlighter-rouge">SUB.event_param_index</code>  칼럼의 값들을 일일이 출력했던 것과 달리, 이번에는 조건을 만족하기만 하면 단순히 일괄적으로  <code class="language-plaintext highlighter-rouge">1</code>로만 구성된 칼럼을 메모리에 로드하게 됩니다. Data Type 측면에서 훨씬 메모리의 부담을 경감시킬 수 있습니다. (혹은 <code class="language-plaintext highlighter-rouge">1</code>이 아니라,  <code class="language-plaintext highlighter-rouge">True</code>나  <code class="language-plaintext highlighter-rouge">False</code>와 같은 Boolean 타입으로 출력하면 더 확실하게 경감시킬 수 있을 것 같네요.)</p>
-
-<h1 id="5-결론-무조건적-우월성은-없다">5. 결론: 무조건적 우월성은 없다.</h1>
-
-<p>자 이제 다시 최적화된 쿼리문 전체를 보시죠.</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>  
-   <span class="nb">datetime</span><span class="p">,</span>  
-   <span class="n">user_id</span><span class="p">,</span>  
-   <span class="n">session_id</span><span class="p">,</span>  
-   <span class="n">event_index</span><span class="p">,</span>  
-   <span class="n">event_param_index</span><span class="p">,</span>  
-   <span class="n">event_param_key</span><span class="p">,</span>  
-   <span class="n">event_param_value</span>  
-<span class="k">FROM</span>  
-   <span class="n">source_events</span> <span class="n">MAIN</span>  
-<span class="k">WHERE</span>  
-   <span class="k">EXISTS</span> <span class="p">(</span>  
-      <span class="k">SELECT</span> <span class="mi">1</span>  
-      <span class="k">FROM</span> <span class="n">source_events</span> <span class="n">SUB</span>  
-      <span class="k">WHERE</span>  
-         <span class="n">event_type</span> <span class="o">=</span> <span class="s1">'click_button'</span>  
-         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span>  
-         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">session_id</span>  
-         <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_index</span>  
-         <span class="k">AND</span> <span class="p">(</span>  
-            <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">0</span>  
-            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">1</span>  
-            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">2</span>  
-            <span class="k">OR</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">=</span> <span class="n">SUB</span><span class="p">.</span><span class="n">event_param_index</span> <span class="o">+</span> <span class="mi">3</span>  
-         <span class="p">)</span>  
-   <span class="p">)</span>
-</code></pre></div></div>
-
-<p>프로그래밍에는 반드시 “<strong>방법 A가 방법 B보다 우월하다.</strong>”라는 것은 존재하지 않은 것처럼, 각자의 환경에 따라 취사선택하며 최적화를 하는 것이 중요할 것입니다.</p>
-
-<p>WHERE Statement의 Subquery가 JOIN보다 반드시 우월한 것도 아니고, 경우에 따라 EXISTS가 IN보다 반드시 뛰어난 성능을 보이지 않을 수도 있습니다.</p>
-
-<p>또한, 일반적으로 Subquery와 EXISTS 문법은 SQL 초급 사용자 분들께는 살짝 팔로업하기 어려울 수 있으므로, 가독성 측면에서 추후 유지보수의 장애로 작용할 수도 있을 것입니다.</p>
-
-<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/infinite-challenge.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://i.pinimg.com/736x/cd/c3/57/cdc35735e9efc721d26a0f3f780178a4.jpg">Source</a></p>
-</blockquote>
-
-<p>앞으로, 대용량의 데이터 소스를 다루시다가 SELF JOIN 때문에 트래픽 문제가 발생하신다면 위와 같은 사례로도 접근 가능하다는 점을 참고하시고, 각자 처한 환경에 따라 최적화하여 가성비 좋은 데이터 분석을 하시길 바랄게요. 부족한 글을 읽어주셔서 감사합니다!</p>
-
-<p><img src="/assets/2023-11-30-how-to-avoid-self-joins/bye-guys.webp" alt="" /></p>
-<blockquote>
-  <p>퇴사하겠다는 의미가 아니라, 계속 쿼리 작성하러 가겠다는 의미</p>
-</blockquote>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Data Analysis" /><category term="SQL" /><summary type="html"><![CDATA[대고객 서빙을 위해 엄청나게 큰 사이즈의 소스 테이블로부터 최적화된 데이터 마트 설계 고민을 많이 하고 있는 만큼, 이번에는 SELF JOIN 사례를 중심으로 SQL 성능에 대한 이야기를 들려드리겠습니다.]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Blockchain" /><summary type="html"><![CDATA[개발적인 용어가 난무해서 당시에는 도저히 펼쳐 볼 엄두가 안 났지만, 이 업계에서 약 3년 가까이 구르다보니 어느 정도 잘 읽히게 되었다. 그래서 2023년 1월 1일 새해 목표 중 하나로 “마스터링 이더리움 완독하고 정리하기”를 세우게 되었다. 그리고 약 1개월 만에 다 읽게 되었다.]]></summary></entry></feed>
