@@ -121,6 +121,10 @@
 <lastmod>2024-01-14T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/data-warehouse-14/</loc>
+<lastmod>2024-01-14T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/404/</loc>
 </url>
 <url>
@@ -149,5 +153,8 @@
 </url>
 <url>
 <loc>http://localhost:4000/page6/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page7/</loc>
 </url>
 </urlset>

@@ -1,4 +1,137 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-14T17:23:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #12-13</title><link href="http://localhost:4000/data-warehouse-12-13/" rel="alternate" type="text/html" title="Data Warehouse #12-13" /><published>2024-01-14T00:00:00+09:00</published><updated>2024-01-14T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-12-13</id><content type="html" xml:base="http://localhost:4000/data-warehouse-12-13/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-14T17:35:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Data Analyst</subtitle><entry><title type="html">Data Warehouse #14</title><link href="http://localhost:4000/data-warehouse-14/" rel="alternate" type="text/html" title="Data Warehouse #14" /><published>2024-01-14T00:00:00+09:00</published><updated>2024-01-14T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-14</id><content type="html" xml:base="http://localhost:4000/data-warehouse-14/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 14. The Modern Data Warehouses</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="cloud-vs-on-premise">Cloud vs. On-premise</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Cloud</strong></th>
+      <th><strong>On-premise</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fully Managed</td>
+      <td>Full Control</td>
+    </tr>
+    <tr>
+      <td>Scalable</td>
+      <td>Data Governance &amp; Compliance</td>
+    </tr>
+    <tr>
+      <td>Cost Efficiency ⬆️</td>
+      <td>Cost Efficiency ⬇️</td>
+    </tr>
+    <tr>
+      <td>Regulations</td>
+      <td>Flexibility ⬇️</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In most cases, <strong>Cloud Data Warehouse</strong> is the better choice nowadays!</p>
+<ul>
+  <li>Snowflake</li>
+  <li>Amazon Redshift</li>
+  <li>Azure Synapse</li>
+  <li>Google BigQuery</li>
+</ul>
+
+<h1 id="mpp-massive-parallel-processing">MPP (Massive Parallel Processing)</h1>
+
+<p><img src="/assets/2024-01-14-data-warehouse-14/1.png" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.tibco.com/reference-center/what-is-massively-parallel-processing">Source</a></p>
+</blockquote>
+
+<ul>
+  <li><strong>“Shared Nothing”</strong> Architecture
+    <ul>
+      <li>Independent Resources</li>
+      <li>The workload is split up &amp; processed individually.</li>
+    </ul>
+  </li>
+  <li>The modern way of solving performance issues</li>
+  <li>Millions or rows can be processed faster.</li>
+  <li>Many people can run queries at the same time with good performance.</li>
+  <li>Helpful with centralizing massive amounts of data</li>
+</ul>
+
+<h1 id="columnar-databases">Columnar Databases</h1>
+
+<p><img src="/assets/2024-01-14-data-warehouse-14/2.png" alt="" /></p>
+<blockquote>
+  <p><a href="https://en.wikipedia.org/wiki/Column-oriented_DBMS">Source</a></p>
+</blockquote>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+	<span class="n">Lastname</span>
+<span class="k">FROM</span>
+	<span class="n">emp</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="row-oriented-databases">Row-oriented Databases</h3>
+<p><img src="/assets/2024-01-14-data-warehouse-14/3.png" alt="" /></p>
+<blockquote>
+  <p><a href="https://en.wikipedia.org/wiki/Column-oriented_DBMS">Source</a></p>
+</blockquote>
+
+<ul>
+  <li>All have to be scanned.
+    <ul>
+      <li>Bad for fast data retrieval.</li>
+    </ul>
+  </li>
+  <li>Good for Transactional Databases.</li>
+</ul>
+
+<h3 id="column-oriented-databases">Column-oriented Databases</h3>
+<p><img src="/assets/2024-01-14-data-warehouse-14/4.png" alt="" /></p>
+<blockquote>
+  <p><a href="https://en.wikipedia.org/wiki/Column-oriented_DBMS">Source</a></p>
+</blockquote>
+
+<ul>
+  <li>Less data needs to be processed.</li>
+  <li>Better compression, Less storage</li>
+</ul>
+
+<p><img src="/assets/2024-01-14-data-warehouse-14/5.png" alt="" /></p>
+
+<h1 id="tips">Tips</h1>
+
+<ul>
+  <li>Use Indexes
+    <ul>
+      <li>if you frequently want to retrieve less than 15% of the rows in a large table.</li>
+      <li>If you frequently use joins to improve join performance.</li>
+    </ul>
+  </li>
+  <li>Small tables do not require indexes.</li>
+  <li>Wide Range of Values (<strong>High Cardinality</strong>) → Good for <strong>B-tree Indexes</strong></li>
+  <li>Small Range of Values (<strong>Low Cardinality</strong>) → Good for <strong>Bitmap Indexes</strong></li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 14. The Modern Data Warehouses]]></summary></entry><entry><title type="html">Data Warehouse #12-13</title><link href="http://localhost:4000/data-warehouse-12-13/" rel="alternate" type="text/html" title="Data Warehouse #12-13" /><published>2024-01-14T00:00:00+09:00</published><updated>2024-01-14T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-12-13</id><content type="html" xml:base="http://localhost:4000/data-warehouse-12-13/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 12. Using a Data Warehouse</li>
@@ -142,86 +275,7 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 12. Using a Data Warehouse SECTION 13. Optimizing a Data Warehouse]]></summary></entry><entry><title type="html">Data Warehouse #10</title><link href="http://localhost:4000/data-warehouse-10/" rel="alternate" type="text/html" title="Data Warehouse #10" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-10</id><content type="html" xml:base="http://localhost:4000/data-warehouse-10/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 10. Case Study: Creating a Data Warehouse</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="guidelines">Guidelines</h1>
-<ol>
-  <li>Look at the problem and plan</li>
-  <li>Set up tables &amp; schema</li>
-  <li>Staging</li>
-  <li>Core (Dimension Tables)</li>
-  <li>Core (Fact Tables)</li>
-  <li>Set up Jobs &amp; Testing</li>
-</ol>
-
-<h1 id="fact-table-design">Fact Table Design</h1>
-<ol>
-  <li><code class="language-plaintext highlighter-rouge">date_FK</code></li>
-  <li><code class="language-plaintext highlighter-rouge">product_FK</code></li>
-  <li><code class="language-plaintext highlighter-rouge">payment_FK</code></li>
-  <li>Additional Columns:
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">total_price</code></li>
-      <li><code class="language-plaintext highlighter-rouge">total_cost</code></li>
-      <li><code class="language-plaintext highlighter-rouge">profit</code></li>
-    </ul>
-  </li>
-</ol>
-
-<p><img src="/assets/2024-01-13-data-warehouse-10/1.png" alt="" /></p>
-
-<h1 id="processing-order">Processing Order</h1>
-
-<p><img src="/assets/2024-01-13-data-warehouse-10/2.png" alt="" /></p>
-
-<h3 id="source--staging">Source → Staging</h3>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">Extract</code>
-    <ul>
-      <li>Add Surrogate Key</li>
-      <li>Delta Logic
-        <h3 id="staging--core">Staging → Core</h3>
-      </li>
-    </ul>
-  </li>
-  <li><code class="language-plaintext highlighter-rouge">Transform</code> + <code class="language-plaintext highlighter-rouge">Load</code>
-    <ul>
-      <li>Clean Data</li>
-      <li>Add Additional Columns</li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="scheduling">Scheduling</h1>
-<ul>
-  <li>Jobs or Packages</li>
-  <li>Scheduling at:
-    <ul>
-      <li>Specific Times</li>
-      <li>Frequencies</li>
-    </ul>
-  </li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 10. Case Study: Creating a Data Warehouse]]></summary></entry><entry><title type="html">Data Warehouse #11</title><link href="http://localhost:4000/data-warehouse-11/" rel="alternate" type="text/html" title="Data Warehouse #11" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-11</id><content type="html" xml:base="http://localhost:4000/data-warehouse-11/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 12. Using a Data Warehouse SECTION 13. Optimizing a Data Warehouse]]></summary></entry><entry><title type="html">Data Warehouse #11</title><link href="http://localhost:4000/data-warehouse-11/" rel="alternate" type="text/html" title="Data Warehouse #11" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-11</id><content type="html" xml:base="http://localhost:4000/data-warehouse-11/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 11. ETL vs. ELT</li>
@@ -306,7 +360,86 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 11. ETL vs. ELT]]></summary></entry><entry><title type="html">Data Warehouse #09</title><link href="http://localhost:4000/data-warehouse-09/" rel="alternate" type="text/html" title="Data Warehouse #09" /><published>2024-01-12T00:00:00+09:00</published><updated>2024-01-12T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-09</id><content type="html" xml:base="http://localhost:4000/data-warehouse-09/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 11. ETL vs. ELT]]></summary></entry><entry><title type="html">Data Warehouse #10</title><link href="http://localhost:4000/data-warehouse-10/" rel="alternate" type="text/html" title="Data Warehouse #10" /><published>2024-01-13T00:00:00+09:00</published><updated>2024-01-13T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-10</id><content type="html" xml:base="http://localhost:4000/data-warehouse-10/"><![CDATA[<blockquote>
+  <p>In this article, I’ll summarize key takeaways from:</p>
+  <ul>
+    <li>SECTION 10. Case Study: Creating a Data Warehouse</li>
+  </ul>
+</blockquote>
+
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
+</blockquote>
+
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
+</blockquote>
+
+<h1 id="guidelines">Guidelines</h1>
+<ol>
+  <li>Look at the problem and plan</li>
+  <li>Set up tables &amp; schema</li>
+  <li>Staging</li>
+  <li>Core (Dimension Tables)</li>
+  <li>Core (Fact Tables)</li>
+  <li>Set up Jobs &amp; Testing</li>
+</ol>
+
+<h1 id="fact-table-design">Fact Table Design</h1>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">date_FK</code></li>
+  <li><code class="language-plaintext highlighter-rouge">product_FK</code></li>
+  <li><code class="language-plaintext highlighter-rouge">payment_FK</code></li>
+  <li>Additional Columns:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">total_price</code></li>
+      <li><code class="language-plaintext highlighter-rouge">total_cost</code></li>
+      <li><code class="language-plaintext highlighter-rouge">profit</code></li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/assets/2024-01-13-data-warehouse-10/1.png" alt="" /></p>
+
+<h1 id="processing-order">Processing Order</h1>
+
+<p><img src="/assets/2024-01-13-data-warehouse-10/2.png" alt="" /></p>
+
+<h3 id="source--staging">Source → Staging</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Extract</code>
+    <ul>
+      <li>Add Surrogate Key</li>
+      <li>Delta Logic
+        <h3 id="staging--core">Staging → Core</h3>
+      </li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Transform</code> + <code class="language-plaintext highlighter-rouge">Load</code>
+    <ul>
+      <li>Clean Data</li>
+      <li>Add Additional Columns</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="scheduling">Scheduling</h1>
+<ul>
+  <li>Jobs or Packages</li>
+  <li>Scheduling at:
+    <ul>
+      <li>Specific Times</li>
+      <li>Frequencies</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 10. Case Study: Creating a Data Warehouse]]></summary></entry><entry><title type="html">Data Warehouse #09</title><link href="http://localhost:4000/data-warehouse-09/" rel="alternate" type="text/html" title="Data Warehouse #09" /><published>2024-01-12T00:00:00+09:00</published><updated>2024-01-12T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-09</id><content type="html" xml:base="http://localhost:4000/data-warehouse-09/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
     <li>SECTION 09. ETL Tools</li>
@@ -1514,203 +1647,295 @@ Combination: Year-quarter, Year-Month, etc.
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #03</title><link href="http://localhost:4000/data-warehouse-03/" rel="alternate" type="text/html" title="Data Warehouse #03" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-03</id><content type="html" xml:base="http://localhost:4000/data-warehouse-03/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 06. Dimensions]]></summary></entry><entry><title type="html">Data Warehouse #05</title><link href="http://localhost:4000/data-warehouse-05/" rel="alternate" type="text/html" title="Data Warehouse #05" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-05</id><content type="html" xml:base="http://localhost:4000/data-warehouse-05/"><![CDATA[<blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
-    <li>SECTION 03. Data Warehouse Architecture</li>
+    <li>SECTION 05. Facts</li>
   </ul>
 </blockquote>
 
 <h3 id="disclaimer">DISCLAIMER</h3>
-
 <blockquote>
   <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-warehouse.webp" alt="" /></p>
+<p><img src="/assets/2023-12-06-data-warehouse-05/data-warehouse.webp" alt="" /></p>
 <blockquote>
   <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-<h1 id="data-lake-vs-data-warehouse">Data Lake vs. Data Warehouse</h1>
+<h1 id="additivity-in-facts">Additivity in Facts</h1>
 
-<p><img src="/assets/2023-12-06-data-warehouse-03/data-lake-vs-data-warehouse.webp" alt="" /></p>
-
-<h1 id="pentaho--postgresql">Pentaho &amp; PostgreSQL</h1>
-
-<h3 id="pentaho">Pentaho</h3>
-
+<p><strong>1. Fully Additive Facts</strong></p>
 <ul>
-  <li><strong>ETL Tool</strong></li>
-  <li><a href="https://www.hitachivantara.com/en-us/products/pentaho-plus-platform/data-integration-analytics/pentaho-community-edition.html">Pentaho Community Edition Download</a></li>
-  <li><code class="language-plaintext highlighter-rouge">pdi-ce-9.4.0.0-343.zip</code></li>
-  <li>After unzipping the downloaded file, click the  <code class="language-plaintext highlighter-rouge">spoon</code>  file.</li>
+  <li>Can be added across  <strong>all dimensions</strong></li>
+  <li>Most Flexible &amp; Useful</li>
+  <li><strong>Most fact tables</strong>  are fully additive!</li>
 </ul>
 
-<h3 id="postgresql">PostgreSQL</h3>
-
+<p><strong>2. Semi-additive Facts</strong></p>
 <ul>
-  <li><strong>Database Management System</strong></li>
-  <li><a href="https://www.postgresql.org/download/">PostgreSQL Download</a></li>
-  <li>After installing the downloaded file, run  <code class="language-plaintext highlighter-rouge">PGAdmin</code>.</li>
+  <li>Can be added across  <strong>a few dimensions</strong></li>
+  <li>Less Flexible &amp; Used Carefully</li>
+  <li><strong>Averaging</strong>  might be an alternative! (i.e.,  <strong>Balance</strong>)</li>
 </ul>
 
-<h1 id="the-layers-of-a-data-warehouse">The Layers of a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/The Layers of a Data Warehouse.webp" alt="" /></p>
-
-<h3 id="data-sources--the-staging-layer">Data Sources → The Staging Layer</h3>
+<p><strong>3. Non-additive Facts</strong></p>
 <ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">E</code></strong> of ETL Process</li>
-  <li><strong>“The Landing Zone Extracted Data”</strong>
+  <li>Can  <strong>NOT</strong>  be added across  <strong>any dimensions</strong></li>
+  <li>Limited Analytical</li>
+  <li>Store the  <strong>underlying values</strong>  instead! (i.e.,  <strong>Ratio</strong>,  <strong>Percentage</strong>,  <strong>Price</strong>, etc.)</li>
+</ul>
+
+<h3 id="1-fully-additive-facts">1. Fully Additive Facts</h3>
+<ul>
+  <li>Given the tables below:</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/fully-additive-facts-1.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">units</code>  are  <strong>additive</strong>.</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/fully-additive-facts-2.webp" alt="" /></p>
+
+<h3 id="2-semi-additive-facts">2. Semi-additive Facts</h3>
+
+<ul>
+  <li>Given the tables below:</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/semi-additive-facts-1.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">balance</code>  is  <strong>semi-additive</strong>.</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/semi-additive-facts-2.webp" alt="" /></p>
+
+<h3 id="3-non-additive-facts">3. Non-additive Facts</h3>
+
+<ul>
+  <li>Given the tables below:</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/non-additive-facts-1.webp" alt="" /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">price</code>  is  <strong>non-additive</strong>.</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/non-additive-facts-2.webp" alt="" /></p>
+
+<h1 id="year-to-date-in-facts">Year-to-Date in Facts</h1>
+
+<p><strong>Month-to-Date, Quarter-to-Date, Year-to-Date</strong></p>
+<ul>
+  <li>Often requested by business users</li>
+  <li>Tempted to store them in columns</li>
+  <li><strong>DO NOT store them in Fact Tables!</strong>
     <ul>
-      <li>Data in Tables and on a Separate Database</li>
-      <li>As little “toughing” as possible</li>
-      <li>We don’t charge the source systems.</li>
-      <li>Temporary or Persistent Staging Layers</li>
+      <li>Instead, better store  <strong>the underlying values</strong>  in Fact Tables!</li>
     </ul>
   </li>
-  <li>Short Time on the Source Systems</li>
-  <li>Quickly Extracted</li>
-  <li>Move the Data into Relational Database</li>
-  <li>Start Transformations from There</li>
-  <li>Minimal Transformation</li>
 </ul>
 
-<h3 id="the-staging-layer--the-cleansing-layer">The Staging Layer → The Cleansing Layer</h3>
-<ul>
-  <li><strong><code class="language-plaintext highlighter-rouge">TL</code></strong> of ETL Process</li>
-</ul>
+<h1 id="types-of-fact-tables">Types of Fact Tables</h1>
 
-<h3 id="the-cleansing-layer--core--access-layer--data-warehouse">The Cleansing Layer → Core / Access Layer / Data Warehouse</h3>
-<ul>
-  <li><strong>“Core”</strong>
-    <ul>
-      <li>Business Logic</li>
-    </ul>
-  </li>
-</ul>
+<p><strong>1. Transactional Fact Tables</strong>
+<strong>2. Periodic Snapshot Fact Tables</strong>
+<strong>3. Accumulating Snapshot Fact Tables</strong></p>
 
-<h3 id="core--access-layer--data-warehouse--data-mart">Core / Access Layer / Data Warehouse → Data Mart</h3>
-<ul>
-  <li><strong>“Data Mart”</strong>
-    <ul>
-      <li>Subset of a Data Warehouse</li>
-      <li>Dimensional Model</li>
-      <li>Can be Further Aggregated.</li>
-      <li>Usability + Acceptance</li>
-      <li>Performance</li>
-    </ul>
-  </li>
-  <li>Can Vary depending on Each Tool, Each Department, Each Region, Each Usecase</li>
-</ul>
-
-<h1 id="in-memory-databases">In-memory Databases</h1>
-
-<h3 id="traditional-databases">Traditional Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/traditional-databases.webp" alt="" /></p>
-
-<h3 id="in-memory-databases-1">In-memory Databases</h3>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/in-memory-databases.webp" alt="" /></p>
+<h3 id="1-transactional-fact-tables">1. Transactional Fact Tables</h3>
 
 <ul>
-  <li>Highly Optimized for Query Performance</li>
-  <li>Good for Analytics &amp; High Query Volume</li>
-  <li>Usually Used for Data Marts</li>
-  <li>Relational &amp; Non-relational</li>
-  <li>Techniques: Columnar Storage, Parallel Query Plans, and Others</li>
+  <li>1 Row = Measurement of 1 Event/Transaction</li>
+  <li>It takes place at a specific time.</li>
+  <li>One transaction defines the lowest grain.</li>
 </ul>
 
-<h1 id="demo-setting-up-the-staging-area-with-postgresql">Demo: Setting up the Staging Area with PostgreSQL</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-03/pgadmin4.webp" alt="" /></p>
+<p><strong>Characteristics</strong></p>
 <ul>
-  <li>Created a  <strong>database</strong>  named  <code class="language-plaintext highlighter-rouge">DataWarehouseX</code>.</li>
-  <li>Created a  <strong>schema</strong>  named  <code class="language-plaintext highlighter-rouge">Staging</code>.</li>
+  <li>Most Common &amp; Very Flexible</li>
+  <li>Typically Additive</li>
+  <li>Other dimension tables associated ⬆️</li>
+  <li>Size ⬆️⬆️</li>
 </ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/transactional-fact-tables.webp" alt="" /></p>
+
+<h3 id="2-periodic-snapshot-fact-tables">2. Periodic Snapshot Fact Tables</h3>
+
+<ul>
+  <li>1 Row = Summarizes Measurement of Many Events/Transactions</li>
+  <li>Summarized of standard period (i.e., 1 day, 1 week, etc.)</li>
+  <li>One period defines the lowest grain.</li>
+</ul>
+
+<p><strong>Characteristics</strong></p>
+<ul>
+  <li>No Events = NULL or 0</li>
+  <li>Typically Additive</li>
+  <li>Other fact tables associated ⬆️ / Other dimension tables associated ⬇️</li>
+  <li>Size ⬇️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/periodic-snapshot-fact-tables.webp" alt="" /></p>
+
+<h3 id="3-accumulating-snapshot-fact-tables">3. Accumulating Snapshot Fact Tables</h3>
+
+<ul>
+  <li>1 Row = Summarizes Measurement of Many Events/Transactions</li>
+  <li>Summarized of the lifespan of 1 process (i.e., order fulfillment)</li>
+  <li>Definite beginning &amp; Definite ending (with steps)</li>
+</ul>
+
+<p><strong>Characteristics</strong></p>
+<ul>
+  <li>Least Common</li>
+  <li>Workflow or Process Analysis</li>
+  <li>Multiple Datetime Foreign Keys (for each process step)</li>
+  <li>Other Datetime dimension tables associated ⬆️⬆️⬆️</li>
+  <li>Size ⬇️⬇️⬇️</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/accumulating-snapshot-fact-tables.webp" alt="" /></p>
+
+<h1 id="steps-to-create-a-fact-table">Steps to Create a Fact Table</h1>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/steps-to-create-a-fact-table.webp" alt="" /></p>
+
+<h3 id="4-key-decisions">4 Key Decisions</h3>
+
+<p><strong>1. Identify a business process for analysis.</strong></p>
+<ul>
+  <li>Examples: Sales, Order processing</li>
+</ul>
+
+<p><strong>2. Declare the grain.</strong></p>
+<ul>
+  <li>Examples: Transaction, Order, Order lines, Daily, Location</li>
+</ul>
+
+<p><strong>3. Identify relevant dimensions.</strong></p>
+<ul>
+  <li>“Filtering &amp; Grouping”</li>
+  <li>“Soul” for Analysis</li>
+  <li>Examples: Time, Locations, Product Category, Users</li>
+</ul>
+
+<p><strong>4. Identify facts for measurement.</strong></p>
+<ul>
+  <li>Defined by the grain! (Not by specific use cases)</li>
+  <li>Examples: Revenue, Order Amount</li>
+</ul>
+
+<h1 id="factless-fact-tables">Factless Fact Tables</h1>
+
+<p>Only dimensional aspects of an event are recorded.</p>
+<ul>
+  <li>How many employees have been registered last month?</li>
+  <li>How many employees have been registered in a certain region?</li>
+</ul>
+
+<p>There are no measurement columns in the Factless Fact Tables.</p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/factless-fact-tables.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://learn.microsoft.com/ko-kr/power-bi/guidance/star-schema#factless-fact-tables">Source</a></p>
+</blockquote>
+
+<h1 id="natural-vs-surrogate-key">Natural vs. Surrogate Key</h1>
+
+<h3 id="natural-key">Natural Key</h3>
+<ul>
+  <li>Comes out of the source system</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/natural-keys.webp" alt="" /></p>
+
+<h3 id="surrogate-key">Surrogate Key</h3>
+<ul>
+  <li>Artificial Keys</li>
+  <li>Integer Number</li>
+  <li><code class="language-plaintext highlighter-rouge">_PK</code> or <code class="language-plaintext highlighter-rouge">_FK</code> suffixes</li>
+  <li>Created by the Database or ETL Tool</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/surrogate-keys.webp" alt="" /></p>
+
+<p><strong>Benefits of Surrogate Key</strong></p>
+<ul>
+  <li>Improve performance (Storage ⬇️, Easy Joins ⬆️)</li>
+  <li>Handle dummy values such as NULLs or Missing Values (using 999 or -1)</li>
+  <li>Integrate multiple source systems</li>
+  <li>Easier Administration &amp; Updates</li>
+  <li>Sometimes there are even NO Natural Keys available.</li>
+</ul>
+
+<p><strong>Practical Guidelines of Surrogate Key</strong></p>
+<ul>
+  <li>Always use Surrogate Keys in tables as Main PK and FK</li>
+  <li>Use Surrogate Keys both for Fact &amp; Dimension Tables (Except the Date Dimension Tables)</li>
+  <li>Optionally keep the Natural Keys</li>
+</ul>
+
+<h1 id="case-study-e-commerce">Case Study: E-commerce</h1>
+
+<h3 id="data-collection">Data Collection</h3>
+<ul>
+  <li>Shopping Cart Checkouts</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/data-collection-1.webp" alt="" /></p>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/data-collection-2.webp" alt="" /></p>
+
+<h3 id="goals">Goals</h3>
+<ul>
+  <li>Maximizing Profits (profit margins, sales volume, product cost, promotions, and discounts)</li>
+</ul>
+
+<h3 id="1-identify-a-business-process-for-analysis">1. Identify a business process for analysis.</h3>
+<ul>
+  <li>Which products have been sold?</li>
+  <li>How much is the sales profit?</li>
+  <li>How much is the sales profit for each website?</li>
+  <li>How much is the performance on each different day?</li>
+  <li>What does the sales trend look like over time?</li>
+</ul>
+
+<h3 id="2-declare-the-grain">2. Declare the grain.</h3>
+<ul>
+  <li>The grains should have the most analytical values</li>
+  <li>The grains should have the highest dimensionalities.</li>
+  <li>In this case:  <code class="language-plaintext highlighter-rouge">order_id</code>  and  <code class="language-plaintext highlighter-rouge">product_id</code></li>
+</ul>
+
+<h3 id="3-identify-relevant-dimensions">3. Identify relevant dimensions.</h3>
+<ul>
+  <li>Dimensions should be the descriptive aspects of measures.</li>
+  <li>Dimensions should be naturally derived after the grains are defined.</li>
+  <li>In this case:  <code class="language-plaintext highlighter-rouge">customers</code>,  <code class="language-plaintext highlighter-rouge">products</code>,  <code class="language-plaintext highlighter-rouge">promotions</code>,  <code class="language-plaintext highlighter-rouge">datetimes</code>,  <code class="language-plaintext highlighter-rouge">websites</code></li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/identify-relevant-dimensions.webp" alt="" /></p>
+
+<h3 id="4-identify-facts-for-measurement">4. Identify facts for measurement.</h3>
+<ul>
+  <li>The facts must comply with the grains that we have defined above.</li>
+  <li><code class="language-plaintext highlighter-rouge">discount</code>: additive vs. non-additive</li>
+  <li><code class="language-plaintext highlighter-rouge">profit</code> : also complies with the grain</li>
+</ul>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/identify-facts-for-measurement.webp" alt="" /></p>
+
+<h3 id="5-final-results">5. Final Results</h3>
+
+<p><img src="/assets/2023-12-06-data-warehouse-05/final-results.webp" alt="" /></p>
 
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 03. Data Warehouse Architecture]]></summary></entry><entry><title type="html">Data Warehouse #01-02</title><link href="http://localhost:4000/data-warehouse-01-02/" rel="alternate" type="text/html" title="Data Warehouse #01-02" /><published>2023-12-06T00:00:00+09:00</published><updated>2023-12-06T00:00:00+09:00</updated><id>http://localhost:4000/data-warehouse-01-02</id><content type="html" xml:base="http://localhost:4000/data-warehouse-01-02/"><![CDATA[<blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 01. Introduction</li>
-    <li>SECTION 02. Data Warehouse Basics</li>
-  </ul>
-</blockquote>
-
-<h3 id="disclaimer">DISCLAIMER</h3>
-
-<blockquote>
-  <p>This article is a compilation of key takeaways after completing  <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a>  on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
-</blockquote>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse.webp" alt="" /></p>
-<blockquote>
-  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
-</blockquote>
-
-<h1 id="what-will-you-learn">What Will You Learn?</h1>
-
-<ul>
-  <li>Data Warehouse Basics</li>
-  <li>Data Warehouse Architecture</li>
-  <li>Dimensional Modeling</li>
-  <li>Fact Tables</li>
-  <li>Dimension Tables</li>
-  <li>Slowly Changing Dimensions</li>
-  <li>ETL Process</li>
-  <li>ETL Tools</li>
-  <li>Case Study: Create a Data Warehouse</li>
-  <li>ETL vs. ELT</li>
-  <li>Using a Data Warehouse</li>
-  <li>Optimizing a Data Warehouse</li>
-  <li>The Modern Data Warehouse</li>
-</ul>
-
-<h1 id="why-do-we-need-a-data-warehouse">Why Do We Need a Data Warehouse?</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/Why Do We Need a Data Warehouse.webp" alt="" /></p>
-
-<h1 id="what-is-a-data-warehouse">What is a Data Warehouse?</h1>
-
-<p>🗣️  <strong>A database used and optimized for analytical purposes.</strong></p>
-<ul>
-  <li>User-friendly</li>
-  <li>Fast query performance</li>
-  <li>Enabling data analysis</li>
-</ul>
-
-<h1 id="etl">ETL</h1>
-
-<ul>
-  <li><strong>Extract</strong>  +  <strong>Transform</strong>  +  <strong>Load</strong>  →  <strong><code class="language-plaintext highlighter-rouge">Data Warehouse</code></strong></li>
-</ul>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/etl-flowchart.webp" alt="" /></p>
-
-<h1 id="goals-of-data-warehouse">Goals of Data Warehouse</h1>
-<ul>
-  <li>Centralized and Consistent Location for Data</li>
-  <li>Data Must be Accessible Fast (<strong>Query Performance</strong>)</li>
-  <li>User-friendly (<strong>Easy to Understand</strong>)</li>
-  <li>Must Load Data Consistently and repeatedly (<strong>ETL</strong>)</li>
-  <li><strong>Reporting</strong>  and  <strong>Data Visualization</strong>  Built on Top</li>
-</ul>
-
-<h1 id="understanding-a-data-warehouse">Understanding a Data Warehouse</h1>
-
-<p><img src="/assets/2023-12-06-data-warehouse-01-02/data-warehouse-flowchart.webp" alt="" /></p>
-
-<h1 id="business-intelligence">Business Intelligence</h1>
-<ul>
-  <li>We Create a Data Warehouse for  <strong>Business Intelligence</strong>!</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 01. Introduction SECTION 02. Data Warehouse Basics]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="SQL" /><category term="Data Warehouse" /><summary type="html"><![CDATA[In this article, I’ll summarize key takeaways from: SECTION 05. Facts]]></summary></entry></feed>
