@@ -39,7 +39,7 @@ In most cases, **Cloud Data Warehouse** is the better choice nowadays!
     - Independent Resources
     - The workload is split up & processed individually.
 - The modern way of solving performance issues
-- Millions or rows can be processed faster.
+- Millions of rows can be processed faster.
 - Many people can run queries at the same time with good performance.
 - Helpful with centralizing massive amounts of data
 
