@@ -17,7 +17,7 @@
     crossorigin="anonymous">
   </script>
 
-  <title>Joshua Kim – Data Analyst</title>
+  <title>Data Warehouse #12-13 – Joshua Kim – Data Analyst</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -25,11 +25,28 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Data Analyst">
-    <meta property="og:description" content="Data Analyst" />
+    <meta name="description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 12. Using a Data Warehouse
+    SECTION 13. Optimizing a Data Warehouse
+  
+
+" />
+    <meta property="og:description" content="
+  In this article, I’ll summarize key takeaways from:
+  
+    SECTION 12. Using a Data Warehouse
+    SECTION 13. Optimizing a Data Warehouse
+  
+
+" />
     
     <meta name="author" content="Joshua Kim" />
 
+    
+    <meta property="og:title" content="Data Warehouse #12-13" />
+    <meta property="twitter:title" content="Data Warehouse #12-13" />
     
   <!-- Async font loading -->
 <script>
@@ -118,231 +135,203 @@
 </div>
 
     <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Data Warehouse #12-13</h1>
+
+  <div>
+    <span class="date">
+      2024-01-14
+    </span>
+
+    <ul class="tag">
       
+      <li>
+        <a href="http://localhost:4000/tags#SQL">
+          SQL
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Data Warehouse">
+          Data Warehouse
+        </a>
+      </li>
+      
+    </ul>
+  </div>
 
-<div class="posts">
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-07/">Data Warehouse #07</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-02
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
+  <div class="entry">
+    <blockquote>
   <p>In this article, I’ll summarize key takeaways from:</p>
   <ul>
-    <li>SECTION 07. Slowly Changing Dimensions</li>
+    <li>SECTION 12. Using a Data Warehouse</li>
+    <li>SECTION 13. Optimizing a Data Warehouse</li>
   </ul>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-07/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/retention-batch-query/">데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2024-01-01
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Analysis">
-              Data Analysis
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>코호트 리텐션의 의미와 중요성에 대해 말씀드리고, Batch Query를 사용하여 회원가입 월 코호트 별로 Monthly Range Retention을 계산하는 방법을 제시해드릴게요.</p>
+<h3 id="disclaimer">DISCLAIMER</h3>
+<blockquote>
+  <p>This article is a compilation of key takeaways after completing <a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Data Warehouse — The Ultimate Guide</a> on Udemy. However, it may be challenging to achieve a comprehensive and deep understanding of Data Warehouse solely through this article. For your in-depth learning, please take the course, which is an excellent resource, and I personally highly recommend it to those who are eager to master data warehousing, dimensional modeling, and the ETL process.</p>
 </blockquote>
 
-      </div>
-
-      <a href="/retention-batch-query/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-06/">Data Warehouse #06</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-19
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 06. Dimensions</li>
-  </ul>
+<p><img src="/assets/2023-12-19-data-warehouse-06/data-warehouse.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.udemy.com/course/data-warehouse-the-ultimate-guide/">Source</a></p>
 </blockquote>
 
-      </div>
+<h1 id="using-indexes">Using Indexes</h1>
 
-      <a href="/data-warehouse-06/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-05/">Data Warehouse #05</a>
-      </h1>
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/1.png" alt="" /></p>
 
-      <div>
-        <span class="date">
-          2023-12-06
-        </span>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+	<span class="n">product_id</span>
+<span class="k">FROM</span>
+	<span class="n">sales</span>
+<span class="k">WHERE</span>
+	<span class="n">customer_id</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre></div></div>
 
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
+<h3 id="without-indexes">WITHOUT Indexes</h3>
+<ul>
+  <li>Table Scan</li>
+  <li>Read Efficiency ⬇️</li>
+  <li>Write Efficiency ⬆️</li>
+</ul>
 
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 05. Facts</li>
-  </ul>
+<h3 id="with-indexes">WITH Indexes</h3>
+<ul>
+  <li>Read Efficiency ⬆️</li>
+  <li>Write Efficiency ⬇️</li>
+  <li>How It Works:
+    <ul>
+      <li>Write Data in a Specific Order</li>
+      <li>Create a Lookup Table (to find a pointer to read later)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/2.png" alt="" /></p>
+<blockquote>
+  <p>Write Data in a Specific Order</p>
 </blockquote>
 
-      </div>
-
-      <a href="/data-warehouse-05/" class="read-more">Read More</a>
-    </article>
-  
-    <article class="post">
-      <h1>
-        <a href="/data-warehouse-04/">Data Warehouse #04</a>
-      </h1>
-
-      <div>
-        <span class="date">
-          2023-12-06
-        </span>
-
-        <ul class="tag">
-          
-          <li>
-            <a href="http://localhost:4000/tags#SQL">
-              SQL
-            </a>
-          </li>
-          
-          <li>
-            <a href="http://localhost:4000/tags#Data Warehouse">
-              Data Warehouse
-            </a>
-          </li>
-          
-        </ul>
-      </div>
-
-      <div class="entry">
-        <blockquote>
-  <p>In this article, I’ll summarize key takeaways from:</p>
-  <ul>
-    <li>SECTION 04. Dimensional Modeling</li>
-  </ul>
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/3.png" alt="" /></p>
+<blockquote>
+  <p>Create a Lookup Table</p>
 </blockquote>
 
-      </div>
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/4.png" alt="" /></p>
 
-      <a href="/data-warehouse-04/" class="read-more">Read More</a>
-    </article>
-  
-</div>
+<h1 id="b-tree-indexes">B-tree Indexes</h1>
 
-<div class="pagination">
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/5.png" alt="" /></p>
+<blockquote>
+  <p><a href="https://velog.io/@gayeong39/B-%ED%8A%B8%EB%A6%AC-%EC%9D%B8%EB%8D%B1%EC%8A%A4">Source</a></p>
+</blockquote>
+
+<ul>
+  <li>Multi-level Tree Structure</li>
+  <li>It breaks data down into pages or blocks.</li>
+  <li>Columns should be High Cardinality</li>
+  <li>Not Entire Table</li>
+  <li>Storage Cost ⬆️</li>
+</ul>
+
+<h1 id="bitmap-indexes">Bitmap Indexes</h1>
+
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/6.png" alt="" /></p>
+<blockquote>
+  <p><a href="https://velog.io/@gayeong39/%EB%B9%84%ED%8A%B8%EB%A7%B5-%EC%9D%B8%EB%8D%B1%EC%8A%A4BitMap-Index">Source</a></p>
+</blockquote>
+
+<ul>
+  <li>Particularly Good for Data Warehouses</li>
+  <li>Columns should be <strong>Low Cardinality</strong> + <strong>Large Amounts of Data</strong></li>
+  <li>Storage Cost ⬇️</li>
+  <li>Read Optimization ⬆️</li>
+  <li>DML Operation ⬆️</li>
+</ul>
+
+<h1 id="guidelines">Guidelines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>B-tree Index</strong></th>
+      <th><strong>Bitmap Index</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Default Index</td>
+      <td>Slow Update</td>
+    </tr>
+    <tr>
+      <td>Unique Columns</td>
+      <td>Storage Efficiency</td>
+    </tr>
+    <tr>
+      <td>(Surrogate Key, Names)</td>
+      <td>Read Performance ⬆️</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/2024-01-14-data-warehouse-12-13/7.png" alt="" /></p>
+
+<h3 id="fact-tables">Fact Tables</h3>
+<ul>
+  <li>Choose Columns that are used as <code class="language-plaintext highlighter-rouge">Filters</code>.</li>
+  <li>Surrogate Key → <strong>B-tree Index</strong></li>
+  <li>Foreign Keys → <strong>Bitmap Index</strong></li>
+</ul>
+
+<h3 id="dimension-tables">Dimension Tables</h3>
+<ul>
+  <li>Are they used in searches a lot?</li>
+  <li>Choose based on <code class="language-plaintext highlighter-rouge">Cardinality</code>.</li>
+</ul>
+
+<h3 id="create-index-examples">Create Index Examples</h3>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">INDEX</span>
+	<span class="n">index_name</span> <span class="k">ON</span> <span class="k">table_name</span> <span class="p">[</span><span class="k">USING</span> <span class="k">method</span><span class="p">]</span>
+	<span class="p">(</span>
+		<span class="k">column_name</span> <span class="p">[</span><span class="k">ASC</span> <span class="o">|</span> <span class="k">DESC</span><span class="p">],</span>
+		<span class="p">...</span>
+	<span class="p">)</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/data-warehouse-11/">
+            &#xE000; Data Warehouse #11
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
   
-    <span class="prev">
-      <a href="/" class="prev">
-        &#xE000; Previous
-      </a>
-    </span>
-  
-  
-    <span class="next">
-      <a href="/page3/" class="next">
-        Next &#xE001;
-      </a>
-    </span>
-  
-</div>
+</article>
 
     </div>
 
