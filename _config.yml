@@ -36,7 +36,7 @@ paginate: 5
 footer-links:
   behance: # https://www.behance.net/<username>
   dribbble:
-  email: joshuajkim413@gmail.com
+  email: 
   facebook:
   flickr:
   github: joshua-data
@@ -44,7 +44,7 @@ footer-links:
   instagram:
   linkedin: joshuajsk
   pinterest:
-  rss: # just type anything here for a working RSS icon
+  rss: /feed.xml
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
   tumblr: # https://<username>.tumblr.com
   twitter: 
