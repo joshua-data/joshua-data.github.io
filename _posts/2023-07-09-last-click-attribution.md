@@ -2,6 +2,7 @@
 layout: post
 title: "The Last Click Attribution Model Using BigQuery"
 tags:
+  - English
   - Data Analysis
   - SQL
   - BigQuery

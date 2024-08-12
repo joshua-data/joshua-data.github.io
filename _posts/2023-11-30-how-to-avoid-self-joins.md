@@ -2,6 +2,7 @@
 layout: post
 title: "데이터 분석가의 SQL 최적화 일기: SELF JOIN을 피하는 방법"
 tags:
+  - Korean
   - Data Analysis
   - SQL
 ---

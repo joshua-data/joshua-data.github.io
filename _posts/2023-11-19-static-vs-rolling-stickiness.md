@@ -2,6 +2,7 @@
 layout: post
 title: "데이터 분석가의 SQL 최적화 일기: Static vs. Rolling Stickiness"
 tags:
+  - Korean
   - Data Analysis
   - SQL
   - Data Warehouse

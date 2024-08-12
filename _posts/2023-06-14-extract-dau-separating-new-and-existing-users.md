@@ -2,6 +2,7 @@
 layout: post
 title: "It’s Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery"
 tags:
+  - English
   - SQL
   - Data Analysis
   - BigQuery

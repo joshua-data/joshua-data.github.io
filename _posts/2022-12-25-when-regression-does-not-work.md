@@ -2,6 +2,7 @@
 layout: post
 title: "회귀 모델이 풀 수 없는 문제"
 tags:
+  - Korean
   - Machine Learning
   - Statistics
   - Python

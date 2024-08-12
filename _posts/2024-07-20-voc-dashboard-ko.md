@@ -2,6 +2,7 @@
 layout: post
 title: "데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화"
 tags:
+  - Korean
   - Python
   - BigQuery
   - Redash

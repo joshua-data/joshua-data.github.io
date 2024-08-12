@@ -2,6 +2,7 @@
 layout: post
 title: "Harnessing the Power of BigQuery and Python: Overcoming Google Optimize A/B Testing Limitations"
 tags:
+  - English
   - Statistics
   - Data Analysis
   - SQL

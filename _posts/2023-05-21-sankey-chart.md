@@ -2,6 +2,7 @@
 layout: post
 title: "Let’s Create the Sankey Chart"
 tags:
+  - English
   - SQL
   - BigQuery
   - Redash

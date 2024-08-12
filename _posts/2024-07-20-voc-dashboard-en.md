@@ -2,6 +2,7 @@
 layout: post
 title: "Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency"
 tags:
+  - English
   - Python
   - BigQuery
   - Redash
