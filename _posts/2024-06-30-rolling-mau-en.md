@@ -73,14 +73,20 @@ tags:
 
 ##### (2) Analysis of the Existing Query (`Rolling 2-day Active Users Example`)
 
-* **A**. First, the `daily_activated_users` table data is retrieved through the following process:
+<details>
+<summary>**A**. First, the `daily_activated_users` table data is retrieved through the following process:</summary>
+<div markdown="1">
 ```sql
    FROM
       daily_activated_users MAIN
 ```
 ![Joshua Kim]({{ site.baseurl }}/assets/2024-06-30-rolling-mau/1.webp)
+</div>
+</details>
 
-* **B**. Then, a SELF JOIN is performed to concatenate the list of active users for the recent 2-day period for each day.
+<details>
+<summary>**B**. Then, a SELF JOIN is performed to concatenate the list of active users for the recent 2-day period for each day.</summary>
+<div markdown="1">
 ```sql
    FROM
       daily_activated_users MAIN
@@ -89,8 +95,12 @@ tags:
       ON SUB.date BETWEEN MAIN.date - INTERVAL '1 DAYS' AND MAIN.date
 ```
 ![Joshua Kim]({{ site.baseurl }}/assets/2024-06-30-rolling-mau/2.webp)
+</div>
+</details>
 
-* **C**. Now, the users are grouped by `MAIN.date` to calculate the unique number of users.
+<details>
+<summary>**C**. Now, the users are grouped by `MAIN.date` to calculate the unique number of users.</summary>
+<div markdown="1">
 ```sql
    SELECT
       MAIN.date,
@@ -104,6 +114,8 @@ tags:
       MAIN.date
 ```
 ![Joshua Kim]({{ site.baseurl }}/assets/2024-06-30-rolling-mau/3.webp)
+</div>
+</details>
 
 * Identifying the Exact Bottleneck
    * **The most time-consuming part is step B.** In this step, all rows corresponding to the Recent 2-day Window are concatenated for each row. For example, if there are 10 rows on January 2nd, and 100 rows corresponding to the Recent 2-day Window, a total of 1,000 rows (10*100) need to be concatenated, resulting in a rapid increase in memory usage. The process of concatenating the list of active users for each day through SELF JOIN was the primary cause of excessive scan time and memory usage.

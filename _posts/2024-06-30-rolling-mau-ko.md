@@ -73,14 +73,20 @@ tags:
 
 ##### (2) 기존 쿼리 분석 (`Rolling 2-day Active Users 사례`)
 
-* **A**. 먼저, 아래 과정을 통해 `daily_activated_users` 테이블의 데이터를 가져옵니다.
+<details>
+<summary>**A**. 먼저, 아래 과정을 통해 `daily_activated_users` 테이블의 데이터를 가져옵니다.</summary>
+<div markdown="1">
 ```sql
    FROM
       daily_activated_users MAIN
 ```
 ![Joshua Kim]({{ site.baseurl }}/assets/2024-06-30-rolling-mau/1.webp)
+</div>
+</details>
 
-* **B**. 그런 후, SELF JOIN을 통해 각 일별 Recent 2-day 활성 사용자 목록을 모두 이어 붙입니다.
+<details>
+<summary>**B**. 그런 후, SELF JOIN을 통해 각 일별 Recent 2-day 활성 사용자 목록을 모두 이어 붙입니다.</summary>
+<div markdown="1">
 ```sql
    FROM
       daily_activated_users MAIN
@@ -89,8 +95,12 @@ tags:
       ON SUB.date BETWEEN MAIN.date - INTERVAL '1 DAYS' AND MAIN.date
 ```
 ![Joshua Kim]({{ site.baseurl }}/assets/2024-06-30-rolling-mau/2.webp)
+</div>
+</details>
 
-* **C**. 이제 `MAIN.date`를 기준으로 그룹화하여 순수 사용자 수를 계산합니다.
+<details>
+<summary>**C**. 이제 `MAIN.date`를 기준으로 그룹화하여 순수 사용자 수를 계산합니다.</summary>
+<div markdown="1">
 ```sql
    SELECT
       MAIN.date,
@@ -104,6 +114,8 @@ tags:
       MAIN.date
 ```
 ![Joshua Kim]({{ site.baseurl }}/assets/2024-06-30-rolling-mau/3.webp)
+</div>
+</details>
 
 * 정확한 병목 지점 파악
    * **연산 시간이 가장 많이 소모되는 지점은 단계 B입니다.** 이 단계에서는 각 행마다 Recent 2-day Window에 해당하는 모든 행을 이어 붙이는 과정이 이루어집니다. 예를 들어, 1월 2일의 행 수가 10개이고, Recent 2-day Window에 해당하는 행이 100개라면, 총 1,000개의 행(10*100)을 이어 붙여야 하므로 메모리 사용량이 급격히 증가합니다. 즉, SELF JOIN을 통해 각 일별 Recent 2-day 활성 사용자 목록을 이어 붙이는 과정이 Scan 시간과 메모리 사용량을 상당히 많이 소모하는 원인이었습니다.
