@@ -248,33 +248,51 @@
 
 <ul>
   <li><strong>A</strong>. First, the <code class="language-plaintext highlighter-rouge">daily_activated_users</code> table data is retrieved through the following process:
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-</code></pre></div>    </div>
-    <p><img src="/assets/2024-06-30-rolling-mau/1.webp" alt="Joshua Kim" /></p>
+    <details>
+ <summary>View code</summary>
+ <div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">FROM</span>
+       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
+</code></pre></div>        </div>
+
+        <p><img src="/assets/2024-06-30-rolling-mau/1.webp" alt="Joshua Kim" /></p>
+      </div>
+ </details>
   </li>
   <li><strong>B</strong>. Then, a SELF JOIN is performed to concatenate the list of active users for the recent 2-day period for each day.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'1 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-    <p><img src="/assets/2024-06-30-rolling-mau/2.webp" alt="Joshua Kim" /></p>
+    <details>
+ <summary>View code</summary>
+ <div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">FROM</span>
+       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+       <span class="n">daily_activated_users</span> <span class="n">SUB</span>
+       <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'1 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
+</code></pre></div>        </div>
+
+        <p><img src="/assets/2024-06-30-rolling-mau/2.webp" alt="Joshua Kim" /></p>
+      </div>
+ </details>
   </li>
   <li><strong>C</strong>. Now, the users are grouped by <code class="language-plaintext highlighter-rouge">MAIN.date</code> to calculate the unique number of users.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">SELECT</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
- <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">GROUP</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-    <p><img src="/assets/2024-06-30-rolling-mau/3.webp" alt="Joshua Kim" /></p>
+    <details>
+ <summary>View code</summary>
+ <div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+       <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
+    <span class="k">FROM</span>
+       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+       <span class="n">daily_activated_users</span> <span class="n">SUB</span>
+       <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+       <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
+</code></pre></div>        </div>
+
+        <p><img src="/assets/2024-06-30-rolling-mau/3.webp" alt="Joshua Kim" /></p>
+      </div>
+ </details>
   </li>
   <li>Identifying the Exact Bottleneck
     <ul>
