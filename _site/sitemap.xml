@@ -37,6 +37,14 @@
 <lastmod>2024-01-01T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/ip-address-to-country-en/</loc>
+<lastmod>2024-05-19T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/ip-address-to-country-ko/</loc>
+<lastmod>2024-05-19T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/rolling-mau-en/</loc>
 <lastmod>2024-06-30T00:00:00+09:00</lastmod>
 </url>

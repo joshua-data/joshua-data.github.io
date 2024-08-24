@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>IP Address-Country Mapping Query Optimization – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “Optimized the process of mapping user country information using IP addresses in a data warehouse. The previous method was inefficient due to long processing times, but the new approach reduced query execution time by 90%.”
+
+" />
+    <meta property="og:description" content="
+  “Optimized the process of mapping user country information using IP addresses in a data warehouse. The previous method was inefficient due to long processing times, but the new approach reduced query execution time by 90%.”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="IP Address-Country Mapping Query Optimization" />
+    <meta property="twitter:title" content="IP Address-Country Mapping Query Optimization" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>IP Address-Country Mapping Query Optimization</h1>
+
+  <div>
+    <span class="date">
+      2024-05-19
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#English">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#PostgreSQL">
+          PostgreSQL
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“Optimized the process of mapping user country information using IP addresses in a data warehouse. The previous method was inefficient due to long processing times, but the new approach reduced query execution time by 90%.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>STAR Summary</li>
+  <li>Situation</li>
+  <li>Tasks</li>
+  <li>Actions</li>
+  <li>Results</li>
+</ol>
+
+<hr />
+
+<h1 id="1-star-summary">1. STAR Summary</h1>
+
+<h3 id="situation">Situation</h3>
+<ul>
+  <li>In an environment operating a global service, it was necessary to map user country information based on connection IP addresses. This task was performed using PostgreSQL, but the previous approach resulted in performance degradation. The existing query took too long to execute, placing a significant burden on data warehouse operations.</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+<ul>
+  <li>The goal was to optimize the existing IP address mapping query to drastically reduce processing time. This optimization aimed to improve the efficiency of the transformation process, achieving better data warehouse performance. Specifically, the core task was to optimize the computational process for IP address mapping and enhance the efficiency of the JOIN conditions.</li>
+</ul>
+
+<h3 id="actions">Actions</h3>
+
+<ol>
+  <li><strong>Analysis of the Existing Approach</strong>
+    <ul>
+      <li>The existing query used the <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator to map IP addresses to CIDR networks, identified as the main cause of performance degradation.</li>
+    </ul>
+  </li>
+  <li><strong>Creation of a New Table</strong>
+    <ul>
+      <li>Created a new table, <code class="language-plaintext highlighter-rouge">dim_ips_countries</code>, by processing the existing table.
+        <ul>
+          <li>This table includes <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns.</li>
+          <li>Converted IP addresses to BIGINT type to improve the efficiency of comparison operations.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Index Creation</strong>
+    <ul>
+      <li>Created indexes on the <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns to maximize search performance.</li>
+    </ul>
+  </li>
+  <li><strong>Query Optimization</strong>
+    <ul>
+      <li>Replaced the existing <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator with the <code class="language-plaintext highlighter-rouge">BETWEEN</code> operator to simplify IP address comparison and restructure the query for lightweight operations.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="results">Results</h3>
+<ul>
+  <li>The optimized query reduced execution time by 90%, significantly improving data warehouse performance.</li>
+</ul>
+
+<hr />
+
+<h1 id="2-situation">2. Situation</h1>
+
+<blockquote>
+  <ul>
+    <li>In an environment operating a global service, it was necessary to map user country information based on connection IP addresses. This task was performed using PostgreSQL, but the previous approach resulted in performance degradation. The existing query took too long to execute, placing a significant burden on data warehouse operations.</li>
+  </ul>
+</blockquote>
+
+<h3 id="problem-summary">Problem Summary</h3>
+<ul>
+  <li>In an environment operating a global service, it was necessary to map IP addresses collected from user connections to geographical information such as the country. For this, a table mapping IP addresses to country names was created using PostgreSQL’s CIDR operator, but the existing method was highly inefficient.</li>
+</ul>
+
+<h3 id="specific-problem-context">Specific Problem Context</h3>
+<ul>
+  <li>The core task was to map the <code class="language-plaintext highlighter-rouge">session_ip</code> column in the <code class="language-plaintext highlighter-rouge">src_sessions</code> table to the <code class="language-plaintext highlighter-rouge">cidr</code> column in the <code class="language-plaintext highlighter-rouge">src_cidrs_countries</code> table to create the <code class="language-plaintext highlighter-rouge">fct_sessions</code> table.</li>
+  <li>The existing query used the <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator to determine whether an IP address was included in a specific CIDR network. However, this method caused performance issues during large-scale data processing, with query execution times being excessively long. This degraded data warehouse performance and caused severe operational disruptions.</li>
+</ul>
+
+<hr />
+
+<h1 id="3-tasks">3. Tasks</h1>
+<blockquote>
+  <ul>
+    <li>The goal was to optimize the existing IP address mapping query to drastically reduce processing time. This optimization aimed to improve the efficiency of the transformation process, achieving better data warehouse performance. Specifically, the core task was to optimize the computational process for IP address mapping and enhance the efficiency of the JOIN conditions.</li>
+  </ul>
+</blockquote>
+
+<h3 id="assigned-tasks"><strong>Assigned Tasks</strong></h3>
+<ul>
+  <li>The main objective was to significantly reduce the inefficient query execution time.</li>
+</ul>
+
+<h3 id="1-improve-data-processing-speed"><strong>1. Improve Data Processing Speed</strong></h3>
+<ul>
+  <li>Reduce execution time to enhance data processing efficiency and prevent disruption to service operations.</li>
+</ul>
+
+<h3 id="2-query-optimization"><strong>2. Query Optimization</strong></h3>
+<ul>
+  <li>Design and implement an optimized query structure that can perform IP address and country information mapping more efficiently.</li>
+</ul>
+
+<h3 id="3-system-performance-improvement"><strong>3. System Performance Improvement</strong></h3>
+<ul>
+  <li>Improve overall data warehouse performance to establish a foundation that can handle future data expansion and growth.</li>
+</ul>
+
+<hr />
+
+<h1 id="4-actions">4. Actions</h1>
+
+<blockquote>
+  <ol>
+    <li><strong>Analysis of the Existing Approach</strong>
+      <ul>
+        <li>The existing query used the <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator to map IP addresses to CIDR networks, identified as the main cause of performance degradation.</li>
+      </ul>
+    </li>
+    <li><strong>Creation of a New Table</strong>
+      <ul>
+        <li>Created a new table, <code class="language-plaintext highlighter-rouge">dim_ips_countries</code>, by processing the existing table.
+          <ul>
+            <li>This table includes <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns.</li>
+            <li>Converted IP addresses to BIGINT type to improve the efficiency of comparison operations.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><strong>Index Creation</strong>
+      <ul>
+        <li>Created indexes on the <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns to maximize search performance.</li>
+      </ul>
+    </li>
+    <li><strong>Query Optimization</strong>
+      <ul>
+        <li>Replaced the existing <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator with the <code class="language-plaintext highlighter-rouge">BETWEEN</code> operator to simplify IP address comparison and restructure the query for lightweight operations.</li>
+      </ul>
+    </li>
+  </ol>
+</blockquote>
+
+<h3 id="1-analysis-of-the-existing-approach">1. Analysis of the Existing Approach</h3>
+<p><img src="/assets/2024-05-19-ip-address-to-country/1.webp" alt="" /></p>
+
+<p><strong>(STEP 1)</strong> Create an index on the <code class="language-plaintext highlighter-rouge">src_cidrs_countries</code> table.</p>
+<ul>
+  <li>Since the <code class="language-plaintext highlighter-rouge">cidr</code> column needs to be frequently scanned during the JOIN operation with the <code class="language-plaintext highlighter-rouge">src_sessions</code> table, an index was created on this column.
+    <details>
+<summary>View code</summary>
+<div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_cidr</span> <span class="k">ON</span> <span class="n">src_cidrs_countries</span> <span class="p">(</span><span class="n">cidr</span><span class="p">);</span>
+</code></pre></div>        </div>
+      </div>
+</details>
+  </li>
+</ul>
+
+<p><strong>(STEP 2)</strong> Created the <code class="language-plaintext highlighter-rouge">fct_sessions</code> table by joining the <code class="language-plaintext highlighter-rouge">src_cidrs_countries</code> table with the <code class="language-plaintext highlighter-rouge">src_sessions</code> table.</p>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator was used in the JOIN process.</li>
+  <li>However, this operator, which compares CIDR types, had a high computational cost, causing performance degradation during large-scale data processing.
+    <details>
+<summary>View code</summary>
+<div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">fct_sessions</span> <span class="k">AS</span>
+    <span class="k">SELECT</span>
+      <span class="n">S</span><span class="p">.</span><span class="n">session_id</span><span class="p">,</span>
+      <span class="n">S</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+      <span class="k">C</span><span class="p">.</span><span class="n">country</span>
+    <span class="k">FROM</span>
+      <span class="n">src_sessions</span> <span class="n">S</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+      <span class="n">src_cidrs_countries</span> <span class="k">C</span>
+      <span class="k">ON</span> <span class="n">S</span><span class="p">.</span><span class="n">session_ip</span><span class="p">::</span><span class="n">INET</span> <span class="o">&lt;&lt;=</span> <span class="k">C</span><span class="p">.</span><span class="n">cidr</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </div>
+</details>
+  </li>
+</ul>
+
+<h3 id="2-creation-of-a-new-table">2. <strong>Creation of a New Table</strong></h3>
+<p><img src="/assets/2024-05-19-ip-address-to-country/2.webp" alt="" /></p>
+
+<ul>
+  <li>A new table, <code class="language-plaintext highlighter-rouge">dim_ips_countries</code>, was created by processing the existing <code class="language-plaintext highlighter-rouge">src_cidrs_countries</code> table. This table was newly designed to minimize CIDR operations, adding <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns representing the IP address range for each CIDR value.</li>
+  <li>By converting IP addresses to BIGINT type for storage, computation speed was greatly improved. <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> represent the lowest and highest IPs within the CIDR range, simplifying the process of verifying IP addresses within a CIDR network.</li>
+</ul>
+<details>
+<summary>View code</summary>
+<div>
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">dim_ips_countries</span> <span class="k">AS</span>
+    <span class="k">SELECT</span>
+      <span class="n">cidr</span><span class="p">,</span>
+      <span class="p">(</span><span class="s1">'x'</span> <span class="o">||</span> 
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">cidr</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">cidr</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">cidr</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">cidr</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span>
+      <span class="p">)::</span><span class="nb">BIT</span><span class="p">(</span><span class="mi">32</span><span class="p">)::</span><span class="nb">BIGINT</span> <span class="k">AS</span> <span class="n">start_ip</span><span class="p">,</span>
+      <span class="p">(</span><span class="s1">'x'</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">BROADCAST</span><span class="p">(</span><span class="n">cidr</span><span class="p">)),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">BROADCAST</span><span class="p">(</span><span class="n">cidr</span><span class="p">)),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">BROADCAST</span><span class="p">(</span><span class="n">cidr</span><span class="p">)),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">BROADCAST</span><span class="p">(</span><span class="n">cidr</span><span class="p">)),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span>
+      <span class="p">)::</span><span class="nb">BIT</span><span class="p">(</span><span class="mi">32</span><span class="p">)::</span><span class="nb">BIGINT</span> <span class="k">AS</span> <span class="n">end_ip</span><span class="p">,</span>				
+      <span class="n">country</span>
+    <span class="k">FROM</span>
+      <span class="n">src_cidrs_countries</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<h3 id="3-index-creation">3. <strong>Index Creation</strong></h3>
+
+<ul>
+  <li>Since the <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns need to be frequently scanned during the JOIN operation with the <code class="language-plaintext highlighter-rouge">src_sessions</code> table, an index was created on these two columns.</li>
+  <li>This index was designed to efficiently find values within an IP address range, enabling quick searches during JOIN operations.
+    <details>
+<summary>View code</summary>
+<div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_ip_range</span> <span class="k">ON</span> <span class="n">dim_ips_countries</span> <span class="p">(</span><span class="n">start_ip</span><span class="p">,</span> <span class="n">end_ip</span><span class="p">);</span>
+</code></pre></div>        </div>
+      </div>
+</details>
+  </li>
+</ul>
+
+<h3 id="4-query-optimization">4. <strong>Query Optimization</strong></h3>
+
+<ul>
+  <li>The existing <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator was replaced with the <code class="language-plaintext highlighter-rouge">BETWEEN</code> operator to simplify IP address comparison and restructure the query for lightweight operations.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">session_ip</code> column in the <code class="language-plaintext highlighter-rouge">src_sessions</code> table was also converted from CIDR to IP address, then to BIGINT type, to be compared with the <code class="language-plaintext highlighter-rouge">start_ip</code> and <code class="language-plaintext highlighter-rouge">end_ip</code> columns in the <code class="language-plaintext highlighter-rouge">dim_ips_countries</code> table.
+    <details>
+<summary>View code</summary>
+<div>
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">fct_sessions</span> <span class="k">AS</span>
+    <span class="k">SELECT</span>
+    <span class="n">S</span><span class="p">.</span><span class="n">session_id</span><span class="p">,</span>
+    <span class="n">S</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+    <span class="k">C</span><span class="p">.</span><span class="n">country</span>
+  <span class="k">FROM</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+      <span class="n">session_id</span><span class="p">,</span>
+      <span class="n">user_id</span><span class="p">,</span>
+      <span class="p">(</span><span class="s1">'x'</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">session_ip</span><span class="p">::</span><span class="n">INET</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">session_ip</span><span class="p">::</span><span class="n">INET</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">session_ip</span><span class="p">::</span><span class="n">INET</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span> <span class="o">||</span>
+      <span class="n">LPAD</span><span class="p">(</span><span class="n">TO_HEX</span><span class="p">((</span><span class="n">SPLIT_PART</span><span class="p">(</span><span class="k">HOST</span><span class="p">(</span><span class="n">session_ip</span><span class="p">::</span><span class="n">INET</span><span class="p">),</span> <span class="s1">'.'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)::</span><span class="nb">INTEGER</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">)</span>                
+      <span class="p">)::</span><span class="nb">BIT</span><span class="p">(</span><span class="mi">32</span><span class="p">)::</span><span class="nb">BIGINT</span> <span class="k">AS</span> <span class="n">session_ip</span>
+    <span class="k">FROM</span>
+      <span class="n">src_sessions</span>
+  <span class="p">)</span> <span class="n">S</span>
+  <span class="k">LEFT</span> <span class="k">JOIN</span>
+    <span class="n">src_cidrs_countries</span> <span class="k">C</span>
+    <span class="k">ON</span> <span class="n">S</span><span class="p">.</span><span class="n">session_ip</span> <span class="k">BETWEEN</span> <span class="k">C</span><span class="p">.</span><span class="n">start_ip</span> <span class="k">AND</span> <span class="k">C</span><span class="p">.</span><span class="n">end_ip</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </div>
+</details>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+<blockquote>
+  <ul>
+    <li>The optimized query reduced execution time by 90%, significantly improving data warehouse performance.</li>
+  </ul>
+</blockquote>
+
+<h3 id="1-positive-results">1. Positive Results</h3>
+
+<ul>
+  <li>The optimized approach reduced query execution time from approximately 100x to 10x, effectively cutting execution time by around 90%. This significantly improved data processing speed and system performance. The new approach also maintained stable performance during large-scale data processing and established a foundation that could flexibly respond to future data growth.</li>
+  <li>This optimization effort maximized the efficiency of the data warehouse, reducing operational costs and enabling better data analysis and service delivery. As a result, the overall system performance was greatly enhanced, making a significant contribution to the company’s data operation strategy.</li>
+</ul>
+
+<h3 id="2-lessons-learned">2. Lessons Learned</h3>
+
+<ul>
+  <li>As shown in the figure below, SQL JOINs involve a nested loop search process, which needs to be carefully considered.
+<img src="/assets/2024-05-19-ip-address-to-country/3.webp" alt="" /></li>
+</ul>
+
+<h5 id="tip-1-columns-used-in-join-conditions-should-have-lightweight-data-types">(TIP 1) Columns used in JOIN conditions should have lightweight data types.</h5>
+<ul>
+  <li>In the existing approach, the <code class="language-plaintext highlighter-rouge">cidr</code> column was of the CIDR type, but in the new approach, it was parsed into BIGINT to make the data type lighter.</li>
+</ul>
+
+<h5 id="tip-2-operators-used-in-join-conditions-should-have-lightweight-processes">(TIP 2) Operators used in JOIN conditions should have lightweight processes.</h5>
+<ul>
+  <li>In the existing approach, the heavier <code class="language-plaintext highlighter-rouge">&lt;&lt;=</code> operator was used, but in the new approach, the <code class="language-plaintext highlighter-rouge">BETWEEN</code> operator was used to reduce the burden.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/retention-batch-query/">
+            &#xE000; 데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/ip-address-to-country-ko/">
+            IP 주소-국가 매핑 쿼리 최적화 &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>© Joshua Kim</p>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
