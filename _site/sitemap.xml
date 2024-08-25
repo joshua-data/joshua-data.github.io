@@ -61,6 +61,14 @@
 <lastmod>2024-07-20T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/join-instead-of-not-in-en/</loc>
+<lastmod>2024-08-13T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/join-instead-of-not-in-ko/</loc>
+<lastmod>2024-08-13T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/404/</loc>
 </url>
 <url>
@@ -80,5 +88,8 @@
 </url>
 <url>
 <loc>http://localhost:4000/page3/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page4/</loc>
 </url>
 </urlset>
