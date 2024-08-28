@@ -589,6 +589,12 @@ footer {
       left: 0;
     }
   }
+
+  .footer-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
