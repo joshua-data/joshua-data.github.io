@@ -415,7 +415,7 @@ tags:
 ### Internal Sharing
 * I clarified the problem and shared the details with internal stakeholders, and many expressed agreement with the issue.
 * Eventually, I held a meeting with executives and marketing team members to **discuss possible action plans** to address the issue.
-   ![]({{ site.baseurl }}/assets/2024-08-29-how-we-dramatically-improved-conversion-rates/7.png)
+   ![]({{ site.baseurl }}/assets/2024-08-29-how-we-dramatically-improved-conversion-rates/7-eng.png)
 
 ### Limitations of Data Analysis
 * Unfortunately, the user behavior that occurred between the `add_payment_info` event and the `purchase` event could not be confirmed through the data.
