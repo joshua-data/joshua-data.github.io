@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>A/B 테스트 후기: 할인율 명시의 효과 – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “본 A/B 테스트는 저희 기업 내 A/B 테스트 TF에서 진행한 프로젝트로, 자사몰 웹사이트의 구매 전환율과 매출을 향상시키기 위해 할인율(%) 표시의 효과를 분석했습니다. 실험 설계 단계에서 Chi-squared test, 두 그룹 비율 차이 검정(z-test), 두 그룹 평균 차이 검정(t-test) 등의 통계 방법론을 사용해 실험군과 대조군 간의 차이를 검증했습니다. 결과적으로는 할인율 표시가 구매 전환율과 1인당 매출액에 유의미한 영향을 주지 않았으나, 장바구니 담기 전환율이 유의미하게 상승했습니다. 이를 통해 할인 정보가 소비자의 구매 결정을 앞당기는 데 효과적임을 발견하고, 향후 제품 가치 전달을 위한 더욱 효과적인 전략을 세우는 것이 중요하다는 사실을 확인했습니다.”
+
+
+" />
+    <meta property="og:description" content="
+  “본 A/B 테스트는 저희 기업 내 A/B 테스트 TF에서 진행한 프로젝트로, 자사몰 웹사이트의 구매 전환율과 매출을 향상시키기 위해 할인율(%) 표시의 효과를 분석했습니다. 실험 설계 단계에서 Chi-squared test, 두 그룹 비율 차이 검정(z-test), 두 그룹 평균 차이 검정(t-test) 등의 통계 방법론을 사용해 실험군과 대조군 간의 차이를 검증했습니다. 결과적으로는 할인율 표시가 구매 전환율과 1인당 매출액에 유의미한 영향을 주지 않았으나, 장바구니 담기 전환율이 유의미하게 상승했습니다. 이를 통해 할인 정보가 소비자의 구매 결정을 앞당기는 데 효과적임을 발견하고, 향후 제품 가치 전달을 위한 더욱 효과적인 전략을 세우는 것이 중요하다는 사실을 확인했습니다.”
+
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="A/B 테스트 후기: 할인율 명시의 효과" />
+    <meta property="twitter:title" content="A/B 테스트 후기: 할인율 명시의 효과" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>A/B 테스트 후기: 할인율 명시의 효과</h1>
+
+  <div>
+    <span class="date">
+      2023-04-30
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Korean">
+          Korean
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#BigQuery">
+          BigQuery
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Python">
+          Python
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Data Analysis">
+          Data Analysis
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“본 A/B 테스트는 저희 기업 내 A/B 테스트 TF에서 진행한 프로젝트로, 자사몰 웹사이트의 구매 전환율과 매출을 향상시키기 위해 할인율(%) 표시의 효과를 분석했습니다. 실험 설계 단계에서 Chi-squared test, 두 그룹 비율 차이 검정(z-test), 두 그룹 평균 차이 검정(t-test) 등의 통계 방법론을 사용해 실험군과 대조군 간의 차이를 검증했습니다. 결과적으로는 할인율 표시가 구매 전환율과 1인당 매출액에 유의미한 영향을 주지 않았으나, 장바구니 담기 전환율이 유의미하게 상승했습니다. 이를 통해 할인 정보가 소비자의 구매 결정을 앞당기는 데 효과적임을 발견하고, 향후 제품 가치 전달을 위한 더욱 효과적인 전략을 세우는 것이 중요하다는 사실을 확인했습니다.”
+<img src="/assets/2023-04-30-ab-test-review/7.png" alt="" /></p>
+</blockquote>
+
+<hr />
+
+<h1 id="목차">목차</h1>
+<ol>
+  <li>STAR Summary</li>
+  <li>Situation</li>
+  <li>Tasks</li>
+  <li>Actions</li>
+  <li>Results</li>
+</ol>
+
+<hr />
+
+<h1 id="all-in-one-jupyter-notebook">All-in-one Jupyter Notebook</h1>
+<ul>
+  <li><a href="https://github.com/joshua-data/portfolio/blob/main/ab_test_bigquery.ipynb">Jupyter Notebook (GitHub Repo)</a></li>
+</ul>
+
+<hr />
+
+<h1 id="1-star-summary">1. STAR Summary</h1>
+
+<h3 id="situation">Situation</h3>
+<ul>
+  <li>2023년 회사의 데이터 기반 의사결정 프로세스를 제고하기 위해 <strong>A/B 테스트 TF</strong>가 운영되었으며, 유일한 데이터 분석가인 본인이 TF 리드를 맡았습니다.</li>
+  <li>TF의 목표는 자사몰 웹사이트의 <strong>구매 전환율과 매출액 향상</strong>이었으며, 약 20회의 A/B 테스트를 수행했습니다.</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+<ul>
+  <li>기획자 분께서 <strong>제품 이미지에 할인율(%)을 표시</strong>하면 소비자 심리학 측면에서 구매 전환율을 높일 수 있다는 아이디어를 제안해주셨습니다.</li>
+  <li>제품 이미지 상단에 <strong>할인율(%)</strong>을 표시하는 방식이 구매 전환에 미치는 효과를 실험하기로 결정했습니다.</li>
+</ul>
+
+<h3 id="actions">Actions</h3>
+<ul>
+  <li><strong>핵심 지표</strong>는 구매 전환율과 1인당 매출액, <strong>보조 지표</strong>는 장바구니 담기 전환율과 구매 시작하기 전환율, 그리고 <strong>가드레일 지표</strong>는 다른 이커머스 플랫폼으로 이동하는 전환율을 설정했습니다.</li>
+  <li>할인율(%) 표시가 구매 전환율과 1인당 매출액을 상승시킬 것이라는 <strong>가설을 수립</strong>하고, <strong>Type 1 Error(α)</strong>를 0.05로 설정했습니다.</li>
+  <li>chi-squared 검정, 두 그룹 비율 차이 검정(z-test), 두 그룹 평균 차이 검정(t-test) 등의 통계 방법론을 통해 <strong>실험군과 대조군의 독립성 및 차이를 검증</strong>했습니다.</li>
+</ul>
+
+<h3 id="results">Results</h3>
+<ul>
+  <li><strong>핵심 지표에서의 결론</strong>: 할인율 표시가 구매 전환율과 매출액에 유의미한 변화를 주지 못했으며, 이는 제품의 본질적 가치를 효과적으로 전달하지 못했기 때문으로 해석됩니다.</li>
+  <li><strong>장바구니 담기 전환율의 상승</strong>: 할인 정보는 구매 결정을 촉진하는 요소로 작용해 장바구니 담기 전환율을 높였으며, 고객에게 시각적으로 강조된 할인 정보가 긍정적인 영향을 미칠 수 있다는 점을 확인할 수 있었습니다.</li>
+</ul>
+
+<hr />
+
+<h1 id="2-situation">2. Situation</h1>
+<blockquote>
+  <ul>
+    <li>2023년 회사의 데이터 기반 의사결정 프로세스를 제고하기 위해 <strong>A/B 테스트 TF</strong>가 운영되었으며, 유일한 데이터 분석가인 본인이 TF 리드를 맡았습니다.</li>
+    <li>TF의 목표는 자사몰 웹사이트의 <strong>구매 전환율과 매출액 향상</strong>이었으며, 약 20회의 A/B 테스트를 수행했습니다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="21-ab-테스트-tf의-결성">2.1. A/B 테스트 TF의 결성</h3>
+<p>데이터 기반 의사결정 프로세스를 공고히 다져가던 저희 기업은 2023년 수 개월 동안 A/B 테스트 TF를 운영한 적이 있습니다. 사내 유일한 데이터 분석가로서 저는 당시 TF 리드로 임명되었습니다. 당시 TF에는 다음의 동료 분들이 함께 합류하셨습니다.</p>
+
+<ul>
+  <li>임원 (CSO)</li>
+  <li>임원 (CBO)</li>
+  <li>기획자</li>
+  <li>프로덕트 디자이너</li>
+  <li>마케터</li>
+  <li>프론트엔드 개발자</li>
+</ul>
+
+<h3 id="22-ab-테스트-tf의-목표">2.2. A/B 테스트 TF의 목표</h3>
+<p>당시 TF의 목표는 자사몰 웹사이트의 구매 전환율과 매출액을 향상시키는 것이었습니다. 이를 위해 약 20번의 A/B 테스트를 반복적으로 진행했습니다.
+<img src="/assets/2023-04-30-ab-test-review/1.png" alt="" /></p>
+
+<hr />
+
+<h1 id="3-tasks">3. Tasks</h1>
+<blockquote>
+  <ul>
+    <li>기획자 분께서 <strong>제품 이미지에 할인율(%)을 표시</strong>하면 소비자 심리학 측면에서 구매 전환율을 높일 수 있다는 아이디어를 제안해주셨습니다.</li>
+    <li>제품 이미지 상단에 <strong>할인율(%)</strong>을 표시하는 방식이 구매 전환에 미치는 효과를 실험하기로 결정했습니다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="31-실험-아이디어-제안">3.1. 실험 아이디어 제안</h3>
+
+<p>실험 아이디어를 결정하기 위한 미팅에서 기획자 동료 분이 이런 아이디어를 들려주셨습니다.</p>
+
+<blockquote>
+  <p>“우리는 제품 이미지에 <strong>할인 가격($)</strong>을 표시하고 있어요. 그런데, 소비자 심리학 측면에서 <strong>할인율(%)</strong>을 표시하면 경우에 따라 가치 전달의 효과가 더 좋을 수 있어요. 이 점에 대해 실험해보면 괜찮을 것 같아요.”</p>
+</blockquote>
+
+<p>즉, 제품 할인을 부각하기 위해 Percent off와 Dollar off 표현 방식 중 어떤 것이 더 구매를 자극하는지 비교해볼 필요가 있다는 말씀이었습니다.</p>
+
+<p>이커머스 SaaS 플랫폼을 서비스하고 있는 Namogoo는 이를 좀 더 구체화하여 <a href="https://www.namogoo.com/blog/consumer-behavior-psychology/psychology-of-discounts/">The Rule of 100</a>를 언급하며, 상품 가격이 $100를 기점으로 Percent off와 Dollar off 표현 중 효과의 우월성이 달라진다고 제시하기도 했습니다. 하지만 이는 지나치게 일반화된 명제일 수 있으므로 저희 웹사이트에서 실험해볼 만한 가치가 있었습니다.
+<img src="/assets/2023-04-30-ab-test-review/2.png" alt="" /></p>
+
+<h3 id="32-실험-아이디어-결정">3.2. 실험 아이디어 결정</h3>
+
+<p>결국 저희는 다음과 같이 구체적으로 실험 아이디어를 결정했습니다.</p>
+
+<blockquote>
+  <p>“제품 이미지 상단에 <strong>할인율(%)</strong>을 표시하는 것이 효과적일지 실험해보기”</p>
+</blockquote>
+
+<p><img src="/assets/2023-04-30-ab-test-review/3.png" alt="" /></p>
+
+<hr />
+
+<h1 id="4-actions">4. Actions</h1>
+<blockquote>
+  <ul>
+    <li><strong>핵심 지표</strong>는 구매 전환율과 1인당 매출액, <strong>보조 지표</strong>는 장바구니 담기 전환율과 구매 시작하기 전환율, 그리고 <strong>가드레일 지표</strong>는 다른 이커머스 플랫폼으로 이동하는 전환율을 설정했습니다.</li>
+    <li>할인율(%) 표시가 구매 전환율과 1인당 매출액을 상승시킬 것이라는 <strong>가설을 수립</strong>하고, <strong>Type 1 Error(α)</strong>를 0.05로 설정했습니다.</li>
+    <li>chi-squared 검정, 두 그룹 비율 차이 검정(z-test), 두 그룹 평균 차이 검정(t-test) 등의 통계 방법론을 통해 <strong>실험군과 대조군의 독립성 및 차이를 검증</strong>했습니다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="41-지표-선정">4.1. 지표 선정</h3>
+
+<p><strong>4.1.1. 핵심 지표</strong></p>
+
+<blockquote>
+  <p>구매 전환율과 1인당 매출액을 핵심 지표로 선정했습니다. 사실 핵심 지표를 2개로 두면 실험 의사결정 프로세스가 불명확해지고 방향의 모호성에 직면할 수 있다는 단점이 있었지만, 그럼에도 불구하고 2개를 두는 것이 당시 시점에서는 중요하다고 생각했습니다. 아직 조직의 A/B 테스트 경험이 충분하지 않아 실험 아이디어의 적중률이 낮을 것이기 때문에, 여러 관점에서 지표를 측정하여 학습의 여지를 남겨둔 것입니다. 특히, 구매 전환율과 1인당 매출액 사이의 관계가 명확히 밝혀지지 않은 상황에서 무리하게 1개의 핵심 지표만을 두는 것은 오히려 오판의 위험성을 낳을 수 있기도 했습니다.</p>
+</blockquote>
+
+<p>(1) 구매 전환율</p>
+<ul>
+  <li>실험 페이지를 방문한 사용자의 최종 구매 전환율</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 순수 사용자 수 기준의 조건부 확률</span>
+P<span class="o">(</span>최종 구매 완료 사건 | 실험 페이지 방문 사건<span class="o">)</span>
+</code></pre></div></div>
+
+<p>(2) 1인당 매출액 (ARPU)</p>
+<ul>
+  <li>실험 페이지를 방문한 사용자의 기대 평균 매출액</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>실험 페이지 방문 사용자 발생 총 매출액 ÷ 실험 페이지 방문 사용자 수
+</code></pre></div></div>
+
+<p><strong>4.1.2. 보조 지표</strong></p>
+
+<blockquote>
+  <p>핵심 지표 외에도, 아래 두 가지 지표도 보조적으로 측정해보기로 했습니다. 핵심 지표에 가장 가까이 맞닿아 있는 지표들이므로, 실험 방향을 재설정하거나 숨겨진 의미를 찾는 데 중요한 실마리가 될 수 있다고 생각했기 때문입니다.</p>
+</blockquote>
+
+<p>(1) 장바구니 담기 전환율</p>
+<ul>
+  <li>실험 페이지를 방문한 사용자의 장바구니 담기 버튼 클릭률</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 순수 사용자 수 기준의 조건부 확률</span>
+P<span class="o">(</span>장바구니 담기 버튼 클릭 사건 | 실험 페이지 방문 사건<span class="o">)</span>
+</code></pre></div></div>
+
+<p>(2) 구매 시작하기 전환율</p>
+<ul>
+  <li>실험 페이지를 방문한 사용자의 구매 시작하기 버튼 클릭률</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 순수 사용자 수 기준의 조건부 확률</span>
+P<span class="o">(</span>구매 시작하기 버튼 클릭 사건 | 실험 페이지 방문 사건<span class="o">)</span>
+</code></pre></div></div>
+
+<p><strong>4.1.3. 가드레일 지표</strong></p>
+
+<blockquote>
+  <p>저희 기업은 자사몰 뿐만 아니라, 아마존, 네이버, 쿠팡 등 다른 이커머스 플랫폼에서도 동일한 제품을 판매하고 있습니다. 그런데, A/B 테스트 TF의 활동 바운더리는 엄밀하게 조직의 전체 매출에 집중한 것이라기보다는 지역 지표에 한정된 영역이었습니다. 자사몰에 국한된 구매 전환율과 1인당 매출액을 향상시키려는 목표를 가지고 있었기 때문입니다. 물론 자사몰에서의 성과가 다른 이커머스 플랫폼 매출에 악영향을 끼치지는 않을 것이라는 직관을 가지고 있었지만, 조직의 전체 관점을 놓치지 않기 위해 이를 꼼꼼히 가드레일 지표로 설정하게 되었습니다.</p>
+</blockquote>
+
+<p><img src="/assets/2023-04-30-ab-test-review/4.png" alt="" /></p>
+
+<p>(1) 다른 이커머스 플랫폼 바로가기 전환율</p>
+<ul>
+  <li>실험 페이지를 방문한 사용자의 다른 이커머스 플랫폼 바로가기 버튼 클릭률</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 순수 사용자 수 기준의 조건부 확률</span>
+P<span class="o">(</span>다른 이커머스 플랫폼 바로가기 버튼 클릭 사건 | 실험 페이지 방문 사건<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-04-30-ab-test-review/5.png" alt="" /></p>
+
+<h3 id="42-가설-수립과-검정력-분석">4.2. 가설 수립과 검정력 분석</h3>
+
+<p><strong>4.2.1. 가설 수립</strong>
+미팅을 통해 결정한 실험 아이디어와 핵심 지표를 결합하여 다음과 같이 명제 형태로 실험 가설을 수립했습니다.</p>
+
+<blockquote>
+  <p>“제품 이미지 상단에 할인율(%)을 표시하면, 구매 전환율 및 1인당 매출액이 상승한다.”</p>
+</blockquote>
+
+<p><img src="/assets/2023-04-30-ab-test-review/6.png" alt="" /></p>
+
+<p>이를 귀무가설과 대립가설 형태로 표현하면 다음과 같습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>구분</strong></th>
+      <th><strong>귀무가설 (H0)</strong></th>
+      <th><strong>대립가설 (H1)</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>구매 전환율</strong></td>
+      <td>기존 페이지(A) 방문 사용자의 구매 전환율 ≥ 신규 페이지(B) 방문 사용자의 구매 전환율</td>
+      <td>기존 페이지(A) 방문 사용자의 구매 전환율 &lt; 신규 페이지(B) 방문 사용자의 구매 전환율</td>
+    </tr>
+    <tr>
+      <td><strong>1인당 매출액 (ARPU)</strong></td>
+      <td>기존 페이지(A) 방문 사용자의 ARPU ≥ 신규 페이지(B) 방문 사용자의 ARPU</td>
+      <td>기존 페이지(A) 방문 사용자의 ARPU &lt; 신규 페이지(B) 방문 사용자의 ARPU</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>4.2.2. 검정력 분석 (Power Analysis)</strong></p>
+
+<p>가설 검정의 판단 기준을 세우기 위해 다음과 같이 검정력 분석 절차를 밟았습니다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>용어</strong></th>
+      <th><strong>설명</strong></th>
+      <th><strong>값</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Type 1 Error (α, 유의 수준, 기각역)</strong></td>
+      <td>귀무가설이 실제로 True인데도 불구하고 대립가설을 채택할 확률</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <td><strong>Type 2 Error (β)</strong></td>
+      <td>대립가설이 실제로 True인데도 불구하고 대립가설을 채택하지 않을 확률</td>
+      <td>결정 불필요</td>
+    </tr>
+    <tr>
+      <td><strong>검정력 (Power)</strong></td>
+      <td>1 - β</td>
+      <td>결정 불필요</td>
+    </tr>
+    <tr>
+      <td><strong>최소 효과 크기 (MDE, Minimum Detectable Effect)</strong></td>
+      <td>실무적으로 액션을 실행하기 위해 필요한 실험군(A)과 대조군(B) 간의 최소 차이</td>
+      <td>결정 불필요</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>최소 효과 크기 (MDE, Minimum Detectable Effect)에 대해 따로 정의하지는 않았습니다. 왜냐하면 본 실험의 전체 배포 과정은 SaaS 플랫폼 상에서 간단하게 이뤄질 수 있어서 개발 리소스 비용이 거의 들지 않기 때문입니다.</p>
+
+<h3 id="43-분석-방법론-결정하기">4.3. 분석 방법론 결정하기</h3>
+
+<p>가설 검정을 수행하기 위한 분석 프로세스를 다음과 같이 설계했습니다.</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/7.png" alt="" /></p>
+
+<p><strong>4.3.1. 독립성 검정 (Independence Test)</strong></p>
+
+<p>실험군과 대조군의 범주형 변수 분포가 독립인지 검정하는 과정입니다. 즉, 본격적인 가설 검정에 앞서 외부 요인 통제를 확인하는 절차입니다. 국가 분포와 접속 기기 유형 분포가 각 그룹 배정 여부와 무관한지 확인했습니다.</p>
+<ul>
+  <li><strong>국가 분포</strong>: 저희 웹사이트의 경우, 한국과 미국 방문자가 대부분을 차지하므로 한국, 미국, 기타국가 총 세 가지 국가 범주로 분류하여 진행했습니다.</li>
+  <li><strong>접속 기기 유형 분포</strong>: Desktop, Mobile, Tablet 총 세 가지 기기 유형 범주로 분류했습니다.</li>
+</ul>
+
+<p>(1) 검정 통계량: chi-squared</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/8.png" alt="" /></p>
+
+<p>(2) 가설 수립과 검정력 분석</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>구분</strong></th>
+      <th><strong>귀무가설 (H0)</strong></th>
+      <th><strong>대립가설 (H1)</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>국가 분포</strong></td>
+      <td>실험군과 대조군의 국가 분포가 독립적이다.</td>
+      <td>실험군과 대조군의 국가 분포가 독립적이지 않다.</td>
+    </tr>
+    <tr>
+      <td><strong>접속 기기 유형 분포</strong></td>
+      <td>실험군과 대조군의 접속 기기 유형 분포가 독립적이다.</td>
+      <td>실험군과 대조군의 접속 기기 유형 분포가 독립적이지 않다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>용어</strong></th>
+      <th><strong>설명</strong></th>
+      <th><strong>값</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Type 1 Error (α, 유의 수준, 기각역)</strong></td>
+      <td>귀무가설이 실제로 True인데도 불구하고 대립가설을 채택할 확률</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>4.3.2. 두 그룹 비율 차이 검정 (Two-proportion z-test)</strong></p>
+
+<p>실험군과 대조군 사이의 비교하고자 하는 값이 비율인 경우 수행하는 검정 방법입니다. 다음 지표들에 적용하도록 했습니다.</p>
+<ul>
+  <li><strong>핵심 지표</strong>: 구매 전환율</li>
+  <li><strong>보조 지표</strong>: 장바구니 담기 전환율, 구매 시작하기 전환율</li>
+  <li><strong>가드레일 지표</strong>: 다른 이커머스 플랫폼 바로가기 전환율</li>
+</ul>
+
+<p>(1) 가정 충족 확인</p>
+
+<ul>
+  <li>두 그룹에서 발생한 전환 사용자 수와 미전환 사용자 수가 모두 5명을 초과해야 한다.</li>
+</ul>
+
+<p>(2) 검정 통계량: z</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/9.png" alt="" /></p>
+
+<p><strong>4.3.3. 두 그룹 평균 차이 검정 (Two-sample t-test)</strong></p>
+
+<p>실험군과 대조군 사이의 비교하고자 하는 값이 수치형 변수인 경우 수행하는 검정 방법입니다. 다음 지표에 적용하도록 했습니다.</p>
+
+<ul>
+  <li>핵심 지표: 1인당 매출액</li>
+</ul>
+
+<p>(1) 가정 충족 확인</p>
+<ul>
+  <li>두 그룹의 수치형 변수가 모두 정규 분포를 따르거나, 혹은 두 그룹의 샘플 수 합계가 30을 초과해야 한다.</li>
+</ul>
+
+<p>(2) 등분산 검정 (Bartlett’s Test)</p>
+<ul>
+  <li>실험군과 대조군의 변수 분포의 분산이 동일한지 검정하는 과정입니다. 즉, 본격적인 검정 통계량 추정에 앞서 각 집단의 분산 동일 여부를 확인하는 절차입니다.</li>
+  <li>
+    <p>가설 수립과 검정력 분석</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th><strong>구분</strong></th>
+          <th><strong>귀무가설 (H0)</strong></th>
+          <th><strong>대립가설 (H1)</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>등분산 검정</td>
+          <td>실험군의 분산 = 대조군의 분산</td>
+          <td>실험군의 분산 ≠ 대조군의 분산</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th><strong>용어</strong></th>
+          <th><strong>설명</strong></th>
+          <th><strong>값</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Type 1 Error (α, 유의 수준, 기각역)</strong></td>
+          <td>귀무가설이 실제로 True인데도 불구하고 대립가설을 채택할 확률</td>
+          <td>0.05</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<p>(3) 검정 통계량: t</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/10.png" alt="" /></p>
+
+<h3 id="44-bigquery-쿼리문-및-python-코드-작성하기">4.4. BigQuery 쿼리문 및 Python 코드 작성하기</h3>
+
+<p>BigQuery로부터 데이터를 불러와 Python 상에서 분석을 했습니다.</p>
+<ul>
+  <li><a href="https://github.com/joshua-data/portfolio/blob/main/ab_test_bigquery.ipynb">Jupyter Notebook (GitHub Repo)</a></li>
+</ul>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+<blockquote>
+  <ul>
+    <li><strong>핵심 지표에서의 결론</strong>: 할인율 표시가 구매 전환율과 매출액에 유의미한 변화를 주지 못했으며, 이는 제품의 본질적 가치를 효과적으로 전달하지 못했기 때문으로 해석됩니다.</li>
+    <li><strong>장바구니 담기 전환율의 상승</strong>: 할인 정보는 구매 결정을 촉진하는 요소로 작용해 장바구니 담기 전환율을 높였으며, 고객에게 시각적으로 강조된 할인 정보가 긍정적인 영향을 미칠 수 있다는 점을 확인할 수 있었습니다.</li>
+  </ul>
+</blockquote>
+
+<h3 id="51-분석-결과">5.1. 분석 결과</h3>
+
+<p><img src="/assets/2023-04-30-ab-test-review/11.png" alt="" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>유형</strong></th>
+      <th><strong>지표</strong></th>
+      <th><strong>p-value</strong></th>
+      <th><strong>결론</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>핵심 지표</td>
+      <td>구매 전환율</td>
+      <td><code class="language-plaintext highlighter-rouge">0.0984</code></td>
+      <td>A ≥ B</td>
+    </tr>
+    <tr>
+      <td>핵심 지표</td>
+      <td>1인당 매출액</td>
+      <td><code class="language-plaintext highlighter-rouge">0.2284</code></td>
+      <td>A ≥ B</td>
+    </tr>
+    <tr>
+      <td>보조 지표</td>
+      <td>장바구니 담기 전환율</td>
+      <td><code class="language-plaintext highlighter-rouge">0.0438</code></td>
+      <td>A &lt; B</td>
+    </tr>
+    <tr>
+      <td>보조 지표</td>
+      <td>구매 시작하기 전환율</td>
+      <td><code class="language-plaintext highlighter-rouge">0.1194</code></td>
+      <td>A ≥ B</td>
+    </tr>
+    <tr>
+      <td>가드레일 지표</td>
+      <td>다른 이커머스 플랫폼 바로가기 전환율</td>
+      <td><code class="language-plaintext highlighter-rouge">0.5758</code></td>
+      <td>A ≥ B</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="52-분석-결과-해석">5.2. 분석 결과 해석</h3>
+
+<p>이번 실험의 결과, <strong>핵심 지표인 구매 전환율과 1인당 매출액에서는</strong> 귀무가설을 기각할 만큼의 통계적 유의성을 확보하지 못했습니다. 즉, 대립가설을 채택할 만한 근거가 부족하다는 것을 의미합니다. 하지만 흥미로운 발견이 있었습니다. <strong>보조 지표였던 장바구니 담기 전환율에서는</strong> 실험군(B)이 우세한 결과를 보여줬으며, 통계적으로 유의미한 차이를 확인할 수 있었습니다. 이를 바탕으로 실험 결과를 다음과 같이 해석할 수 있었습니다.</p>
+
+<p><strong>5.2.1. 제품 가치 인식 전략의 중요성</strong></p>
+
+<p><strong>제품의 가치를 제대로 인지시키는 전략</strong> 없이는 구매 전환율이나 매출 증가에 큰 영향을 미치기 어렵다는 사실이 드러났습니다. 특히 이번 실험에서 사용된 할인율 표시 방식은 <strong>제품의 본질적 가치를 강조하는 것과는 거리가 멀었기 때문에</strong> 매출에 즉각적인 변화를 이끌어내지 못했습니다. 저희 기업의 제품은 충동 구매를 유발하는 일반적인 소비재와는 달리, 고객이 신중히 고려하는 고가의 자산 보호용 제품입니다. 따라서 제품의 고유한 가치를 더 명확히 전달하거나, 구매 시점에서 고객이 가질 수 있는 우려를 해소하는 컨텐츠가 더 적합한 A/B 테스트 전략임을 알 수 있었습니다.</p>
+
+<p><strong>5.2.2. 할인 정보가 장바구니 전환에 미치는 영향</strong></p>
+
+<p>비록 매출에 직접적인 성과를 나타내지 못했지만, <strong>장바구니 담기 전환율</strong>에서 긍정적인 결과를 얻을 수 있었습니다. 할인 정보는 언제 사라질지 모르는 혜택으로 인식되어, <strong>고객이 구매 결정을 앞당기게 만든 요소로 작용</strong>한 것으로 보입니다. 할인율 자체가 제품의 핵심 가치를 전달하지는 않지만, 고객의 구매 결정을 서두르게 하는 요소로서 간접적으로 긍정적인 영향을 미칠 수 있다는 점에서 시각적 강조가 구매 여정에서 효과적일 수 있었던 것입니다.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/ab-test-review-en/">
+            &#xE000; A/B Test Review: The Impact of Displaying Discount Percentages
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/sankey-chart/">
+            Let’s Create the Sankey Chart &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>A/B Test Review: The Impact of Displaying Discount Percentages – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “This A/B test was conducted as part of a project within our company’s A/B Testing TF to analyze the impact of displaying discount percentages (%) on the website’s purchase conversion rate and revenue. In the experiment design phase, I used statistical methodologies such as the Chi-squared test, two-proportion z-test, and two-sample t-test to verify differences between the test and control groups. While the discount display did not significantly affect the purchase conversion rate or average revenue per user, the add-to-cart conversion rate showed a notable increase. This revealed that discount information can effectively expedite consumer purchase decisions, and highlighted the importance of developing more effective strategies for communicating product value moving forward.”
+
+
+" />
+    <meta property="og:description" content="
+  “This A/B test was conducted as part of a project within our company’s A/B Testing TF to analyze the impact of displaying discount percentages (%) on the website’s purchase conversion rate and revenue. In the experiment design phase, I used statistical methodologies such as the Chi-squared test, two-proportion z-test, and two-sample t-test to verify differences between the test and control groups. While the discount display did not significantly affect the purchase conversion rate or average revenue per user, the add-to-cart conversion rate showed a notable increase. This revealed that discount information can effectively expedite consumer purchase decisions, and highlighted the importance of developing more effective strategies for communicating product value moving forward.”
+
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="A/B Test Review: The Impact of Displaying Discount Percentages" />
+    <meta property="twitter:title" content="A/B Test Review: The Impact of Displaying Discount Percentages" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>A/B Test Review: The Impact of Displaying Discount Percentages</h1>
+
+  <div>
+    <span class="date">
+      2023-04-30
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#English">
+          English
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#BigQuery">
+          BigQuery
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Python">
+          Python
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Data Analysis">
+          Data Analysis
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“This A/B test was conducted as part of a project within our company’s A/B Testing TF to analyze the impact of displaying discount percentages (%) on the website’s purchase conversion rate and revenue. In the experiment design phase, I used statistical methodologies such as the Chi-squared test, two-proportion z-test, and two-sample t-test to verify differences between the test and control groups. While the discount display did not significantly affect the purchase conversion rate or average revenue per user, the add-to-cart conversion rate showed a notable increase. This revealed that discount information can effectively expedite consumer purchase decisions, and highlighted the importance of developing more effective strategies for communicating product value moving forward.”
+<img src="/assets/2023-04-30-ab-test-review/7.png" alt="" /></p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>STAR Summary</li>
+  <li>Situation</li>
+  <li>Tasks</li>
+  <li>Actions</li>
+  <li>Results</li>
+</ol>
+
+<hr />
+
+<h1 id="all-in-one-jupyter-notebook">All-in-one Jupyter Notebook</h1>
+<ul>
+  <li><a href="https://github.com/joshua-data/portfolio/blob/main/ab_test_bigquery.ipynb">Jupyter Notebook (GitHub Repo)</a></li>
+</ul>
+
+<hr />
+
+<h1 id="1-star-summary">1. STAR Summary</h1>
+
+<h3 id="situation">Situation</h3>
+<ul>
+  <li>In 2023, <strong>an A/B Test Task Force (TF)</strong> was established to enhance the company’s data-driven decision-making process. As the sole data analyst, I led the TF.</li>
+  <li>The TF’s goal was to <strong>improve purchase conversion rates and revenue</strong> on the company’s website, and we conducted around 20 A/B tests.</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+<ul>
+  <li>A product manager suggested that <strong>displaying discount percentages (%) on product images</strong> could increase conversion rates by leveraging consumer psychology.</li>
+  <li>We decided to experiment with displaying <strong>discount percentages (%)</strong> on product images to see its effect on conversion rates.</li>
+</ul>
+
+<h3 id="actions">Actions</h3>
+<ul>
+  <li><strong>Key metrics</strong> were set as the Purchase CVR and Average Revenue per User (ARPU), <strong>supplementary metrics</strong> were set as the Add to Cart CVR and Begin Checkout CVR, and <strong>the guardrail metric</strong> was the rate of users bouncing to other e-commerce platforms.</li>
+  <li>We <strong>formulated the hypothesis</strong> that displaying discount percentages would increase Purchase CVR and ARPU, <strong>setting Type 1 Error (α)</strong> at 0.05.</li>
+  <li>Using chi-squared tests, two-proportion z-tests, and two-sample t-tests, I <strong>validated the independence and differences between the test and control groups.</strong></li>
+</ul>
+
+<h3 id="results">Results</h3>
+<ul>
+  <li><strong>Conclusion from key metrics</strong>: Displaying discount percentages did not bring significant changes to Purchase CVR and ARPU, which may be because it did not effectively communicate the inherent value of the product.</li>
+  <li><strong>Increase in Add to Cart CVRT</strong>: Discount information acted as a driver for purchase decisions, increasing the Add to Cart CVR, showing that visually highlighting discounts could positively influence user behavior.</li>
+</ul>
+
+<hr />
+
+<h1 id="2-situation">2. Situation</h1>
+<blockquote>
+  <ul>
+    <li>In 2023, <strong>an A/B Test Task Force (TF)</strong> was established to enhance the company’s data-driven decision-making process. As the sole data analyst, I led the TF.</li>
+    <li>The TF’s goal was to <strong>improve purchase conversion rates and revenue</strong> on the company’s website, and we conducted around 20 A/B tests.</li>
+  </ul>
+</blockquote>
+
+<h3 id="21-formation-of-the-ab-test-tf">2.1. Formation of the A/B Test TF</h3>
+<p>Our company, which had been steadily strengthening its data-driven decision-making process, formed an A/B Test Task Force (TF) in 2023. As the only data analyst, I was appointed as the TF lead. The following colleagues joined the TF.</p>
+
+<ul>
+  <li>Executive (CSO)</li>
+  <li>Executive (CBO)</li>
+  <li>Product Manager</li>
+  <li>Product Designer</li>
+  <li>Marketer</li>
+  <li>Frontend Developer</li>
+</ul>
+
+<h3 id="22-goals-of-the-ab-test-tf">2.2. Goals of the A/B Test TF</h3>
+<p>The TF’s goal was to improve conversion rates and revenue on the company’s website. To achieve this, we conducted around 20 A/B tests.
+<img src="/assets/2023-04-30-ab-test-review/1.png" alt="" /></p>
+
+<hr />
+
+<h1 id="3-tasks">3. Tasks</h1>
+<blockquote>
+  <ul>
+    <li>A product manager suggested that <strong>displaying discount percentages (%) on product images</strong> could increase conversion rates by leveraging consumer psychology.</li>
+    <li>We decided to experiment with displaying <strong>discount percentages (%)</strong> on product images to see its effect on conversion rates.</li>
+  </ul>
+</blockquote>
+
+<h3 id="31-proposal-of-the-experiment-idea">3.1. Proposal of the Experiment Idea</h3>
+
+<p>During a meeting to decide on an experiment idea, the product manager shared this suggestion:</p>
+
+<blockquote>
+  <p>“We display <strong>discount prices ($)</strong> on product images. However, from a consumer psychology perspective, displaying <strong>discount percentages (%)</strong> might be more effective in certain cases. It’s worth experimenting with this.”</p>
+</blockquote>
+
+<p>The idea was to highlight discounts and compare whether displaying percentages or dollar-off prices would be more effective in driving purchases.</p>
+
+<p>Namogoo, an e-commerce SaaS platform, has discussed this further in their article on <a href="https://www.namogoo.com/blog/consumer-behavior-psychology/psychology-of-discounts/">The Rule of 100</a>, suggesting that depending on whether the price is above or below $100, either percent-off or dollar-off might be more effective. However, I believed this generalized rule needed testing in the context of our website.
+<img src="/assets/2023-04-30-ab-test-review/2.png" alt="" /></p>
+
+<h3 id="32-finalizing-the-experiment-idea">3.2. Finalizing the Experiment Idea</h3>
+
+<p>We decided to test the following hypothesis:</p>
+
+<blockquote>
+  <p>“Displaying <strong>discount percentages (%)</strong> on product images might positively influence conversion rates.”</p>
+</blockquote>
+
+<p><img src="/assets/2023-04-30-ab-test-review/3.png" alt="" /></p>
+
+<hr />
+
+<h1 id="4-actions">4. Actions</h1>
+<blockquote>
+  <ul>
+    <li><strong>Key metrics</strong> were set as the Purchase CVR and Average Revenue per User (ARPU), <strong>supplementary metrics</strong> were set as the Add to Cart CVR and Begin Checkout CVR, and <strong>the guardrail metric</strong> was the rate of users bouncing to other e-commerce platforms.</li>
+    <li>We <strong>formulated the hypothesis</strong> that displaying discount percentages would increase Purchase CVR and ARPU, <strong>setting Type 1 Error (α)</strong> at 0.05.</li>
+    <li>Using chi-squared tests, two-proportion z-tests, and two-sample t-tests, I <strong>validated the independence and differences between the test and control groups.</strong></li>
+  </ul>
+</blockquote>
+
+<h3 id="41-selection-of-metrics">4.1. Selection of Metrics</h3>
+
+<p><strong>4.1.1. Key Metrics</strong></p>
+
+<blockquote>
+  <p>The core metrics selected were conversion rates and ARPU. Although having two key metrics can create ambiguity, I believed it was crucial to learn from multiple perspectives, given that the relationship between conversion rates and ARPU was unclear.</p>
+</blockquote>
+
+<p>(1) Conversion Rate</p>
+<ul>
+  <li>The final conversion rate of users visiting the experiment page</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Conditional probability based on total number of users</span>
+P<span class="o">(</span>Final Purchase | Visit Experiment Page<span class="o">)</span>
+</code></pre></div></div>
+
+<p>(2) Average Revenue Per User (ARPU)</p>
+<ul>
+  <li>The expected average revenue per user visiting the experiment page</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Total Revenue from Users Visiting Experiment Page ÷ Total Number of Users Visiting Experiment Page  
+</code></pre></div></div>
+
+<p><strong>4.1.2. Supplementary Metrics</strong></p>
+
+<blockquote>
+  <p>In addition to the key metrics, I decided to measure the following two supplementary metrics. These metrics are closely tied to the core metrics and could provide valuable insights into adjusting the experimental direction or uncovering hidden meanings.</p>
+</blockquote>
+
+<p>(1) Add to Cart Conversion Rate</p>
+<ul>
+  <li>The rate at which users who visit the experiment page click the Add to Cart button</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Conditional probability based on total number of users</span>
+P<span class="o">(</span>Click Add to Cart Button Click | Visit Experiment Page<span class="o">)</span>
+</code></pre></div></div>
+
+<p>(2) Begin Checkout CVR</p>
+<ul>
+  <li>The rate at which users who visit the experiment page click the Begin Checkout button</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Conditional probability based on total number of users</span>
+P<span class="o">(</span>Click Begin Checkout Button | Visit Experiment Page<span class="o">)</span>
+</code></pre></div></div>
+
+<p><strong>4.1.3. Guardrail Metrics</strong></p>
+
+<blockquote>
+  <p>Our company sells the same products on other platforms such as Amazon, Naver, and Coupang. However, the scope of the A/B Test TF’s activities was primarily limited to our own website’s conversion rates and ARPU. AlthoughI didn’t expect our website’s performance to negatively impact other e-commerce platforms, I set up guardrail metrics to ensure a holistic view of overall company performance.</p>
+</blockquote>
+
+<p><img src="/assets/2023-04-30-ab-test-review/4.png" alt="" /></p>
+
+<p>(1) Rate of Switching to Other E-commerce Platforms</p>
+<ul>
+  <li>The rate at which users who visit the experiment page click the button to visit other e-commerce platforms</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Conditional probability based on total number of users</span>
+P<span class="o">(</span>Click on Link to Other E-commerce Platforms | Visit Experiment Page<span class="o">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2023-04-30-ab-test-review/5.png" alt="" /></p>
+
+<h3 id="42-hypothesis-formulation-and-power-analysis">4.2. Hypothesis Formulation and Power Analysis</h3>
+
+<p><strong>4.2.1. Hypothesis Formulation</strong>
+Combining the experimental idea and key metrics determined during the meeting, we formulated the following hypothesis:</p>
+
+<blockquote>
+  <p>“Displaying discount percentages on product images will increase conversion rates and ARPU.”</p>
+</blockquote>
+
+<p><img src="/assets/2023-04-30-ab-test-review/6.png" alt="" /></p>
+
+<p>The hypothesis can be expressed as the following null and alternative hypotheses:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Key Metrics</strong></th>
+      <th><strong>Null Hypothesis (H0)</strong></th>
+      <th><strong>Alternative Hypothesis (H1)</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Purchase CVR</strong></td>
+      <td>The CVR of users visiting the existing page (A) ≥ The CVR of users visiting the new page (B)</td>
+      <td>The CVR of users visiting the existing page (A) &lt; The CVR of users visiting the new page (B)</td>
+    </tr>
+    <tr>
+      <td><strong>ARPU</strong></td>
+      <td>The ARPU of users visiting the existing page (A) ≥ The ARPU of users visiting the new page (B)</td>
+      <td>The ARPU of users visiting the existing page (A) &lt; The ARPU of users visiting the new page (B)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>4.2.2. Power Analysis</strong></p>
+
+<p>To establish the decision-making criteria for hypothesis testing, I conducted the following power analysis:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Term</strong></th>
+      <th><strong>Description</strong></th>
+      <th><strong>Value</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Type 1 Error (α, Significance Level)</strong></td>
+      <td>The probability of rejecting the null hypothesis when it is actually true</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <td><strong>Type 2 Error (β)</strong></td>
+      <td>The probability of failing to reject the alternative hypothesis when it is actually true</td>
+      <td>Not calculated</td>
+    </tr>
+    <tr>
+      <td><strong>Power</strong></td>
+      <td>1 - β</td>
+      <td>Not calculated</td>
+    </tr>
+    <tr>
+      <td><strong>Minimum Detectable Effect (MDE)</strong></td>
+      <td>The smallest effect size required for practical action between the test group (A) and the control group (B)</td>
+      <td>Not calculated</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>I did not explicitly define the Minimum Detectable Effect (MDE), as the entire deployment process for this experiment on the SaaS platform could be done easily with minimal development resources.</p>
+
+<h3 id="43-determining-the-analytical-methodology">4.3. Determining the Analytical Methodology</h3>
+
+<p>The analytical process for hypothesis testing was designed as follows:</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/7.png" alt="" /></p>
+
+<p><strong>4.3.1. Independence Test</strong></p>
+
+<p>This test verifies the independence of the categorical variables between the test and control groups, ensuring that external factors were controlled before proceeding with the main hypothesis test. I checked whether the distribution of country and device type was independent of the group assignment.</p>
+<ul>
+  <li><strong>Country Distribution</strong>: Most visitors to our website are from South Korea and the U.S., so I categorized users into three groups: Korea, U.S., and other countries.</li>
+  <li><strong>Device Type Distribution</strong>: I categorized users into three groups: Desktop, Mobile, and Tablet.</li>
+</ul>
+
+<p>(1) Test Statistic: chi-squared</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/8.png" alt="" /></p>
+
+<p>(2) Hypothesis Formulation and Power Analysis</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Category</strong></th>
+      <th><strong>Null Hypothesis (H0)</strong></th>
+      <th><strong>Alternative Hypothesis (H1)</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Country Distribution</strong></td>
+      <td>The country distribution between the test and control groups is independent.</td>
+      <td>The country distribution between the test and control groups is not independent.</td>
+    </tr>
+    <tr>
+      <td><strong>Device Type Distribution</strong></td>
+      <td>The device type distribution between the test and control groups is independent.</td>
+      <td>The device type distribution between the test and control groups is not independent.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Category</strong></th>
+      <th><strong>Description</strong></th>
+      <th><strong>Value</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Type 1 Error (α, Significance Level)</strong></td>
+      <td>The probability of rejecting the null hypothesis when it is actually true</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>4.3.2. Two-proportion z-test</strong></p>
+
+<p>This test is used when comparing proportions between the test and control groups. I applied this test to the following metrics:</p>
+<ul>
+  <li><strong>Key Metric</strong>: Purchase CVR</li>
+  <li><strong>Supplementary Metrics</strong>: Add to Cart CVR, Begin Checkout CVR</li>
+  <li><strong>Guardrail Metric</strong>: Other Platforms CVR</li>
+</ul>
+
+<p>(1) Assumption Check</p>
+
+<ul>
+  <li>The number of conversions and non-conversions in both groups must exceed 5.</li>
+</ul>
+
+<p>(2) Test Statistic: z</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/9.png" alt="" /></p>
+
+<p><strong>4.3.3. Two-sample t-test</strong></p>
+
+<p>This test is used when comparing numerical variables between the test and control groups. I applied this test to the following metric:</p>
+
+<ul>
+  <li><strong>Key Metric</strong>: ARPU</li>
+</ul>
+
+<p>(1) Assumption Check</p>
+<ul>
+  <li>The numerical variable in both groups must follow a normal distribution, or the total sample size across both groups must exceed 30.</li>
+</ul>
+
+<p>(2) Bartlett’s Test for Equal Variances</p>
+<ul>
+  <li>This test checks if the variances of the numerical variable in both groups are equal. It’s an important step before estimating the test statistic.</li>
+  <li>
+    <p>Hypothesis Formulation and Power Analysis</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th><strong>Category</strong></th>
+          <th><strong>Null Hypothesis (H0)</strong></th>
+          <th><strong>Alternative Hypothesis (H1)</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Equal Variance Test</td>
+          <td>Variance of Test Group = Variance of Control Group</td>
+          <td>Variance of Test Group ≠ Variance of Control Group</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th><strong>Term</strong></th>
+          <th><strong>Description</strong></th>
+          <th><strong>Value</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Type 1 Error (α, Significance Level)</strong></td>
+          <td>The probability of rejecting the null hypothesis when it is actually true</td>
+          <td>0.05</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<p>(3) Test Statistic: t</p>
+
+<p><img src="/assets/2023-04-30-ab-test-review/10.png" alt="" /></p>
+
+<h3 id="44-writing-bigquery-queries-and-python-code">4.4. Writing BigQuery Queries and Python Code</h3>
+
+<p>Data was retrieved from BigQuery and analyzed using Python.</p>
+<ul>
+  <li><a href="https://github.com/joshua-data/portfolio/blob/main/ab_test_bigquery.ipynb">Jupyter Notebook (GitHub Repo)</a></li>
+</ul>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+<blockquote>
+  <ul>
+    <li><strong>Conclusion from key metrics</strong>: Displaying discount percentages did not bring significant changes to Purchase CVR and ARPU, which may be because it did not effectively communicate the inherent value of the product.</li>
+    <li><strong>Increase in Add to Cart CVRT</strong>: Discount information acted as a driver for purchase decisions, increasing the Add to Cart CVR, showing that visually highlighting discounts could positively influence user behavior.</li>
+  </ul>
+</blockquote>
+
+<h3 id="51-analysis-results">5.1. Analysis Results</h3>
+
+<p><img src="/assets/2023-04-30-ab-test-review/11.png" alt="" /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Type</strong></th>
+      <th><strong>Metric</strong></th>
+      <th><strong>p-value</strong></th>
+      <th><strong>Conclusion</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Key</td>
+      <td>Purchase CVR</td>
+      <td><code class="language-plaintext highlighter-rouge">0.0984</code></td>
+      <td>A ≥ B</td>
+    </tr>
+    <tr>
+      <td>Key</td>
+      <td>ARPU</td>
+      <td><code class="language-plaintext highlighter-rouge">0.2284</code></td>
+      <td>A ≥ B</td>
+    </tr>
+    <tr>
+      <td>Supplementary</td>
+      <td>Add to Cart CVR</td>
+      <td><code class="language-plaintext highlighter-rouge">0.0438</code></td>
+      <td>A &lt; B</td>
+    </tr>
+    <tr>
+      <td>Supplementary</td>
+      <td>Begin Checkout CVR</td>
+      <td><code class="language-plaintext highlighter-rouge">0.1194</code></td>
+      <td>A ≥ B</td>
+    </tr>
+    <tr>
+      <td>Guardrail</td>
+      <td>Other Platforms CVR</td>
+      <td><code class="language-plaintext highlighter-rouge">0.5758</code></td>
+      <td>A ≥ B</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="52-interpretation-of-results">5.2. Interpretation of Results</h3>
+
+<p>In this experiment, neither <strong>the key metrics of conversion rate nor ARPU</strong> showed statistically significant results that would allow us to reject the null hypothesis. In other words, there wasn’t enough evidence to support the alternative hypothesis. However, an interesting observation was made. <strong>The supplementary metric of the Add to Cart CVR</strong> showed a statistically significant difference, with the test group (B) outperforming the control group (A). Based on this, we can interpret the results as follows:</p>
+
+<p><strong>5.2.1. Importance of a Value Perception Strategy</strong></p>
+
+<p>It became clear that without <strong>a strategy to properly communicate the value of the product</strong>, it’s difficult to make significant changes in conversion rates or revenue. In particular, the method of displaying discount percentages in this experiment <strong>did not effectively highlight the inherent value of the product</strong>, which is why it failed to drive immediate sales. Our company’s products are high-value, protective items that require careful consideration, unlike common consumer goods that trigger impulse purchases. Therefore, a better A/B testing strategy might focus on more clearly communicating the unique value of the product or addressing customer concerns at the time of purchase.</p>
+
+<p><strong>5.2.2. Impact of Discount Information on Add to Cart Conversion</strong></p>
+
+<p>Although it didn’t directly boost revenue, <strong>the Add to Cart conversion rate</strong> yielded positive results. Discount information is perceived as a fleeting benefit that could disappear, <strong>encouraging customers to make faster purchasing decisions</strong>. While the discount percentage itself may not convey the core value of the product, it serves as an element that can indirectly influence the customer’s decision to expedite their purchase. This shows that visually emphasizing discounts can be effective in the customer journey.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/when-regression-does-not-work/">
+            &#xE000; 회귀 모델이 풀 수 없는 문제
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/ab-test-review-ko/">
+            A/B 테스트 후기: 할인율 명시의 효과 &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

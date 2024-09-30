@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-09-18T02:08:13+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Analytics Engineer | Data Analyst</subtitle><entry><title type="html">구매 전환율 급상승 후기</title><link href="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/" rel="alternate" type="text/html" title="구매 전환율 급상승 후기" /><published>2024-08-29T00:00:00+09:00</published><updated>2024-08-29T00:00:00+09:00</updated><id>http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko</id><content type="html" xml:base="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-01T03:48:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Analytics Engineer | Data Analyst</subtitle><entry><title type="html">구매 전환율 급상승 후기</title><link href="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/" rel="alternate" type="text/html" title="구매 전환율 급상승 후기" /><published>2024-08-29T00:00:00+09:00</published><updated>2024-08-29T00:00:00+09:00</updated><id>http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko</id><content type="html" xml:base="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/"><![CDATA[<blockquote>
   <p>“외부 요인으로 인해 증가한 신규 방문자 데이터를 분석하여 구매 전환율의 급상승을 달성했습니다. 데이터를 통해 신규 방문자 수와 이들의 구매 의향이 크게 증가했음을 발견했지만, 결제 단계에서 이탈률이 높다는 문제를 파악했습니다. 이에 결제 과정의 불편함이 주요 원인임을 가설로 설정하고, PayPal Express Checkout을 도입하여 사용자 경험을 개선했습니다. 그 결과, 결제 전환율이 32%p 상승하여 이전보다 훨씬 높은 수준을 기록했으며, 이는 지속적으로 유지되고 있습니다. 이를 통해 분석 기반의 문제 해결과 성과 향상을 이뤄냈습니다.”</p>
 </blockquote>
 
@@ -1292,206 +1292,7 @@
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
 
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="English" /><category term="GA4" /><category term="BigQuery" /><category term="Redash" /><category term="Data Analysis" /><summary type="html"><![CDATA[“By analyzing the data of new visitors that increased due to external factors, I achieved a significant rise in purchase conversion rates. The data revealed a substantial increase in the number of new visitors and their purchasing intent, but also identified a high dropout rate at the payment stage. Based on the hypothesis that the inconvenience in the payment process was the main cause, I introduced PayPal Express Checkout to enhance user experience. As a result, the payment conversion rate increased by 32%p, reaching a much higher level than before, and this improvement has been sustained. This demonstrates effective problem-solving and performance enhancement based on data analysis.”]]></summary></entry><entry><title type="html">Query Optimization by Using JOIN Instead of NOT IN</title><link href="http://localhost:4000/join-instead-of-not-in-en/" rel="alternate" type="text/html" title="Query Optimization by Using JOIN Instead of NOT IN" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-en</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-en/"><![CDATA[<blockquote>
-  <p>“In this project, I optimized the incremental update strategy for the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”</p>
-</blockquote>
-
-<hr />
-
-<h1 id="table-of-contents">Table of Contents</h1>
-<ol>
-  <li>STAR Summary</li>
-  <li>Situation</li>
-  <li>Tasks</li>
-  <li>Actions</li>
-  <li>Results</li>
-</ol>
-
-<hr />
-
-<h1 id="1-star-summary">1. STAR Summary</h1>
-
-<h3 id="situation">Situation</h3>
-<ul>
-  <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
-</ul>
-
-<h3 id="tasks">Tasks</h3>
-<ul>
-  <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
-</ul>
-
-<h3 id="actions">Actions</h3>
-<ul>
-  <li>I <strong>replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
-</ul>
-
-<h3 id="results">Results</h3>
-<ul>
-  <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
-</ul>
-
-<hr />
-
-<h1 id="2-situation">2. Situation</h1>
-
-<blockquote>
-  <ul>
-    <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
-  </ul>
-</blockquote>
-
-<p><img src="/assets/2024-08-13-join-instead-of-not-in/1.webp" alt="" /></p>
-
-<h3 id="specific-situation">Specific Situation</h3>
-<ul>
-  <li>Our company operates an Enterprise Data Warehouse (EDW) environment to provide B2B BI services. Every midnight, a complex data transformation process based on user event data is performed. <strong>However, this process was taking longer than expected.</strong> In particular, <strong>the incremental update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table, a key event table</strong>, was taking up most of the orchestration time. This delay in data refresh posed a risk of negatively impacting service quality.</li>
-</ul>
-
-<hr />
-
-<h1 id="3-tasks">3. Tasks</h1>
-
-<blockquote>
-  <ul>
-    <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
-  </ul>
-</blockquote>
-
-<h3 id="root-causes-of-the-problem">Root Causes of the Problem</h3>
-<ul>
-  <li>I identified three major issues in the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">WITH</span>
-    <span class="n">CTE_src_events</span> <span class="k">AS</span> <span class="p">(</span>
-        <span class="k">SELECT</span>
-            <span class="k">DISTINCT</span>
-            <span class="nb">datetime</span><span class="p">,</span>
-            <span class="n">app_id</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="p">,</span>
-            <span class="n">event_name</span>
-        <span class="k">FROM</span>
-            <span class="n">src_events</span>
-        <span class="c1">-- Incremental Strategy: Read rows with a datetime greater than the maximum datetime currently stored in the table.</span>
-        <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-        <span class="k">WHERE</span>
-            <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="nb">datetime</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span> <span class="o">&lt;</span> <span class="nb">datetime</span>
-        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-    <span class="p">)</span>
-    <span class="k">SELECT</span>
-        <span class="o">*</span>
-    <span class="k">FROM</span>
-        <span class="n">CTE_src_events</span>
-    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-    <span class="k">WHERE</span>
-        <span class="p">(</span><span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-</code></pre></div></div>
-
-<h5 id="1-large-data-volume">1. Large Data Volume</h5>
-<ul>
-  <li>The <code class="language-plaintext highlighter-rouge">core_fct_events</code> table contained all user event log data, making the table size very large.</li>
-</ul>
-
-<h5 id="2-presence-of-duplicate-rows">2. Presence of Duplicate Rows</h5>
-<ul>
-  <li>Due to the existence of duplicate data in the source table itself, the <code class="language-plaintext highlighter-rouge">DISTINCT</code> keyword had to be used to remove duplicates.</li>
-</ul>
-
-<h5 id="3-inefficient-duplicate-check-method">3. Inefficient Duplicate Check Method</h5>
-<ul>
-  <li>The existing query used the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause to compare new data with existing data, which was the main cause of the performance bottleneck. This clause triggers nested loop searches, causing performance degradation as the table size increases.</li>
-</ul>
-
-<hr />
-
-<h1 id="4-actions">4. Actions</h1>
-
-<blockquote>
-  <ul>
-    <li><strong>I replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
-  </ul>
-</blockquote>
-
-<h3 id="specific-actions-taken">Specific Actions Taken</h3>
-
-<h5 id="1-problem-analysis-and-alternative-exploration">1. Problem Analysis and Alternative Exploration</h5>
-<ul>
-  <li>First, I identified that the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause was the primary cause of the performance bottleneck. The <code class="language-plaintext highlighter-rouge">NOT IN</code> clause requires the database engine to check all possible combinations through <strong>nested loops</strong>, making it highly inefficient.</li>
-</ul>
-
-<p><img src="/assets/2024-08-13-join-instead-of-not-in/2.webp" alt="" /></p>
-
-<h5 id="2-query-refactoring">2. Query Refactoring</h5>
-<ul>
-  <li>I replaced the existing <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>. Using a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code> allows for more efficient comparison between the existing table and the new data. Specifically, <strong>after performing the <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, only new data that does not exist in the existing data is inserted by filtering for <code class="language-plaintext highlighter-rouge">NULL</code> values.</strong></li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
-        <span class="n">MAIN</span><span class="p">.</span><span class="o">*</span>
-    <span class="k">FROM</span> 
-        <span class="n">CTE_src_events</span> <span class="n">MAIN</span>
-    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-    <span class="k">LEFT</span> <span class="k">JOIN</span>
-        <span class="p">{{</span> <span class="n">this</span> <span class="p">}}</span> <span class="n">THIS</span>
-        <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span>
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">app_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">app_id</span>
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">user_id</span>
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">event_name</span>
-    <span class="k">WHERE</span>
-        <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span> <span class="k">IS</span> <span class="k">NULL</span>    
-    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-</code></pre></div></div>
-
-<h5 id="3-performance-testing-and-validation">3. Performance Testing and Validation</h5>
-<ul>
-  <li>After modifying the query, I conducted performance tests using various data sets. This confirmed that the query execution time was significantly reduced. <strong>The optimized query execution time was reduced from 50 minutes to approximately 2 minutes.</strong></li>
-</ul>
-
-<hr />
-
-<h1 id="5-results">5. Results</h1>
-
-<blockquote>
-  <ul>
-    <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
-  </ul>
-</blockquote>
-
-<p><img src="/assets/2024-08-13-join-instead-of-not-in/3.webp" alt="" /></p>
-
-<h3 id="1-performance-improvement">1. Performance Improvement</h3>
-<ul>
-  <li>The total orchestration time was reduced <strong>from 50 minutes to 2 minutes</strong>, representing approximately <strong>96% performance improvement</strong>, drastically enhancing data processing speed.</li>
-</ul>
-
-<h3 id="2-improved-resource-efficiency">2. Improved Resource Efficiency</h3>
-<ul>
-  <li>Efficient use of database resources reduced system load, allowing other queries and tasks to execute more smoothly.</li>
-</ul>
-
-<h3 id="3-enhanced-service-reliability">3. Enhanced Service Reliability</h3>
-<ul>
-  <li>Faster and more reliable data updates provided a more dependable service to users.</li>
-</ul>
-
-<h3 id="4-future-scalability-secured">4. Future Scalability Secured</h3>
-<ul>
-  <li>The optimization efforts in preparation for increased traffic and data expansion have laid a foundation for easily meeting future data processing requirements.</li>
-</ul>
-
-<h3 id="conclusion">Conclusion</h3>
-<ul>
-  <li>This query optimization project significantly enhanced the performance of our data warehouse while also strengthening our analytics engineering capabilities. It was a valuable contribution to maximizing data processing efficiency and improving the quality of our BI services.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="English" /><category term="PostgreSQL" /><summary type="html"><![CDATA[“In this project, I optimized the incremental update strategy for the core_fct_events table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient NOT IN clause with a LEFT JOIN, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”]]></summary></entry><entry><title type="html">NOT IN 대신 JOIN을 통한 쿼리 최적화</title><link href="http://localhost:4000/join-instead-of-not-in-ko/" rel="alternate" type="text/html" title="NOT IN 대신 JOIN을 통한 쿼리 최적화" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-ko</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-ko/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="English" /><category term="GA4" /><category term="BigQuery" /><category term="Redash" /><category term="Data Analysis" /><summary type="html"><![CDATA[“By analyzing the data of new visitors that increased due to external factors, I achieved a significant rise in purchase conversion rates. The data revealed a substantial increase in the number of new visitors and their purchasing intent, but also identified a high dropout rate at the payment stage. Based on the hypothesis that the inconvenience in the payment process was the main cause, I introduced PayPal Express Checkout to enhance user experience. As a result, the payment conversion rate increased by 32%p, reaching a much higher level than before, and this improvement has been sustained. This demonstrates effective problem-solving and performance enhancement based on data analysis.”]]></summary></entry><entry><title type="html">NOT IN 대신 JOIN을 통한 쿼리 최적화</title><link href="http://localhost:4000/join-instead-of-not-in-ko/" rel="alternate" type="text/html" title="NOT IN 대신 JOIN을 통한 쿼리 최적화" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-ko</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-ko/"><![CDATA[<blockquote>
   <p>“이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, <code class="language-plaintext highlighter-rouge">core_fct_events</code> 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 <code class="language-plaintext highlighter-rouge">NOT IN</code> 구문을 <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다.”</p>
 </blockquote>
 
@@ -1690,7 +1491,979 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Korean" /><category term="PostgreSQL" /><summary type="html"><![CDATA[“이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, core_fct_events 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 NOT IN 구문을 LEFT JOIN으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다.”]]></summary></entry><entry><title type="html">데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화</title><link href="http://localhost:4000/voc-dashboard-ko/" rel="alternate" type="text/html" title="데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화" /><published>2024-07-20T00:00:00+09:00</published><updated>2024-07-20T00:00:00+09:00</updated><id>http://localhost:4000/voc-dashboard-ko</id><content type="html" xml:base="http://localhost:4000/voc-dashboard-ko/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Korean" /><category term="PostgreSQL" /><summary type="html"><![CDATA[“이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, core_fct_events 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 NOT IN 구문을 LEFT JOIN으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다.”]]></summary></entry><entry><title type="html">Query Optimization by Using JOIN Instead of NOT IN</title><link href="http://localhost:4000/join-instead-of-not-in-en/" rel="alternate" type="text/html" title="Query Optimization by Using JOIN Instead of NOT IN" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-en</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-en/"><![CDATA[<blockquote>
+  <p>“In this project, I optimized the incremental update strategy for the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>STAR Summary</li>
+  <li>Situation</li>
+  <li>Tasks</li>
+  <li>Actions</li>
+  <li>Results</li>
+</ol>
+
+<hr />
+
+<h1 id="1-star-summary">1. STAR Summary</h1>
+
+<h3 id="situation">Situation</h3>
+<ul>
+  <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+<ul>
+  <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
+</ul>
+
+<h3 id="actions">Actions</h3>
+<ul>
+  <li>I <strong>replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
+</ul>
+
+<h3 id="results">Results</h3>
+<ul>
+  <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
+</ul>
+
+<hr />
+
+<h1 id="2-situation">2. Situation</h1>
+
+<blockquote>
+  <ul>
+    <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-13-join-instead-of-not-in/1.webp" alt="" /></p>
+
+<h3 id="specific-situation">Specific Situation</h3>
+<ul>
+  <li>Our company operates an Enterprise Data Warehouse (EDW) environment to provide B2B BI services. Every midnight, a complex data transformation process based on user event data is performed. <strong>However, this process was taking longer than expected.</strong> In particular, <strong>the incremental update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table, a key event table</strong>, was taking up most of the orchestration time. This delay in data refresh posed a risk of negatively impacting service quality.</li>
+</ul>
+
+<hr />
+
+<h1 id="3-tasks">3. Tasks</h1>
+
+<blockquote>
+  <ul>
+    <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
+  </ul>
+</blockquote>
+
+<h3 id="root-causes-of-the-problem">Root Causes of the Problem</h3>
+<ul>
+  <li>I identified three major issues in the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">WITH</span>
+    <span class="n">CTE_src_events</span> <span class="k">AS</span> <span class="p">(</span>
+        <span class="k">SELECT</span>
+            <span class="k">DISTINCT</span>
+            <span class="nb">datetime</span><span class="p">,</span>
+            <span class="n">app_id</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="p">,</span>
+            <span class="n">event_name</span>
+        <span class="k">FROM</span>
+            <span class="n">src_events</span>
+        <span class="c1">-- Incremental Strategy: Read rows with a datetime greater than the maximum datetime currently stored in the table.</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+        <span class="k">WHERE</span>
+            <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="nb">datetime</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span> <span class="o">&lt;</span> <span class="nb">datetime</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="k">SELECT</span>
+        <span class="o">*</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_src_events</span>
+    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">WHERE</span>
+        <span class="p">(</span><span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="1-large-data-volume">1. Large Data Volume</h5>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">core_fct_events</code> table contained all user event log data, making the table size very large.</li>
+</ul>
+
+<h5 id="2-presence-of-duplicate-rows">2. Presence of Duplicate Rows</h5>
+<ul>
+  <li>Due to the existence of duplicate data in the source table itself, the <code class="language-plaintext highlighter-rouge">DISTINCT</code> keyword had to be used to remove duplicates.</li>
+</ul>
+
+<h5 id="3-inefficient-duplicate-check-method">3. Inefficient Duplicate Check Method</h5>
+<ul>
+  <li>The existing query used the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause to compare new data with existing data, which was the main cause of the performance bottleneck. This clause triggers nested loop searches, causing performance degradation as the table size increases.</li>
+</ul>
+
+<hr />
+
+<h1 id="4-actions">4. Actions</h1>
+
+<blockquote>
+  <ul>
+    <li><strong>I replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
+  </ul>
+</blockquote>
+
+<h3 id="specific-actions-taken">Specific Actions Taken</h3>
+
+<h5 id="1-problem-analysis-and-alternative-exploration">1. Problem Analysis and Alternative Exploration</h5>
+<ul>
+  <li>First, I identified that the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause was the primary cause of the performance bottleneck. The <code class="language-plaintext highlighter-rouge">NOT IN</code> clause requires the database engine to check all possible combinations through <strong>nested loops</strong>, making it highly inefficient.</li>
+</ul>
+
+<p><img src="/assets/2024-08-13-join-instead-of-not-in/2.webp" alt="" /></p>
+
+<h5 id="2-query-refactoring">2. Query Refactoring</h5>
+<ul>
+  <li>I replaced the existing <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>. Using a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code> allows for more efficient comparison between the existing table and the new data. Specifically, <strong>after performing the <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, only new data that does not exist in the existing data is inserted by filtering for <code class="language-plaintext highlighter-rouge">NULL</code> values.</strong></li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">MAIN</span><span class="p">.</span><span class="o">*</span>
+    <span class="k">FROM</span> 
+        <span class="n">CTE_src_events</span> <span class="n">MAIN</span>
+    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+        <span class="p">{{</span> <span class="n">this</span> <span class="p">}}</span> <span class="n">THIS</span>
+        <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span>
+        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">app_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">app_id</span>
+        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">user_id</span>
+        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">event_name</span>
+    <span class="k">WHERE</span>
+        <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span> <span class="k">IS</span> <span class="k">NULL</span>    
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="3-performance-testing-and-validation">3. Performance Testing and Validation</h5>
+<ul>
+  <li>After modifying the query, I conducted performance tests using various data sets. This confirmed that the query execution time was significantly reduced. <strong>The optimized query execution time was reduced from 50 minutes to approximately 2 minutes.</strong></li>
+</ul>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+
+<blockquote>
+  <ul>
+    <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-13-join-instead-of-not-in/3.webp" alt="" /></p>
+
+<h3 id="1-performance-improvement">1. Performance Improvement</h3>
+<ul>
+  <li>The total orchestration time was reduced <strong>from 50 minutes to 2 minutes</strong>, representing approximately <strong>96% performance improvement</strong>, drastically enhancing data processing speed.</li>
+</ul>
+
+<h3 id="2-improved-resource-efficiency">2. Improved Resource Efficiency</h3>
+<ul>
+  <li>Efficient use of database resources reduced system load, allowing other queries and tasks to execute more smoothly.</li>
+</ul>
+
+<h3 id="3-enhanced-service-reliability">3. Enhanced Service Reliability</h3>
+<ul>
+  <li>Faster and more reliable data updates provided a more dependable service to users.</li>
+</ul>
+
+<h3 id="4-future-scalability-secured">4. Future Scalability Secured</h3>
+<ul>
+  <li>The optimization efforts in preparation for increased traffic and data expansion have laid a foundation for easily meeting future data processing requirements.</li>
+</ul>
+
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+  <li>This query optimization project significantly enhanced the performance of our data warehouse while also strengthening our analytics engineering capabilities. It was a valuable contribution to maximizing data processing efficiency and improving the quality of our BI services.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="English" /><category term="PostgreSQL" /><summary type="html"><![CDATA[“In this project, I optimized the incremental update strategy for the core_fct_events table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient NOT IN clause with a LEFT JOIN, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”]]></summary></entry><entry><title type="html">Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency</title><link href="http://localhost:4000/voc-dashboard-en/" rel="alternate" type="text/html" title="Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency" /><published>2024-07-20T00:00:00+09:00</published><updated>2024-07-20T00:00:00+09:00</updated><id>http://localhost:4000/voc-dashboard-en</id><content type="html" xml:base="http://localhost:4000/voc-dashboard-en/"><![CDATA[<blockquote>
+  <p>“I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>STAR Summary</li>
+  <li>Situation</li>
+  <li>Tasks</li>
+  <li>Actions</li>
+  <li>Results</li>
+</ol>
+
+<hr />
+
+<h1 id="1-star-summary">1. STAR Summary</h1>
+
+<h3 id="situation">Situation</h3>
+<ul>
+  <li>Internal team members were struggling to efficiently track and follow up on Zendesk customer inquiries. Reading through all the inquiries required <strong>an excessive amount of time and effort</strong>, and implementing an external VOC analysis service posed <strong>a cost burden</strong>.</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+<ol>
+  <li>I decided to <strong>categorize and summarize</strong> customer inquiries and create a Redash VOC <strong>dashboard</strong>.</li>
+  <li>I also decided to build <strong>a Slack notification bot</strong> to alert the team about the most urgent customer inquiry topics.</li>
+</ol>
+
+<h3 id="actions">Actions</h3>
+<ol>
+  <li>
+    <p><strong>Data Pipeline</strong></p>
+
+    <p>1.1. Data Collection and Preprocessing <code class="language-plaintext highlighter-rouge">(Zendesk Tickets → Google Sheets → BigQuery)</code></p>
+
+    <p>1.2. Topic Categorization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
+
+    <p>1.3. Summarization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
+  </li>
+  <li>
+    <p><strong>Dashboard and Notification Bot</strong></p>
+
+    <p>2.1. Creating the Dashboard <code class="language-plaintext highlighter-rouge">(BigQuery → Redash)</code></p>
+
+    <p>2.2. Building the Notification Bot <code class="language-plaintext highlighter-rouge">(BigQuery → Slack API)</code></p>
+  </li>
+</ol>
+
+<h3 id="results">Results</h3>
+<ol>
+  <li><strong>Cost Savings</strong>
+    <ul>
+      <li>We solved the problem internally at a cost of $25 per month, avoiding the need for an external service that would have cost $300 per month.</li>
+    </ul>
+  </li>
+  <li><strong>Time Savings</strong>
+    <ul>
+      <li>The time required for internal team members to follow up on VOC, identify issues, and respond was significantly reduced.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="2-situation">2. Situation</h1>
+
+<blockquote>
+  <p>Internal team members were struggling to efficiently track and follow up on Zendesk customer inquiries. Reading through all the inquiries required <strong>an excessive amount of time and effort</strong>, and implementing an external VOC analysis service posed <strong>a cost burden</strong>.</p>
+</blockquote>
+
+<h3 id="specific-situation">Specific Situation</h3>
+<ul>
+  <li>It was taking too much time to follow up on dozens to hundreds of customer inquiries each week.</li>
+  <li>It was challenging to identify which topics were negatively impacting the customer experience.</li>
+</ul>
+
+<h3 id="feedback-from-internal-team-members">Feedback from Internal Team Members</h3>
+<ul>
+  <li><strong>C-level 1</strong>: “I’m trying to stay on top of customer sentiment by regularly reading the inquiries, but there are just too many, and it’s very time-consuming.”</li>
+  <li><strong>C-level 2</strong>: “I’d like to introduce an external service for VOC analysis, but the cost is too high, so we’re hesitant.”</li>
+  <li><strong>CX Manager</strong>: “I want to share more VOC insights with colleagues and improve the speed of issue resolution.”</li>
+</ul>
+
+<hr />
+
+<h1 id="3-tasks">3. Tasks</h1>
+
+<blockquote>
+  <ol>
+    <li>I decided to <strong>categorize and summarize</strong> customer inquiries and create a Redash VOC <strong>dashboard</strong>.</li>
+    <li>I also decided to build <strong>a Slack notification bot</strong> to alert the team about the most urgent customer inquiry topics.</li>
+  </ol>
+</blockquote>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/1.png" alt="" /></p>
+
+<hr />
+
+<h1 id="4-actions">4. Actions</h1>
+
+<blockquote>
+  <ol>
+    <li>
+      <p><strong>Data Pipeline</strong></p>
+
+      <p>1.1. Data Collection and Preprocessing <code class="language-plaintext highlighter-rouge">(Zendesk Tickets → Google Sheets → BigQuery)</code></p>
+
+      <p>1.2. Topic Categorization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
+
+      <p>1.3. Summarization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
+    </li>
+    <li>
+      <p><strong>Dashboard and Notification Bot</strong></p>
+
+      <p>2.1. Creating the Dashboard <code class="language-plaintext highlighter-rouge">(BigQuery → Redash)</code></p>
+
+      <p>2.2. Building the Notification Bot <code class="language-plaintext highlighter-rouge">(BigQuery → Slack API)</code></p>
+    </li>
+  </ol>
+</blockquote>
+
+<h3 id="1-data-pipeline">1. <strong>Data Pipeline</strong></h3>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/2-en.png" alt="" /></p>
+
+<h5 id="11-data-collection-and-preprocessing-zendesk-tickets--google-sheets--bigquery">1.1. Data Collection and Preprocessing <code class="language-plaintext highlighter-rouge">(Zendesk Tickets → Google Sheets → BigQuery)</code></h5>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/3-en.png" alt="" /></p>
+
+<p>1) First, I used the <strong>Zendesk Connector</strong> available from Google Workspace Marketplace to automatically store completed Zendesk ticket data in a private Google Sheet.</p>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/4.png" alt="" /></p>
+
+<p>2) I then loaded the Google Sheets data into Python.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Raw Data from Google Sheets (to `df`)
+</span>   <span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="p">.</span><span class="nf">service_account</span><span class="p">(</span><span class="n">google_sheets_credentials_fpath</span><span class="p">)</span>
+   <span class="n">spreadsheet</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="nf">open_by_url</span><span class="p">(</span><span class="n">google_sheets_url</span><span class="p">)</span>
+   <span class="n">sheet</span> <span class="o">=</span> <span class="n">spreadsheet</span><span class="p">.</span><span class="nf">worksheet</span><span class="p">(</span><span class="n">google_sheets_worksheet_name</span><span class="p">)</span>
+   <span class="n">sheet_data</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="nf">get_all_records</span><span class="p">()</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">(</span><span class="n">sheet_data</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>3) After that, I proceeded with data preprocessing.</p>
+
+<details>
+<summary>Filter Only Necessary Columns</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Rename Columns
+</span>   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">rename</span><span class="p">(</span>
+      <span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+         <span class="sh">'</span><span class="s">created_at</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
+         <span class="sh">'</span><span class="s">raw_subject</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">,</span>
+         <span class="sh">'</span><span class="s">tags.0</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">zendesk_topic</span><span class="sh">'</span><span class="p">,</span>
+         <span class="sh">'</span><span class="s">updated_at</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">updated_datetime</span><span class="sh">'</span>
+      <span class="p">}</span>
+   <span class="p">)</span>
+   <span class="c1"># Extract Only Necessary Columns
+</span>   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span>
+      <span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">zendesk_topic</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">description</span><span class="sh">'</span>
+   <span class="p">]]</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<details>
+<summary>Change Timezone (UTC → KST)</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Convert Existing Timestamps: UTC to KST
+</span>   <span class="n">kst</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="nf">timezone</span><span class="p">(</span><span class="sh">'</span><span class="s">Asia/Seoul</span><span class="sh">'</span><span class="p">)</span>
+   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">],</span> <span class="n">utc</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">dt</span><span class="p">.</span><span class="nf">tz_convert</span><span class="p">(</span><span class="n">kst</span><span class="p">).</span><span class="n">dt</span><span class="p">.</span><span class="nf">tz_localize</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="sh">'</span><span class="s">str</span><span class="sh">'</span><span class="p">)</span> <span class="c1"># To load into BigQuery, all columns must be cast as strings.
+</span></code></pre></div>    </div>
+  </div>
+</details>
+
+<details>
+<summary>Filter Only New Entries</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Remove Rows Already in Target Table (Prevent Duplicates)
+</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT DISTINCT id FROM `</span><span class="si">{</span><span class="n">bigquery_tickets_table_id</span><span class="si">}</span><span class="s">`</span><span class="sh">'</span>
+   <span class="k">try</span><span class="p">:</span>
+      <span class="n">existing_ids</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+      <span class="n">existing_ids</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">])</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+         <span class="o">~</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">].</span><span class="nf">isin</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">)</span>
+      <span class="p">].</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="k">except</span><span class="p">:</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>4) Finally, I loaded the data into the BigQuery table.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Data into BigQuery Table
+</span>   <span class="n">table</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">get_table</span><span class="p">(</span><span class="n">bigquery_tickets_table_id</span><span class="p">)</span>
+   <span class="n">client</span><span class="p">.</span><span class="nf">load_table_from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<h5 id="12-topic-categorization-openai-api">1.2. Topic Categorization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></h5>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/5-en.png" alt="" /></p>
+
+<p>1) To predefine the list of topics to be categorized, I discussed and established a classification system with a CX manager and a UX/UI designer.</p>
+
+<ul>
+  <li><strong>Topic</strong>: Broad subject categories</li>
+  <li><strong>Keyword</strong>: Specific subtopics</li>
+</ul>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/6.png" alt="" /></p>
+
+<p>2) I loaded the data from the BigQuery table into Python.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load BigQuery `tickets` Table (to `df`)
+</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT * FROM </span><span class="si">{</span><span class="n">bigquery_tickets_table_id</span><span class="si">}</span><span class="sh">'</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>3) I then filtered out only new entries.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Remove Rows Already in Target Table (Prevent Duplicates)
+</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT DISTINCT id FROM `</span><span class="si">{</span><span class="n">bigquery_tickets_topics_table_id</span><span class="si">}</span><span class="s">`</span><span class="sh">'</span>
+   <span class="k">try</span><span class="p">:</span>
+      <span class="n">existing_ids</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+      <span class="n">existing_ids</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">])</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+         <span class="o">~</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">].</span><span class="nf">isin</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">)</span>
+      <span class="p">].</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="k">except</span><span class="p">:</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>4) I created the prompt to be sent to OpenAI.</p>
+
+<details>
+<summary>System Prompt</summary>
+<div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   Your task is to classify a single key keyword from the customer inquiry details. You must respond by selecting only from the provided list of topics. Below is the list of topics you can choose from:
+      {Keyword List}
+   Do not create or select any other topics.
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<details>
+<summary>User Prompt</summary>
+<div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   Below is the customer inquiry details.
+   Extract a single key topic from this text.
+
+   Customer Inquiry Details:
+      {Actual Text}
+
+   Extraction Format: Topic
+   Restrictions:
+   1. Respond with only the topic.
+   2. Choose only from the provided list of topics. Do not create or select any other topics.
+   3. Make sure to select one from the list below:
+   {Keyword List}
+   
+   Extraction Result:
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>5) I then obtained the main topic by calling the OpenAI API.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Define the system prompt for OpenAI
+</span>   <span class="n">prompt_system</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'''</span><span class="s">
+   Your task is to classify a single key keyword from the customer inquiry details. You must respond by selecting only from the provided list of topics. Below is the list of topics you can choose from:
+   </span><span class="si">{</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">topics2_list</span><span class="p">)</span><span class="si">}</span><span class="s">
+   Do not create or select any other topics.
+   </span><span class="sh">'''</span>
+
+   <span class="c1"># Start the OpenAI API Request for each row
+</span>   <span class="n">topic2_results_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
+
+      <span class="c1"># Subject + Description
+</span>      <span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">]</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> </span><span class="sh">'</span> <span class="o">+</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">description</span><span class="sh">'</span><span class="p">]</span>
+      <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span> <span class="c1"># Limit length to 2,000 characters (to save costs)
+</span>
+      <span class="c1"># Define the individual prompt for API Request
+</span>      <span class="n">prompt_individual</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'''</span><span class="s">
+      Below is the customer inquiry details.
+      Extract a single key topic from this text.
+
+      Customer Inquiry Details:
+      </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s">
+
+      Extraction Format: Topic
+      Restrictions:
+      1. Respond with only the topic.
+      2. Choose only from the provided list of topics. Do not create or select any other topics.
+      3. Make sure to select one from the list below:
+      </span><span class="si">{</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">topics2_list</span><span class="p">)</span><span class="si">}</span><span class="s"> 
+      
+      Extraction Result:
+      </span><span class="sh">'''</span>
+
+      <span class="c1"># Start the API Request
+</span>      <span class="n">result</span> <span class="o">=</span> <span class="n">openai_client</span><span class="p">.</span><span class="n">chat</span><span class="p">.</span><span class="n">completions</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="sh">'</span><span class="s">gpt-4</span><span class="sh">'</span><span class="p">,</span>
+            <span class="n">max_tokens</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">temperature</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">system</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_system</span><span class="p">},</span>
+               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">user</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_individual</span><span class="p">}</span>
+            <span class="p">]</span>
+      <span class="p">)</span>
+
+      <span class="c1"># Record the topic results into Empty Lists
+</span>      <span class="n">topic2_result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">message</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\'</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\"</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">[</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">]</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span>
+      <span class="n">topic2_results_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">topic2_result</span><span class="p">)</span>
+
+   <span class="c1"># Record the 'Topic 1' results using 'Topic 2' results
+</span>   <span class="n">topic1_results_list</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="k">for</span> <span class="n">topic2</span> <span class="ow">in</span> <span class="n">topic2_results_list</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">topics_list</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">topics_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">topic2</span><span class="p">:</span>
+               <span class="n">topic1_results_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">topics_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+               <span class="k">break</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nf">len</span><span class="p">(</span><span class="n">topics_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+               <span class="n">topic1_results_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">'</span><span class="s">Others</span><span class="sh">'</span><span class="p">)</span>
+      
+   <span class="c1"># Add 'Topic 1' and 'Topic 2' columns to the dataframe and select only the necessary columns
+</span>   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_topic_1</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">topic1_results_list</span>
+   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_topic_2</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">topic2_results_list</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span>
+      <span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">openai_topic_1</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">openai_topic_2</span><span class="sh">'</span>
+   <span class="p">]]</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>6) Finally, the topic categorization results were loaded into a BigQuery table.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Data into BigQuery Table
+</span>   <span class="n">table</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">get_table</span><span class="p">(</span><span class="n">bigquery_tickets_topics_table_id</span><span class="p">)</span>
+   <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">load_table_from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<h5 id="13-summarization-openai-api">1.3. Summarization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></h5>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/7-en.png" alt="" /></p>
+
+<p>1) I loaded the data from the BigQuery table into Python.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load BigQuery `tickets` Table (to `df`)
+</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT * FROM </span><span class="si">{</span><span class="n">bigquery_tickets_table_id</span><span class="si">}</span><span class="sh">'</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>2) I then filtered out only new entries.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Remove Rows Already in Target Table (Prevent Duplicates)
+</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT DISTINCT id FROM `</span><span class="si">{</span><span class="n">bigquery_tickets_summary_table_id</span><span class="si">}</span><span class="s">`</span><span class="sh">'</span>
+   <span class="k">try</span><span class="p">:</span>
+      <span class="n">existing_ids</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+      <span class="n">existing_ids</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">])</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+         <span class="o">~</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">].</span><span class="nf">isin</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">)</span>
+      <span class="p">].</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="k">except</span><span class="p">:</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>3) I created the prompt to be sent to OpenAI.</p>
+
+<details>
+<summary>System Prompt</summary>
+<div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   our task is to summarize customer inquiry details into a single sentence in Korean.
+   Keep in mind that the customer is from a blockchain hardware and app wallet service company.
+   The summary must be provided in a single sentence in Korean, and sensitive personal information or links must be removed.
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<details>
+<summary>User Prompt</summary>
+<div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      Below is a customer inquiry.
+      Summarize this text into a single sentence in Korean.
+
+      Customer inquiry:
+      {text}
+
+      Format of extraction: One sentence in Korean
+      Constraints:
+
+      1. Remember that the customer is from a blockchain hardware and app wallet service company.
+      2. Summarize in Korean only. (However, proper nouns that cannot be translated may remain in English.)
+      3. Respond in only one sentence.
+      4. Ensure that sensitive personal information is removed. (e.g., personal details, wallet addresses, contact information, passwords, private keys, mnemonic phrases, email addresses, IP addresses, URLs, social media accounts, etc.)
+
+      Extraction result:
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>4) I performed the OpenAI summarization task by iterating over each ticket.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Define the system prompt for OpenAI
+</span>   <span class="n">prompt_system</span> <span class="o">=</span> <span class="sh">'''</span><span class="s">
+   our task is to summarize customer inquiry details into a single sentence in Korean.
+   Keep in mind that the customer is from a blockchain hardware and app wallet service company.
+   The summary must be provided in a single sentence in Korean, and sensitive personal information or links must be removed.
+   </span><span class="sh">'''</span>
+
+   <span class="c1"># Start the OpenAI API Request for each row
+</span>   <span class="n">summaries_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
+
+      <span class="c1"># Subject + Description
+</span>      <span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">]</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> </span><span class="sh">'</span> <span class="o">+</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">description</span><span class="sh">'</span><span class="p">]</span>
+      <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span> <span class="c1"># Limit length to 2,000 characters (to save costs)
+</span>
+      <span class="c1"># Define the individual prompt for API Request
+</span>      <span class="n">prompt_individual</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'''</span><span class="s">
+      Below is a customer inquiry.
+      Summarize this text into a single sentence in Korean.
+
+      Customer inquiry:
+      </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s">
+
+      Format of extraction: One sentence in Korean
+      Constraints:
+
+      1. Remember that the customer is from a blockchain hardware and app wallet service company.
+      2. Summarize in Korean only. (However, proper nouns that cannot be translated may remain in English.)
+      3. Respond in only one sentence.
+      4. Ensure that sensitive personal information is removed. (e.g., personal details, wallet addresses, contact information, passwords, private keys, mnemonic phrases, email addresses, IP addresses, URLs, social media accounts, etc.)
+
+      Extraction result:
+      </span><span class="sh">'''</span>
+
+      <span class="c1"># Start the API Request
+</span>      <span class="n">result</span> <span class="o">=</span> <span class="n">openai_client</span><span class="p">.</span><span class="n">chat</span><span class="p">.</span><span class="n">completions</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="sh">'</span><span class="s">gpt-4</span><span class="sh">'</span><span class="p">,</span>
+            <span class="n">max_tokens</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">temperature</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">system</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_system</span><span class="p">},</span>
+               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">user</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_individual</span><span class="p">}</span>
+            <span class="p">]</span>
+      <span class="p">)</span>
+
+      <span class="c1"># Record the topic results into empty lists
+</span>      <span class="n">summary_result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">message</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\'</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\"</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">[</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">]</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span>
+      <span class="n">summaries_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">summary_result</span><span class="p">)</span>
+
+   <span class="c1"># Add the summary column to the dataframe and select only the required columns
+</span>   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_summary</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">summaries_list</span>
+   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span>
+      <span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
+      <span class="sh">'</span><span class="s">openai_summary</span><span class="sh">'</span>
+   <span class="p">]]</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>5) Finally, the summarized results were loaded into a BigQuery table.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Data into BigQuery Table
+</span>   <span class="n">table</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">get_table</span><span class="p">(</span><span class="n">bigquery_tickets_summary_table_id</span><span class="p">)</span>
+   <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">load_table_from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<h3 id="2-dashboard-and-notification-bot">2. <strong>Dashboard and Notification Bot</strong></h3>
+
+<h5 id="21-creating-the-dashboard-bigquery--redash">2.1. Creating the Dashboard <code class="language-plaintext highlighter-rouge">(BigQuery → Redash)</code></h5>
+
+<p>1) I created a Redash dashboard with the following contents.</p>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/11.png" alt="" /></p>
+
+<details>
+<summary>Proportion by Topic</summary>
+<div>
+    <p><img src="/assets/2024-07-20-voc-dashboard/12.png" alt="" /></p>
+  </div>
+</details>
+
+<details>
+<summary>Trends by Topic</summary>
+<div>
+    <p><img src="/assets/2024-07-20-voc-dashboard/13.png" alt="" /></p>
+  </div>
+</details>
+
+<details>
+<summary>Trends by Keyword</summary>
+<div>
+    <p><img src="/assets/2024-07-20-voc-dashboard/14.png" alt="" /></p>
+  </div>
+</details>
+
+<details>
+<summary>Summary of Inquiries by Keyword</summary>
+<div>
+    <p><img src="/assets/2024-07-20-voc-dashboard/15.png" alt="" /></p>
+  </div>
+</details>
+
+<details>
+<summary>All Datasets</summary>
+<div>
+    <p><img src="/assets/2024-07-20-voc-dashboard/16.png" alt="" /></p>
+  </div>
+</details>
+
+<h5 id="22-building-the-notification-bot-bigquery--slack-api">2.2. Building the Notification Bot <code class="language-plaintext highlighter-rouge">(BigQuery → Slack API)</code></h5>
+
+<p>1) First, I wrote a BigQuery query.</p>
+
+<details>
+<summary>Extracting the detailed topics (Keywords) with the most significant increase in customer inquiries from the previous week (compared to the week before)</summary>
+<div>
+    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">WITH</span>
+   <span class="n">CTE_1w_ago_raw</span> <span class="k">AS</span> <span class="p">(</span>
+      <span class="k">SELECT</span>
+         <span class="n">openai_topic_2</span><span class="p">,</span>
+         <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt</span>
+      <span class="k">FROM</span>
+         <span class="nv">`bigquery_tickets_topics_table_id`</span>
+      <span class="k">WHERE</span>
+         <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="n">DATE_ADD</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="o">-</span><span class="mi">1</span> <span class="n">WEEK</span><span class="p">),</span> <span class="n">WEEK</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span>
+         <span class="k">AND</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">WEEK</span><span class="p">)</span>
+         <span class="k">AND</span> <span class="n">openai_topic_1</span> <span class="o">!=</span> <span class="s1">'Others'</span>
+      <span class="k">GROUP</span> <span class="k">BY</span>
+         <span class="mi">1</span>
+   <span class="p">),</span>
+   <span class="n">CTE_2w_ago_raw</span> <span class="k">AS</span> <span class="p">(</span>
+      <span class="k">SELECT</span>
+         <span class="n">openai_topic_2</span><span class="p">,</span>
+         <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt</span>
+      <span class="k">FROM</span>
+         <span class="nv">`bigquery_tickets_topics_table_id`</span>
+      <span class="k">WHERE</span>
+         <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="n">DATE_ADD</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="o">-</span><span class="mi">2</span> <span class="n">WEEK</span><span class="p">),</span> <span class="n">WEEK</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span>
+         <span class="k">AND</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="n">DATE_ADD</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="o">-</span><span class="mi">1</span> <span class="n">WEEK</span><span class="p">),</span> <span class="n">WEEK</span><span class="p">)</span>
+         <span class="k">AND</span> <span class="n">openai_topic_1</span> <span class="o">!=</span> <span class="s1">'Others'</span>
+      <span class="k">GROUP</span> <span class="k">BY</span>
+         <span class="mi">1</span>
+   <span class="p">),</span>
+   <span class="n">CTE_diff</span> <span class="k">AS</span> <span class="p">(</span>
+      <span class="k">SELECT</span>
+         <span class="n">COALESCE</span><span class="p">(</span><span class="n">MAIN</span><span class="p">.</span><span class="n">openai_topic_2</span><span class="p">,</span> <span class="n">COMP</span><span class="p">.</span><span class="n">openai_topic_2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">openai_topic_2</span><span class="p">,</span>
+         <span class="n">MAIN</span><span class="p">.</span><span class="n">tickets_cnt</span> <span class="k">AS</span> <span class="n">tickets_cnt_1w_ago</span><span class="p">,</span>
+         <span class="n">COALESCE</span><span class="p">(</span><span class="n">COMP</span><span class="p">.</span><span class="n">tickets_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt_2w_ago</span><span class="p">,</span>
+         <span class="n">COALESCE</span><span class="p">(</span><span class="n">MAIN</span><span class="p">.</span><span class="n">tickets_cnt</span> <span class="o">-</span> <span class="n">COMP</span><span class="p">.</span><span class="n">tickets_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt_diff</span>
+      <span class="k">FROM</span>
+         <span class="n">CTE_1w_ago_raw</span> <span class="n">MAIN</span>
+      <span class="k">LEFT</span> <span class="k">JOIN</span>
+         <span class="n">CTE_2w_ago_raw</span> <span class="n">COMP</span>
+         <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">openai_topic_2</span> <span class="o">=</span> <span class="n">COMP</span><span class="p">.</span><span class="n">openai_topic_2</span>
+   <span class="p">)</span>
+   <span class="k">SELECT</span>
+      <span class="n">openai_topic_2</span><span class="p">,</span>
+      <span class="n">tickets_cnt_1w_ago</span><span class="p">,</span>
+      <span class="n">tickets_cnt_2w_ago</span><span class="p">,</span>
+      <span class="n">tickets_cnt_diff</span>
+   <span class="k">FROM</span>
+      <span class="n">CTE_diff</span>
+   <span class="k">WHERE</span>
+      <span class="n">tickets_cnt_diff</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">tickets_cnt_diff</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">CTE_diff</span><span class="p">)</span>
+      <span class="k">AND</span> <span class="n">tickets_cnt_diff</span> <span class="o">&gt;</span> <span class="mi">0</span>
+   <span class="k">ORDER</span> <span class="k">BY</span>
+      <span class="mi">1</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>2) I created a Slack message object.</p>
+
+<details>
+<summary>View Code</summary>
+<div>
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+
+   <span class="c1"># Slack Message Title
+</span>   <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">:phone: *Weekly Zendesk Summary* </span><span class="se">\n\n</span><span class="sh">'</span>
+   <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">*Here are the customer inquiry topics that increased the most in the past week.* </span><span class="se">\n</span><span class="sh">'</span>
+
+   <span class="c1"># If data exists
+</span>   <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">topics</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_topic_2</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
+      <span class="n">tickets_cnt_1w_agos</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">tickets_cnt_1w_ago</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
+      <span class="n">tickets_cnt_diffs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">tickets_cnt_diff</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
+      <span class="c1"># Create Slack message
+</span>      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">):</span>
+         <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">- *</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s">*: Total </span><span class="si">{</span><span class="n">tickets_cnt_1w_agos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s"> cases (Compared to the previous week +</span><span class="si">{</span><span class="n">tickets_cnt_diffs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">) </span><span class="se">\n</span><span class="sh">'</span>
+
+   <span class="c1"># If no data exists
+</span>   <span class="k">else</span><span class="p">:</span>
+      <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">- *There are no topics that increased.*:smile: </span><span class="se">\n\n</span><span class="sh">'</span>
+</code></pre></div>    </div>
+  </div>
+</details>
+
+<p>3) Every Monday at 9:00 AM, the following Slack notification was sent.</p>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/10-en.png" alt="" /></p>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+
+<blockquote>
+  <ol>
+    <li><strong>Cost Savings</strong>
+      <ul>
+        <li>We solved the problem internally at a cost of $25 per month, avoiding the need for an external service that would have cost $300 per month.</li>
+      </ul>
+    </li>
+    <li><strong>Time Savings</strong>
+      <ul>
+        <li>The time required for internal team members to follow up on VOC, identify issues, and respond was significantly reduced.</li>
+      </ul>
+    </li>
+  </ol>
+</blockquote>
+
+<h3 id="1-cost-savings">1. <strong>Cost Savings</strong></h3>
+
+<p>Conclusion)  By developing internally, we were able to eliminate approximately $275 in opportunity costs each month.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong>External VOC Analysis Service</strong></td>
+      <td><strong>Internal Development</strong></td>
+    </tr>
+    <tr>
+      <td>Monthly Cost</td>
+      <td><code class="language-plaintext highlighter-rouge">$300</code></td>
+      <td><code class="language-plaintext highlighter-rouge">$25</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>1) External VOC Analysis Service</p>
+<ul>
+  <li>The <a href="https://www.syncly.kr/">syncly</a> service we considered adopting required a minimum monthly cost of $299.</li>
+</ul>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/8.png" alt="" /></p>
+
+<p>2) Internal Development</p>
+<ul>
+  <li>However, internal development required the following costs:</li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Resource</strong></td>
+      <td><strong>Monthly Cost</strong></td>
+    </tr>
+    <tr>
+      <td>1. OpenAI API</td>
+      <td><code class="language-plaintext highlighter-rouge">$25</code></td>
+    </tr>
+    <tr>
+      <td>2. BigQuery Storage</td>
+      <td>Minimal</td>
+    </tr>
+    <tr>
+      <td>3. BigQuery Query Usage</td>
+      <td>Negligible</td>
+    </tr>
+    <tr>
+      <td>4. VM Instance Operation</td>
+      <td>Minimal, as we used existing instances</td>
+    </tr>
+    <tr>
+      <td><strong>TOTAL</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">$25</code> + e</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/2024-07-20-voc-dashboard/9.png" alt="ㅇㅇㅇ" /></p>
+<blockquote>
+  <p>Daily OpenAI API Costs</p>
+</blockquote>
+
+<h3 id="2-time-savings">2. <strong>Time Savings</strong></h3>
+
+<p>1) Redash VOC Dashboard (Topic Categorization)</p>
+<ul>
+  <li>Improved <u>the ease of identifying</u> VOC issues for internal team members.</li>
+</ul>
+
+<p>2) Redash VOC Dashboard (Summarization)</p>
+<ul>
+  <li>Enhanced <u>the follow-up speed</u> on VOC and improved <u>accessibility</u> for internal team members.</li>
+</ul>
+
+<p>3) Slack Notification Bot</p>
+<ul>
+  <li>Improved issue <u>identification</u> and <u>response speed</u> by sharing the topics with the highest increase in inquiries with internal team members each week, contributing to <u>a shared understanding of the context</u>.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="English" /><category term="Python" /><category term="BigQuery" /><category term="Redash" /><category term="Data Visualization" /><category term="LLM" /><summary type="html"><![CDATA[“I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups.”]]></summary></entry><entry><title type="html">데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화</title><link href="http://localhost:4000/voc-dashboard-ko/" rel="alternate" type="text/html" title="데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화" /><published>2024-07-20T00:00:00+09:00</published><updated>2024-07-20T00:00:00+09:00</updated><id>http://localhost:4000/voc-dashboard-ko</id><content type="html" xml:base="http://localhost:4000/voc-dashboard-ko/"><![CDATA[<blockquote>
   <p>“사내 구성원 분들이 젠데스크 고객 문의 내역 팔로업에 어려움을 겪고 있다는 사실을 공유 받아, 이를 해결하기 위해 Redash VOC 대시보드를 구축했습니다. 젠데스크 데이터를 자동으로 수집하고 전처리한 후, OpenAI API를 활용해 고객 문의 내역을 주제별로 분류하고 요약했습니다. 추가적으로, 매주 월요일마다 가장 많이 증가한 문의 주제를 슬랙으로 알림을 보내어, 고객 이슈를 효율적으로 식별하고 대응할 수 있도록 기여했습니다. 결과적으로 매월 약 $275 기회 비용을 제거할 수 있었으며, 사내 구성원 분들의 VOC 팔로업 시간을 감소시키는 성과를 얻었습니다.”</p>
 </blockquote>
 
@@ -2464,780 +3237,7 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Korean" /><category term="Python" /><category term="BigQuery" /><category term="Redash" /><category term="Data Visualization" /><category term="LLM" /><summary type="html"><![CDATA[“사내 구성원 분들이 젠데스크 고객 문의 내역 팔로업에 어려움을 겪고 있다는 사실을 공유 받아, 이를 해결하기 위해 Redash VOC 대시보드를 구축했습니다. 젠데스크 데이터를 자동으로 수집하고 전처리한 후, OpenAI API를 활용해 고객 문의 내역을 주제별로 분류하고 요약했습니다. 추가적으로, 매주 월요일마다 가장 많이 증가한 문의 주제를 슬랙으로 알림을 보내어, 고객 이슈를 효율적으로 식별하고 대응할 수 있도록 기여했습니다. 결과적으로 매월 약 $275 기회 비용을 제거할 수 있었으며, 사내 구성원 분들의 VOC 팔로업 시간을 감소시키는 성과를 얻었습니다.”]]></summary></entry><entry><title type="html">Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency</title><link href="http://localhost:4000/voc-dashboard-en/" rel="alternate" type="text/html" title="Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency" /><published>2024-07-20T00:00:00+09:00</published><updated>2024-07-20T00:00:00+09:00</updated><id>http://localhost:4000/voc-dashboard-en</id><content type="html" xml:base="http://localhost:4000/voc-dashboard-en/"><![CDATA[<blockquote>
-  <p>“I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups.”</p>
-</blockquote>
-
-<hr />
-
-<h1 id="table-of-contents">Table of Contents</h1>
-<ol>
-  <li>STAR Summary</li>
-  <li>Situation</li>
-  <li>Tasks</li>
-  <li>Actions</li>
-  <li>Results</li>
-</ol>
-
-<hr />
-
-<h1 id="1-star-summary">1. STAR Summary</h1>
-
-<h3 id="situation">Situation</h3>
-<ul>
-  <li>Internal team members were struggling to efficiently track and follow up on Zendesk customer inquiries. Reading through all the inquiries required <strong>an excessive amount of time and effort</strong>, and implementing an external VOC analysis service posed <strong>a cost burden</strong>.</li>
-</ul>
-
-<h3 id="tasks">Tasks</h3>
-<ol>
-  <li>I decided to <strong>categorize and summarize</strong> customer inquiries and create a Redash VOC <strong>dashboard</strong>.</li>
-  <li>I also decided to build <strong>a Slack notification bot</strong> to alert the team about the most urgent customer inquiry topics.</li>
-</ol>
-
-<h3 id="actions">Actions</h3>
-<ol>
-  <li>
-    <p><strong>Data Pipeline</strong></p>
-
-    <p>1.1. Data Collection and Preprocessing <code class="language-plaintext highlighter-rouge">(Zendesk Tickets → Google Sheets → BigQuery)</code></p>
-
-    <p>1.2. Topic Categorization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
-
-    <p>1.3. Summarization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
-  </li>
-  <li>
-    <p><strong>Dashboard and Notification Bot</strong></p>
-
-    <p>2.1. Creating the Dashboard <code class="language-plaintext highlighter-rouge">(BigQuery → Redash)</code></p>
-
-    <p>2.2. Building the Notification Bot <code class="language-plaintext highlighter-rouge">(BigQuery → Slack API)</code></p>
-  </li>
-</ol>
-
-<h3 id="results">Results</h3>
-<ol>
-  <li><strong>Cost Savings</strong>
-    <ul>
-      <li>We solved the problem internally at a cost of $25 per month, avoiding the need for an external service that would have cost $300 per month.</li>
-    </ul>
-  </li>
-  <li><strong>Time Savings</strong>
-    <ul>
-      <li>The time required for internal team members to follow up on VOC, identify issues, and respond was significantly reduced.</li>
-    </ul>
-  </li>
-</ol>
-
-<hr />
-
-<h1 id="2-situation">2. Situation</h1>
-
-<blockquote>
-  <p>Internal team members were struggling to efficiently track and follow up on Zendesk customer inquiries. Reading through all the inquiries required <strong>an excessive amount of time and effort</strong>, and implementing an external VOC analysis service posed <strong>a cost burden</strong>.</p>
-</blockquote>
-
-<h3 id="specific-situation">Specific Situation</h3>
-<ul>
-  <li>It was taking too much time to follow up on dozens to hundreds of customer inquiries each week.</li>
-  <li>It was challenging to identify which topics were negatively impacting the customer experience.</li>
-</ul>
-
-<h3 id="feedback-from-internal-team-members">Feedback from Internal Team Members</h3>
-<ul>
-  <li><strong>C-level 1</strong>: “I’m trying to stay on top of customer sentiment by regularly reading the inquiries, but there are just too many, and it’s very time-consuming.”</li>
-  <li><strong>C-level 2</strong>: “I’d like to introduce an external service for VOC analysis, but the cost is too high, so we’re hesitant.”</li>
-  <li><strong>CX Manager</strong>: “I want to share more VOC insights with colleagues and improve the speed of issue resolution.”</li>
-</ul>
-
-<hr />
-
-<h1 id="3-tasks">3. Tasks</h1>
-
-<blockquote>
-  <ol>
-    <li>I decided to <strong>categorize and summarize</strong> customer inquiries and create a Redash VOC <strong>dashboard</strong>.</li>
-    <li>I also decided to build <strong>a Slack notification bot</strong> to alert the team about the most urgent customer inquiry topics.</li>
-  </ol>
-</blockquote>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/1.png" alt="" /></p>
-
-<hr />
-
-<h1 id="4-actions">4. Actions</h1>
-
-<blockquote>
-  <ol>
-    <li>
-      <p><strong>Data Pipeline</strong></p>
-
-      <p>1.1. Data Collection and Preprocessing <code class="language-plaintext highlighter-rouge">(Zendesk Tickets → Google Sheets → BigQuery)</code></p>
-
-      <p>1.2. Topic Categorization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
-
-      <p>1.3. Summarization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></p>
-    </li>
-    <li>
-      <p><strong>Dashboard and Notification Bot</strong></p>
-
-      <p>2.1. Creating the Dashboard <code class="language-plaintext highlighter-rouge">(BigQuery → Redash)</code></p>
-
-      <p>2.2. Building the Notification Bot <code class="language-plaintext highlighter-rouge">(BigQuery → Slack API)</code></p>
-    </li>
-  </ol>
-</blockquote>
-
-<h3 id="1-data-pipeline">1. <strong>Data Pipeline</strong></h3>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/2-en.png" alt="" /></p>
-
-<h5 id="11-data-collection-and-preprocessing-zendesk-tickets--google-sheets--bigquery">1.1. Data Collection and Preprocessing <code class="language-plaintext highlighter-rouge">(Zendesk Tickets → Google Sheets → BigQuery)</code></h5>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/3-en.png" alt="" /></p>
-
-<p>1) First, I used the <strong>Zendesk Connector</strong> available from Google Workspace Marketplace to automatically store completed Zendesk ticket data in a private Google Sheet.</p>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/4.png" alt="" /></p>
-
-<p>2) I then loaded the Google Sheets data into Python.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Raw Data from Google Sheets (to `df`)
-</span>   <span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="p">.</span><span class="nf">service_account</span><span class="p">(</span><span class="n">google_sheets_credentials_fpath</span><span class="p">)</span>
-   <span class="n">spreadsheet</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="nf">open_by_url</span><span class="p">(</span><span class="n">google_sheets_url</span><span class="p">)</span>
-   <span class="n">sheet</span> <span class="o">=</span> <span class="n">spreadsheet</span><span class="p">.</span><span class="nf">worksheet</span><span class="p">(</span><span class="n">google_sheets_worksheet_name</span><span class="p">)</span>
-   <span class="n">sheet_data</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">.</span><span class="nf">get_all_records</span><span class="p">()</span>
-   <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">(</span><span class="n">sheet_data</span><span class="p">)</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>3) After that, I proceeded with data preprocessing.</p>
-
-<details>
-<summary>Filter Only Necessary Columns</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Rename Columns
-</span>   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">rename</span><span class="p">(</span>
-      <span class="n">columns</span><span class="o">=</span><span class="p">{</span>
-         <span class="sh">'</span><span class="s">created_at</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
-         <span class="sh">'</span><span class="s">raw_subject</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">,</span>
-         <span class="sh">'</span><span class="s">tags.0</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">zendesk_topic</span><span class="sh">'</span><span class="p">,</span>
-         <span class="sh">'</span><span class="s">updated_at</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">updated_datetime</span><span class="sh">'</span>
-      <span class="p">}</span>
-   <span class="p">)</span>
-   <span class="c1"># Extract Only Necessary Columns
-</span>   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span>
-      <span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">zendesk_topic</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">description</span><span class="sh">'</span>
-   <span class="p">]]</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<details>
-<summary>Change Timezone (UTC → KST)</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Convert Existing Timestamps: UTC to KST
-</span>   <span class="n">kst</span> <span class="o">=</span> <span class="n">pytz</span><span class="p">.</span><span class="nf">timezone</span><span class="p">(</span><span class="sh">'</span><span class="s">Asia/Seoul</span><span class="sh">'</span><span class="p">)</span>
-   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">],</span> <span class="n">utc</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">dt</span><span class="p">.</span><span class="nf">tz_convert</span><span class="p">(</span><span class="n">kst</span><span class="p">).</span><span class="n">dt</span><span class="p">.</span><span class="nf">tz_localize</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
-   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="nf">astype</span><span class="p">(</span><span class="sh">'</span><span class="s">str</span><span class="sh">'</span><span class="p">)</span> <span class="c1"># To load into BigQuery, all columns must be cast as strings.
-</span></code></pre></div>    </div>
-  </div>
-</details>
-
-<details>
-<summary>Filter Only New Entries</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Remove Rows Already in Target Table (Prevent Duplicates)
-</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT DISTINCT id FROM `</span><span class="si">{</span><span class="n">bigquery_tickets_table_id</span><span class="si">}</span><span class="s">`</span><span class="sh">'</span>
-   <span class="k">try</span><span class="p">:</span>
-      <span class="n">existing_ids</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
-      <span class="n">existing_ids</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">])</span>
-      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
-         <span class="o">~</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">].</span><span class="nf">isin</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">)</span>
-      <span class="p">].</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-   <span class="k">except</span><span class="p">:</span>
-      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>4) Finally, I loaded the data into the BigQuery table.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Data into BigQuery Table
-</span>   <span class="n">table</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">get_table</span><span class="p">(</span><span class="n">bigquery_tickets_table_id</span><span class="p">)</span>
-   <span class="n">client</span><span class="p">.</span><span class="nf">load_table_from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<h5 id="12-topic-categorization-openai-api">1.2. Topic Categorization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></h5>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/5-en.png" alt="" /></p>
-
-<p>1) To predefine the list of topics to be categorized, I discussed and established a classification system with a CX manager and a UX/UI designer.</p>
-
-<ul>
-  <li><strong>Topic</strong>: Broad subject categories</li>
-  <li><strong>Keyword</strong>: Specific subtopics</li>
-</ul>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/6.png" alt="" /></p>
-
-<p>2) I loaded the data from the BigQuery table into Python.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load BigQuery `tickets` Table (to `df`)
-</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT * FROM </span><span class="si">{</span><span class="n">bigquery_tickets_table_id</span><span class="si">}</span><span class="sh">'</span>
-   <span class="n">df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>3) I then filtered out only new entries.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Remove Rows Already in Target Table (Prevent Duplicates)
-</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT DISTINCT id FROM `</span><span class="si">{</span><span class="n">bigquery_tickets_topics_table_id</span><span class="si">}</span><span class="s">`</span><span class="sh">'</span>
-   <span class="k">try</span><span class="p">:</span>
-      <span class="n">existing_ids</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
-      <span class="n">existing_ids</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">])</span>
-      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
-         <span class="o">~</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">].</span><span class="nf">isin</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">)</span>
-      <span class="p">].</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-   <span class="k">except</span><span class="p">:</span>
-      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>4) I created the prompt to be sent to OpenAI.</p>
-
-<details>
-<summary>System Prompt</summary>
-<div>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   Your task is to classify a single key keyword from the customer inquiry details. You must respond by selecting only from the provided list of topics. Below is the list of topics you can choose from:
-      {Keyword List}
-   Do not create or select any other topics.
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<details>
-<summary>User Prompt</summary>
-<div>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   Below is the customer inquiry details.
-   Extract a single key topic from this text.
-
-   Customer Inquiry Details:
-      {Actual Text}
-
-   Extraction Format: Topic
-   Restrictions:
-   1. Respond with only the topic.
-   2. Choose only from the provided list of topics. Do not create or select any other topics.
-   3. Make sure to select one from the list below:
-   {Keyword List}
-   
-   Extraction Result:
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>5) I then obtained the main topic by calling the OpenAI API.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Define the system prompt for OpenAI
-</span>   <span class="n">prompt_system</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'''</span><span class="s">
-   Your task is to classify a single key keyword from the customer inquiry details. You must respond by selecting only from the provided list of topics. Below is the list of topics you can choose from:
-   </span><span class="si">{</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">topics2_list</span><span class="p">)</span><span class="si">}</span><span class="s">
-   Do not create or select any other topics.
-   </span><span class="sh">'''</span>
-
-   <span class="c1"># Start the OpenAI API Request for each row
-</span>   <span class="n">topic2_results_list</span> <span class="o">=</span> <span class="p">[]</span>
-
-   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
-
-      <span class="c1"># Subject + Description
-</span>      <span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">]</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> </span><span class="sh">'</span> <span class="o">+</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">description</span><span class="sh">'</span><span class="p">]</span>
-      <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span> <span class="c1"># Limit length to 2,000 characters (to save costs)
-</span>
-      <span class="c1"># Define the individual prompt for API Request
-</span>      <span class="n">prompt_individual</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'''</span><span class="s">
-      Below is the customer inquiry details.
-      Extract a single key topic from this text.
-
-      Customer Inquiry Details:
-      </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s">
-
-      Extraction Format: Topic
-      Restrictions:
-      1. Respond with only the topic.
-      2. Choose only from the provided list of topics. Do not create or select any other topics.
-      3. Make sure to select one from the list below:
-      </span><span class="si">{</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">topics2_list</span><span class="p">)</span><span class="si">}</span><span class="s"> 
-      
-      Extraction Result:
-      </span><span class="sh">'''</span>
-
-      <span class="c1"># Start the API Request
-</span>      <span class="n">result</span> <span class="o">=</span> <span class="n">openai_client</span><span class="p">.</span><span class="n">chat</span><span class="p">.</span><span class="n">completions</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="sh">'</span><span class="s">gpt-4</span><span class="sh">'</span><span class="p">,</span>
-            <span class="n">max_tokens</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="n">temperature</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
-            <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">system</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_system</span><span class="p">},</span>
-               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">user</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_individual</span><span class="p">}</span>
-            <span class="p">]</span>
-      <span class="p">)</span>
-
-      <span class="c1"># Record the topic results into Empty Lists
-</span>      <span class="n">topic2_result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">message</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\'</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\"</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">[</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">]</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span>
-      <span class="n">topic2_results_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">topic2_result</span><span class="p">)</span>
-
-   <span class="c1"># Record the 'Topic 1' results using 'Topic 2' results
-</span>   <span class="n">topic1_results_list</span> <span class="o">=</span> <span class="p">[]</span>
-   <span class="k">for</span> <span class="n">topic2</span> <span class="ow">in</span> <span class="n">topic2_results_list</span><span class="p">:</span>
-      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">topics_list</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">topics_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">topic2</span><span class="p">:</span>
-               <span class="n">topic1_results_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">topics_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-               <span class="k">break</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nf">len</span><span class="p">(</span><span class="n">topics_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-               <span class="n">topic1_results_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">'</span><span class="s">Others</span><span class="sh">'</span><span class="p">)</span>
-      
-   <span class="c1"># Add 'Topic 1' and 'Topic 2' columns to the dataframe and select only the necessary columns
-</span>   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_topic_1</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">topic1_results_list</span>
-   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_topic_2</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">topic2_results_list</span>
-   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span>
-      <span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">openai_topic_1</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">openai_topic_2</span><span class="sh">'</span>
-   <span class="p">]]</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>6) Finally, the topic categorization results were loaded into a BigQuery table.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Data into BigQuery Table
-</span>   <span class="n">table</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">get_table</span><span class="p">(</span><span class="n">bigquery_tickets_topics_table_id</span><span class="p">)</span>
-   <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">load_table_from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<h5 id="13-summarization-openai-api">1.3. Summarization <code class="language-plaintext highlighter-rouge">(OpenAI API)</code></h5>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/7-en.png" alt="" /></p>
-
-<p>1) I loaded the data from the BigQuery table into Python.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load BigQuery `tickets` Table (to `df`)
-</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT * FROM </span><span class="si">{</span><span class="n">bigquery_tickets_table_id</span><span class="si">}</span><span class="sh">'</span>
-   <span class="n">df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>2) I then filtered out only new entries.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Remove Rows Already in Target Table (Prevent Duplicates)
-</span>   <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">SELECT DISTINCT id FROM `</span><span class="si">{</span><span class="n">bigquery_tickets_summary_table_id</span><span class="si">}</span><span class="s">`</span><span class="sh">'</span>
-   <span class="k">try</span><span class="p">:</span>
-      <span class="n">existing_ids</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
-      <span class="n">existing_ids</span> <span class="o">=</span> <span class="nf">set</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">])</span>
-      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
-         <span class="o">~</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">].</span><span class="nf">isin</span><span class="p">(</span><span class="n">existing_ids</span><span class="p">)</span>
-      <span class="p">].</span><span class="nf">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-   <span class="k">except</span><span class="p">:</span>
-      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>3) I created the prompt to be sent to OpenAI.</p>
-
-<details>
-<summary>System Prompt</summary>
-<div>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   our task is to summarize customer inquiry details into a single sentence in Korean.
-   Keep in mind that the customer is from a blockchain hardware and app wallet service company.
-   The summary must be provided in a single sentence in Korean, and sensitive personal information or links must be removed.
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<details>
-<summary>User Prompt</summary>
-<div>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      Below is a customer inquiry.
-      Summarize this text into a single sentence in Korean.
-
-      Customer inquiry:
-      {text}
-
-      Format of extraction: One sentence in Korean
-      Constraints:
-
-      1. Remember that the customer is from a blockchain hardware and app wallet service company.
-      2. Summarize in Korean only. (However, proper nouns that cannot be translated may remain in English.)
-      3. Respond in only one sentence.
-      4. Ensure that sensitive personal information is removed. (e.g., personal details, wallet addresses, contact information, passwords, private keys, mnemonic phrases, email addresses, IP addresses, URLs, social media accounts, etc.)
-
-      Extraction result:
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>4) I performed the OpenAI summarization task by iterating over each ticket.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Define the system prompt for OpenAI
-</span>   <span class="n">prompt_system</span> <span class="o">=</span> <span class="sh">'''</span><span class="s">
-   our task is to summarize customer inquiry details into a single sentence in Korean.
-   Keep in mind that the customer is from a blockchain hardware and app wallet service company.
-   The summary must be provided in a single sentence in Korean, and sensitive personal information or links must be removed.
-   </span><span class="sh">'''</span>
-
-   <span class="c1"># Start the OpenAI API Request for each row
-</span>   <span class="n">summaries_list</span> <span class="o">=</span> <span class="p">[]</span>
-
-   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
-
-      <span class="c1"># Subject + Description
-</span>      <span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">subject</span><span class="sh">'</span><span class="p">]</span> <span class="o">+</span> <span class="sh">'</span><span class="s"> </span><span class="sh">'</span> <span class="o">+</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="sh">'</span><span class="s">description</span><span class="sh">'</span><span class="p">]</span>
-      <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span> <span class="c1"># Limit length to 2,000 characters (to save costs)
-</span>
-      <span class="c1"># Define the individual prompt for API Request
-</span>      <span class="n">prompt_individual</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'''</span><span class="s">
-      Below is a customer inquiry.
-      Summarize this text into a single sentence in Korean.
-
-      Customer inquiry:
-      </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s">
-
-      Format of extraction: One sentence in Korean
-      Constraints:
-
-      1. Remember that the customer is from a blockchain hardware and app wallet service company.
-      2. Summarize in Korean only. (However, proper nouns that cannot be translated may remain in English.)
-      3. Respond in only one sentence.
-      4. Ensure that sensitive personal information is removed. (e.g., personal details, wallet addresses, contact information, passwords, private keys, mnemonic phrases, email addresses, IP addresses, URLs, social media accounts, etc.)
-
-      Extraction result:
-      </span><span class="sh">'''</span>
-
-      <span class="c1"># Start the API Request
-</span>      <span class="n">result</span> <span class="o">=</span> <span class="n">openai_client</span><span class="p">.</span><span class="n">chat</span><span class="p">.</span><span class="n">completions</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="sh">'</span><span class="s">gpt-4</span><span class="sh">'</span><span class="p">,</span>
-            <span class="n">max_tokens</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="n">temperature</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="n">stop</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
-            <span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">system</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_system</span><span class="p">},</span>
-               <span class="p">{</span><span class="sh">"</span><span class="s">role</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">user</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">content</span><span class="sh">"</span><span class="p">:</span> <span class="n">prompt_individual</span><span class="p">}</span>
-            <span class="p">]</span>
-      <span class="p">)</span>
-
-      <span class="c1"># Record the topic results into empty lists
-</span>      <span class="n">summary_result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">message</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\'</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="se">\"</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">[</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">]</span><span class="sh">'</span><span class="p">,</span> <span class="sh">''</span><span class="p">).</span><span class="nf">strip</span><span class="p">()</span>
-      <span class="n">summaries_list</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">summary_result</span><span class="p">)</span>
-
-   <span class="c1"># Add the summary column to the dataframe and select only the required columns
-</span>   <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_summary</span><span class="sh">'</span><span class="p">]</span> <span class="o">=</span> <span class="n">summaries_list</span>
-   <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span>
-      <span class="sh">'</span><span class="s">id</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">created_datetime</span><span class="sh">'</span><span class="p">,</span>
-      <span class="sh">'</span><span class="s">openai_summary</span><span class="sh">'</span>
-   <span class="p">]]</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>5) Finally, the summarized results were loaded into a BigQuery table.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="c1"># Load Data into BigQuery Table
-</span>   <span class="n">table</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">get_table</span><span class="p">(</span><span class="n">bigquery_tickets_summary_table_id</span><span class="p">)</span>
-   <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">load_table_from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<h3 id="2-dashboard-and-notification-bot">2. <strong>Dashboard and Notification Bot</strong></h3>
-
-<h5 id="21-creating-the-dashboard-bigquery--redash">2.1. Creating the Dashboard <code class="language-plaintext highlighter-rouge">(BigQuery → Redash)</code></h5>
-
-<p>1) I created a Redash dashboard with the following contents.</p>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/11.png" alt="" /></p>
-
-<details>
-<summary>Proportion by Topic</summary>
-<div>
-    <p><img src="/assets/2024-07-20-voc-dashboard/12.png" alt="" /></p>
-  </div>
-</details>
-
-<details>
-<summary>Trends by Topic</summary>
-<div>
-    <p><img src="/assets/2024-07-20-voc-dashboard/13.png" alt="" /></p>
-  </div>
-</details>
-
-<details>
-<summary>Trends by Keyword</summary>
-<div>
-    <p><img src="/assets/2024-07-20-voc-dashboard/14.png" alt="" /></p>
-  </div>
-</details>
-
-<details>
-<summary>Summary of Inquiries by Keyword</summary>
-<div>
-    <p><img src="/assets/2024-07-20-voc-dashboard/15.png" alt="" /></p>
-  </div>
-</details>
-
-<details>
-<summary>All Datasets</summary>
-<div>
-    <p><img src="/assets/2024-07-20-voc-dashboard/16.png" alt="" /></p>
-  </div>
-</details>
-
-<h5 id="22-building-the-notification-bot-bigquery--slack-api">2.2. Building the Notification Bot <code class="language-plaintext highlighter-rouge">(BigQuery → Slack API)</code></h5>
-
-<p>1) First, I wrote a BigQuery query.</p>
-
-<details>
-<summary>Extracting the detailed topics (Keywords) with the most significant increase in customer inquiries from the previous week (compared to the week before)</summary>
-<div>
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">WITH</span>
-   <span class="n">CTE_1w_ago_raw</span> <span class="k">AS</span> <span class="p">(</span>
-      <span class="k">SELECT</span>
-         <span class="n">openai_topic_2</span><span class="p">,</span>
-         <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt</span>
-      <span class="k">FROM</span>
-         <span class="nv">`bigquery_tickets_topics_table_id`</span>
-      <span class="k">WHERE</span>
-         <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="n">DATE_ADD</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="o">-</span><span class="mi">1</span> <span class="n">WEEK</span><span class="p">),</span> <span class="n">WEEK</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span>
-         <span class="k">AND</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">WEEK</span><span class="p">)</span>
-         <span class="k">AND</span> <span class="n">openai_topic_1</span> <span class="o">!=</span> <span class="s1">'Others'</span>
-      <span class="k">GROUP</span> <span class="k">BY</span>
-         <span class="mi">1</span>
-   <span class="p">),</span>
-   <span class="n">CTE_2w_ago_raw</span> <span class="k">AS</span> <span class="p">(</span>
-      <span class="k">SELECT</span>
-         <span class="n">openai_topic_2</span><span class="p">,</span>
-         <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt</span>
-      <span class="k">FROM</span>
-         <span class="nv">`bigquery_tickets_topics_table_id`</span>
-      <span class="k">WHERE</span>
-         <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="n">DATE_ADD</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="o">-</span><span class="mi">2</span> <span class="n">WEEK</span><span class="p">),</span> <span class="n">WEEK</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span>
-         <span class="k">AND</span> <span class="nb">DATE</span><span class="p">(</span><span class="n">created_datetime</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="n">DATE_ADD</span><span class="p">(</span><span class="k">CURRENT_DATE</span><span class="p">(),</span> <span class="n">INTERVAL</span> <span class="o">-</span><span class="mi">1</span> <span class="n">WEEK</span><span class="p">),</span> <span class="n">WEEK</span><span class="p">)</span>
-         <span class="k">AND</span> <span class="n">openai_topic_1</span> <span class="o">!=</span> <span class="s1">'Others'</span>
-      <span class="k">GROUP</span> <span class="k">BY</span>
-         <span class="mi">1</span>
-   <span class="p">),</span>
-   <span class="n">CTE_diff</span> <span class="k">AS</span> <span class="p">(</span>
-      <span class="k">SELECT</span>
-         <span class="n">COALESCE</span><span class="p">(</span><span class="n">MAIN</span><span class="p">.</span><span class="n">openai_topic_2</span><span class="p">,</span> <span class="n">COMP</span><span class="p">.</span><span class="n">openai_topic_2</span><span class="p">)</span> <span class="k">AS</span> <span class="n">openai_topic_2</span><span class="p">,</span>
-         <span class="n">MAIN</span><span class="p">.</span><span class="n">tickets_cnt</span> <span class="k">AS</span> <span class="n">tickets_cnt_1w_ago</span><span class="p">,</span>
-         <span class="n">COALESCE</span><span class="p">(</span><span class="n">COMP</span><span class="p">.</span><span class="n">tickets_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt_2w_ago</span><span class="p">,</span>
-         <span class="n">COALESCE</span><span class="p">(</span><span class="n">MAIN</span><span class="p">.</span><span class="n">tickets_cnt</span> <span class="o">-</span> <span class="n">COMP</span><span class="p">.</span><span class="n">tickets_cnt</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">AS</span> <span class="n">tickets_cnt_diff</span>
-      <span class="k">FROM</span>
-         <span class="n">CTE_1w_ago_raw</span> <span class="n">MAIN</span>
-      <span class="k">LEFT</span> <span class="k">JOIN</span>
-         <span class="n">CTE_2w_ago_raw</span> <span class="n">COMP</span>
-         <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">openai_topic_2</span> <span class="o">=</span> <span class="n">COMP</span><span class="p">.</span><span class="n">openai_topic_2</span>
-   <span class="p">)</span>
-   <span class="k">SELECT</span>
-      <span class="n">openai_topic_2</span><span class="p">,</span>
-      <span class="n">tickets_cnt_1w_ago</span><span class="p">,</span>
-      <span class="n">tickets_cnt_2w_ago</span><span class="p">,</span>
-      <span class="n">tickets_cnt_diff</span>
-   <span class="k">FROM</span>
-      <span class="n">CTE_diff</span>
-   <span class="k">WHERE</span>
-      <span class="n">tickets_cnt_diff</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">tickets_cnt_diff</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">CTE_diff</span><span class="p">)</span>
-      <span class="k">AND</span> <span class="n">tickets_cnt_diff</span> <span class="o">&gt;</span> <span class="mi">0</span>
-   <span class="k">ORDER</span> <span class="k">BY</span>
-      <span class="mi">1</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>2) I created a Slack message object.</p>
-
-<details>
-<summary>View Code</summary>
-<div>
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="n">df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="nf">to_dataframe</span><span class="p">()</span>
-
-   <span class="c1"># Slack Message Title
-</span>   <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">:phone: *Weekly Zendesk Summary* </span><span class="se">\n\n</span><span class="sh">'</span>
-   <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">*Here are the customer inquiry topics that increased the most in the past week.* </span><span class="se">\n</span><span class="sh">'</span>
-
-   <span class="c1"># If data exists
-</span>   <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-      <span class="n">topics</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">openai_topic_2</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
-      <span class="n">tickets_cnt_1w_agos</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">tickets_cnt_1w_ago</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
-      <span class="n">tickets_cnt_diffs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="sh">'</span><span class="s">tickets_cnt_diff</span><span class="sh">'</span><span class="p">].</span><span class="nf">tolist</span><span class="p">()</span>
-      <span class="c1"># Create Slack message
-</span>      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">):</span>
-         <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">- *</span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s">*: Total </span><span class="si">{</span><span class="n">tickets_cnt_1w_agos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s"> cases (Compared to the previous week +</span><span class="si">{</span><span class="n">tickets_cnt_diffs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">) </span><span class="se">\n</span><span class="sh">'</span>
-
-   <span class="c1"># If no data exists
-</span>   <span class="k">else</span><span class="p">:</span>
-      <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">'</span><span class="s">- *There are no topics that increased.*:smile: </span><span class="se">\n\n</span><span class="sh">'</span>
-</code></pre></div>    </div>
-  </div>
-</details>
-
-<p>3) Every Monday at 9:00 AM, the following Slack notification was sent.</p>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/10-en.png" alt="" /></p>
-
-<hr />
-
-<h1 id="5-results">5. Results</h1>
-
-<blockquote>
-  <ol>
-    <li><strong>Cost Savings</strong>
-      <ul>
-        <li>We solved the problem internally at a cost of $25 per month, avoiding the need for an external service that would have cost $300 per month.</li>
-      </ul>
-    </li>
-    <li><strong>Time Savings</strong>
-      <ul>
-        <li>The time required for internal team members to follow up on VOC, identify issues, and respond was significantly reduced.</li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<h3 id="1-cost-savings">1. <strong>Cost Savings</strong></h3>
-
-<p>Conclusion)  By developing internally, we were able to eliminate approximately $275 in opportunity costs each month.</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td> </td>
-      <td><strong>External VOC Analysis Service</strong></td>
-      <td><strong>Internal Development</strong></td>
-    </tr>
-    <tr>
-      <td>Monthly Cost</td>
-      <td><code class="language-plaintext highlighter-rouge">$300</code></td>
-      <td><code class="language-plaintext highlighter-rouge">$25</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<p>1) External VOC Analysis Service</p>
-<ul>
-  <li>The <a href="https://www.syncly.kr/">syncly</a> service we considered adopting required a minimum monthly cost of $299.</li>
-</ul>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/8.png" alt="" /></p>
-
-<p>2) Internal Development</p>
-<ul>
-  <li>However, internal development required the following costs:</li>
-</ul>
-
-<table>
-  <tbody>
-    <tr>
-      <td><strong>Resource</strong></td>
-      <td><strong>Monthly Cost</strong></td>
-    </tr>
-    <tr>
-      <td>1. OpenAI API</td>
-      <td><code class="language-plaintext highlighter-rouge">$25</code></td>
-    </tr>
-    <tr>
-      <td>2. BigQuery Storage</td>
-      <td>Minimal</td>
-    </tr>
-    <tr>
-      <td>3. BigQuery Query Usage</td>
-      <td>Negligible</td>
-    </tr>
-    <tr>
-      <td>4. VM Instance Operation</td>
-      <td>Minimal, as we used existing instances</td>
-    </tr>
-    <tr>
-      <td><strong>TOTAL</strong></td>
-      <td><code class="language-plaintext highlighter-rouge">$25</code> + e</td>
-    </tr>
-  </tbody>
-</table>
-
-<p><img src="/assets/2024-07-20-voc-dashboard/9.png" alt="ㅇㅇㅇ" /></p>
-<blockquote>
-  <p>Daily OpenAI API Costs</p>
-</blockquote>
-
-<h3 id="2-time-savings">2. <strong>Time Savings</strong></h3>
-
-<p>1) Redash VOC Dashboard (Topic Categorization)</p>
-<ul>
-  <li>Improved <u>the ease of identifying</u> VOC issues for internal team members.</li>
-</ul>
-
-<p>2) Redash VOC Dashboard (Summarization)</p>
-<ul>
-  <li>Enhanced <u>the follow-up speed</u> on VOC and improved <u>accessibility</u> for internal team members.</li>
-</ul>
-
-<p>3) Slack Notification Bot</p>
-<ul>
-  <li>Improved issue <u>identification</u> and <u>response speed</u> by sharing the topics with the highest increase in inquiries with internal team members each week, contributing to <u>a shared understanding of the context</u>.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="English" /><category term="Python" /><category term="BigQuery" /><category term="Redash" /><category term="Data Visualization" /><category term="LLM" /><summary type="html"><![CDATA[“I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups.”]]></summary></entry><entry><title type="html">Rolling MAU 쿼리 최적화</title><link href="http://localhost:4000/rolling-mau-ko/" rel="alternate" type="text/html" title="Rolling MAU 쿼리 최적화" /><published>2024-06-30T00:00:00+09:00</published><updated>2024-06-30T00:00:00+09:00</updated><id>http://localhost:4000/rolling-mau-ko</id><content type="html" xml:base="http://localhost:4000/rolling-mau-ko/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Korean" /><category term="Python" /><category term="BigQuery" /><category term="Redash" /><category term="Data Visualization" /><category term="LLM" /><summary type="html"><![CDATA[“사내 구성원 분들이 젠데스크 고객 문의 내역 팔로업에 어려움을 겪고 있다는 사실을 공유 받아, 이를 해결하기 위해 Redash VOC 대시보드를 구축했습니다. 젠데스크 데이터를 자동으로 수집하고 전처리한 후, OpenAI API를 활용해 고객 문의 내역을 주제별로 분류하고 요약했습니다. 추가적으로, 매주 월요일마다 가장 많이 증가한 문의 주제를 슬랙으로 알림을 보내어, 고객 이슈를 효율적으로 식별하고 대응할 수 있도록 기여했습니다. 결과적으로 매월 약 $275 기회 비용을 제거할 수 있었으며, 사내 구성원 분들의 VOC 팔로업 시간을 감소시키는 성과를 얻었습니다.”]]></summary></entry><entry><title type="html">Rolling MAU 쿼리 최적화</title><link href="http://localhost:4000/rolling-mau-ko/" rel="alternate" type="text/html" title="Rolling MAU 쿼리 최적화" /><published>2024-06-30T00:00:00+09:00</published><updated>2024-06-30T00:00:00+09:00</updated><id>http://localhost:4000/rolling-mau-ko</id><content type="html" xml:base="http://localhost:4000/rolling-mau-ko/"><![CDATA[<blockquote>
   <p>“Rolling MAU와 같은 복잡한 Rolling Metrics를 계산하는 데는 대규모 데이터셋에서 막대한 시간과 비용이 소요될 수 있습니다. 기존 쿼리로 6시간 이상 걸리던 작업을 쿼리 최적화와 B-tree Index를 통해 6초로 단축했습니다. 이 과정에서 불필요한 메모리 사용을 줄이고 쿼리 성능을 극대화하여 데이터 처리 효율성을 크게 향상시켰습니다. 이를 통해 기업이 Rolling MAU 지표를 효율적으로 관리하고 인프라 비용을 절감하는 데 기여할 수 있었습니다.”</p>
 </blockquote>
 
