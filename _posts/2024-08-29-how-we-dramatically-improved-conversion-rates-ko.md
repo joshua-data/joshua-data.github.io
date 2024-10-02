@@ -15,7 +15,7 @@ tags:
 
 | **Performance Summary** |
 | - |
-| - Conversion Rate (`add_payment_info` → `purchase`): 32%p ↑ | 
+| - 전환율 (`add_payment_info` → `purchase`): 32%p ↑ | 
 
 ---
 

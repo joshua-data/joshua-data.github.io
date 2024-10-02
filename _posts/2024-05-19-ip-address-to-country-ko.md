@@ -15,7 +15,7 @@ tags:
 
 | **Performance Summary** |
 | - |
-| - Query Execution Time: `100 mins` → `10 mins` |
+| - 쿼리 실행 시간: `100분` → `10분` |
 
 ---
 

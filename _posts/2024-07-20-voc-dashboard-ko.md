@@ -18,7 +18,7 @@ tags:
 
 | **Performance Summary** |
 | - |
-| - Opportunity Cost: `$300/month` → `$25/month` (92% ↓) |
+| - 기회 비용 절감: `$300/월` → `$25/월` (92% ↓) |
 
 ---
 

@@ -16,7 +16,7 @@ tags:
 
 | **Performance Summary** |
 | - |
-| - Orchestration Time: `50 mins` → `2 mins` (96% ↓) | 
+| - 오케스트레이션 소요 시간: `50분` → `2분` (96% ↓) | 
 
 ---
 
