@@ -13,6 +13,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Conversion Rate (`add_payment_info` → `purchase`): 32%p ↑ | 
+
+---
+
 # 목차
 1. STAR Summary
 2. Situation

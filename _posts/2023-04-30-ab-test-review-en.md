@@ -15,6 +15,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Add to Cart CVR (Supplementary Metric): `p-value = 0.0438` → Significant Increase |
+
+---
+
 # Table of Contents
 1. STAR Summary
 2. Situation

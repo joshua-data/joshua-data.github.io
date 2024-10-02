@@ -15,6 +15,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - 장바구니 담기 전환율 (보조 지표): `p-value = 0.0438` → 유의미한 증가 |
+
+---
+
 # 목차
 1. STAR Summary
 2. Situation

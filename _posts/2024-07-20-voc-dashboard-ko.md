@@ -16,6 +16,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Opportunity Cost: `$300/month` → `$25/month` (92% ↓) |
+
+---
+
 # 목차
 1. STAR Summary
 2. Situation

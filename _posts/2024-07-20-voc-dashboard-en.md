@@ -16,6 +16,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Opportunity Cost: `$300/month` → `$25/month` (92% ↓) |
+
+---
+
 # Table of Contents
 1. STAR Summary
 2. Situation

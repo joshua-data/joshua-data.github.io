@@ -14,6 +14,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Orchestration Time: `50 mins` → `2 mins` (96% ↓) | 
+
+---
+
 # Table of Contents
 1. STAR Summary
 2. Situation

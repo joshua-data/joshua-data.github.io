@@ -13,6 +13,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Query Execution Time: `6 hours`→ `6 seconds` |
+
+---
+
 # 목차
 1. STAR Summary
 2. Situation

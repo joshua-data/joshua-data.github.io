@@ -13,6 +13,12 @@ tags:
 
 ---
 
+| **Performance Summary** |
+| - |
+| - Query Execution Time: `100 mins` → `10 mins` |
+
+---
+
 # Table of Contents
 1. STAR Summary
 2. Situation
