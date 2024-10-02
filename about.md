@@ -46,9 +46,17 @@ I'm always eager to connect with professionals passionate about data analysis & 
 
 ## 🌎 Locations
 
-* 🇰🇷 Seoul, South Korea
-* 🇺🇸 Austin, Texas, United States
-* 🇹🇼 New Taipei City, Taiwan 
+#### Born and Raised
+* 🇰🇷 Seoul, **South Korea**
+
+#### Work Experience
+* 🇺🇸 Austin, Texas, **United States**
+
+#### Language Training
+* 🇹🇼 New Taipei City, **Taiwan**
+
+#### Traveling
+![]({{ site.baseurl }}/assets/profile/google-maps.png)
 
 ---
 
