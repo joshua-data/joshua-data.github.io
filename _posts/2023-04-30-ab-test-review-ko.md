@@ -4,7 +4,7 @@ title: "A/B 테스트 후기: 할인율 명시의 효과"
 tags:
   - Language (Korean)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Analysis)
   - Skills (Python)
   - Skills (SQL)

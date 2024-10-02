@@ -4,7 +4,7 @@ title: "Query Optimization by Using JOIN Instead of NOT IN"
 tags:
   - Language (English)
   - Article (Issue Resolution)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Analytics Engineering)
   - Skills (SQL)
   - Skills (dbt)  

@@ -4,7 +4,7 @@ title: "Data-driven VOC Analysis and Automated Dashboard Development: Reducing C
 tags:
   - Language (English)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Visualization)
   - Field (Analytics Engineering)
   - Field (LLM)

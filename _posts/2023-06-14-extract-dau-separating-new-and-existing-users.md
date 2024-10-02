@@ -4,7 +4,7 @@ title: "It’s Harder than You Think to Extract DAU Separating New and Existing 
 tags:
   - Language (English)
   - Article (Issue Resolution)
-  - Level (Beginner)
+  - Level (1. Beginner)
   - Field (Data Analysis)
   - Skills (SQL)
 ---

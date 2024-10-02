@@ -4,7 +4,7 @@ title: "Dramatic Increase in E-commerce Conversion Rates"
 tags:
   - Language (English)
   - Article (Project)
-  - Level (Beginner)
+  - Level (1. Beginner)
   - Field (Data Analysis)
   - Skills (SQL)
 ---

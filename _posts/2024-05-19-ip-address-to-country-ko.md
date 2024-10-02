@@ -4,7 +4,7 @@ title: "IP 주소-국가 매핑 쿼리 최적화"
 tags:
   - Language (Korean)
   - Article (Issue Resolution)
-  - Level (Advanced)
+  - Level (3. Advanced)
   - Field (Analytics Engineering)
   - Skills (SQL)
 ---

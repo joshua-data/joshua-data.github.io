@@ -4,7 +4,7 @@ title: "Rolling MAU Query Optimization"
 tags:
   - Language (English)
   - Article (Issue Resolution)
-  - Level (Advanced)
+  - Level (3. Advanced)
   - Field (Analytics Engineering)
   - Skills (SQL)
 ---

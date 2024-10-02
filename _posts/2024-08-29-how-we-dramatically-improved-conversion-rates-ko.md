@@ -4,7 +4,7 @@ title: "구매 전환율 급상승 후기"
 tags:
   - Language (Korean)
   - Article (Project)
-  - Level (Beginner)
+  - Level (1. Beginner)
   - Field (Data Analysis)
   - Skills (SQL)
 ---

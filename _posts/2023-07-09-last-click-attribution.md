@@ -4,7 +4,7 @@ title: "The Last Click Attribution Model Using BigQuery"
 tags:
   - Language (English)
   - Article (Issue Resolution)
-  - Level (Advanced)
+  - Level (3. Advanced)
   - Field (Data Analysis)
   - Skills (SQL)
 ---

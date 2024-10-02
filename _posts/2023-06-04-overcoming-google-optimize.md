@@ -4,7 +4,7 @@ title: "Harnessing the Power of BigQuery and Python: Overcoming Google Optimize 
 tags:
   - Language (English)
   - Article (Issue Resolution)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Analysis)
   - Skills (Python)
   - Skills (SQL)

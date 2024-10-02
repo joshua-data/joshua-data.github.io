@@ -4,7 +4,7 @@ title: "데이터 분석가의 파이썬 클라이언트 개발기 feat. pyinsta
 tags:
   - Language (Korean)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (RPA)
   - Skills (Python)
 ---

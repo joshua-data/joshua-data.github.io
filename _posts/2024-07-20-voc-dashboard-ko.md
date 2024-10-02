@@ -4,7 +4,7 @@ title: "데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 �
 tags:
   - Language (Korean)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Visualization)
   - Field (Analytics Engineering)
   - Field (LLM)

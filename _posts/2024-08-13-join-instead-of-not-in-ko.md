@@ -4,7 +4,7 @@ title: "NOT IN 대신 JOIN을 통한 쿼리 최적화"
 tags:
   - Language (Korean)
   - Article (Issue Resolution)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Analytics Engineering)
   - Skills (SQL)
   - Skills (dbt)  

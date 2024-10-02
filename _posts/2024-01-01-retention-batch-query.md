@@ -4,7 +4,7 @@ title: "데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Q
 tags:
   - Language (Korean)
   - Article (Issue Resolution)
-  - Level (Advanced)
+  - Level (3. Advanced)
   - Field (Data Analysis)
   - Field (Analytics Engineering)
   - Skills (SQL)

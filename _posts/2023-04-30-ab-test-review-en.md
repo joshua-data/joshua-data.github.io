@@ -4,7 +4,7 @@ title: "A/B Test Review: The Impact of Displaying Discount Percentages"
 tags:
   - Language (English)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Analysis)
   - Skills (Python)
   - Skills (SQL)

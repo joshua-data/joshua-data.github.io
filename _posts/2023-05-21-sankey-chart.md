@@ -4,7 +4,7 @@ title: "Let’s Create the Sankey Chart"
 tags:
   - Language (English)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Visualization)
   - Skills (SQL)
 ---

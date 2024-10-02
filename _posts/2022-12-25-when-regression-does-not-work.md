@@ -4,7 +4,7 @@ title: "회귀 모델이 풀 수 없는 문제"
 tags:
   - Language (Korean)
   - Article (Project)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Data Analysis)
   - Skills (Python)
 ---

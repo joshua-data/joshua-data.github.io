@@ -4,7 +4,7 @@ title: "데이터 분석가의 SQL 최적화 일기: Static vs. Rolling Stickine
 tags:
   - Language (Korean)
   - Article (Issue Resolution)
-  - Level (Intermediate)
+  - Level (2. Intermediate)
   - Field (Analytics Engineering)
   - Skills (SQL)
 ---
