@@ -2,12 +2,14 @@
 layout: post
 title: "Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency"
 tags:
-  - English
-  - Python
-  - BigQuery
-  - Redash
-  - Data Visualization
-  - LLM
+  - Language (English)
+  - Article (Project)
+  - Level (Intermediate)
+  - Field (Data Visualization)
+  - Field (Analytics Engineering)
+  - Field (LLM)
+  - Skills (Python)
+  - Skills (SQL)
 ---
 
 > "I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups."

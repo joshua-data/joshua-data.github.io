@@ -2,8 +2,12 @@
 layout: post
 title: "NOT IN 대신 JOIN을 통한 쿼리 최적화"
 tags:
-  - Korean
-  - PostgreSQL
+  - Language (Korean)
+  - Article (Issue Resolution)
+  - Level (Intermediate)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
+  - Skills (dbt)  
 ---
 
 > "이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, `core_fct_events` 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 `NOT IN` 구문을 `LEFT JOIN`으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다."

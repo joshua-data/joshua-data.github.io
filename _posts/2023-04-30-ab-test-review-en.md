@@ -2,10 +2,12 @@
 layout: post
 title: "A/B Test Review: The Impact of Displaying Discount Percentages"
 tags:
-  - English
-  - BigQuery
-  - Python
-  - Data Analysis
+  - Language (English)
+  - Article (Project)
+  - Level (Intermediate)
+  - Field (Data Analysis)
+  - Skills (Python)
+  - Skills (SQL)
 ---
 
 > "This A/B test was conducted as part of a project within our company's A/B Testing TF to analyze the impact of displaying discount percentages (%) on the website’s purchase conversion rate and revenue. In the experiment design phase, I used statistical methodologies such as the Chi-squared test, two-proportion z-test, and two-sample t-test to verify differences between the test and control groups. While the discount display did not significantly affect the purchase conversion rate or average revenue per user, the add-to-cart conversion rate showed a notable increase. This revealed that discount information can effectively expedite consumer purchase decisions, and highlighted the importance of developing more effective strategies for communicating product value moving forward."

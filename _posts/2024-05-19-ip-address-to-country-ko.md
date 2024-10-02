@@ -2,8 +2,11 @@
 layout: post
 title: "IP 주소-국가 매핑 쿼리 최적화"
 tags:
-  - Korean
-  - PostgreSQL
+  - Language (Korean)
+  - Article (Issue Resolution)
+  - Level (Advanced)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
 ---
 
 > "데이터 웨어하우스에서 IP 주소를 사용해 사용자의 국가 정보를 매핑하는 작업을 최적화하였습니다. 기존 방식은 연산 시간이 길어 비효율적이었으나, 새로운 접근 방식을 통해 쿼리 실행 시간을 90% 감소시켰습니다."

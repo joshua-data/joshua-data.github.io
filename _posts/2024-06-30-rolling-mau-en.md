@@ -2,8 +2,11 @@
 layout: post
 title: "Rolling MAU Query Optimization"
 tags:
-  - English
-  - PostgreSQL
+  - Language (English)
+  - Article (Issue Resolution)
+  - Level (Advanced)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
 ---
 
 > "Calculating complex Rolling Metrics like Rolling MAU can consume significant time and cost on large datasets. A task that previously took over 6 hours with the original query was reduced to 6 seconds through query optimization and the use of a B-tree Index. This process significantly enhanced data processing efficiency by minimizing unnecessary memory usage and maximizing query performance. As a result, the company was able to manage Rolling MAU metrics more efficiently, contributing to infrastructure cost savings."

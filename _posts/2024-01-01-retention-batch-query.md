@@ -2,10 +2,13 @@
 layout: post
 title: "데이터 분석가의 SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기"
 tags:
-  - Korean
-  - Data Analysis
-  - SQL
-  - Data Warehouse
+  - Language (Korean)
+  - Article (Issue Resolution)
+  - Level (Advanced)
+  - Field (Data Analysis)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
+  - Skills (dbt)
 ---
 
 > 코호트 리텐션의 의미와 중요성에 대해 말씀드리고, Batch Query를 사용하여 회원가입 월 코호트 별로 Monthly Range Retention을 계산하는 방법을 제시해드릴게요.

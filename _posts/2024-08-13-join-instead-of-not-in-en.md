@@ -2,8 +2,12 @@
 layout: post
 title: "Query Optimization by Using JOIN Instead of NOT IN"
 tags:
-  - English
-  - PostgreSQL
+  - Language (English)
+  - Article (Issue Resolution)
+  - Level (Intermediate)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
+  - Skills (dbt)  
 ---
 
 > "In this project, I optimized the incremental update strategy for the `core_fct_events` table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient `NOT IN` clause with a `LEFT JOIN`, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability."

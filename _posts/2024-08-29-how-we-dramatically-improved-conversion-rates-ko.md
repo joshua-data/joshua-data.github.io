@@ -2,11 +2,11 @@
 layout: post
 title: "구매 전환율 급상승 후기"
 tags:
-  - Korean
-  - GA4
-  - BigQuery
-  - Redash
-  - Data Analysis
+  - Language (Korean)
+  - Article (Project)
+  - Level (Beginner)
+  - Field (Data Analysis)
+  - Skills (SQL)
 ---
 
 > "외부 요인으로 인해 증가한 신규 방문자 데이터를 분석하여 구매 전환율의 급상승을 달성했습니다. 데이터를 통해 신규 방문자 수와 이들의 구매 의향이 크게 증가했음을 발견했지만, 결제 단계에서 이탈률이 높다는 문제를 파악했습니다. 이에 결제 과정의 불편함이 주요 원인임을 가설로 설정하고, PayPal Express Checkout을 도입하여 사용자 경험을 개선했습니다. 그 결과, 결제 전환율이 32%p 상승하여 이전보다 훨씬 높은 수준을 기록했으며, 이는 지속적으로 유지되고 있습니다. 이를 통해 분석 기반의 문제 해결과 성과 향상을 이뤄냈습니다."

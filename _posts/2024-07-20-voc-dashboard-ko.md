@@ -2,12 +2,14 @@
 layout: post
 title: "데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화"
 tags:
-  - Korean
-  - Python
-  - BigQuery
-  - Redash
-  - Data Visualization
-  - LLM
+  - Language (Korean)
+  - Article (Project)
+  - Level (Intermediate)
+  - Field (Data Visualization)
+  - Field (Analytics Engineering)
+  - Field (LLM)
+  - Skills (Python)
+  - Skills (SQL)
 ---
 
 > "사내 구성원 분들이 젠데스크 고객 문의 내역 팔로업에 어려움을 겪고 있다는 사실을 공유 받아, 이를 해결하기 위해 Redash VOC 대시보드를 구축했습니다. 젠데스크 데이터를 자동으로 수집하고 전처리한 후, OpenAI API를 활용해 고객 문의 내역을 주제별로 분류하고 요약했습니다. 추가적으로, 매주 월요일마다 가장 많이 증가한 문의 주제를 슬랙으로 알림을 보내어, 고객 이슈를 효율적으로 식별하고 대응할 수 있도록 기여했습니다. 결과적으로 매월 약 $275 기회 비용을 제거할 수 있었으며, 사내 구성원 분들의 VOC 팔로업 시간을 감소시키는 성과를 얻었습니다."

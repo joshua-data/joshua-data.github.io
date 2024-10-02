@@ -2,8 +2,11 @@
 layout: post
 title: "IP Address-Country Mapping Query Optimization"
 tags:
-  - English
-  - PostgreSQL
+  - Language (English)
+  - Article (Issue Resolution)
+  - Level (Advanced)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
 ---
 
 > "Optimized the process of mapping user country information using IP addresses in a data warehouse. The previous method was inefficient due to long processing times, but the new approach reduced query execution time by 90%."

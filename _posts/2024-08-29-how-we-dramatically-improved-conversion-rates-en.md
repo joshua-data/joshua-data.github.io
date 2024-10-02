@@ -2,11 +2,11 @@
 layout: post
 title: "Dramatic Increase in E-commerce Conversion Rates"
 tags:
-  - English
-  - GA4
-  - BigQuery
-  - Redash
-  - Data Analysis
+  - Language (English)
+  - Article (Project)
+  - Level (Beginner)
+  - Field (Data Analysis)
+  - Skills (SQL)
 ---
 
 > "By analyzing the data of new visitors that increased due to external factors, I achieved a significant rise in purchase conversion rates. The data revealed a substantial increase in the number of new visitors and their purchasing intent, but also identified a high dropout rate at the payment stage. Based on the hypothesis that the inconvenience in the payment process was the main cause, I introduced PayPal Express Checkout to enhance user experience. As a result, the payment conversion rate increased by 32%p, reaching a much higher level than before, and this improvement has been sustained. This demonstrates effective problem-solving and performance enhancement based on data analysis."

@@ -2,8 +2,11 @@
 layout: post
 title: "Rolling MAU 쿼리 최적화"
 tags:
-  - Korean
-  - PostgreSQL
+  - Language (Korean)
+  - Article (Issue Resolution)
+  - Level (Advanced)
+  - Field (Analytics Engineering)
+  - Skills (SQL)
 ---
 
 > "Rolling MAU와 같은 복잡한 Rolling Metrics를 계산하는 데는 대규모 데이터셋에서 막대한 시간과 비용이 소요될 수 있습니다. 기존 쿼리로 6시간 이상 걸리던 작업을 쿼리 최적화와 B-tree Index를 통해 6초로 단축했습니다. 이 과정에서 불필요한 메모리 사용을 줄이고 쿼리 성능을 극대화하여 데이터 처리 효율성을 크게 향상시켰습니다. 이를 통해 기업이 Rolling MAU 지표를 효율적으로 관리하고 인프라 비용을 절감하는 데 기여할 수 있었습니다."

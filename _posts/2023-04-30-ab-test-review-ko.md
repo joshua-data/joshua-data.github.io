@@ -2,10 +2,12 @@
 layout: post
 title: "A/B 테스트 후기: 할인율 명시의 효과"
 tags:
-  - Korean
-  - BigQuery
-  - Python
-  - Data Analysis
+  - Language (Korean)
+  - Article (Project)
+  - Level (Intermediate)
+  - Field (Data Analysis)
+  - Skills (Python)
+  - Skills (SQL)
 ---
 
 > "본 A/B 테스트는 저희 기업 내 A/B 테스트 TF에서 진행한 프로젝트로, 자사몰 웹사이트의 구매 전환율과 매출을 향상시키기 위해 할인율(%) 표시의 효과를 분석했습니다. 실험 설계 단계에서 Chi-squared test, 두 그룹 비율 차이 검정(z-test), 두 그룹 평균 차이 검정(t-test) 등의 통계 방법론을 사용해 실험군과 대조군 간의 차이를 검증했습니다. 결과적으로는 할인율 표시가 구매 전환율과 1인당 매출액에 유의미한 영향을 주지 않았으나, 장바구니 담기 전환율이 유의미하게 상승했습니다. 이를 통해 할인 정보가 소비자의 구매 결정을 앞당기는 데 효과적임을 발견하고, 향후 제품 가치 전달을 위한 더욱 효과적인 전략을 세우는 것이 중요하다는 사실을 확인했습니다."
