@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>How to Share dbt Docs Internally (Site Hosting Review) – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt’s automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company’s IP range.”
+
+" />
+    <meta property="og:description" content="
+  “I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt’s automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company’s IP range.”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="How to Share dbt Docs Internally (Site Hosting Review)" />
+    <meta property="twitter:title" content="How to Share dbt Docs Internally (Site Hosting Review)" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>How to Share dbt Docs Internally (Site Hosting Review)</h1>
+
+  <div>
+    <span class="date">
+      2024-09-21
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (English)">
+          Language (English)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Issue Resolution)">
+          Article (Issue Resolution)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (1. Beginner)">
+          Level (1. Beginner)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Analytics Engineering)">
+          Field (Analytics Engineering)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (Linux)">
+          Skills (Linux)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt’s automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company’s IP range.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>What is dbt Docs?</li>
+  <li>Background</li>
+  <li>Objective</li>
+  <li>Process</li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-what-is-dbt-docs">1. What is dbt Docs?</h1>
+
+<p><a href="https://www.getdbt.com/">dbt</a> is an automation framework specialized in the transformation phase of the ELT pipeline, widely used by data analysts and analytics engineers.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/1.webp" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/2.webp" alt="" /></p>
+
+<p>dbt analyzes data lineage based on table dependencies and compiles it into a DAG (Directed Acyclic Graph) to automatically execute the entire transformation process. This enables more efficient orchestration management of data warehouses. One of dbt’s key strengths is its “automated documentation” feature.</p>
+
+<p>(1) <strong>Lineage Graph</strong>: Visually displays table dependencies, allowing you to easily identify the tables affected during maintenance tasks.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/3.webp" alt="" /></p>
+
+<p>(2) <strong>View Specifications</strong>: Easily check detailed specifications, such as descriptions of each table and column.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/4.gif" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/5.gif" alt="" /></p>
+
+<p>dbt Docs is highly effective in addressing major pain points for data teams. While many companies adopt data warehouses to enhance data utilization, they often face the ironic situation where the complexity of numerous data marts and table structures reduces internal accessibility. As the organization’s dependence on data increases with the rapid growth of its products, maintaining quality, accuracy, accessibility, and documentation can become increasingly difficult.</p>
+
+<p>dbt solves this problem by automatically documenting the entire data warehouse, playing a key role in improving data quality and usability.</p>
+
+<hr />
+
+<h1 id="2-background">2. Background</h1>
+
+<p>I wanted to provide an environment where internal members with query-writing skills could view table and lineage documentation and directly create Redash dashboards. In other words, data warehouse documentation was necessary. Although I considered using Google Sheets or Notion pages, I was concerned that separating analytics engineering and documentation tasks could lead to the following issues:</p>
+
+<ul>
+  <li>Communication could slow down due to latency between data mart creation and documentation.</li>
+  <li>Human error during individual documentation could result in inaccurate query outcomes.</li>
+</ul>
+
+<p>Thus, I concluded that it was not ideal for the documentation environment to be separated from the core analytics engineering work. I wanted to reduce repetitive tasks and spend more time creating value in more critical areas.</p>
+
+<hr />
+
+<h1 id="3-objective">3. Objective</h1>
+
+<p>The goal of this project was to host a dbt Docs site where internal members could check the latest specifications as soon as the dbt project version was updated.</p>
+
+<hr />
+
+<h1 id="4-process">4. Process</h1>
+
+<h3 id="41-current-dbt-project-management">4.1. Current dbt Project Management</h3>
+
+<p>I’ve been working on converting source tables into Core Layer and Mart Layer within the BigQuery project.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/6.webp" alt="" /></p>
+
+<p>All transformation processes are periodically executed via a dbt project on a Google Cloud VM instance.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/7.webp" alt="" /></p>
+
+<h3 id="42-issues-with-local-hosting">4.2. Issues with Local Hosting</h3>
+
+<p>As with other frameworks, hosting dbt Docs is, by default, only accessible from the host machine. In other words, you can only access it from the VM instance where the dbt project is located or from a locally connected machine via SSH.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/8.webp" alt="" /></p>
+
+<p>However, I needed to create an environment where internal members could also access it. In short, I had to allow machines within the same IP range, but without SSH keys, to access the dbt Docs site.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/9.webp" alt="" /></p>
+
+<h3 id="43-starting-dbt-docs-hosting">4.3. Starting dbt Docs Hosting</h3>
+
+<p>Here are the steps I followed to set up the internal access environment:</p>
+
+<p>(1) Create a <code class="language-plaintext highlighter-rouge">tmux</code> session</p>
+
+<p>I used <code class="language-plaintext highlighter-rouge">tmux</code> to create an independent session on the VM instance to maintain the dbt Docs hosting.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   tmux new <span class="nt">-s</span> dbt_docs <span class="c"># Create a session named dbt_docs</span>
+   tmux attach <span class="nt">-t</span> dbt_docs <span class="c"># Attach to the dbt_docs session</span>
+</code></pre></div></div>
+
+<p>(2) Build the site</p>
+
+<p>I compiled the dbt project files to build the Docs site.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nb">source </span>dbt-venv/bin/activate <span class="c"># Activate Python Virtual Environment</span>
+   <span class="nb">export </span><span class="nv">DBT_PROFILES_DIR</span><span class="o">=</span><span class="s2">"path/to/profiles.yml"</span> <span class="c"># Define the DBT_PROFILES_DIR environment variable</span>
+   dbt docs generate <span class="nt">--target</span> prod <span class="c"># Build dbt Docs based on the prod schema</span>
+</code></pre></div></div>
+
+<p>(3) Start hosting the site</p>
+
+<p>I started hosting the Docs site and detached from the session.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   dbt docs serve <span class="nt">--host</span> 0.0.0.0 <span class="nt">--port</span> 8080 <span class="c"># Specify the host domain and port as parameters</span>
+</code></pre></div></div>
+
+<p>(4) Set up the VM Instance</p>
+
+<p>I checked the VM instance’s external IP and added a network tag on the modification page.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/10.webp" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/11.webp" alt="" /></p>
+
+<p>(5) Add VPC firewall rules</p>
+
+<p>I went to the firewall policies console and added VPC firewall rules as follows:</p>
+
+<ul>
+  <li><strong>Direction</strong>: Ingress</li>
+  <li><strong>Source IPv4 Range</strong>: Internal IPv4 range (CIDR format)</li>
+  <li><strong>Target Tags</strong>: The network tag added to the VM instance earlier (dbt-docs-serve)</li>
+  <li><strong>Protocol and Port</strong>: Port for the dbt Docs hosting (8080)</li>
+</ul>
+
+<p>(6) Access address</p>
+
+<p>Now, from within the internal IPv4 range, you can access the site via the following address:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">http://{VM Instance의 External IP}:8080</code></li>
+</ul>
+
+<p>(7) In summary, the configured environment is as follows:</p>
+
+<blockquote>
+  <p>“Within the internal IPv4 range, you can access the hosted dbt Docs site by connecting to the VM instance’s external IP address on port 8080!”</p>
+</blockquote>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/12.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="5-conclusion">5. Conclusion</h1>
+
+<p>I pinned the dbt Docs site link in the Slack channel to allow team members to easily access it later. As the company and product continue to grow, the demand for data utilization will increase. By leveraging dbt’s “automated documentation” feature, we can save documentation resources and enhance the efficiency of data-related tasks.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/">
+            &#xE000; 구매 전환율 급상승 후기
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/dbt-docs-site-hosting-ko/">
+            dbt Docs 사내 공유 방법 (사이트 호스팅 후기) &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

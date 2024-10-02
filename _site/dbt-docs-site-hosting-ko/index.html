@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>dbt Docs 사내 공유 방법 (사이트 호스팅 후기) – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”
+
+" />
+    <meta property="og:description" content="
+  “사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="dbt Docs 사내 공유 방법 (사이트 호스팅 후기)" />
+    <meta property="twitter:title" content="dbt Docs 사내 공유 방법 (사이트 호스팅 후기)" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>dbt Docs 사내 공유 방법 (사이트 호스팅 후기)</h1>
+
+  <div>
+    <span class="date">
+      2024-09-21
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (Korean)">
+          Language (Korean)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Issue Resolution)">
+          Article (Issue Resolution)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (1. Beginner)">
+          Level (1. Beginner)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Analytics Engineering)">
+          Field (Analytics Engineering)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (Linux)">
+          Skills (Linux)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="목차">목차</h1>
+<ol>
+  <li>dbt Docs란 무엇인가?</li>
+  <li>배경</li>
+  <li>목표</li>
+  <li>진행 과정</li>
+  <li>결론</li>
+</ol>
+
+<hr />
+
+<h1 id="1-dbt-docs란-무엇인가">1. dbt Docs란 무엇인가?</h1>
+
+<p><a href="https://www.getdbt.com/">dbt</a>는 ELT 파이프라인의 Transformation 단계에 특화된 자동화 프레임워크로, Data Analyst와 Analytics Engineer 분들을 중심으로 널리 사용됩니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/1.webp" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/2.webp" alt="" /></p>
+
+<p>dbt는 테이블 간의 의존 관계를 바탕으로 Data Lineage를 분석하고, 그 결과를 DAG (Directed Acyclic Graph) 형태로 컴파일하여 전체 Transformation 과정을 자동으로 실행해줍니다. 이를 통해 데이터 웨어하우스의 Orchestration 관리를 보다 효율적으로 진행할 수 있는데요. dbt의 가장 큰 장점 중 하나는 “자동 문서화” 기능입니다.</p>
+
+<p>(1) <strong>Lineage Graph</strong>: 테이블 간의 의존성을 시각적으로 보여주어, 유지보수 작업시 영향을 받는 테이블들을 한 눈에 파악할 수 있도록 도와줍니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/3.webp" alt="" /></p>
+
+<p>(2) <strong>명세서 확인</strong>: 각 테이블과 컬럼의 Description 등 세부적인 명세서를 쉽게 확인할 수 있습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/4.gif" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/5.gif" alt="" /></p>
+
+<p>dbt Docs는 데이터팀의 주요 Pain Point를 해결하는 데 큰 도움이 됩니다. 많은 기업이 데이터 활용도를 높이기 위해 데이터 웨어하우스를 도입하지만, 수많은 데이터 마트와 테이블 구조로 인해 혼란스러워 사내 구성원들의 접근성이 떨어지는 아이러니한 상황에 쉽게 직면하곤 합니다. 특히 프로덕트의 급성장에 따라 조직의 데이터 의존도가 높아지면, 데이터 웨어하우스의 빌딩 속도에 집중하느라 품질, 정합성, 접근성, 명세서 작성 관리를 유지하기가 어려워지기도 쉽습니다.</p>
+
+<p>dbt는 데이터 웨어하우스 전체의 명세를 자동으로 문서화해 이러한 문제를 해결하며, 데이터의 품질과 활용성을 높이는 중요한 역할을 하는 것입니다.</p>
+
+<hr />
+
+<h1 id="2-배경">2. 배경</h1>
+
+<p>저는 사내에서 쿼리 작성 역량을 갖춘 구성원 분들이 테이블과 Lineage 문서를 확인하여 Redash 대시보드를 직접 만들 수 있는 환경을 제공하고자 했습니다. 즉, 데이터 웨어하우스 문서화가 필요했던 것이죠. 구글 시트나 노션 페이지 등을 활용하는 것도 고려해봤지만, 애널리틱스 엔지니어링 작업과 문서화 작업이 분리되면 다음과 같은 문제가 발생할 수 있다는 노파심이 들었습니다.</p>
+
+<ul>
+  <li>데이터 마트 생성과 문서화 사이의 Latency로 인해 커뮤니케이션 속도가 저하될 수 있다.</li>
+  <li>개별적인 문서화 작업 중 휴먼 에러가 발생하여 부정확한 쿼리 결과를 낳을 수 있다.</li>
+</ul>
+
+<p>따라서 저는 문서화 환경이 애널리틱스 엔지니어링 본연의 작업과 분리되어 이중으로 진행되는 것은 결코 바람직하지 않다고 판단했으며, 반복적인 작업 루틴을 줄임으로써 더 중요한 가치를 창출하는 데 시간을 쓰고 싶었습니다.</p>
+
+<hr />
+
+<h1 id="3-목표">3. 목표</h1>
+
+<p>dbt Docs 기능을 통해 사내 구성원 분들이 dbt 프로젝트 버전 업데이트 즉시 최신 명세를 확인할 수 있는 Docs 사이트를 호스팅하는 것이 이번 작업의 목표였습니다.</p>
+
+<hr />
+
+<h1 id="4-진행-과정">4. 진행 과정</h1>
+
+<h3 id="41-dbt-프로젝트-관리-현황">4.1. dbt 프로젝트 관리 현황</h3>
+
+<p>BigQuery 프로젝트 내에서 소스 테이블들을 Core Layer, Mart Layer로 변환하는 작업을 실행하고 있습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/6.webp" alt="" /></p>
+
+<p>모든 Transformation 과정은 dbt 프로젝트를 통해 Google Cloud의 VM Instance 내에서 주기적으로 실행되고 있습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/7.webp" alt="" /></p>
+
+<h3 id="42-로컬-호스팅의-문제점">4.2. 로컬 호스팅의 문제점</h3>
+
+<p>여타 프레임워크와 마찬가지로, dbt Docs를 호스팅할 경우 기본적으로 해당 Host Machine에서만 접속이 가능합니다. 즉, dbt 프로젝트가 있는 VM Instance에서 접속하거나, 혹은 SSH Key를 사용해 Remote 연결된 Local Machine에서만 접속할 수 있는 것입니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/8.webp" alt="" /></p>
+
+<p>하지만 사내 구성원들도 접속할 수 있는 환경을 마련해야 했습니다. 즉, SSH Key가 없지만 동일한 IP 주소 범위 내에서 접속하는 각 Machine에서 dbt Docs 사이트에 접속할 수 있도록 지원해야 했던 것이죠.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/9.webp" alt="" /></p>
+
+<h3 id="43-dbt-docs-호스팅-시작하기">4.3. dbt Docs 호스팅 시작하기</h3>
+
+<p>다음은 사내 구성원들의 접속 환경을 마련하기 위해 설정한 단계들입니다.</p>
+
+<p>(1) <code class="language-plaintext highlighter-rouge">tmux</code> 세션 생성</p>
+
+<p><code class="language-plaintext highlighter-rouge">tmux</code>를 통해 VM Instance에서 dbt Docs 호스팅을 유지하는 독립 세션을 만들었습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   tmux new <span class="nt">-s</span> dbt_docs <span class="c"># dbt_docs 이름의 세션을 생성합니다.</span>
+   tmux attach <span class="nt">-t</span> dbt_docs <span class="c"># dbt_docs 세션에 Attach합니다.</span>
+</code></pre></div></div>
+
+<p>(2) 사이트 빌드</p>
+
+<p>dbt 프로젝트의 파일들을 컴파일하여 Docs 사이트를 빌드했습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nb">source </span>dbt-venv/bin/activate <span class="c"># Python Virtual Environment 활성화</span>
+   <span class="nb">export </span><span class="nv">DBT_PROFILES_DIR</span><span class="o">=</span><span class="s2">"path/to/profiles.yml"</span> <span class="c"># DBT_PROFILES_DIR 환경변수 정의</span>
+   dbt docs generate <span class="nt">--target</span> prod <span class="c"># prod 스키마 기준으로 dbt Docs 빌드하기</span>
+</code></pre></div></div>
+
+<p>(3) 사이트 호스팅 시작</p>
+
+<p>Docs 사이트 호스팅을 시작한 후, 해당 세션으로부터 Detach하여 빠져나왔습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   dbt docs serve <span class="nt">--host</span> 0.0.0.0 <span class="nt">--port</span> 8080 <span class="c"># host 도메인과 port를 파라미터로 명시하기</span>
+</code></pre></div></div>
+
+<p>(4) VM Instance 설정</p>
+
+<p>VM Instance의 External IP를 확인하고, 수정 페이지에서 Network Tag를 추가했습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/10.webp" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/11.webp" alt="" /></p>
+
+<p>(5) VPC 방화벽 규칙 추가</p>
+
+<p>Firewall policies 콘솔에 들어가서 VPC fire rules를 다음과 같이 추가했습니다.</p>
+
+<ul>
+  <li><strong>방향</strong>: 인그레스 (Ingress)</li>
+  <li><strong>소스 IPv4 범위</strong>: 사내 IPv4 범위 (CIDR 형식)</li>
+  <li><strong>타겟 Tags</strong>: 방금 전 VM Instance에 추가한 Network Tag (dbt-docs-serve)</li>
+  <li><strong>프로토콜 및 포트</strong>: 방금 전 호스팅한 dbt Docs의 Port (8080)</li>
+</ul>
+
+<p>(6) 접속 주소</p>
+
+<p>이제 사내 IPv4 범위 내에서 다음 주소로 접속하면 됩니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">http://{VM Instance의 External IP}:8080</code></li>
+</ul>
+
+<p>(7) 구성된 환경을 요약하면 다음과 같습니다.</p>
+
+<blockquote>
+  <p>“사내 IPv4 범위 내에서 VM 인스턴스의 External IP 주소에 Port 8080으로 접속하면, 호스팅 중인 dbt Docs 사이트가 로드됩니다!”</p>
+</blockquote>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/12.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="5-결론">5. 결론</h1>
+
+<p>dbt Docs 사이트 링크를 슬랙 채널에 고정(Pin)하여 구성원 분들이 추후 편리하게 접속하실 수 있도록 설정했습니다. 앞으로 기업과 프로덕트가 성장함에 따라 데이터 활용의 수요는 지속적으로 커질 것입니다. dbt의 “자동 문서화” 기능을 통해 문서화 리소스를 절감하고, 데이터 본연의 업무 효율성을 높일 수 있을 것입니다.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/dbt-docs-site-hosting-en/">
+            &#xE000; How to Share dbt Docs Internally (Site Hosting Review)
+          </a>
+      </span>
+    
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
