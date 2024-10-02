@@ -4,7 +4,7 @@ title: Joshua Kim
 permalink: /about/
 ---
 
-> *"Creating Impact through Data Analysis and Engineering while Pursuing Growth and Kindness"*
+> *"Building Impactful Data Solutions While Fostering Personal Growth and Putting Teams First"*
 
 ![]({{ site.baseurl }}/assets/profile/joshua-elpaso.png)
 
@@ -12,16 +12,16 @@ permalink: /about/
 
 ## 👦🏼 About Me
 
-Hello! I'm **Jinseok Kim (Joshua)**, a passionate **Data Analyst** and **Analytics Engineer** with a strong background in building data infrastructures, designing analytics solutions, and driving data-driven decisions. I thrive in environments that emphasize effective communication and collaboration, believing that these are the foundations for delivering impactful insights.
+Hello! I'm **Jinseok Kim (Joshua)**, a dedicated **Data Analyst** and **Analytics Engineer** with deep expertise in developing robust data infrastructures and crafting analytics solutions that drive strategic decision-making. My strength lies not just in technical execution, but in my ability to communicate insights effectively, fostering a culture of data literacy across teams. I strive to understand different perspectives and work collaboratively toward shared goals, ensuring that my contributions align with both team success and organizational growth.
 
 ---
 
 ## 👨🏼‍💻 Professional Background
 
-- **Current Role**: Analytics Engineer
+- **Current Role**: Analytics Engineer (Data Warehouse)
 - **Previous Experience**:
-  - Data Analyst
-  - VBA Developer
+  - Data Analyst (A/B Tests and Ad-hoc Analyses)
+  - VBA Developer (Workflow Automation Solutions)
 
 ---
 
@@ -34,13 +34,13 @@ Hello! I'm **Jinseok Kim (Joshua)**, a passionate **Data Analyst** and **Analyti
 
 ## 🗣️ Personal Philosophy
 
-I believe in **creating impact through data analysis and engineering while pursuing growth and kindness**. My work is driven by the desire to build systems that not only solve problems but also empower others to make informed decisions. I am particularly interested in data literacy and building environments where everyone understands the metrics that matter.
+I am driven by the philosophy of **creating meaningful impact through data**. My work is not just about building systems but empowering others with the knowledge and tools to make informed decisions. I focus on fostering an environment where data becomes accessible and actionable for everyone. Beyond analytics, I value **growth**, **collaboration**, and **empathy**, believing that understanding diverse viewpoints is key to success in any team or project.
 
 ---
 
 ## 🧑‍🤝‍🧑 Let's Connect!
 
-Feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/joshuajsk/). I'm always open to discussing new opportunities, data analysis or engineering, or simply sharing knowledge.
+I'm always eager to connect with professionals passionate about data analysis & engineering. Feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/joshuajsk/), whether it's to explore new opportunities, discuss data strategies, or simply exchange knowledge.
 
 ---
 
@@ -54,4 +54,4 @@ Feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/joshuajsk
 
 ## ⚠️ Content Usage Policy
 
-All materials within this blog cannot be used for commercial purposes. For non-commercial purposes, proper attribution is mandatory. Please contact me directly for more details.
+All materials within this blog are for non-commercial use only, with proper attribution. For commercial inquiries, please contact me directly.
