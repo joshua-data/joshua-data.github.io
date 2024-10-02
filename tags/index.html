@@ -10,19 +10,67 @@ permalink: /tags/
 
 <div class="tags">
   <ul class="label">
-    {% assign sorted_tags = site.tags | sort %}
-    {% for tag in sorted_tags %}
+
+    <!-- Give Language Tags Sorting Priority -->
+    {% if site.tags['Language (English)'] %}
     <li>
-      <a href="#{{ tag[0] }}">
-        <span>{{ tag[0] }}</span>
-        <span class="count">{{ tag[1] | size }}</span>
+      <a href="#Language-English">
+        <span>Language (English)</span>
+        <span class="count">{{ site.tags['Language (English)'] | size }}</span>
       </a>
     </li>
+    {% endif %}
+    {% if site.tags['Language (Korean)'] %}
+    <li>
+      <a href="#Language-Korean">
+        <span>Language (Korean)</span>
+        <span class="count">{{ site.tags['Language (Korean)'] | size }}</span>
+      </a>
+    </li>
+    {% endif %}
+    {% assign sorted_tags = site.tags | sort %}
+    {% for tag in sorted_tags %}
+      {% if tag[0] != 'Language (English)' and tag[0] != 'Language (Korean)' %}
+      <li>
+        <a href="#{{ tag[0] }}">
+          <span>{{ tag[0] }}</span>
+          <span class="count">{{ tag[1] | size }}</span>
+        </a>
+      </li>
+      {% endif %}
     {% endfor %}
   </ul>
 
+    <!-- Give Language Tags Sorting Priority -->
+  {% if site.tags['Language (English)'] %}
+  <h2 id="Language-English">
+    Language (English)
+  </h2>
+  <ul class="tag">
+    {% for post in site.tags['Language (English)'] %}
+      <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if site.tags['Language (Korean)'] %}
+  <h2 id="Language-Korean">
+    Language (Korean)
+  </h2>
+  <ul class="tag">
+    {% for post in site.tags['Language (Korean)'] %}
+      <li>
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
   {% assign sorted_tags = site.tags | sort %}
   {% for tag in sorted_tags %}
+    {% if tag[0] != 'Language (English)' and tag[0] != 'Language (Korean)' %}
     <h2 id="{{ tag[0] }}">
       {{ tag[0] }}
     </h2>
@@ -42,5 +90,6 @@ permalink: /tags/
         {% endif %}
       {% endfor %}
     </ul>
+    {% endif %}
   {% endfor %}
 </div>
