@@ -14,6 +14,10 @@ permalink: /about/
 
 Hello! I'm **Jinseok Kim (Joshua)**, a dedicated **Data Analyst** and **Analytics Engineer** with deep expertise in developing robust data infrastructures and crafting analytics solutions that drive strategic decision-making. My strength lies not just in technical execution, but in my ability to communicate insights effectively, fostering a culture of data literacy across teams. I strive to understand different perspectives and work collaboratively toward shared goals, ensuring that my contributions align with both team success and organizational growth.
 
+## 📺 My YouTube Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8VnYUtjj7Fk?si=-Hj66y1F5R7tBoBp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ---
 
 ## 👨🏼‍💻 Professional Background
