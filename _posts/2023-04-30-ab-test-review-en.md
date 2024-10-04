@@ -166,6 +166,7 @@ P(Click on Link to Other E-commerce Platforms | Visit Experiment Page)
 ### 4.2. Hypothesis Formulation and Power Analysis
 
 **4.2.1. Hypothesis Formulation**
+
 Combining the experimental idea and key metrics determined during the meeting, we formulated the following hypothesis:
 
 > "Displaying discount percentages on product images will increase conversion rates and ARPU."
