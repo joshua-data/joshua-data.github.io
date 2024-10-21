@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>Redash Dashboard Usage Review – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “Utilizing the open-source BI tool Redash, I visualized data and systematically managed dashboards to ensure easy access for various members of the organization. To improve accessibility and data literacy, I implemented management rules and actively used query parameter functions. This significantly increased Redash usage frequency, strengthening its role as the organization’s BI hub. (Approximately DAU 39%, WAU 52%, MAU 77% among all Redash account holders).”
+
+" />
+    <meta property="og:description" content="
+  “Utilizing the open-source BI tool Redash, I visualized data and systematically managed dashboards to ensure easy access for various members of the organization. To improve accessibility and data literacy, I implemented management rules and actively used query parameter functions. This significantly increased Redash usage frequency, strengthening its role as the organization’s BI hub. (Approximately DAU 39%, WAU 52%, MAU 77% among all Redash account holders).”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="Redash Dashboard Usage Review" />
+    <meta property="twitter:title" content="Redash Dashboard Usage Review" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Redash Dashboard Usage Review</h1>
+
+  <div>
+    <span class="date">
+      2024-08-09
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (English)">
+          Language (English)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Project)">
+          Article (Project)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (2. Intermediate)">
+          Level (2. Intermediate)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Data Visualization)">
+          Field (Data Visualization)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (Redash)">
+          Skills (Redash)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“Utilizing the open-source BI tool Redash, I visualized data and systematically managed dashboards to ensure easy access for various members of the organization. To improve accessibility and data literacy, I implemented management rules and actively used query parameter functions. This significantly increased Redash usage frequency, strengthening its role as the organization’s BI hub. (Approximately DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code> among all Redash account holders).”</p>
+</blockquote>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Performance Summary</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>- Redash DAU: approx. <code class="language-plaintext highlighter-rouge">39%</code> (compared to the total number of internal Redash account holders)</td>
+    </tr>
+    <tr>
+      <td>- Redash WAU: approx. <code class="language-plaintext highlighter-rouge">52%</code> (compared to the total number of internal Redash account holders)</td>
+    </tr>
+    <tr>
+      <td>- Redash MAU: approx. <code class="language-plaintext highlighter-rouge">77%</code> (compared to the total number of internal Redash account holders)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>Summary</li>
+  <li>Introduction</li>
+  <li>Background</li>
+  <li>How I Used Redash</li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-summary">1. Summary</h1>
+
+<h3 id="introduction">Introduction</h3>
+<ul>
+  <li>At my company, a product data analysis environment is in place, and Redash has been used as a BI tool for nearly two years. In this post, I will share <strong>how Redash was implemented and utilized to enhance our data analysis environment.</strong></li>
+</ul>
+
+<h3 id="background">Background</h3>
+<ul>
+  <li>The decision to implement Redash was driven by the following reasons:</li>
+  <li>(1) <strong>High flexibility in data extraction.</strong></li>
+  <li>(2) It could be used <strong>without any additional costs</strong> due to its open-source nature.</li>
+</ul>
+
+<h3 id="how-i-used-redash">How I Used Redash</h3>
+<ol>
+  <li>Organized dashboard names and tags to make navigation easier for users.</li>
+  <li>Actively used query parameters.</li>
+  <li>Added titles, a table of contents, and simple guides at the top of each dashboard.</li>
+  <li>Positioned explanations on the left and the corresponding charts on the right.</li>
+  <li>Wrote chart usage guides with the help of LLMs.</li>
+  <li>Made subheadings larger and main headings smaller for clarity.</li>
+  <li>Limited the display of charts with high cardinality categories to a maximum of 20 items, providing supplementary tables for the full data.</li>
+  <li>Added hyperlinks for convenience.</li>
+  <li>Stored all query scripts separately in a Git repository.</li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+  <li>Avoided creating dashboards mechanically, ensuring they provided real value to users.</li>
+  <li>Delivered dashboards that were practically useful for team members.</li>
+  <li>Significantly increased Redash usage, reinforcing its role as a BI hub in the organization (approximately DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>).</li>
+</ul>
+
+<hr />
+
+<h1 id="2-introduction">2. Introduction</h1>
+
+<blockquote>
+  <ul>
+    <li>At my company, a product data analysis environment is in place, and Redash has been used as a BI tool for nearly two years. In this post, I will share <strong>how Redash was implemented and utilized to enhance our data analysis environment.</strong></li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-logo.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="3-background">3. Background</h1>
+
+<blockquote>
+  <ul>
+    <li>The decision to implement Redash was driven by the following reasons:</li>
+    <li>(1) <strong>High flexibility in data extraction.</strong></li>
+    <li>(2) It could be used <strong>without any additional costs</strong> due to its open-source nature.</li>
+  </ul>
+</blockquote>
+
+<p>Before hiring a dedicated data analyst, we were only using GA4 and Amplitude for basic data checks without any structured data catalog or event definitions, making data utilization difficult.</p>
+
+<p>Upon joining as the company’s first data analyst, I set a goal of <strong>creating an environment with consistency and high usability</strong> within the first six months. This resulted in the establishment of a pipeline that enabled the organization to operate in a more data-informed decision-making environment than ever before.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/pipeline.webp" alt="" /></p>
+<blockquote>
+  <p>In-house Data Pipeline</p>
+</blockquote>
+
+<p>The final BI tool in this pipeline was Redash, chosen for the following reasons:</p>
+
+<p><strong>(1) High flexibility in data extraction.</strong></p>
+
+<p>Many data analysts agree that while no-code PA tools may be easy to use initially, as the depth of analysis increases, these tools limit analytical freedom.</p>
+
+<p>However, Redash allows for writing custom queries and visualizing results based on flexible conditions and aggregations, making it <strong>an attractive choice for long-term use as the organization’s data-driven decision-making deepens.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://redash.io/product/">https://redash.io/product/</a></p>
+</blockquote>
+
+<p><strong>(2) It could be used without additional costs due to its open-source nature.</strong></p>
+
+<p>By building Redash using <a href="https://hub.docker.com/r/redash/redash">Docker Compose</a>, we could easily develop the Redash application without incurring extra costs beyond operating a VM instance.</p>
+
+<hr />
+
+<h1 id="4-how-i-used-redash">4. How I Used Redash</h1>
+
+<blockquote>
+  <ol>
+    <li>Organized dashboard names and tags to make navigation easier for users.</li>
+    <li>Actively used query parameters.</li>
+    <li>Added titles, a table of contents, and simple guides at the top of each dashboard.</li>
+    <li>Positioned explanations on the left and the corresponding charts on the right.</li>
+    <li>Wrote chart usage guides with the help of LLMs.</li>
+    <li>Made subheadings larger and main headings smaller for clarity.</li>
+    <li>Limited the display of charts with high cardinality categories to a maximum of 20 items, providing supplementary tables for the full data.</li>
+    <li>Added hyperlinks for convenience.</li>
+    <li>Stored all query scripts separately in a Git repository.</li>
+  </ol>
+</blockquote>
+
+<h3 id="1-organized-dashboard-names-and-tags-to-make-navigation-easier-for-users">1. Organized dashboard names and tags to make navigation easier for users.</h3>
+
+<p>One of Redash’s limitations is the lack of a built-in feature to categorize dashboards into directories. Within our organization, dashboards are generally divided into two main types:</p>
+<ul>
+  <li>Regularly followed general dashboards (<strong>general use</strong>)</li>
+  <li>Ad-hoc dashboards created in response to specific analysis requests (<strong>one-time/specialized use</strong>)</li>
+</ul>
+
+<p>As the number of dashboards with different purposes grows over time, it inevitably becomes difficult to navigate. <strong>This complexity hinders usability and eventually negatively impacts the organization’s data utilization and efficiency.</strong></p>
+
+<p>To overcome this, I adopted a method where <strong>dashboard names and tags</strong> were used to maintain ease of navigation.</p>
+
+<p><strong>(1) I applied the following prefixes to dashboard titles:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">General-{Product Name}</code>: General dashboards that team members regularly check.</li>
+  <li><code class="language-plaintext highlighter-rouge">Ad-hoc</code>: Dashboards summarizing specific analysis requests from individual team members.</li>
+  <li><code class="language-plaintext highlighter-rouge">Private</code>: Dashboards containing sensitive information, shared only with specific team members.</li>
+  <li><code class="language-plaintext highlighter-rouge">Public</code>: Dashboards made available for external purposes.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-prefix.webp" alt="" /></p>
+<blockquote>
+  <p>Sample of Internal Dashboards</p>
+</blockquote>
+
+<p><strong>(2) I applied two tags to each dashboard for easier filtering.</strong></p>
+
+<ul>
+  <li><strong>Higher-level tags</strong>: <code class="language-plaintext highlighter-rouge">General</code>, <code class="language-plaintext highlighter-rouge">Ad-hoc</code>, <code class="language-plaintext highlighter-rouge">Private</code>, <code class="language-plaintext highlighter-rouge">Public</code>.</li>
+  <li><strong>Lower-level tags</strong>: Product name or the name of the team member who requested the analysis.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-tags.webp" alt="" /></p>
+<blockquote>
+  <p>Sample of Internal Dashboards</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-filters.webp" alt="" /></p>
+<blockquote>
+  <p>Clicking on the tags in Redash filters the list of dashboards for easier navigation.</p>
+</blockquote>
+
+<h3 id="2-actively-used-query-parameters">2. Actively used query parameters.</h3>
+
+<p>Query Parameters in Redash are dynamic variables that <strong>allow users to select values and run queries directly from the Redash UI.</strong> This feature has several benefits:</p>
+<ul>
+  <li>You can avoid creating individual queries for each case by changing the Query Parameters values at runtime to output the desired data.</li>
+  <li>It improves dashboard visibility and prevents complexity by reducing the need to add charts for every individual case.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameters.webp" alt="" /></p>
+<blockquote>
+  <p>Query Parameters assigned to both dashboard and chart levels</p>
+</blockquote>
+
+<p>Query Parameters can be categorized by Level and Type.</p>
+
+<p><strong>(1) By Level</strong></p>
+
+<ul>
+  <li><strong>Dashboard-level parameters</strong>: Parameters applied to all charts in a dashboard.</li>
+  <li><strong>Widget-level parameters</strong>: Parameters applied only to the specific chart.</li>
+  <li><strong>Static values</strong>: Parameters fixed to a specific value.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameter-level.webp" alt="" /></p>
+<blockquote>
+  <p>Setting the level of Query Parameters</p>
+</blockquote>
+
+<p><strong>(2) By Type</strong></p>
+
+<ul>
+  <li><strong>Text</strong>: Users can freely enter text values.</li>
+  <li><strong>Number</strong>: Users can enter only numeric values.</li>
+  <li><strong>Dropdown List</strong>: Values are selected from a predefined list (static).</li>
+  <li><strong>Query-Based Dropdown List</strong>: Values are selected from the result of another query (dynamic).</li>
+  <li><strong>Date</strong>: Users can select a specific date.</li>
+  <li><strong>Date Range</strong>: Users can select a date range.</li>
+</ul>
+
+<p>Now, let me introduce some of the key Query Parameters I used.</p>
+
+<p>(A) Interval Parameter</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">DATE_TRUNC()</code> function’s interval in the query below is a dynamic parameter. This allows users to view aggregated results based on DAY, WEEK, MONTH, QUARTER, or YEAR.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="nb">date</span><span class="p">,</span> <span class="p">{{</span> <span class="n">interval</span> <span class="p">}})</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-interval.webp" alt="" /></p>
+<blockquote>
+  <p>Interval Parameter</p>
+</blockquote>
+
+<p>(B) Date Range Parameter</p>
+
+<p>The following query uses the partition filter <code class="language-plaintext highlighter-rouge">date</code> to search only the desired partitions. This filter is parameterized, allowing users to select the date range they want to query.</p>
+<ul>
+  <li><strong>Static Range</strong>: January 1, 2024 to January 10, 2024</li>
+  <li><strong>Dynamic Range</strong>: This Week, Last Month, This Year, etc.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="nb">date</span> <span class="k">BETWEEN</span> <span class="s1">'{{Date Range.start}}'</span> <span class="k">AND</span> <span class="s1">'{{Date Range.end}}'</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-date-range.webp" alt="" /></p>
+<blockquote>
+  <p>Date Range Parameter</p>
+</blockquote>
+
+<p>(C) Country Parameter</p>
+
+<p>For the country parameter, I used a <strong>Query Based Dropdown List</strong>. Since the number of user countries increases over time, maintaining a static list would be difficult.</p>
+<ul>
+  <li>First, I created a query to dynamically retrieve the country list (sorted by traffic size and including an “ALL” option).</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country.webp" alt="" /></p>
+<blockquote>
+  <p>Saved query that only returns the country column.</p>
+</blockquote>
+
+<ul>
+  <li>To maintain up-to-date information, I enabled Scheduled Runs to account for new incoming countries.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-scheduled-run.webp" alt="" /></p>
+<blockquote>
+  <p>Enabling Scheduled Run</p>
+</blockquote>
+
+<p>The query below outputs all data when <code class="language-plaintext highlighter-rouge">ALL</code> is selected for the Country parameter. If a specific country is selected, only the data for that <code class="language-plaintext highlighter-rouge">country</code> is shown.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="p">...</span>
+        <span class="k">AND</span> <span class="k">CASE</span>
+            <span class="k">WHEN</span> <span class="s1">'ALL'</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">ELSE</span> <span class="n">country</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span>
+        <span class="k">END</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country-2.webp" alt="" /></p>
+
+<h3 id="3-added-titles-a-table-of-contents-and-simple-guides-at-the-top-of-each-dashboard">3. Added titles, a table of contents, and simple guides at the top of each dashboard.</h3>
+
+<p><strong>Within the company, there are individuals who actively use data analysis in their work, while others may not be as deeply involved for various reasons.</strong> This could be due to the lack of relevance to their main tasks, time constraints, or difficulty in understanding data.</p>
+
+<p><strong>It was essential to provide dashboards that could be quickly and easily understood by as many team members as possible.</strong> To reduce any barriers, I added titles, a table of contents, and simple guides, as shown in the example below.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-josh-sample-dashboard.webp" alt="" /></p>
+
+<p>In Redash, you can freely add not only charts but also textboxes. By leveraging <a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">Markdown syntax</a>, you can make content visually appealing and easy to read.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-markdown.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">https://www.markdownguide.org/cheat-sheet/#basic-syntax</a></p>
+</blockquote>
+
+<h3 id="4-positioned-explanations-on-the-left-and-the-corresponding-charts-on-the-right">4. Positioned explanations on the left and the corresponding charts on the right.</h3>
+
+<p>As many designers and front-end developers know, <strong>languages like Korean and English are left-to-right (LTR) by nature</strong> (<a href="(https://developer.apple.com/design/human-interface-guidelines/layout)">Apple Developer Guidelines</a>). This means that people who use these languages tend to process text, numbers, and even images from left to right.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-ltr.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.linkedin.com/pulse/mastering-front-end-development-creating-ltrrtl-guide-limbachiya-17zif/">Mastering Front-End Development: Creating LTR/RTL Layouts - A Comprehensive Guide
+</a></p>
+</blockquote>
+
+<p>To align with these cognitive patterns, I designed the dashboard layout as follows:</p>
+<ul>
+  <li><strong>Left 1/3 section</strong>: Titles, definitions, and detailed usage explanations for each chart.</li>
+  <li><strong>Right 2/3 section</strong>: Displays the corresponding charts or tables.</li>
+</ul>
+
+<p>This layout follows <strong>the natural eye movement patterns of users.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-topic-trends.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<h3 id="5-wrote-chart-usage-guides-with-the-help-of-llms">5. Wrote chart usage guides with the help of LLMs.</h3>
+
+<p>While data analysts are usually familiar with the meaning of the metrics shown on dashboards, explaining them clearly to non-technical team members can be challenging. This requires not only knowledge of various roles and responsibilities but also the ability to empathize and communicate across different levels of data literacy. <strong>To bridge this gap, I used LLMs (Language Learning Models) to create user-friendly UX writing for the dashboards.</strong></p>
+
+<p><strong>(1) Sample prompt I used:</strong></p>
+
+<pre><code class="language-plain">    Please write a usage guide for the "Active Users" chart.
+
+    Context: This chart will be viewed by employees using the internal BI dashboard.
+
+    Condition 1: Some employees may lack data knowledge, so the explanation must be clear and friendly.
+    Condition 2: It should include connections to business strategy, marketing, design, and development.
+
+    Format:
+    # Active Users
+    &gt; Brief definition
+    ---
+    * 3-5 bullet points with detailed explanations
+    ---
+    * 3-5 bullet points with examples of how the chart can be used for work purposes
+</code></pre>
+
+<p><strong>(2) ChatGPT 4o의 답변 사례</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-chatgpt.webp" alt="" /></p>
+
+<h3 id="6-made-subheadings-larger-and-main-headings-smaller-for-clarity">6. Made subheadings larger and main headings smaller for clarity.</h3>
+
+<p>Those familiar with Markdown usually format <strong>main headings as larger and subheadings as smaller</strong>, like so:</p>
+
+<pre><code class="language-plain">    # 1. Main Heading
+    ## 1.1. Subheading
+</code></pre>
+
+<p>However, when subheadings contain a lot of content, this hierarchy can get lost as users scroll, leading to confusion. They might think:</p>
+
+<blockquote>
+  <p>“What was the main topic again?”</p>
+</blockquote>
+
+<pre><code class="language-plain">    # 1. Main Heading
+    ...
+    (several lines of content)
+    ## 1.1. Subheading
+    ...
+    (several lines of content)
+    ## 1.2. Subheading
+</code></pre>
+
+<p>To address this, I consulted with internal UX/UI experts, who advised:</p>
+
+<blockquote>
+  <p>“Since users will be focusing on the subheadings, it might be better to make subheadings larger and the main headings smaller to improve user experience.”</p>
+</blockquote>
+
+<p>So, I adjusted the layout so that <strong>the subheadings are emphasized while still keeping the main heading in view, helping users stay focused on relevant content.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<h3 id="7-limited-the-display-of-charts-with-high-cardinality-categories-to-a-maximum-of-20-items-providing-supplementary-tables-for-the-full-data">7. Limited the display of charts with high cardinality categories to a maximum of 20 items, providing supplementary tables for the full data.</h3>
+
+<p>Since our company operates a global service, we have more than 100 countries where users are active. If we displayed the user acquisition trend by country on a chart, we would face two options:</p>
+
+<p><strong>(1) Show all countries.</strong></p>
+<ul>
+  <li><strong>Pros</strong>: Completeness of information.</li>
+  <li><strong>Cons</strong>: Poor readability and high memory consumption in the browser.</li>
+</ul>
+
+<p><strong>(2) Display only the top N countries and aggregate the rest as “Others.”</strong></p>
+<ul>
+  <li><strong>Pros</strong>: Improved readability and easier to grasp trends.</li>
+  <li><strong>Cons</strong>: The lack of detail for smaller countries might result in incomplete data.</li>
+</ul>
+
+<p>To solve this dilemma, I chose the following approach:</p>
+<ul>
+  <li>Limit charts to a maximum of 20 countries for readability.</li>
+  <li>Provide a supplementary table with complete country data for comprehensiveness.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt-by-country.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<p>While it’s commonly recommended in the BI field to limit the number of categories displayed in a chart to 7, our company’s global nature led us to increase the limit to 20 to suit our needs.</p>
+
+<h3 id="8-added-hyperlinks-for-convenience">8. Added hyperlinks for convenience.</h3>
+
+<p><strong>In the content marketing domain, it is common to compare and analyze individual content pages.</strong> For these cases, I always added hyperlinks when creating tables that provide “per-page” insights.</p>
+
+<p>From the perspective of a content marketer, it’s natural to review traffic, CTA conversion rates, engagements, and session duration alongside qualitative insights for each piece of content. <strong>Adding hyperlinks allowed users to quickly navigate to the relevant content pages for deeper analysis.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-clicks.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-hyperlinks.webp" alt="" /></p>
+<blockquote>
+  <p>Hyperlink Option</p>
+</blockquote>
+
+<h3 id="9-stored-all-query-scripts-separately-in-a-git-repository">9. Stored all query scripts separately in a Git repository.</h3>
+
+<p>Redash allows queries to be saved and categorized with tags for easier retrieval, much like dashboards.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-queries.webp" alt="" /></p>
+<blockquote>
+  <p>Redash &gt; Queries</p>
+</blockquote>
+
+<p><strong>However, as queries are reused or modified across dashboards, manually searching for specific queries becomes inefficient.</strong> Therefore, I implemented a system where all query scripts are managed separately in a Git repository:</p>
+<ul>
+  <li><strong>Directories</strong>: Correspond to individual dashboards.</li>
+  <li><strong>Files</strong>: Each file contains the query for a specific dashboard.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-git-repo.webp" alt="" /></p>
+<blockquote>
+  <p>Internal Redash Git Repository</p>
+</blockquote>
+
+<p>Using Git for query management has several advantages:</p>
+<ul>
+  <li>When a major update, such as taxonomy changes, requires modifications to multiple queries, it significantly reduces the time spent on repetitive tasks.</li>
+  <li>When creating new dashboards, reusing queries shortens the search time.</li>
+  <li>The VS Code Copilot feature for code generation can further accelerate the work process.</li>
+</ul>
+
+<hr />
+
+<h1 id="5-conclusion">5. Conclusion</h1>
+
+<blockquote>
+  <ul>
+    <li>Avoided creating dashboards mechanically, ensuring they provided real value to users.</li>
+    <li>Delivered dashboards that were practically useful for team members.</li>
+    <li>Significantly increased Redash usage, reinforcing its role as a BI hub in the organization (approximately DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>).</li>
+  </ul>
+</blockquote>
+
+<p>In conclusion, I shared how Redash was utilized within my company. Throughout this process, one critical insight emerged: <strong>avoiding mechanical dashboard creation is key.</strong> In order to contribute to data-driven decision-making and data literacy, it is essential to continuously ask questions like:</p>
+
+<blockquote>
+  <p>“How can we design dashboards that maximize the effectiveness of decision-making and data utilization?”</p>
+</blockquote>
+
+<p>While sophisticated and complex charts are valuable, the ultimate goal should be <strong>to deliver dashboards that are truly helpful for team members</strong>. This mindset drove me to study user psychology and apply LLMs in the process of building Redash dashboards.</p>
+
+<p><strong>I do not consider the current dashboards to be perfect.</strong> As business strategies, data, and organizational growth evolve, there will be opportunities to improve them. I plan to maintain a strong focus on BI, striving to continuously improve and contribute to creating a product loved by customers.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/voc-dashboard-ko/">
+            &#xE000; 데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/redash-dashboard-ko/">
+            Redash 대시보드 활용 후기 &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

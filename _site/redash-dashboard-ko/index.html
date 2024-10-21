@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>Redash 대시보드 활용 후기 – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “오픈소스 BI 도구인 Redash를 활용해 데이터를 시각화하고, 조직 내 다양한 구성원이 데이터를 쉽게 활용할 수 있도록 대시보드를 체계적으로 관리했습니다. 높은 접근성과 데이터 리터러시를 확보하기 위해 관리 규칙을 설정하고, 쿼리 파라미터 기능을 적극적으로 활용했습니다. 그 결과, Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU 39%, WAU 52%, MAU 77%)”
+
+" />
+    <meta property="og:description" content="
+  “오픈소스 BI 도구인 Redash를 활용해 데이터를 시각화하고, 조직 내 다양한 구성원이 데이터를 쉽게 활용할 수 있도록 대시보드를 체계적으로 관리했습니다. 높은 접근성과 데이터 리터러시를 확보하기 위해 관리 규칙을 설정하고, 쿼리 파라미터 기능을 적극적으로 활용했습니다. 그 결과, Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU 39%, WAU 52%, MAU 77%)”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="Redash 대시보드 활용 후기" />
+    <meta property="twitter:title" content="Redash 대시보드 활용 후기" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Redash 대시보드 활용 후기</h1>
+
+  <div>
+    <span class="date">
+      2024-08-09
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (Korean)">
+          Language (Korean)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Project)">
+          Article (Project)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (2. Intermediate)">
+          Level (2. Intermediate)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Data Visualization)">
+          Field (Data Visualization)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (Redash)">
+          Skills (Redash)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“오픈소스 BI 도구인 Redash를 활용해 데이터를 시각화하고, 조직 내 다양한 구성원이 데이터를 쉽게 활용할 수 있도록 대시보드를 체계적으로 관리했습니다. 높은 접근성과 데이터 리터러시를 확보하기 위해 관리 규칙을 설정하고, 쿼리 파라미터 기능을 적극적으로 활용했습니다. 그 결과, Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>)”</p>
+</blockquote>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Performance Summary</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>- Redash DAU: 약 <code class="language-plaintext highlighter-rouge">39%</code> (사내 전체 Redash 계정 보유자 수 대비 비율)</td>
+    </tr>
+    <tr>
+      <td>- Redash WAU: 약 <code class="language-plaintext highlighter-rouge">52%</code> (사내 전체 Redash 계정 보유자 수 대비 비율)</td>
+    </tr>
+    <tr>
+      <td>- Redash MAU: 약 <code class="language-plaintext highlighter-rouge">77%</code> (사내 전체 Redash 계정 보유자 수 대비 비율)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h1 id="목차">목차</h1>
+<ol>
+  <li>Summary</li>
+  <li>Introduction</li>
+  <li>Background</li>
+  <li>How I Used Redash</li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-summary">1. Summary</h1>
+
+<h3 id="introduction">Introduction</h3>
+<ul>
+  <li>제가 근무하고 있는 기업은 프로덕트 데이터 분석을 할 수 있는 환경이 조성되어 있습니다. 그 중 Redash를 BI 도구로 도입하여 2년 가까이 사용하고 있습니다. 본 글에서는 <strong>데이터 분석 환경을 조성하고자 Redash를 어떻게 도입하여 활용했는지</strong> 공유 드리고자 합니다.</li>
+</ul>
+
+<h3 id="background">Background</h3>
+<ul>
+  <li>Redash를 도입하기로 결정한 배경은 다음과 같습니다.</li>
+  <li>(1) <strong>데이터 추출의 자유도</strong>가 매우 높았기 때문입니다.</li>
+  <li>(2) 오픈소스를 통해 별도의 <strong>비용 없이</strong> 이용할 수 있었기 때문입니다.</li>
+</ul>
+
+<h3 id="how-i-used-redash">How I Used Redash</h3>
+<ol>
+  <li>대시보드의 이름과 태그를 정돈하여 사람들이 헤매지 않도록 했습니다.</li>
+  <li>Query Parameters를 적극적으로 사용했습니다.</li>
+  <li>각 대시보드의 상단에는 제목, 목차, 간단한 가이드를 작성했습니다.</li>
+  <li>차트에 대한 설명은 좌측에, 각 차트는 우측에 배치했습니다.</li>
+  <li>차트의 활용 가이드는 LLM의 도움을 받아 작성했습니다.</li>
+  <li>하위 제목은 더 크게, 상위 제목은 더 작게 표현했습니다.</li>
+  <li>카테고리의 Cardinality가 높을 경우, 차트에서는 최대 20개까지만 표현하고, 보충 테이블을 통해 전수를 확인할 수 있도록 구성했습니다.</li>
+  <li>하이퍼링크를 통해 편의성을 제공했습니다.</li>
+  <li>각 쿼리문은 모두 Git Repo에 별도로 보관했습니다.</li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+  <li>생각을 닫은 채 기계적으로 대시보드를 만드는 행위를 지양했습니다.</li>
+  <li>사내 구성원들에게 실질적으로 도움이 되는 방식으로 제공했습니다.</li>
+  <li>Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>)</li>
+</ul>
+
+<hr />
+
+<h1 id="2-introduction">2. Introduction</h1>
+
+<blockquote>
+  <ul>
+    <li>제가 근무하고 있는 기업은 프로덕트 데이터 분석을 할 수 있는 환경이 조성되어 있습니다. 그 중 Redash를 BI 도구로 도입하여 2년 가까이 사용하고 있습니다. 본 글에서는 <strong>데이터 분석 환경을 조성하고자 Redash를 어떻게 도입하여 활용했는지</strong> 공유 드리고자 합니다.</li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-logo.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="3-background">3. Background</h1>
+
+<blockquote>
+  <ul>
+    <li>Redash를 도입하기로 결정한 배경은 다음과 같습니다.</li>
+    <li>(1) <strong>데이터 추출의 자유도</strong>가 매우 높았기 때문입니다.</li>
+    <li>(2) 오픈소스를 통해 별도의 <strong>비용 없이</strong> 이용할 수 있었기 때문입니다.</li>
+  </ul>
+</blockquote>
+
+<p>데이터 분석가가 없던 시절, 원래 GA4와 Amplitude를 통해 아주 기초적인 데이터 현황만을 확인하고 있었을 뿐, 이벤트 정의서 같은 뼈대가 없어 데이터를 적극적으로 활용하기 어려웠습니다.</p>
+
+<p>사내 최초로 데이터 분석가로 입사한 본인은 초반 6개월 동안 이러한 상황을 개선하고자, <strong>일관성과 활용도를 갖춘 환경을 만드는 것</strong>을 목표로 두었습니다. 그 결과, 약 2년 전부터 아래와 같은 파이프라인을 갖추게 되었고, 조직이 예전보다 훨씬 높은 Data-informed Decisions 환경을 누릴 수 있게 되었습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/pipeline.webp" alt="" /></p>
+<blockquote>
+  <p>사내 데이터 파이프라인</p>
+</blockquote>
+
+<p>파이프라인의 최종 BI 도구인 Redash를 도입하기로 결정한 배경은 다음과 같습니다.</p>
+
+<p><strong>(1) 데이터 추출의 자유도가 매우 높았기 때문입니다.</strong></p>
+
+<p>많은 데이터 분석가 분들이 공감하시듯, 노코드 PA 툴의 경우 처음에는 마냥 사용하기 편하지만 깊이를 다져갈수록 분석의 자유도가 떨어져 한계에 부딪히기 마련입니다.</p>
+
+<p>반면 Redash의 경우, 쿼리를 직접 작성한 후 출력된 결과를 기반으로 시각화를 할 수 있기 때문에 조건과 집계를 자유롭게 적용할 수 있습니다. 따라서 <strong>향후 조직의 데이터 기반 의사결정 깊이가 증진될수록 Redash를 지속적으로 활용할 수 있다는 점이 매력적이었습니다.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://redash.io/product/">https://redash.io/product/</a></p>
+</blockquote>
+
+<p><strong>(2) 오픈소스를 통해 별도의 비용 없이 이용할 수 있었기 때문입니다.</strong></p>
+
+<p><a href="https://hub.docker.com/r/redash/redash">Docker Compose</a>를 빌드하여 Redash 애플리케이션을 매우 쉽게 개발할 수 있으며, VM Instance 운영 외에 추가 비용이 들지 않았습니다.</p>
+
+<hr />
+
+<h1 id="4-how-i-used-redash">4. How I Used Redash</h1>
+
+<blockquote>
+  <ol>
+    <li>대시보드의 이름과 태그를 정돈하여 사람들이 헤매지 않도록 했습니다.</li>
+    <li>Query Parameters를 적극적으로 사용했습니다.</li>
+    <li>각 대시보드의 상단에는 제목, 목차, 간단한 가이드를 작성했습니다.</li>
+    <li>차트에 대한 설명은 좌측에, 각 차트는 우측에 배치했습니다.</li>
+    <li>차트의 활용 가이드는 LLM의 도움을 받아 작성했습니다.</li>
+    <li>하위 제목은 더 크게, 상위 제목은 더 작게 표현했습니다.</li>
+    <li>카테고리의 Cardinality가 높을 경우, 차트에서는 최대 20개까지만 표현하고, 보충 테이블을 통해 전수를 확인할 수 있도록 구성했습니다.</li>
+    <li>하이퍼링크를 통해 편의성을 제공했습니다.</li>
+    <li>각 쿼리문은 모두 Git Repo에 별도로 보관했습니다.</li>
+  </ol>
+</blockquote>
+
+<h3 id="1-대시보드의-이름과-태그를-정돈하여-사람들이-헤매지-않도록-했습니다">1. 대시보드의 이름과 태그를 정돈하여 사람들이 헤매지 않도록 했습니다.</h3>
+
+<p>Redash의 단점 중 하나는 각 대시보드를 디렉토리로 분류할 수 있는 기능이 따로 없다는 점입니다. 특히, 사내 구성원이 확인하는 대시보드는 크게 다음 두 가지 종류로 나뉘게 될 것입니다.</p>
+<ul>
+  <li>주기적으로 팔로업해야 하는 기본 대시보드 (<strong>범용성</strong>)</li>
+  <li>Ad-hoc 분석 요청에 의해 만들어진 대시보드 (<strong>일회성/특수성</strong>)</li>
+</ul>
+
+<p>이 때문에 목적이 다른 여러 가지 대시보드들이 시간이 흐를수록 뒤죽박죽 섞이게 되어 탐색하기 매우 복잡해질 것이 뻔합니다. <strong>탐색의 복잡성은 사용성을 해치게 될 것이고, 결국 조직의 데이터 활용 역량과 시간에 악영향을 끼치게 될 것입니다.</strong></p>
+
+<p>이를 어떻게 극복해야 할지 고민하다, 최선의 방법으로 <strong>대시보드의 이름과 태그</strong>를 통해 탐색의 편의성이 유지될 수 있도록 접근했습니다.</p>
+
+<p><strong>(1) 각 대시보드의 제목에 다음과 같은 Prefix를 달았습니다.</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">기본-{프로덕트 이름}</code>: 각 구성원들이 주기적으로 확인해야 하는 범용 대시보드</li>
+  <li><code class="language-plaintext highlighter-rouge">Ad-hoc</code>: 특정 구성원이 요청한 분석 내용을 정리한 대시보드</li>
+  <li><code class="language-plaintext highlighter-rouge">Private</code>: 민감한 정보를 가지고 있어 특정 구성원들에게만 공유해야 하는 대시보드</li>
+  <li><code class="language-plaintext highlighter-rouge">Public</code>: 외부 제공 목적의 공개한 대시보드</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-prefix.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 일부</p>
+</blockquote>
+
+<p><strong>(2) 대시보드마다 총 2개의 태그를 달아, 필터링하기 용이하도록 만들었습니다.</strong></p>
+
+<ul>
+  <li><strong>상위 개념의 태그</strong>: <code class="language-plaintext highlighter-rouge">기본</code>, <code class="language-plaintext highlighter-rouge">Ad-hoc</code>, <code class="language-plaintext highlighter-rouge">Private</code>, <code class="language-plaintext highlighter-rouge">Public</code> 중 하나를 명시</li>
+  <li><strong>하위 목적의 태그</strong>: 프로덕트 이름이나 분석을 요청한 구성원 이름을 명시</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-tags.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 일부</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-filters.webp" alt="" /></p>
+<blockquote>
+  <p>Redash 우측의 각 태그를 클릭하면, 해당 대시보드 목록만 필터링하여 탐색할 수 있습니다.</p>
+</blockquote>
+
+<h3 id="2-query-parameters를-적극적으로-사용했습니다">2. Query Parameters를 적극적으로 사용했습니다.</h3>
+
+<p>Query Parameters란 Redash가 제공하는 동적 변수 기능입니다. 즉, <strong>사용자가 Redash UI에서 원하는 값을 선택하여 쿼리를 실행할 수 있는 것입니다.</strong> 이를 활용하면 다음과 같은 장점이 있습니다.</p>
+<ul>
+  <li>각 케이스 별로 일일이 쿼리문을 생성할 필요 없이, 실행 시점에 Query Parameters 값만 변경함으로써 원하는 데이터가 출력되도록 할 수 있어요.</li>
+  <li>각 케이스 별로 모든 차트를 대시보드에 추가할 필요가 없으므로 대시보드의 가시성이 좋아지고 복잡도를 방지할 수 있어요.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameters.webp" alt="" /></p>
+<blockquote>
+  <p>대시보드 레벨과 각 차트 레벨에 부여한 Query Parameters</p>
+</blockquote>
+
+<p>Query Parameters는 Level과 Type 두 가지 차원에서 다음과 같이 분류됩니다.</p>
+
+<p><strong>(1) Level 차원</strong></p>
+
+<ul>
+  <li><strong>대시보드 레벨 파라미터 (Dashboard Parameter)</strong>: 파라미터 값을 변경하면 대시보드 내의 모든 차트에 적용됩니다.</li>
+  <li><strong>차트 레벨 파라미터 (Widget Parameter)</strong>: 파라미터 값을 변경하면 해당 차트에만 적용됩니다.</li>
+  <li><strong>정적인 값을 지닌 파라미터 (Static Value)</strong>: 파라미터를 특정 값에 고정시킵니다.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameter-level.webp" alt="" /></p>
+<blockquote>
+  <p>Query Parameters의 Level 지정하기</p>
+</blockquote>
+
+<p><strong>(2) Type 차원</strong></p>
+
+<ul>
+  <li><strong>Text</strong>: 파라미터 값을 사용자가 자유롭게 텍스트로 입력할 수 있습니다.</li>
+  <li><strong>Number</strong>: 파라미터 값을 사용자가 숫자로만 입력할 수 있도록 합니다.</li>
+  <li><strong>Dropdown List</strong>: 사전 정의된 리스트에서 값을 선택합니다. (정적 리스트)</li>
+  <li><strong>Query Based Dropdown List</strong>: 다른 쿼리 실행 결과 리스트에서 값을 선택합니다. (동적 리스트)</li>
+  <li><strong>Date</strong>: 특정 날짜를 선택합니다.</li>
+  <li><strong>Date Range</strong>: 특정 날짜 기간을 선택합니다.</li>
+</ul>
+
+<p>이제 제가 사용한 대표적인 Query Parameters를 소개해드리도록 하겠습니다.</p>
+
+<p>(A) 간격 파라미터</p>
+
+<p>아래 쿼리문의 <code class="language-plaintext highlighter-rouge">DATE_TRUNC()</code> 함수의 간격을 동적 파라미터로 두었습니다. 이를 통해 사용자가 DAY, WEEK, MONTH, QUARTER, YEAR 기반으로 각 집계 결과를 자유롭게 확인할 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="nb">date</span><span class="p">,</span> <span class="p">{{</span> <span class="err">간격</span> <span class="p">}})</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-interval.webp" alt="" /></p>
+<blockquote>
+  <p>간격 파라미터</p>
+</blockquote>
+
+<p>(B) 기간 파라미터</p>
+
+<p>아래 쿼리문은 파티션 필터인 <code class="language-plaintext highlighter-rouge">date</code>를 통해 조회를 원하는 파티션만 검색하게 됩니다. 이 기간을 특정할 수 있도록 파라미터화했습니다. 이를 통해, 사용자가 아래와 같이 파라미터 값을 입력하여 조회 기간을 선택할 수 있습니다.</p>
+<ul>
+  <li><strong>정적 기간</strong>: 2024년 1월 1일부터 2024년 1월 10일까지</li>
+  <li><strong>동적 기간</strong>: This Week, Last Month, This Year 등</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="nb">date</span> <span class="k">BETWEEN</span> <span class="s1">'{{Date Range.start}}'</span> <span class="k">AND</span> <span class="s1">'{{Date Range.end}}'</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-date-range.webp" alt="" /></p>
+<blockquote>
+  <p>기간 파라미터</p>
+</blockquote>
+
+<p>(C) 국가 파라미터</p>
+
+<p>국가 파라미터의 경우, <strong>Query Based Dropdown List</strong>를 사용했습니다. 프로덕트 사용자 유입에 따라 시간이 흐를수록 접속 국가가 지속적으로 증가하기 때문에 정적인 목록으로 관리하기에는 어려움이 따르기 때문입니다.</p>
+
+<ul>
+  <li>먼저, 국가 목록을 동적으로 불러오는 쿼리를 작성했습니다. (트래픽 규모가 큰 순서대로 정렬하고, ALL 항목도 포함될 수 있도록 했어요.)</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country.webp" alt="" /></p>
+<blockquote>
+  <p>다음과 같이 country 칼럼만 존재하는 쿼리문을 저장했습니다.</p>
+</blockquote>
+
+<ul>
+  <li>새로운 접속 국가가 발생할 수 있으니, Scheduled Run을 활성화하여 최신성이 유지될 수 있도록 했어요.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-scheduled-run.webp" alt="" /></p>
+<blockquote>
+  <p>Scheduled Run 활성화하기</p>
+</blockquote>
+
+<p>아래 쿼리문은 Country 파라미터의 값이 <code class="language-plaintext highlighter-rouge">ALL</code>이면 전체를 출력하고, 그렇지 않을 경우 <code class="language-plaintext highlighter-rouge">country</code> 칼럼이 해당 값과 동일한 경우만 출력할 수 있도록 작성한 것입니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="p">...</span>
+        <span class="k">AND</span> <span class="k">CASE</span>
+            <span class="k">WHEN</span> <span class="s1">'ALL'</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">ELSE</span> <span class="n">country</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span>
+        <span class="k">END</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country-2.webp" alt="" /></p>
+
+<h3 id="3-각-대시보드의-상단에는-제목-목차-간단한-가이드를-작성했습니다">3. 각 대시보드의 상단에는 제목, 목차, 간단한 가이드를 작성했습니다.</h3>
+
+<p><strong>사내에는 데이터 분석을 업무에 적극적으로 활용하는 분들도 계시는 반면, 여러 가지 이유로 깊게 관여하지 못하는 분들도 계십니다.</strong> 데이터가 업무 관련성이 낮을 수도 있고, 메인 업무만으로도 시간이 부족하실 수도 있고, 혹은 활용은 하고 싶으나 데이터 이해의 어려움을 겪고 계신 것 때문일 수도 있겠죠.</p>
+
+<p><strong>따라서 최대한 많은 구성원들이 빠르고 쉽게 이해할 수 있는 대시보드를 제공하는 것이 가장 중요하다고 생각했습니다.</strong> 조금이라도 장벽을 낮추기 위해 아래 사례와 같이 제목, 목차, 그리고 가이드를 작성했습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-josh-sample-dashboard.webp" alt="" /></p>
+
+<p>Redash에서 차트뿐만 아니라 Textbox도 자유롭게 추가할 수 있는데요. 특히, <a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">Markdown 문법</a>을 잘 활용하면 시각적으로 보기 편하게 작성할 수 있습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-markdown.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">https://www.markdownguide.org/cheat-sheet/#basic-syntax</a></p>
+</blockquote>
+
+<h3 id="4-차트에-대한-설명은-좌측에-각-차트는-우측에-배치했습니다">4. 차트에 대한 설명은 좌측에, 각 차트는 우측에 배치했습니다.</h3>
+
+<p>디자이너와 프론트엔드 개발자 분들이라면 잘 아시듯이, <strong>한국어와 영어는 LTR(Left to Right) 성격을 지닌 언어입니다.</strong> (<a href="https://developer.apple.com/design/human-interface-guidelines/layout">Apple Developer 페이지 참고</a>) 한국어와 영어를 사용하는 사람들은 텍스트와 숫자는 물론, 이미지를 포함한 컨텐츠 자체를 LTR 방식으로 습득하는 경향을 지니고 있는 것입니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-ltr.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.linkedin.com/pulse/mastering-front-end-development-creating-ltrrtl-guide-limbachiya-17zif/">Mastering Front-End Development: Creating LTR/RTL Layouts - A Comprehensive Guide
+</a></p>
+</blockquote>
+
+<p>사용자들의 이러한 인지 성향을 반영하여, 대시보드의 UI를 기본적으로 다음과 같이 배치했습니다.</p>
+<ul>
+  <li><strong>좌측 1/3 영역</strong>: 차트의 제목, 정의, 상세한 활용 방법을 작성한다.</li>
+  <li><strong>우측 2/3 영역</strong>: 해당 차트나 테이블을 보여준다.</li>
+</ul>
+
+<p>이를 통해, <strong>사용자의 시선 이동 습관</strong>을 자연스럽게 따라갈 수 있도록 한 것입니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-topic-trends.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<h3 id="5-차트의-활용-가이드는-llm의-도움을-받아-작성했습니다">5. 차트의 활용 가이드는 LLM의 도움을 받아 작성했습니다.</h3>
+
+<p>사실, 데이터 분석가 분들끼리는 대시보드에 표현할 지표의 의미를 정의하고 설명하는 것에는 큰 어려움이 없습니다. 다만, 각기 다른 포지션의 사내 구성원들이 이해하기 쉽게 설명하는 것은 어렵기 마련입니다. 다양한 R&amp;R에 대한 이해와 공감, 그리고 데이터 문해력을 함께 갖추어야 하기 때문이죠. <strong>이러한 상호 간의 얼음 장벽을 조금이라도 해소하기 위해 대시보드 사용자 관점에서 UX Writing이 이루어질 수 있도록 LLM을 활용해봤습니다.</strong></p>
+
+<p><strong>(1) 작성한 프롬프트 샘플</strong></p>
+
+<pre><code class="language-plain">    "활성 사용자 수" 차트의 설명 가이드를 작성해주세요.
+
+    배경: 사내 BI 대시보드를 이용하는 사내 임직원들에게 보여주는 차트입니다.
+
+    조건 1: 데이터 지식이 부족한 임직원이 있을 수 있으니 친절하고 명료하게 표현해야 합니다.
+    조건 2: 사업 전략, 마케팅, 디자인, 개발 등 각 전문성에 연관된 설명이 있으면 좋습니다.
+
+    작성 포맷:
+    # 활성 사용자 수
+    &gt; 간략한 정의
+    ---
+    * 3-5개 Bullet Points 자세한 설명
+    ---
+    * 3-5개 Bullet Points 차트를 업무에 활용하는 방법 사례
+</code></pre>
+
+<p><strong>(2) ChatGPT 4o의 답변 사례</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-chatgpt.webp" alt="" /></p>
+
+<h3 id="6-하위-제목은-더-크게-상위-제목은-더-작게-표현했습니다">6. 하위 제목은 더 크게, 상위 제목은 더 작게 표현했습니다.</h3>
+
+<p>저를 포함하여 Markdown에 익숙한 분들은 일반적으로 아래와 같이 <strong>대제목은 크게, 소제목은 작게</strong> 표현하곤 하실 것입니다.</p>
+
+<pre><code class="language-plain">    # 1. 대제목
+    ## 1.1. 소제목
+</code></pre>
+
+<p>그런데, 아래와 같이 각 소제목 파트의 양이 워낙 많아 한 화면에 정보의 Hierarchy를 보여줄 수 없는 경우에는 문제가 생길 수 있습니다. 즉, 스크롤을 하게 되면서 사용자는 다음과 같은 혼란에 빠지기 쉬운 것입니다.</p>
+
+<blockquote>
+  <p>“내가 지금 보고 있는 소제목 파트의 대제목이 뭐였지?”</p>
+</blockquote>
+
+<pre><code class="language-plain">    # 1. 대제목
+    ...
+    ...
+    (중략)
+    ...
+    ...
+    ## 1.1. 소제목
+    ...
+    ...
+    (중략)
+    ...
+    ...
+    ## 1.2. 소제목
+</code></pre>
+
+<p>이러한 문제가 생길 것을 직감하여, UX/UI 전문가이신 사내 디자이너 및 프론트엔드 개발자 동료 분들께 의견을 구하니 다음과 같은 조언을 해주셨습니다.</p>
+
+<blockquote>
+  <p>“현재 사용자가 focus한 내용은 소제목 파트이니, 소제목을 더 크게 표현하고, 대제목을 작게 표현해주는 게 사용자 경험을 잘 반영해줄 수 있을 것 같아요.”</p>
+</blockquote>
+
+<p>결국 저는 대제목을 크게 한 번 표현한 이후부터는, <strong>소제목 작성시 대제목을 머릿말 처럼 작게 표시함으로써 소제목에 focus하려는 사용자의 심리를 잘 따라갈 수 있도록</strong> 구성했습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<h3 id="7-카테고리의-cardinality가-높을-경우-차트에서는-최대-20개까지만-표현하고-보충-테이블을-통해-전수를-확인할-수-있도록-구성했습니다">7. 카테고리의 Cardinality가 높을 경우, 차트에서는 최대 20개까지만 표현하고, 보충 테이블을 통해 전수를 확인할 수 있도록 구성했습니다.</h3>
+
+<p>사실 본 기업은 글로벌 서비스를 운영하고 있다보니, 사용자들의 접속 국가 개수가 100개를 훨씬 넘습니다. 만일 국가별 획득 사용자 수 추이를 차트로 표현한다면 아래의 두 가지 방식이 존재할 것입니다.</p>
+
+<p><strong>(1) 전체 국가를 모두 표현하는 방식</strong></p>
+<ul>
+  <li><strong>장점</strong>: 정보의 완전성을 갖출 수 있어요.</li>
+  <li><strong>단점</strong>: 가독성이 떨어지고, 브라우저의 메모리 사용량이 지나치게 높아져요.</li>
+</ul>
+
+<p><strong>(2) 상위 N개 국가만 명시하고, 나머지는 “기타”로 집계하는 방식</strong></p>
+<ul>
+  <li><strong>장점</strong>: 가독성이 높아져 흐름을 읽기 쉬워져요.</li>
+  <li><strong>단점</strong>: 정보가 불완전하여 “소수 국가”의 데이터를 확인하기 어려워져요.</li>
+</ul>
+
+<p>이 딜레마를 해결하기 위해 다음과 같은 접근 방법을 선택했습니다.</p>
+<ul>
+  <li>가독성을 위해 차트에서는 최대 20개국만 명시하기</li>
+  <li>정보의 완전성을 위해 전체 국가 데이터를 별도의 테이블로 보충하기</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt-by-country.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<p>사실 BI 전문가분들 사이에서 차트에 표현할 Cardinality를 최대 7개로 제한하는 것이 좋다는 불문율이 존재하기도 합니다. 하지만 저희 기업의 사업 특성상 워낙 많은 국가에서 프로덕트가 사용되고 있기 때문에 20개국으로 Limit을 올리기로 결정했습니다.</p>
+
+<h3 id="8-하이퍼링크를-통해-편의성을-제공했습니다">8. 하이퍼링크를 통해 편의성을 제공했습니다.</h3>
+
+<p>가령, <strong>컨텐츠 마케팅 영역에서는 각 컨텐츠 페이지를 비교 분석해야 하는 경우가 빈번합니다.</strong> 따라서 “페이지별” 인사이트를 제공하기 위한 테이블을 만들 때는 항상 하이퍼링크를 추가했습니다.</p>
+
+<p>비교 분석을 하는 컨텐츠 마케터 시각에서는, 각 페이지의 트래픽, CTA 전환율, Engagements, 체류 시간 등의 수치를 확인하면서 해당 컨텐츠 자체의 정성적인 배경을 파악하는 것이 자연스러운 사고 흐름일 것입니다. <strong>따라서 편하게 해당 페이지로 이동하여 비교 분석할 수 있도록 하이퍼링크를 사용하게 된 것입니다.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-clicks.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-hyperlinks.webp" alt="" /></p>
+<blockquote>
+  <p>하이퍼링크 옵션</p>
+</blockquote>
+
+<h3 id="9-각-쿼리문은-모두-git-repo에-별도로-보관했습니다">9. 각 쿼리문은 모두 Git Repo에 별도로 보관했습니다.</h3>
+
+<p>Redash에서 각 쿼리문을 저장할 수 있고, 대시보드 처럼 태그를 통해 탐색의 편의성을 높일 수 있습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-queries.webp" alt="" /></p>
+<blockquote>
+  <p>Redash &gt; Queries</p>
+</blockquote>
+
+<p><strong>그러나 대시보드를 만드는 과정에서 쿼리문의 재사용이나 반복 적용된 쿼리문의 전면 수정 등을 진행할 경우 이를 일일이 탐색하려면 엄청난 작업 비효율성을 발생할 것입니다.</strong> 따라서 저는 기본적으로 모든 쿼리문을 다음과 같은 체계를 두어 Git Repo로 관리하고 있습니다.</p>
+<ul>
+  <li>**디렉토리: 각 대시보드</li>
+  <li><strong>개별 파일</strong>: 대시보드에 포함된 각 쿼리문</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-git-repo.webp" alt="" /></p>
+<blockquote>
+  <p>사내 Redash 전용 Git Repo</p>
+</blockquote>
+
+<p>Git Repo를 통한 관리는 다음과 같은 장점을 가져다줄 수 있습니다.</p>
+<ul>
+  <li>데이터 마트의 도입이나 택소노미의 변경 등으로 인해 모든 쿼리문을 한꺼번에 수정해야 한다면, 반복 작업 시간을 크게 단축할 수 있습니다.</li>
+  <li>쿼리문을 재사용하여 새로운 대시보드를 생성할 경우, 탐색 시간이 크게 단축됩니다.</li>
+  <li>VS Code의 Copilot의 코드 생성 기능을 사용함으로써 작업 시간이 매우 크게 단축됩니다.</li>
+</ul>
+
+<hr />
+
+<h1 id="5-conclusion">5. Conclusion</h1>
+
+<blockquote>
+  <ul>
+    <li>생각을 닫은 채 기계적으로 대시보드를 만드는 행위를 지양했습니다.</li>
+    <li>사내 구성원들에게 실질적으로 도움이 되는 방식으로 제공했습니다.</li>
+    <li>Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>)</li>
+  </ul>
+</blockquote>
+
+<p>지금까지 제가 근무하고 있는 기업에서 Redash를 어떻게 활용하고 있는지에 대해 말씀 드렸습니다. 이 과정에서 데이터 분석과 엔지니어링 업무를 수행하며 느낀 중요한 점이 하나 있습니다. <strong>바로, 생각을 닫은 채 기계적으로 대시보드를 만드는 행위를 지양해야 한다는 것입니다.</strong> 데이터 기반 의사결정과 데이터 리터러시에 기여하기 위해 다음과 같은 내적 질문을 끊임없이 던져야 합니다.</p>
+
+<blockquote>
+  <p>“대시보드를 어떤 방식으로 제공해야 의사결정의 실효성과 데이터 활용도를 높일 수 있을까?”</p>
+</blockquote>
+
+<p>다양하고 복잡한 기능을 갖춘 웅장한 차트를 제공하는 것도 좋지만, 결국 가장 중요한 것은 <strong>사내 구성원들에게 실질적인 도움이 되는 방식으로 제공</strong>하는 것입니다. Redash 대시보드를 만드는 과정에서 사용자 심리를 공부하고 LLM을 활용하게 된 배경에도 결국 이러한 고민이 있었습니다.</p>
+
+<p><strong>현재의 대시보드가 결코 완벽하다고 생각하지 않습니다.</strong> 사업 전략, 데이터의 변화, 조직의 성장과 변화에 따라 대시보드를 개선해야 하는 시기가 올 것입니다. 고객이 애정하는 프로덕트가 되는 데 기여할 수 있도록 BI에 대한 관심을 지속적으로 갖고 열심히 노력해야 할 것으로 생각합니다.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/redash-dashboard-en/">
+            &#xE000; Redash Dashboard Usage Review
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/join-instead-of-not-in-en/">
+            Query Optimization by Using JOIN Instead of NOT IN &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

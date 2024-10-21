@@ -1,158 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-05T01:21:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Analytics Engineer | Data Analyst</subtitle><entry><title type="html">dbt Docs 사내 공유 방법 (사이트 호스팅 후기)</title><link href="http://localhost:4000/dbt-docs-site-hosting-ko/" rel="alternate" type="text/html" title="dbt Docs 사내 공유 방법 (사이트 호스팅 후기)" /><published>2024-09-21T00:00:00+09:00</published><updated>2024-09-21T00:00:00+09:00</updated><id>http://localhost:4000/dbt-docs-site-hosting-ko</id><content type="html" xml:base="http://localhost:4000/dbt-docs-site-hosting-ko/"><![CDATA[<blockquote>
-  <p>“사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”</p>
-</blockquote>
-
-<hr />
-
-<h1 id="목차">목차</h1>
-<ol>
-  <li>dbt Docs란 무엇인가?</li>
-  <li>배경</li>
-  <li>목표</li>
-  <li>진행 과정</li>
-  <li>결론</li>
-</ol>
-
-<hr />
-
-<h1 id="1-dbt-docs란-무엇인가">1. dbt Docs란 무엇인가?</h1>
-
-<p><a href="https://www.getdbt.com/">dbt</a>는 ELT 파이프라인의 Transformation 단계에 특화된 자동화 프레임워크로, Data Analyst와 Analytics Engineer 분들을 중심으로 널리 사용됩니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/1.webp" alt="" />
-<img src="/assets/2024-09-21-dbt-docs-site-hosting/2.webp" alt="" /></p>
-
-<p>dbt는 테이블 간의 의존 관계를 바탕으로 Data Lineage를 분석하고, 그 결과를 DAG (Directed Acyclic Graph) 형태로 컴파일하여 전체 Transformation 과정을 자동으로 실행해줍니다. 이를 통해 데이터 웨어하우스의 Orchestration 관리를 보다 효율적으로 진행할 수 있는데요. dbt의 가장 큰 장점 중 하나는 “자동 문서화” 기능입니다.</p>
-
-<p>(1) <strong>Lineage Graph</strong>: 테이블 간의 의존성을 시각적으로 보여주어, 유지보수 작업시 영향을 받는 테이블들을 한 눈에 파악할 수 있도록 도와줍니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/3.webp" alt="" /></p>
-
-<p>(2) <strong>명세서 확인</strong>: 각 테이블과 컬럼의 Description 등 세부적인 명세서를 쉽게 확인할 수 있습니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/4.gif" alt="" />
-<img src="/assets/2024-09-21-dbt-docs-site-hosting/5.gif" alt="" /></p>
-
-<p>dbt Docs는 데이터팀의 주요 Pain Point를 해결하는 데 큰 도움이 됩니다. 많은 기업이 데이터 활용도를 높이기 위해 데이터 웨어하우스를 도입하지만, 수많은 데이터 마트와 테이블 구조로 인해 혼란스러워 사내 구성원들의 접근성이 떨어지는 아이러니한 상황에 쉽게 직면하곤 합니다. 특히 프로덕트의 급성장에 따라 조직의 데이터 의존도가 높아지면, 데이터 웨어하우스의 빌딩 속도에 집중하느라 품질, 정합성, 접근성, 명세서 작성 관리를 유지하기가 어려워지기도 쉽습니다.</p>
-
-<p>dbt는 데이터 웨어하우스 전체의 명세를 자동으로 문서화해 이러한 문제를 해결하며, 데이터의 품질과 활용성을 높이는 중요한 역할을 하는 것입니다.</p>
-
-<hr />
-
-<h1 id="2-배경">2. 배경</h1>
-
-<p>저는 사내에서 쿼리 작성 역량을 갖춘 구성원 분들이 테이블과 Lineage 문서를 확인하여 Redash 대시보드를 직접 만들 수 있는 환경을 제공하고자 했습니다. 즉, 데이터 웨어하우스 문서화가 필요했던 것이죠. 구글 시트나 노션 페이지 등을 활용하는 것도 고려해봤지만, 애널리틱스 엔지니어링 작업과 문서화 작업이 분리되면 다음과 같은 문제가 발생할 수 있다는 노파심이 들었습니다.</p>
-
-<ul>
-  <li>데이터 마트 생성과 문서화 사이의 Latency로 인해 커뮤니케이션 속도가 저하될 수 있다.</li>
-  <li>개별적인 문서화 작업 중 휴먼 에러가 발생하여 부정확한 쿼리 결과를 낳을 수 있다.</li>
-</ul>
-
-<p>따라서 저는 문서화 환경이 애널리틱스 엔지니어링 본연의 작업과 분리되어 이중으로 진행되는 것은 결코 바람직하지 않다고 판단했으며, 반복적인 작업 루틴을 줄임으로써 더 중요한 가치를 창출하는 데 시간을 쓰고 싶었습니다.</p>
-
-<hr />
-
-<h1 id="3-목표">3. 목표</h1>
-
-<p>dbt Docs 기능을 통해 사내 구성원 분들이 dbt 프로젝트 버전 업데이트 즉시 최신 명세를 확인할 수 있는 Docs 사이트를 호스팅하는 것이 이번 작업의 목표였습니다.</p>
-
-<hr />
-
-<h1 id="4-진행-과정">4. 진행 과정</h1>
-
-<h3 id="41-dbt-프로젝트-관리-현황">4.1. dbt 프로젝트 관리 현황</h3>
-
-<p>BigQuery 프로젝트 내에서 소스 테이블들을 Core Layer, Mart Layer로 변환하는 작업을 실행하고 있습니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/6.webp" alt="" /></p>
-
-<p>모든 Transformation 과정은 dbt 프로젝트를 통해 Google Cloud의 VM Instance 내에서 주기적으로 실행되고 있습니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/7.webp" alt="" /></p>
-
-<h3 id="42-로컬-호스팅의-문제점">4.2. 로컬 호스팅의 문제점</h3>
-
-<p>여타 프레임워크와 마찬가지로, dbt Docs를 호스팅할 경우 기본적으로 해당 Host Machine에서만 접속이 가능합니다. 즉, dbt 프로젝트가 있는 VM Instance에서 접속하거나, 혹은 SSH Key를 사용해 Remote 연결된 Local Machine에서만 접속할 수 있는 것입니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/8.webp" alt="" /></p>
-
-<p>하지만 사내 구성원들도 접속할 수 있는 환경을 마련해야 했습니다. 즉, SSH Key가 없지만 동일한 IP 주소 범위 내에서 접속하는 각 Machine에서 dbt Docs 사이트에 접속할 수 있도록 지원해야 했던 것이죠.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/9.webp" alt="" /></p>
-
-<h3 id="43-dbt-docs-호스팅-시작하기">4.3. dbt Docs 호스팅 시작하기</h3>
-
-<p>다음은 사내 구성원들의 접속 환경을 마련하기 위해 설정한 단계들입니다.</p>
-
-<p>(1) <code class="language-plaintext highlighter-rouge">tmux</code> 세션 생성</p>
-
-<p><code class="language-plaintext highlighter-rouge">tmux</code>를 통해 VM Instance에서 dbt Docs 호스팅을 유지하는 독립 세션을 만들었습니다.</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   tmux new <span class="nt">-s</span> dbt_docs <span class="c"># dbt_docs 이름의 세션을 생성합니다.</span>
-   tmux attach <span class="nt">-t</span> dbt_docs <span class="c"># dbt_docs 세션에 Attach합니다.</span>
-</code></pre></div></div>
-
-<p>(2) 사이트 빌드</p>
-
-<p>dbt 프로젝트의 파일들을 컴파일하여 Docs 사이트를 빌드했습니다.</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nb">source </span>dbt-venv/bin/activate <span class="c"># Python Virtual Environment 활성화</span>
-   <span class="nb">export </span><span class="nv">DBT_PROFILES_DIR</span><span class="o">=</span><span class="s2">"path/to/profiles.yml"</span> <span class="c"># DBT_PROFILES_DIR 환경변수 정의</span>
-   dbt docs generate <span class="nt">--target</span> prod <span class="c"># prod 스키마 기준으로 dbt Docs 빌드하기</span>
-</code></pre></div></div>
-
-<p>(3) 사이트 호스팅 시작</p>
-
-<p>Docs 사이트 호스팅을 시작한 후, 해당 세션으로부터 Detach하여 빠져나왔습니다.</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   dbt docs serve <span class="nt">--host</span> 0.0.0.0 <span class="nt">--port</span> 8080 <span class="c"># host 도메인과 port를 파라미터로 명시하기</span>
-</code></pre></div></div>
-
-<p>(4) VM Instance 설정</p>
-
-<p>VM Instance의 External IP를 확인하고, 수정 페이지에서 Network Tag를 추가했습니다.</p>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/10.webp" alt="" />
-<img src="/assets/2024-09-21-dbt-docs-site-hosting/11.webp" alt="" /></p>
-
-<p>(5) VPC 방화벽 규칙 추가</p>
-
-<p>Firewall policies 콘솔에 들어가서 VPC fire rules를 다음과 같이 추가했습니다.</p>
-
-<ul>
-  <li><strong>방향</strong>: 인그레스 (Ingress)</li>
-  <li><strong>소스 IPv4 범위</strong>: 사내 IPv4 범위 (CIDR 형식)</li>
-  <li><strong>타겟 Tags</strong>: 방금 전 VM Instance에 추가한 Network Tag (dbt-docs-serve)</li>
-  <li><strong>프로토콜 및 포트</strong>: 방금 전 호스팅한 dbt Docs의 Port (8080)</li>
-</ul>
-
-<p>(6) 접속 주소</p>
-
-<p>이제 사내 IPv4 범위 내에서 다음 주소로 접속하면 됩니다.</p>
-
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">http://{VM Instance의 External IP}:8080</code></li>
-</ul>
-
-<p>(7) 구성된 환경을 요약하면 다음과 같습니다.</p>
-
-<blockquote>
-  <p>“사내 IPv4 범위 내에서 VM 인스턴스의 External IP 주소에 Port 8080으로 접속하면, 호스팅 중인 dbt Docs 사이트가 로드됩니다!”</p>
-</blockquote>
-
-<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/12.webp" alt="" /></p>
-
-<hr />
-
-<h1 id="5-결론">5. 결론</h1>
-
-<p>dbt Docs 사이트 링크를 슬랙 채널에 고정(Pin)하여 구성원 분들이 추후 편리하게 접속하실 수 있도록 설정했습니다. 앞으로 기업과 프로덕트가 성장함에 따라 데이터 활용의 수요는 지속적으로 커질 것입니다. dbt의 “자동 문서화” 기능을 통해 문서화 리소스를 절감하고, 데이터 본연의 업무 효율성을 높일 수 있을 것입니다.</p>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (Korean)" /><category term="Article (Issue Resolution)" /><category term="Level (1. Beginner)" /><category term="Field (Analytics Engineering)" /><category term="Skills (Linux)" /><summary type="html"><![CDATA[“사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”]]></summary></entry><entry><title type="html">How to Share dbt Docs Internally (Site Hosting Review)</title><link href="http://localhost:4000/dbt-docs-site-hosting-en/" rel="alternate" type="text/html" title="How to Share dbt Docs Internally (Site Hosting Review)" /><published>2024-09-21T00:00:00+09:00</published><updated>2024-09-21T00:00:00+09:00</updated><id>http://localhost:4000/dbt-docs-site-hosting-en</id><content type="html" xml:base="http://localhost:4000/dbt-docs-site-hosting-en/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-10-22T05:42:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Analytics Engineer | Data Analyst</subtitle><entry><title type="html">How to Share dbt Docs Internally (Site Hosting Review)</title><link href="http://localhost:4000/dbt-docs-site-hosting-en/" rel="alternate" type="text/html" title="How to Share dbt Docs Internally (Site Hosting Review)" /><published>2024-09-21T00:00:00+09:00</published><updated>2024-09-21T00:00:00+09:00</updated><id>http://localhost:4000/dbt-docs-site-hosting-en</id><content type="html" xml:base="http://localhost:4000/dbt-docs-site-hosting-en/"><![CDATA[<blockquote>
   <p>“I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt’s automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company’s IP range.”</p>
 </blockquote>
 
@@ -306,7 +152,161 @@
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
 
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Issue Resolution)" /><category term="Level (1. Beginner)" /><category term="Field (Analytics Engineering)" /><category term="Skills (Linux)" /><summary type="html"><![CDATA[“I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt’s automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company’s IP range.”]]></summary></entry><entry><title type="html">구매 전환율 급상승 후기</title><link href="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/" rel="alternate" type="text/html" title="구매 전환율 급상승 후기" /><published>2024-08-29T00:00:00+09:00</published><updated>2024-08-29T00:00:00+09:00</updated><id>http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko</id><content type="html" xml:base="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Issue Resolution)" /><category term="Level (1. Beginner)" /><category term="Field (Analytics Engineering)" /><category term="Skills (Linux)" /><summary type="html"><![CDATA[“I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt’s automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company’s IP range.”]]></summary></entry><entry><title type="html">dbt Docs 사내 공유 방법 (사이트 호스팅 후기)</title><link href="http://localhost:4000/dbt-docs-site-hosting-ko/" rel="alternate" type="text/html" title="dbt Docs 사내 공유 방법 (사이트 호스팅 후기)" /><published>2024-09-21T00:00:00+09:00</published><updated>2024-09-21T00:00:00+09:00</updated><id>http://localhost:4000/dbt-docs-site-hosting-ko</id><content type="html" xml:base="http://localhost:4000/dbt-docs-site-hosting-ko/"><![CDATA[<blockquote>
+  <p>“사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="목차">목차</h1>
+<ol>
+  <li>dbt Docs란 무엇인가?</li>
+  <li>배경</li>
+  <li>목표</li>
+  <li>진행 과정</li>
+  <li>결론</li>
+</ol>
+
+<hr />
+
+<h1 id="1-dbt-docs란-무엇인가">1. dbt Docs란 무엇인가?</h1>
+
+<p><a href="https://www.getdbt.com/">dbt</a>는 ELT 파이프라인의 Transformation 단계에 특화된 자동화 프레임워크로, Data Analyst와 Analytics Engineer 분들을 중심으로 널리 사용됩니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/1.webp" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/2.webp" alt="" /></p>
+
+<p>dbt는 테이블 간의 의존 관계를 바탕으로 Data Lineage를 분석하고, 그 결과를 DAG (Directed Acyclic Graph) 형태로 컴파일하여 전체 Transformation 과정을 자동으로 실행해줍니다. 이를 통해 데이터 웨어하우스의 Orchestration 관리를 보다 효율적으로 진행할 수 있는데요. dbt의 가장 큰 장점 중 하나는 “자동 문서화” 기능입니다.</p>
+
+<p>(1) <strong>Lineage Graph</strong>: 테이블 간의 의존성을 시각적으로 보여주어, 유지보수 작업시 영향을 받는 테이블들을 한 눈에 파악할 수 있도록 도와줍니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/3.webp" alt="" /></p>
+
+<p>(2) <strong>명세서 확인</strong>: 각 테이블과 컬럼의 Description 등 세부적인 명세서를 쉽게 확인할 수 있습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/4.gif" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/5.gif" alt="" /></p>
+
+<p>dbt Docs는 데이터팀의 주요 Pain Point를 해결하는 데 큰 도움이 됩니다. 많은 기업이 데이터 활용도를 높이기 위해 데이터 웨어하우스를 도입하지만, 수많은 데이터 마트와 테이블 구조로 인해 혼란스러워 사내 구성원들의 접근성이 떨어지는 아이러니한 상황에 쉽게 직면하곤 합니다. 특히 프로덕트의 급성장에 따라 조직의 데이터 의존도가 높아지면, 데이터 웨어하우스의 빌딩 속도에 집중하느라 품질, 정합성, 접근성, 명세서 작성 관리를 유지하기가 어려워지기도 쉽습니다.</p>
+
+<p>dbt는 데이터 웨어하우스 전체의 명세를 자동으로 문서화해 이러한 문제를 해결하며, 데이터의 품질과 활용성을 높이는 중요한 역할을 하는 것입니다.</p>
+
+<hr />
+
+<h1 id="2-배경">2. 배경</h1>
+
+<p>저는 사내에서 쿼리 작성 역량을 갖춘 구성원 분들이 테이블과 Lineage 문서를 확인하여 Redash 대시보드를 직접 만들 수 있는 환경을 제공하고자 했습니다. 즉, 데이터 웨어하우스 문서화가 필요했던 것이죠. 구글 시트나 노션 페이지 등을 활용하는 것도 고려해봤지만, 애널리틱스 엔지니어링 작업과 문서화 작업이 분리되면 다음과 같은 문제가 발생할 수 있다는 노파심이 들었습니다.</p>
+
+<ul>
+  <li>데이터 마트 생성과 문서화 사이의 Latency로 인해 커뮤니케이션 속도가 저하될 수 있다.</li>
+  <li>개별적인 문서화 작업 중 휴먼 에러가 발생하여 부정확한 쿼리 결과를 낳을 수 있다.</li>
+</ul>
+
+<p>따라서 저는 문서화 환경이 애널리틱스 엔지니어링 본연의 작업과 분리되어 이중으로 진행되는 것은 결코 바람직하지 않다고 판단했으며, 반복적인 작업 루틴을 줄임으로써 더 중요한 가치를 창출하는 데 시간을 쓰고 싶었습니다.</p>
+
+<hr />
+
+<h1 id="3-목표">3. 목표</h1>
+
+<p>dbt Docs 기능을 통해 사내 구성원 분들이 dbt 프로젝트 버전 업데이트 즉시 최신 명세를 확인할 수 있는 Docs 사이트를 호스팅하는 것이 이번 작업의 목표였습니다.</p>
+
+<hr />
+
+<h1 id="4-진행-과정">4. 진행 과정</h1>
+
+<h3 id="41-dbt-프로젝트-관리-현황">4.1. dbt 프로젝트 관리 현황</h3>
+
+<p>BigQuery 프로젝트 내에서 소스 테이블들을 Core Layer, Mart Layer로 변환하는 작업을 실행하고 있습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/6.webp" alt="" /></p>
+
+<p>모든 Transformation 과정은 dbt 프로젝트를 통해 Google Cloud의 VM Instance 내에서 주기적으로 실행되고 있습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/7.webp" alt="" /></p>
+
+<h3 id="42-로컬-호스팅의-문제점">4.2. 로컬 호스팅의 문제점</h3>
+
+<p>여타 프레임워크와 마찬가지로, dbt Docs를 호스팅할 경우 기본적으로 해당 Host Machine에서만 접속이 가능합니다. 즉, dbt 프로젝트가 있는 VM Instance에서 접속하거나, 혹은 SSH Key를 사용해 Remote 연결된 Local Machine에서만 접속할 수 있는 것입니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/8.webp" alt="" /></p>
+
+<p>하지만 사내 구성원들도 접속할 수 있는 환경을 마련해야 했습니다. 즉, SSH Key가 없지만 동일한 IP 주소 범위 내에서 접속하는 각 Machine에서 dbt Docs 사이트에 접속할 수 있도록 지원해야 했던 것이죠.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/9.webp" alt="" /></p>
+
+<h3 id="43-dbt-docs-호스팅-시작하기">4.3. dbt Docs 호스팅 시작하기</h3>
+
+<p>다음은 사내 구성원들의 접속 환경을 마련하기 위해 설정한 단계들입니다.</p>
+
+<p>(1) <code class="language-plaintext highlighter-rouge">tmux</code> 세션 생성</p>
+
+<p><code class="language-plaintext highlighter-rouge">tmux</code>를 통해 VM Instance에서 dbt Docs 호스팅을 유지하는 독립 세션을 만들었습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   tmux new <span class="nt">-s</span> dbt_docs <span class="c"># dbt_docs 이름의 세션을 생성합니다.</span>
+   tmux attach <span class="nt">-t</span> dbt_docs <span class="c"># dbt_docs 세션에 Attach합니다.</span>
+</code></pre></div></div>
+
+<p>(2) 사이트 빌드</p>
+
+<p>dbt 프로젝트의 파일들을 컴파일하여 Docs 사이트를 빌드했습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nb">source </span>dbt-venv/bin/activate <span class="c"># Python Virtual Environment 활성화</span>
+   <span class="nb">export </span><span class="nv">DBT_PROFILES_DIR</span><span class="o">=</span><span class="s2">"path/to/profiles.yml"</span> <span class="c"># DBT_PROFILES_DIR 환경변수 정의</span>
+   dbt docs generate <span class="nt">--target</span> prod <span class="c"># prod 스키마 기준으로 dbt Docs 빌드하기</span>
+</code></pre></div></div>
+
+<p>(3) 사이트 호스팅 시작</p>
+
+<p>Docs 사이트 호스팅을 시작한 후, 해당 세션으로부터 Detach하여 빠져나왔습니다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   dbt docs serve <span class="nt">--host</span> 0.0.0.0 <span class="nt">--port</span> 8080 <span class="c"># host 도메인과 port를 파라미터로 명시하기</span>
+</code></pre></div></div>
+
+<p>(4) VM Instance 설정</p>
+
+<p>VM Instance의 External IP를 확인하고, 수정 페이지에서 Network Tag를 추가했습니다.</p>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/10.webp" alt="" />
+<img src="/assets/2024-09-21-dbt-docs-site-hosting/11.webp" alt="" /></p>
+
+<p>(5) VPC 방화벽 규칙 추가</p>
+
+<p>Firewall policies 콘솔에 들어가서 VPC fire rules를 다음과 같이 추가했습니다.</p>
+
+<ul>
+  <li><strong>방향</strong>: 인그레스 (Ingress)</li>
+  <li><strong>소스 IPv4 범위</strong>: 사내 IPv4 범위 (CIDR 형식)</li>
+  <li><strong>타겟 Tags</strong>: 방금 전 VM Instance에 추가한 Network Tag (dbt-docs-serve)</li>
+  <li><strong>프로토콜 및 포트</strong>: 방금 전 호스팅한 dbt Docs의 Port (8080)</li>
+</ul>
+
+<p>(6) 접속 주소</p>
+
+<p>이제 사내 IPv4 범위 내에서 다음 주소로 접속하면 됩니다.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">http://{VM Instance의 External IP}:8080</code></li>
+</ul>
+
+<p>(7) 구성된 환경을 요약하면 다음과 같습니다.</p>
+
+<blockquote>
+  <p>“사내 IPv4 범위 내에서 VM 인스턴스의 External IP 주소에 Port 8080으로 접속하면, 호스팅 중인 dbt Docs 사이트가 로드됩니다!”</p>
+</blockquote>
+
+<p><img src="/assets/2024-09-21-dbt-docs-site-hosting/12.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="5-결론">5. 결론</h1>
+
+<p>dbt Docs 사이트 링크를 슬랙 채널에 고정(Pin)하여 구성원 분들이 추후 편리하게 접속하실 수 있도록 설정했습니다. 앞으로 기업과 프로덕트가 성장함에 따라 데이터 활용의 수요는 지속적으로 커질 것입니다. dbt의 “자동 문서화” 기능을 통해 문서화 리소스를 절감하고, 데이터 본연의 업무 효율성을 높일 수 있을 것입니다.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (Korean)" /><category term="Article (Issue Resolution)" /><category term="Level (1. Beginner)" /><category term="Field (Analytics Engineering)" /><category term="Skills (Linux)" /><summary type="html"><![CDATA[“사내에서 dbt Docs를 활용하여 데이터 웨어하우스 문서화를 자동화하고 이를 통해 사내 데이터 접근성과 효율성을 높이기 위한 작업을 수행했습니다. 특히, dbt의 자동 문서화 기능을 활용해 테이블 간 의존성 및 명세서를 최신화함으로써 데이터 활용의 정확성과 속도를 개선했습니다. 이를 위해 VM 인스턴스에서 dbt Docs를 호스팅하고 사내 IP 범위 내 구성원들이 접근할 수 있도록 방화벽 설정을 추가하는 등의 기술적 문제를 해결하며 성공적으로 시스템을 구축했습니다.”]]></summary></entry><entry><title type="html">구매 전환율 급상승 후기</title><link href="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/" rel="alternate" type="text/html" title="구매 전환율 급상승 후기" /><published>2024-08-29T00:00:00+09:00</published><updated>2024-08-29T00:00:00+09:00</updated><id>http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko</id><content type="html" xml:base="http://localhost:4000/how-we-dramatically-improved-conversion-rates-ko/"><![CDATA[<blockquote>
   <p>“외부 요인으로 인해 증가한 신규 방문자 데이터를 분석하여 구매 전환율의 급상승을 달성했습니다. 데이터를 통해 신규 방문자 수와 이들의 구매 의향이 크게 증가했음을 발견했지만, 결제 단계에서 이탈률이 높다는 문제를 파악했습니다. 이에 결제 과정의 불편함이 주요 원인임을 가설로 설정하고, PayPal Express Checkout을 도입하여 사용자 경험을 개선했습니다. 그 결과, 결제 전환율이 32%p 상승하여 이전보다 훨씬 높은 수준을 기록했으며, 이는 지속적으로 유지되고 있습니다. 이를 통해 분석 기반의 문제 해결과 성과 향상을 이뤄냈습니다.”</p>
 </blockquote>
 
@@ -1630,221 +1630,7 @@
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
 
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Project)" /><category term="Level (1. Beginner)" /><category term="Field (Data Analysis)" /><category term="Skills (SQL)" /><summary type="html"><![CDATA[“By analyzing the data of new visitors that increased due to external factors, I achieved a significant rise in purchase conversion rates. The data revealed a substantial increase in the number of new visitors and their purchasing intent, but also identified a high dropout rate at the payment stage. Based on the hypothesis that the inconvenience in the payment process was the main cause, I introduced PayPal Express Checkout to enhance user experience. As a result, the payment conversion rate increased by 32%p, reaching a much higher level than before, and this improvement has been sustained. This demonstrates effective problem-solving and performance enhancement based on data analysis.”]]></summary></entry><entry><title type="html">Query Optimization by Using JOIN Instead of NOT IN</title><link href="http://localhost:4000/join-instead-of-not-in-en/" rel="alternate" type="text/html" title="Query Optimization by Using JOIN Instead of NOT IN" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-en</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-en/"><![CDATA[<blockquote>
-  <p>“In this project, I optimized the incremental update strategy for the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”</p>
-</blockquote>
-
-<hr />
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Performance Summary</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>- Orchestration Time: <code class="language-plaintext highlighter-rouge">50 mins</code> → <code class="language-plaintext highlighter-rouge">2 mins</code> (96% ↓)</td>
-    </tr>
-  </tbody>
-</table>
-
-<hr />
-
-<h1 id="table-of-contents">Table of Contents</h1>
-<ol>
-  <li>STAR Summary</li>
-  <li>Situation</li>
-  <li>Tasks</li>
-  <li>Actions</li>
-  <li>Results</li>
-</ol>
-
-<hr />
-
-<h1 id="1-star-summary">1. STAR Summary</h1>
-
-<h3 id="situation">Situation</h3>
-<ul>
-  <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
-</ul>
-
-<h3 id="tasks">Tasks</h3>
-<ul>
-  <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
-</ul>
-
-<h3 id="actions">Actions</h3>
-<ul>
-  <li>I <strong>replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
-</ul>
-
-<h3 id="results">Results</h3>
-<ul>
-  <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
-</ul>
-
-<hr />
-
-<h1 id="2-situation">2. Situation</h1>
-
-<blockquote>
-  <ul>
-    <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
-  </ul>
-</blockquote>
-
-<p><img src="/assets/2024-08-13-join-instead-of-not-in/1.webp" alt="" /></p>
-
-<h3 id="specific-situation">Specific Situation</h3>
-<ul>
-  <li>Our company operates an Enterprise Data Warehouse (EDW) environment to provide B2B BI services. Every midnight, a complex data transformation process based on user event data is performed. <strong>However, this process was taking longer than expected.</strong> In particular, <strong>the incremental update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table, a key event table</strong>, was taking up most of the orchestration time. This delay in data refresh posed a risk of negatively impacting service quality.</li>
-</ul>
-
-<hr />
-
-<h1 id="3-tasks">3. Tasks</h1>
-
-<blockquote>
-  <ul>
-    <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
-  </ul>
-</blockquote>
-
-<h3 id="root-causes-of-the-problem">Root Causes of the Problem</h3>
-<ul>
-  <li>I identified three major issues in the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">WITH</span>
-    <span class="n">CTE_src_events</span> <span class="k">AS</span> <span class="p">(</span>
-        <span class="k">SELECT</span>
-            <span class="k">DISTINCT</span>
-            <span class="nb">datetime</span><span class="p">,</span>
-            <span class="n">app_id</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="p">,</span>
-            <span class="n">event_name</span>
-        <span class="k">FROM</span>
-            <span class="n">src_events</span>
-        <span class="c1">-- Incremental Strategy: Read rows with a datetime greater than the maximum datetime currently stored in the table.</span>
-        <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-        <span class="k">WHERE</span>
-            <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="nb">datetime</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span> <span class="o">&lt;</span> <span class="nb">datetime</span>
-        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-    <span class="p">)</span>
-    <span class="k">SELECT</span>
-        <span class="o">*</span>
-    <span class="k">FROM</span>
-        <span class="n">CTE_src_events</span>
-    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-    <span class="k">WHERE</span>
-        <span class="p">(</span><span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-</code></pre></div></div>
-
-<h5 id="1-large-data-volume">1. Large Data Volume</h5>
-<ul>
-  <li>The <code class="language-plaintext highlighter-rouge">core_fct_events</code> table contained all user event log data, making the table size very large.</li>
-</ul>
-
-<h5 id="2-presence-of-duplicate-rows">2. Presence of Duplicate Rows</h5>
-<ul>
-  <li>Due to the existence of duplicate data in the source table itself, the <code class="language-plaintext highlighter-rouge">DISTINCT</code> keyword had to be used to remove duplicates.</li>
-</ul>
-
-<h5 id="3-inefficient-duplicate-check-method">3. Inefficient Duplicate Check Method</h5>
-<ul>
-  <li>The existing query used the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause to compare new data with existing data, which was the main cause of the performance bottleneck. This clause triggers nested loop searches, causing performance degradation as the table size increases.</li>
-</ul>
-
-<hr />
-
-<h1 id="4-actions">4. Actions</h1>
-
-<blockquote>
-  <ul>
-    <li><strong>I replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
-  </ul>
-</blockquote>
-
-<h3 id="specific-actions-taken">Specific Actions Taken</h3>
-
-<h5 id="1-problem-analysis-and-alternative-exploration">1. Problem Analysis and Alternative Exploration</h5>
-<ul>
-  <li>First, I identified that the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause was the primary cause of the performance bottleneck. The <code class="language-plaintext highlighter-rouge">NOT IN</code> clause requires the database engine to check all possible combinations through <strong>nested loops</strong>, making it highly inefficient.</li>
-</ul>
-
-<p><img src="/assets/2024-08-13-join-instead-of-not-in/2.webp" alt="" /></p>
-
-<h5 id="2-query-refactoring">2. Query Refactoring</h5>
-<ul>
-  <li>I replaced the existing <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>. Using a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code> allows for more efficient comparison between the existing table and the new data. Specifically, <strong>after performing the <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, only new data that does not exist in the existing data is inserted by filtering for <code class="language-plaintext highlighter-rouge">NULL</code> values.</strong></li>
-</ul>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
-        <span class="n">MAIN</span><span class="p">.</span><span class="o">*</span>
-    <span class="k">FROM</span> 
-        <span class="n">CTE_src_events</span> <span class="n">MAIN</span>
-    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
-    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
-    <span class="k">LEFT</span> <span class="k">JOIN</span>
-        <span class="p">{{</span> <span class="n">this</span> <span class="p">}}</span> <span class="n">THIS</span>
-        <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span>
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">app_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">app_id</span>
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">user_id</span>
-        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">event_name</span>
-    <span class="k">WHERE</span>
-        <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span> <span class="k">IS</span> <span class="k">NULL</span>    
-    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
-</code></pre></div></div>
-
-<h5 id="3-performance-testing-and-validation">3. Performance Testing and Validation</h5>
-<ul>
-  <li>After modifying the query, I conducted performance tests using various data sets. This confirmed that the query execution time was significantly reduced. <strong>The optimized query execution time was reduced from 50 minutes to approximately 2 minutes.</strong></li>
-</ul>
-
-<hr />
-
-<h1 id="5-results">5. Results</h1>
-
-<blockquote>
-  <ul>
-    <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
-  </ul>
-</blockquote>
-
-<p><img src="/assets/2024-08-13-join-instead-of-not-in/3.webp" alt="" /></p>
-
-<h3 id="1-performance-improvement">1. Performance Improvement</h3>
-<ul>
-  <li>The total orchestration time was reduced <strong>from 50 minutes to 2 minutes</strong>, representing approximately <strong>96% performance improvement</strong>, drastically enhancing data processing speed.</li>
-</ul>
-
-<h3 id="2-improved-resource-efficiency">2. Improved Resource Efficiency</h3>
-<ul>
-  <li>Efficient use of database resources reduced system load, allowing other queries and tasks to execute more smoothly.</li>
-</ul>
-
-<h3 id="3-enhanced-service-reliability">3. Enhanced Service Reliability</h3>
-<ul>
-  <li>Faster and more reliable data updates provided a more dependable service to users.</li>
-</ul>
-
-<h3 id="4-future-scalability-secured">4. Future Scalability Secured</h3>
-<ul>
-  <li>The optimization efforts in preparation for increased traffic and data expansion have laid a foundation for easily meeting future data processing requirements.</li>
-</ul>
-
-<h3 id="conclusion">Conclusion</h3>
-<ul>
-  <li>This query optimization project significantly enhanced the performance of our data warehouse while also strengthening our analytics engineering capabilities. It was a valuable contribution to maximizing data processing efficiency and improving the quality of our BI services.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Issue Resolution)" /><category term="Level (2. Intermediate)" /><category term="Field (Analytics Engineering)" /><category term="Skills (SQL)" /><category term="Skills (dbt)" /><summary type="html"><![CDATA[“In this project, I optimized the incremental update strategy for the core_fct_events table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient NOT IN clause with a LEFT JOIN, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”]]></summary></entry><entry><title type="html">NOT IN 대신 JOIN을 통한 쿼리 최적화</title><link href="http://localhost:4000/join-instead-of-not-in-ko/" rel="alternate" type="text/html" title="NOT IN 대신 JOIN을 통한 쿼리 최적화" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-ko</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-ko/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Project)" /><category term="Level (1. Beginner)" /><category term="Field (Data Analysis)" /><category term="Skills (SQL)" /><summary type="html"><![CDATA[“By analyzing the data of new visitors that increased due to external factors, I achieved a significant rise in purchase conversion rates. The data revealed a substantial increase in the number of new visitors and their purchasing intent, but also identified a high dropout rate at the payment stage. Based on the hypothesis that the inconvenience in the payment process was the main cause, I introduced PayPal Express Checkout to enhance user experience. As a result, the payment conversion rate increased by 32%p, reaching a much higher level than before, and this improvement has been sustained. This demonstrates effective problem-solving and performance enhancement based on data analysis.”]]></summary></entry><entry><title type="html">NOT IN 대신 JOIN을 통한 쿼리 최적화</title><link href="http://localhost:4000/join-instead-of-not-in-ko/" rel="alternate" type="text/html" title="NOT IN 대신 JOIN을 통한 쿼리 최적화" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-ko</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-ko/"><![CDATA[<blockquote>
   <p>“이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, <code class="language-plaintext highlighter-rouge">core_fct_events</code> 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 <code class="language-plaintext highlighter-rouge">NOT IN</code> 구문을 <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다.”</p>
 </blockquote>
 
@@ -2058,7 +1844,1218 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (Korean)" /><category term="Article (Issue Resolution)" /><category term="Level (2. Intermediate)" /><category term="Field (Analytics Engineering)" /><category term="Skills (SQL)" /><category term="Skills (dbt)" /><summary type="html"><![CDATA[“이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, core_fct_events 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 NOT IN 구문을 LEFT JOIN으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다.”]]></summary></entry><entry><title type="html">데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화</title><link href="http://localhost:4000/voc-dashboard-ko/" rel="alternate" type="text/html" title="데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화" /><published>2024-07-20T00:00:00+09:00</published><updated>2024-07-20T00:00:00+09:00</updated><id>http://localhost:4000/voc-dashboard-ko</id><content type="html" xml:base="http://localhost:4000/voc-dashboard-ko/"><![CDATA[<blockquote>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (Korean)" /><category term="Article (Issue Resolution)" /><category term="Level (2. Intermediate)" /><category term="Field (Analytics Engineering)" /><category term="Skills (SQL)" /><category term="Skills (dbt)" /><summary type="html"><![CDATA[“이번 프로젝트에서는 엔터프라이즈 데이터 웨어하우스(EDW) 환경에서 발생한 쿼리 성능 문제를 해결하기 위해, core_fct_events 테이블의 Incremental 업데이트 전략을 최적화했습니다. 기존의 비효율적인 NOT IN 구문을 LEFT JOIN으로 대체하여 데이터 중복 검사를 최적화함으로써, 오케스트레이션 전체 소요 시간을 50분에서 2분으로 단축했습니다. 이로 인해 약 96%의 성능 개선을 이루었으며, 데이터 처리 효율성과 시스템 자원 활용도를 크게 향상시켜 서비스의 안정성과 확장성을 강화했습니다.”]]></summary></entry><entry><title type="html">Query Optimization by Using JOIN Instead of NOT IN</title><link href="http://localhost:4000/join-instead-of-not-in-en/" rel="alternate" type="text/html" title="Query Optimization by Using JOIN Instead of NOT IN" /><published>2024-08-13T00:00:00+09:00</published><updated>2024-08-13T00:00:00+09:00</updated><id>http://localhost:4000/join-instead-of-not-in-en</id><content type="html" xml:base="http://localhost:4000/join-instead-of-not-in-en/"><![CDATA[<blockquote>
+  <p>“In this project, I optimized the incremental update strategy for the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”</p>
+</blockquote>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Performance Summary</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>- Orchestration Time: <code class="language-plaintext highlighter-rouge">50 mins</code> → <code class="language-plaintext highlighter-rouge">2 mins</code> (96% ↓)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>STAR Summary</li>
+  <li>Situation</li>
+  <li>Tasks</li>
+  <li>Actions</li>
+  <li>Results</li>
+</ol>
+
+<hr />
+
+<h1 id="1-star-summary">1. STAR Summary</h1>
+
+<h3 id="situation">Situation</h3>
+<ul>
+  <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
+</ul>
+
+<h3 id="tasks">Tasks</h3>
+<ul>
+  <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
+</ul>
+
+<h3 id="actions">Actions</h3>
+<ul>
+  <li>I <strong>replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
+</ul>
+
+<h3 id="results">Results</h3>
+<ul>
+  <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
+</ul>
+
+<hr />
+
+<h1 id="2-situation">2. Situation</h1>
+
+<blockquote>
+  <ul>
+    <li>In our Enterprise Data Warehouse (EDW), <strong>the orchestration process of the ELT pipeline was taking significantly longer than expected.</strong> Specifically, there were performance issues during the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-13-join-instead-of-not-in/1.webp" alt="" /></p>
+
+<h3 id="specific-situation">Specific Situation</h3>
+<ul>
+  <li>Our company operates an Enterprise Data Warehouse (EDW) environment to provide B2B BI services. Every midnight, a complex data transformation process based on user event data is performed. <strong>However, this process was taking longer than expected.</strong> In particular, <strong>the incremental update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table, a key event table</strong>, was taking up most of the orchestration time. This delay in data refresh posed a risk of negatively impacting service quality.</li>
+</ul>
+
+<hr />
+
+<h1 id="3-tasks">3. Tasks</h1>
+
+<blockquote>
+  <ul>
+    <li>The goal was to optimize the incremental strategy of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table to <strong>reduce the overall orchestration time</strong>. This would enable us to handle increasing data traffic more efficiently and enhance service reliability.</li>
+  </ul>
+</blockquote>
+
+<h3 id="root-causes-of-the-problem">Root Causes of the Problem</h3>
+<ul>
+  <li>I identified three major issues in the update process of the <code class="language-plaintext highlighter-rouge">core_fct_events</code> table.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">WITH</span>
+    <span class="n">CTE_src_events</span> <span class="k">AS</span> <span class="p">(</span>
+        <span class="k">SELECT</span>
+            <span class="k">DISTINCT</span>
+            <span class="nb">datetime</span><span class="p">,</span>
+            <span class="n">app_id</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="p">,</span>
+            <span class="n">event_name</span>
+        <span class="k">FROM</span>
+            <span class="n">src_events</span>
+        <span class="c1">-- Incremental Strategy: Read rows with a datetime greater than the maximum datetime currently stored in the table.</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+        <span class="k">WHERE</span>
+            <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="nb">datetime</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span> <span class="o">&lt;</span> <span class="nb">datetime</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="k">SELECT</span>
+        <span class="o">*</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_src_events</span>
+    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">WHERE</span>
+        <span class="p">(</span><span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nb">datetime</span><span class="p">,</span> <span class="n">app_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">event_name</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="1-large-data-volume">1. Large Data Volume</h5>
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">core_fct_events</code> table contained all user event log data, making the table size very large.</li>
+</ul>
+
+<h5 id="2-presence-of-duplicate-rows">2. Presence of Duplicate Rows</h5>
+<ul>
+  <li>Due to the existence of duplicate data in the source table itself, the <code class="language-plaintext highlighter-rouge">DISTINCT</code> keyword had to be used to remove duplicates.</li>
+</ul>
+
+<h5 id="3-inefficient-duplicate-check-method">3. Inefficient Duplicate Check Method</h5>
+<ul>
+  <li>The existing query used the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause to compare new data with existing data, which was the main cause of the performance bottleneck. This clause triggers nested loop searches, causing performance degradation as the table size increases.</li>
+</ul>
+
+<hr />
+
+<h1 id="4-actions">4. Actions</h1>
+
+<blockquote>
+  <ul>
+    <li><strong>I replaced the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code></strong> to effectively filter duplicate data while optimizing performance.</li>
+  </ul>
+</blockquote>
+
+<h3 id="specific-actions-taken">Specific Actions Taken</h3>
+
+<h5 id="1-problem-analysis-and-alternative-exploration">1. Problem Analysis and Alternative Exploration</h5>
+<ul>
+  <li>First, I identified that the <code class="language-plaintext highlighter-rouge">NOT IN</code> clause was the primary cause of the performance bottleneck. The <code class="language-plaintext highlighter-rouge">NOT IN</code> clause requires the database engine to check all possible combinations through <strong>nested loops</strong>, making it highly inefficient.</li>
+</ul>
+
+<p><img src="/assets/2024-08-13-join-instead-of-not-in/2.webp" alt="" /></p>
+
+<h5 id="2-query-refactoring">2. Query Refactoring</h5>
+<ul>
+  <li>I replaced the existing <code class="language-plaintext highlighter-rouge">NOT IN</code> clause with a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>. Using a <code class="language-plaintext highlighter-rouge">LEFT JOIN</code> allows for more efficient comparison between the existing table and the new data. Specifically, <strong>after performing the <code class="language-plaintext highlighter-rouge">LEFT JOIN</code>, only new data that does not exist in the existing data is inserted by filtering for <code class="language-plaintext highlighter-rouge">NULL</code> values.</strong></li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">MAIN</span><span class="p">.</span><span class="o">*</span>
+    <span class="k">FROM</span> 
+        <span class="n">CTE_src_events</span> <span class="n">MAIN</span>
+    <span class="c1">-- Incremental Strategy: Exclude data that already exists in the table. Do not insert those rows.</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+        <span class="p">{{</span> <span class="n">this</span> <span class="p">}}</span> <span class="n">THIS</span>
+        <span class="k">ON</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">datetime</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span>
+        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">app_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">app_id</span>
+        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">user_id</span>
+        <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="n">THIS</span><span class="p">.</span><span class="n">event_name</span>
+    <span class="k">WHERE</span>
+        <span class="n">THIS</span><span class="p">.</span><span class="nb">datetime</span> <span class="k">IS</span> <span class="k">NULL</span>    
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="3-performance-testing-and-validation">3. Performance Testing and Validation</h5>
+<ul>
+  <li>After modifying the query, I conducted performance tests using various data sets. This confirmed that the query execution time was significantly reduced. <strong>The optimized query execution time was reduced from 50 minutes to approximately 2 minutes.</strong></li>
+</ul>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+
+<blockquote>
+  <ul>
+    <li>Through query optimization, the total orchestration time was <strong>reduced from 50 minutes to 2 minutes</strong>, achieving approximately <strong>96% performance improvement</strong> and significantly enhancing data processing efficiency.</li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-13-join-instead-of-not-in/3.webp" alt="" /></p>
+
+<h3 id="1-performance-improvement">1. Performance Improvement</h3>
+<ul>
+  <li>The total orchestration time was reduced <strong>from 50 minutes to 2 minutes</strong>, representing approximately <strong>96% performance improvement</strong>, drastically enhancing data processing speed.</li>
+</ul>
+
+<h3 id="2-improved-resource-efficiency">2. Improved Resource Efficiency</h3>
+<ul>
+  <li>Efficient use of database resources reduced system load, allowing other queries and tasks to execute more smoothly.</li>
+</ul>
+
+<h3 id="3-enhanced-service-reliability">3. Enhanced Service Reliability</h3>
+<ul>
+  <li>Faster and more reliable data updates provided a more dependable service to users.</li>
+</ul>
+
+<h3 id="4-future-scalability-secured">4. Future Scalability Secured</h3>
+<ul>
+  <li>The optimization efforts in preparation for increased traffic and data expansion have laid a foundation for easily meeting future data processing requirements.</li>
+</ul>
+
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+  <li>This query optimization project significantly enhanced the performance of our data warehouse while also strengthening our analytics engineering capabilities. It was a valuable contribution to maximizing data processing efficiency and improving the quality of our BI services.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Issue Resolution)" /><category term="Level (2. Intermediate)" /><category term="Field (Analytics Engineering)" /><category term="Skills (SQL)" /><category term="Skills (dbt)" /><summary type="html"><![CDATA[“In this project, I optimized the incremental update strategy for the core_fct_events table to address query performance issues in our Enterprise Data Warehouse (EDW) environment. By replacing the inefficient NOT IN clause with a LEFT JOIN, I streamlined the duplicate data check process, reducing the overall orchestration time from 50 minutes to 2 minutes. This resulted in approximately a 96% performance improvement, significantly enhancing data processing efficiency and system resource utilization, thereby strengthening service stability and scalability.”]]></summary></entry><entry><title type="html">Redash Dashboard Usage Review</title><link href="http://localhost:4000/redash-dashboard-en/" rel="alternate" type="text/html" title="Redash Dashboard Usage Review" /><published>2024-08-09T00:00:00+09:00</published><updated>2024-08-09T00:00:00+09:00</updated><id>http://localhost:4000/redash-dashboard-en</id><content type="html" xml:base="http://localhost:4000/redash-dashboard-en/"><![CDATA[<blockquote>
+  <p>“Utilizing the open-source BI tool Redash, I visualized data and systematically managed dashboards to ensure easy access for various members of the organization. To improve accessibility and data literacy, I implemented management rules and actively used query parameter functions. This significantly increased Redash usage frequency, strengthening its role as the organization’s BI hub. (Approximately DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code> among all Redash account holders).”</p>
+</blockquote>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Performance Summary</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>- Redash DAU: approx. <code class="language-plaintext highlighter-rouge">39%</code> (compared to the total number of internal Redash account holders)</td>
+    </tr>
+    <tr>
+      <td>- Redash WAU: approx. <code class="language-plaintext highlighter-rouge">52%</code> (compared to the total number of internal Redash account holders)</td>
+    </tr>
+    <tr>
+      <td>- Redash MAU: approx. <code class="language-plaintext highlighter-rouge">77%</code> (compared to the total number of internal Redash account holders)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>Summary</li>
+  <li>Introduction</li>
+  <li>Background</li>
+  <li>How I Used Redash</li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-summary">1. Summary</h1>
+
+<h3 id="introduction">Introduction</h3>
+<ul>
+  <li>At my company, a product data analysis environment is in place, and Redash has been used as a BI tool for nearly two years. In this post, I will share <strong>how Redash was implemented and utilized to enhance our data analysis environment.</strong></li>
+</ul>
+
+<h3 id="background">Background</h3>
+<ul>
+  <li>The decision to implement Redash was driven by the following reasons:</li>
+  <li>(1) <strong>High flexibility in data extraction.</strong></li>
+  <li>(2) It could be used <strong>without any additional costs</strong> due to its open-source nature.</li>
+</ul>
+
+<h3 id="how-i-used-redash">How I Used Redash</h3>
+<ol>
+  <li>Organized dashboard names and tags to make navigation easier for users.</li>
+  <li>Actively used query parameters.</li>
+  <li>Added titles, a table of contents, and simple guides at the top of each dashboard.</li>
+  <li>Positioned explanations on the left and the corresponding charts on the right.</li>
+  <li>Wrote chart usage guides with the help of LLMs.</li>
+  <li>Made subheadings larger and main headings smaller for clarity.</li>
+  <li>Limited the display of charts with high cardinality categories to a maximum of 20 items, providing supplementary tables for the full data.</li>
+  <li>Added hyperlinks for convenience.</li>
+  <li>Stored all query scripts separately in a Git repository.</li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+  <li>Avoided creating dashboards mechanically, ensuring they provided real value to users.</li>
+  <li>Delivered dashboards that were practically useful for team members.</li>
+  <li>Significantly increased Redash usage, reinforcing its role as a BI hub in the organization (approximately DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>).</li>
+</ul>
+
+<hr />
+
+<h1 id="2-introduction">2. Introduction</h1>
+
+<blockquote>
+  <ul>
+    <li>At my company, a product data analysis environment is in place, and Redash has been used as a BI tool for nearly two years. In this post, I will share <strong>how Redash was implemented and utilized to enhance our data analysis environment.</strong></li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-logo.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="3-background">3. Background</h1>
+
+<blockquote>
+  <ul>
+    <li>The decision to implement Redash was driven by the following reasons:</li>
+    <li>(1) <strong>High flexibility in data extraction.</strong></li>
+    <li>(2) It could be used <strong>without any additional costs</strong> due to its open-source nature.</li>
+  </ul>
+</blockquote>
+
+<p>Before hiring a dedicated data analyst, we were only using GA4 and Amplitude for basic data checks without any structured data catalog or event definitions, making data utilization difficult.</p>
+
+<p>Upon joining as the company’s first data analyst, I set a goal of <strong>creating an environment with consistency and high usability</strong> within the first six months. This resulted in the establishment of a pipeline that enabled the organization to operate in a more data-informed decision-making environment than ever before.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/pipeline.webp" alt="" /></p>
+<blockquote>
+  <p>In-house Data Pipeline</p>
+</blockquote>
+
+<p>The final BI tool in this pipeline was Redash, chosen for the following reasons:</p>
+
+<p><strong>(1) High flexibility in data extraction.</strong></p>
+
+<p>Many data analysts agree that while no-code PA tools may be easy to use initially, as the depth of analysis increases, these tools limit analytical freedom.</p>
+
+<p>However, Redash allows for writing custom queries and visualizing results based on flexible conditions and aggregations, making it <strong>an attractive choice for long-term use as the organization’s data-driven decision-making deepens.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://redash.io/product/">https://redash.io/product/</a></p>
+</blockquote>
+
+<p><strong>(2) It could be used without additional costs due to its open-source nature.</strong></p>
+
+<p>By building Redash using <a href="https://hub.docker.com/r/redash/redash">Docker Compose</a>, we could easily develop the Redash application without incurring extra costs beyond operating a VM instance.</p>
+
+<hr />
+
+<h1 id="4-how-i-used-redash">4. How I Used Redash</h1>
+
+<blockquote>
+  <ol>
+    <li>Organized dashboard names and tags to make navigation easier for users.</li>
+    <li>Actively used query parameters.</li>
+    <li>Added titles, a table of contents, and simple guides at the top of each dashboard.</li>
+    <li>Positioned explanations on the left and the corresponding charts on the right.</li>
+    <li>Wrote chart usage guides with the help of LLMs.</li>
+    <li>Made subheadings larger and main headings smaller for clarity.</li>
+    <li>Limited the display of charts with high cardinality categories to a maximum of 20 items, providing supplementary tables for the full data.</li>
+    <li>Added hyperlinks for convenience.</li>
+    <li>Stored all query scripts separately in a Git repository.</li>
+  </ol>
+</blockquote>
+
+<h3 id="1-organized-dashboard-names-and-tags-to-make-navigation-easier-for-users">1. Organized dashboard names and tags to make navigation easier for users.</h3>
+
+<p>One of Redash’s limitations is the lack of a built-in feature to categorize dashboards into directories. Within our organization, dashboards are generally divided into two main types:</p>
+<ul>
+  <li>Regularly followed general dashboards (<strong>general use</strong>)</li>
+  <li>Ad-hoc dashboards created in response to specific analysis requests (<strong>one-time/specialized use</strong>)</li>
+</ul>
+
+<p>As the number of dashboards with different purposes grows over time, it inevitably becomes difficult to navigate. <strong>This complexity hinders usability and eventually negatively impacts the organization’s data utilization and efficiency.</strong></p>
+
+<p>To overcome this, I adopted a method where <strong>dashboard names and tags</strong> were used to maintain ease of navigation.</p>
+
+<p><strong>(1) I applied the following prefixes to dashboard titles:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">General-{Product Name}</code>: General dashboards that team members regularly check.</li>
+  <li><code class="language-plaintext highlighter-rouge">Ad-hoc</code>: Dashboards summarizing specific analysis requests from individual team members.</li>
+  <li><code class="language-plaintext highlighter-rouge">Private</code>: Dashboards containing sensitive information, shared only with specific team members.</li>
+  <li><code class="language-plaintext highlighter-rouge">Public</code>: Dashboards made available for external purposes.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-prefix.webp" alt="" /></p>
+<blockquote>
+  <p>Sample of Internal Dashboards</p>
+</blockquote>
+
+<p><strong>(2) I applied two tags to each dashboard for easier filtering.</strong></p>
+
+<ul>
+  <li><strong>Higher-level tags</strong>: <code class="language-plaintext highlighter-rouge">General</code>, <code class="language-plaintext highlighter-rouge">Ad-hoc</code>, <code class="language-plaintext highlighter-rouge">Private</code>, <code class="language-plaintext highlighter-rouge">Public</code>.</li>
+  <li><strong>Lower-level tags</strong>: Product name or the name of the team member who requested the analysis.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-tags.webp" alt="" /></p>
+<blockquote>
+  <p>Sample of Internal Dashboards</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-filters.webp" alt="" /></p>
+<blockquote>
+  <p>Clicking on the tags in Redash filters the list of dashboards for easier navigation.</p>
+</blockquote>
+
+<h3 id="2-actively-used-query-parameters">2. Actively used query parameters.</h3>
+
+<p>Query Parameters in Redash are dynamic variables that <strong>allow users to select values and run queries directly from the Redash UI.</strong> This feature has several benefits:</p>
+<ul>
+  <li>You can avoid creating individual queries for each case by changing the Query Parameters values at runtime to output the desired data.</li>
+  <li>It improves dashboard visibility and prevents complexity by reducing the need to add charts for every individual case.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameters.webp" alt="" /></p>
+<blockquote>
+  <p>Query Parameters assigned to both dashboard and chart levels</p>
+</blockquote>
+
+<p>Query Parameters can be categorized by Level and Type.</p>
+
+<p><strong>(1) By Level</strong></p>
+
+<ul>
+  <li><strong>Dashboard-level parameters</strong>: Parameters applied to all charts in a dashboard.</li>
+  <li><strong>Widget-level parameters</strong>: Parameters applied only to the specific chart.</li>
+  <li><strong>Static values</strong>: Parameters fixed to a specific value.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameter-level.webp" alt="" /></p>
+<blockquote>
+  <p>Setting the level of Query Parameters</p>
+</blockquote>
+
+<p><strong>(2) By Type</strong></p>
+
+<ul>
+  <li><strong>Text</strong>: Users can freely enter text values.</li>
+  <li><strong>Number</strong>: Users can enter only numeric values.</li>
+  <li><strong>Dropdown List</strong>: Values are selected from a predefined list (static).</li>
+  <li><strong>Query-Based Dropdown List</strong>: Values are selected from the result of another query (dynamic).</li>
+  <li><strong>Date</strong>: Users can select a specific date.</li>
+  <li><strong>Date Range</strong>: Users can select a date range.</li>
+</ul>
+
+<p>Now, let me introduce some of the key Query Parameters I used.</p>
+
+<p>(A) Interval Parameter</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">DATE_TRUNC()</code> function’s interval in the query below is a dynamic parameter. This allows users to view aggregated results based on DAY, WEEK, MONTH, QUARTER, or YEAR.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="nb">date</span><span class="p">,</span> <span class="p">{{</span> <span class="n">interval</span> <span class="p">}})</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-interval.webp" alt="" /></p>
+<blockquote>
+  <p>Interval Parameter</p>
+</blockquote>
+
+<p>(B) Date Range Parameter</p>
+
+<p>The following query uses the partition filter <code class="language-plaintext highlighter-rouge">date</code> to search only the desired partitions. This filter is parameterized, allowing users to select the date range they want to query.</p>
+<ul>
+  <li><strong>Static Range</strong>: January 1, 2024 to January 10, 2024</li>
+  <li><strong>Dynamic Range</strong>: This Week, Last Month, This Year, etc.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="nb">date</span> <span class="k">BETWEEN</span> <span class="s1">'{{Date Range.start}}'</span> <span class="k">AND</span> <span class="s1">'{{Date Range.end}}'</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-date-range.webp" alt="" /></p>
+<blockquote>
+  <p>Date Range Parameter</p>
+</blockquote>
+
+<p>(C) Country Parameter</p>
+
+<p>For the country parameter, I used a <strong>Query Based Dropdown List</strong>. Since the number of user countries increases over time, maintaining a static list would be difficult.</p>
+<ul>
+  <li>First, I created a query to dynamically retrieve the country list (sorted by traffic size and including an “ALL” option).</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country.webp" alt="" /></p>
+<blockquote>
+  <p>Saved query that only returns the country column.</p>
+</blockquote>
+
+<ul>
+  <li>To maintain up-to-date information, I enabled Scheduled Runs to account for new incoming countries.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-scheduled-run.webp" alt="" /></p>
+<blockquote>
+  <p>Enabling Scheduled Run</p>
+</blockquote>
+
+<p>The query below outputs all data when <code class="language-plaintext highlighter-rouge">ALL</code> is selected for the Country parameter. If a specific country is selected, only the data for that <code class="language-plaintext highlighter-rouge">country</code> is shown.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="p">...</span>
+        <span class="k">AND</span> <span class="k">CASE</span>
+            <span class="k">WHEN</span> <span class="s1">'ALL'</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">ELSE</span> <span class="n">country</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span>
+        <span class="k">END</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country-2.webp" alt="" /></p>
+
+<h3 id="3-added-titles-a-table-of-contents-and-simple-guides-at-the-top-of-each-dashboard">3. Added titles, a table of contents, and simple guides at the top of each dashboard.</h3>
+
+<p><strong>Within the company, there are individuals who actively use data analysis in their work, while others may not be as deeply involved for various reasons.</strong> This could be due to the lack of relevance to their main tasks, time constraints, or difficulty in understanding data.</p>
+
+<p><strong>It was essential to provide dashboards that could be quickly and easily understood by as many team members as possible.</strong> To reduce any barriers, I added titles, a table of contents, and simple guides, as shown in the example below.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-josh-sample-dashboard.webp" alt="" /></p>
+
+<p>In Redash, you can freely add not only charts but also textboxes. By leveraging <a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">Markdown syntax</a>, you can make content visually appealing and easy to read.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-markdown.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">https://www.markdownguide.org/cheat-sheet/#basic-syntax</a></p>
+</blockquote>
+
+<h3 id="4-positioned-explanations-on-the-left-and-the-corresponding-charts-on-the-right">4. Positioned explanations on the left and the corresponding charts on the right.</h3>
+
+<p>As many designers and front-end developers know, <strong>languages like Korean and English are left-to-right (LTR) by nature</strong> (<a href="(https://developer.apple.com/design/human-interface-guidelines/layout)">Apple Developer Guidelines</a>). This means that people who use these languages tend to process text, numbers, and even images from left to right.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-ltr.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.linkedin.com/pulse/mastering-front-end-development-creating-ltrrtl-guide-limbachiya-17zif/">Mastering Front-End Development: Creating LTR/RTL Layouts - A Comprehensive Guide
+</a></p>
+</blockquote>
+
+<p>To align with these cognitive patterns, I designed the dashboard layout as follows:</p>
+<ul>
+  <li><strong>Left 1/3 section</strong>: Titles, definitions, and detailed usage explanations for each chart.</li>
+  <li><strong>Right 2/3 section</strong>: Displays the corresponding charts or tables.</li>
+</ul>
+
+<p>This layout follows <strong>the natural eye movement patterns of users.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-topic-trends.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<h3 id="5-wrote-chart-usage-guides-with-the-help-of-llms">5. Wrote chart usage guides with the help of LLMs.</h3>
+
+<p>While data analysts are usually familiar with the meaning of the metrics shown on dashboards, explaining them clearly to non-technical team members can be challenging. This requires not only knowledge of various roles and responsibilities but also the ability to empathize and communicate across different levels of data literacy. <strong>To bridge this gap, I used LLMs (Language Learning Models) to create user-friendly UX writing for the dashboards.</strong></p>
+
+<p><strong>(1) Sample prompt I used:</strong></p>
+
+<pre><code class="language-plain">    Please write a usage guide for the "Active Users" chart.
+
+    Context: This chart will be viewed by employees using the internal BI dashboard.
+
+    Condition 1: Some employees may lack data knowledge, so the explanation must be clear and friendly.
+    Condition 2: It should include connections to business strategy, marketing, design, and development.
+
+    Format:
+    # Active Users
+    &gt; Brief definition
+    ---
+    * 3-5 bullet points with detailed explanations
+    ---
+    * 3-5 bullet points with examples of how the chart can be used for work purposes
+</code></pre>
+
+<p><strong>(2) ChatGPT 4o의 답변 사례</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-chatgpt.webp" alt="" /></p>
+
+<h3 id="6-made-subheadings-larger-and-main-headings-smaller-for-clarity">6. Made subheadings larger and main headings smaller for clarity.</h3>
+
+<p>Those familiar with Markdown usually format <strong>main headings as larger and subheadings as smaller</strong>, like so:</p>
+
+<pre><code class="language-plain">    # 1. Main Heading
+    ## 1.1. Subheading
+</code></pre>
+
+<p>However, when subheadings contain a lot of content, this hierarchy can get lost as users scroll, leading to confusion. They might think:</p>
+
+<blockquote>
+  <p>“What was the main topic again?”</p>
+</blockquote>
+
+<pre><code class="language-plain">    # 1. Main Heading
+    ...
+    (several lines of content)
+    ## 1.1. Subheading
+    ...
+    (several lines of content)
+    ## 1.2. Subheading
+</code></pre>
+
+<p>To address this, I consulted with internal UX/UI experts, who advised:</p>
+
+<blockquote>
+  <p>“Since users will be focusing on the subheadings, it might be better to make subheadings larger and the main headings smaller to improve user experience.”</p>
+</blockquote>
+
+<p>So, I adjusted the layout so that <strong>the subheadings are emphasized while still keeping the main heading in view, helping users stay focused on relevant content.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<h3 id="7-limited-the-display-of-charts-with-high-cardinality-categories-to-a-maximum-of-20-items-providing-supplementary-tables-for-the-full-data">7. Limited the display of charts with high cardinality categories to a maximum of 20 items, providing supplementary tables for the full data.</h3>
+
+<p>Since our company operates a global service, we have more than 100 countries where users are active. If we displayed the user acquisition trend by country on a chart, we would face two options:</p>
+
+<p><strong>(1) Show all countries.</strong></p>
+<ul>
+  <li><strong>Pros</strong>: Completeness of information.</li>
+  <li><strong>Cons</strong>: Poor readability and high memory consumption in the browser.</li>
+</ul>
+
+<p><strong>(2) Display only the top N countries and aggregate the rest as “Others.”</strong></p>
+<ul>
+  <li><strong>Pros</strong>: Improved readability and easier to grasp trends.</li>
+  <li><strong>Cons</strong>: The lack of detail for smaller countries might result in incomplete data.</li>
+</ul>
+
+<p>To solve this dilemma, I chose the following approach:</p>
+<ul>
+  <li>Limit charts to a maximum of 20 countries for readability.</li>
+  <li>Provide a supplementary table with complete country data for comprehensiveness.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt-by-country.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<p>While it’s commonly recommended in the BI field to limit the number of categories displayed in a chart to 7, our company’s global nature led us to increase the limit to 20 to suit our needs.</p>
+
+<h3 id="8-added-hyperlinks-for-convenience">8. Added hyperlinks for convenience.</h3>
+
+<p><strong>In the content marketing domain, it is common to compare and analyze individual content pages.</strong> For these cases, I always added hyperlinks when creating tables that provide “per-page” insights.</p>
+
+<p>From the perspective of a content marketer, it’s natural to review traffic, CTA conversion rates, engagements, and session duration alongside qualitative insights for each piece of content. <strong>Adding hyperlinks allowed users to quickly navigate to the relevant content pages for deeper analysis.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-clicks.webp" alt="" /></p>
+<blockquote>
+  <p>Example of Internal Dashboard</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-hyperlinks.webp" alt="" /></p>
+<blockquote>
+  <p>Hyperlink Option</p>
+</blockquote>
+
+<h3 id="9-stored-all-query-scripts-separately-in-a-git-repository">9. Stored all query scripts separately in a Git repository.</h3>
+
+<p>Redash allows queries to be saved and categorized with tags for easier retrieval, much like dashboards.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-queries.webp" alt="" /></p>
+<blockquote>
+  <p>Redash &gt; Queries</p>
+</blockquote>
+
+<p><strong>However, as queries are reused or modified across dashboards, manually searching for specific queries becomes inefficient.</strong> Therefore, I implemented a system where all query scripts are managed separately in a Git repository:</p>
+<ul>
+  <li><strong>Directories</strong>: Correspond to individual dashboards.</li>
+  <li><strong>Files</strong>: Each file contains the query for a specific dashboard.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-git-repo.webp" alt="" /></p>
+<blockquote>
+  <p>Internal Redash Git Repository</p>
+</blockquote>
+
+<p>Using Git for query management has several advantages:</p>
+<ul>
+  <li>When a major update, such as taxonomy changes, requires modifications to multiple queries, it significantly reduces the time spent on repetitive tasks.</li>
+  <li>When creating new dashboards, reusing queries shortens the search time.</li>
+  <li>The VS Code Copilot feature for code generation can further accelerate the work process.</li>
+</ul>
+
+<hr />
+
+<h1 id="5-conclusion">5. Conclusion</h1>
+
+<blockquote>
+  <ul>
+    <li>Avoided creating dashboards mechanically, ensuring they provided real value to users.</li>
+    <li>Delivered dashboards that were practically useful for team members.</li>
+    <li>Significantly increased Redash usage, reinforcing its role as a BI hub in the organization (approximately DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>).</li>
+  </ul>
+</blockquote>
+
+<p>In conclusion, I shared how Redash was utilized within my company. Throughout this process, one critical insight emerged: <strong>avoiding mechanical dashboard creation is key.</strong> In order to contribute to data-driven decision-making and data literacy, it is essential to continuously ask questions like:</p>
+
+<blockquote>
+  <p>“How can we design dashboards that maximize the effectiveness of decision-making and data utilization?”</p>
+</blockquote>
+
+<p>While sophisticated and complex charts are valuable, the ultimate goal should be <strong>to deliver dashboards that are truly helpful for team members</strong>. This mindset drove me to study user psychology and apply LLMs in the process of building Redash dashboards.</p>
+
+<p><strong>I do not consider the current dashboards to be perfect.</strong> As business strategies, data, and organizational growth evolve, there will be opportunities to improve them. I plan to maintain a strong focus on BI, striving to continuously improve and contribute to creating a product loved by customers.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Project)" /><category term="Level (2. Intermediate)" /><category term="Field (Data Visualization)" /><category term="Skills (Redash)" /><summary type="html"><![CDATA[“Utilizing the open-source BI tool Redash, I visualized data and systematically managed dashboards to ensure easy access for various members of the organization. To improve accessibility and data literacy, I implemented management rules and actively used query parameter functions. This significantly increased Redash usage frequency, strengthening its role as the organization’s BI hub. (Approximately DAU 39%, WAU 52%, MAU 77% among all Redash account holders).”]]></summary></entry><entry><title type="html">Redash 대시보드 활용 후기</title><link href="http://localhost:4000/redash-dashboard-ko/" rel="alternate" type="text/html" title="Redash 대시보드 활용 후기" /><published>2024-08-09T00:00:00+09:00</published><updated>2024-08-09T00:00:00+09:00</updated><id>http://localhost:4000/redash-dashboard-ko</id><content type="html" xml:base="http://localhost:4000/redash-dashboard-ko/"><![CDATA[<blockquote>
+  <p>“오픈소스 BI 도구인 Redash를 활용해 데이터를 시각화하고, 조직 내 다양한 구성원이 데이터를 쉽게 활용할 수 있도록 대시보드를 체계적으로 관리했습니다. 높은 접근성과 데이터 리터러시를 확보하기 위해 관리 규칙을 설정하고, 쿼리 파라미터 기능을 적극적으로 활용했습니다. 그 결과, Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>)”</p>
+</blockquote>
+
+<hr />
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Performance Summary</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>- Redash DAU: 약 <code class="language-plaintext highlighter-rouge">39%</code> (사내 전체 Redash 계정 보유자 수 대비 비율)</td>
+    </tr>
+    <tr>
+      <td>- Redash WAU: 약 <code class="language-plaintext highlighter-rouge">52%</code> (사내 전체 Redash 계정 보유자 수 대비 비율)</td>
+    </tr>
+    <tr>
+      <td>- Redash MAU: 약 <code class="language-plaintext highlighter-rouge">77%</code> (사내 전체 Redash 계정 보유자 수 대비 비율)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h1 id="목차">목차</h1>
+<ol>
+  <li>Summary</li>
+  <li>Introduction</li>
+  <li>Background</li>
+  <li>How I Used Redash</li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-summary">1. Summary</h1>
+
+<h3 id="introduction">Introduction</h3>
+<ul>
+  <li>제가 근무하고 있는 기업은 프로덕트 데이터 분석을 할 수 있는 환경이 조성되어 있습니다. 그 중 Redash를 BI 도구로 도입하여 2년 가까이 사용하고 있습니다. 본 글에서는 <strong>데이터 분석 환경을 조성하고자 Redash를 어떻게 도입하여 활용했는지</strong> 공유 드리고자 합니다.</li>
+</ul>
+
+<h3 id="background">Background</h3>
+<ul>
+  <li>Redash를 도입하기로 결정한 배경은 다음과 같습니다.</li>
+  <li>(1) <strong>데이터 추출의 자유도</strong>가 매우 높았기 때문입니다.</li>
+  <li>(2) 오픈소스를 통해 별도의 <strong>비용 없이</strong> 이용할 수 있었기 때문입니다.</li>
+</ul>
+
+<h3 id="how-i-used-redash">How I Used Redash</h3>
+<ol>
+  <li>대시보드의 이름과 태그를 정돈하여 사람들이 헤매지 않도록 했습니다.</li>
+  <li>Query Parameters를 적극적으로 사용했습니다.</li>
+  <li>각 대시보드의 상단에는 제목, 목차, 간단한 가이드를 작성했습니다.</li>
+  <li>차트에 대한 설명은 좌측에, 각 차트는 우측에 배치했습니다.</li>
+  <li>차트의 활용 가이드는 LLM의 도움을 받아 작성했습니다.</li>
+  <li>하위 제목은 더 크게, 상위 제목은 더 작게 표현했습니다.</li>
+  <li>카테고리의 Cardinality가 높을 경우, 차트에서는 최대 20개까지만 표현하고, 보충 테이블을 통해 전수를 확인할 수 있도록 구성했습니다.</li>
+  <li>하이퍼링크를 통해 편의성을 제공했습니다.</li>
+  <li>각 쿼리문은 모두 Git Repo에 별도로 보관했습니다.</li>
+</ol>
+
+<h3 id="conclusion">Conclusion</h3>
+<ul>
+  <li>생각을 닫은 채 기계적으로 대시보드를 만드는 행위를 지양했습니다.</li>
+  <li>사내 구성원들에게 실질적으로 도움이 되는 방식으로 제공했습니다.</li>
+  <li>Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>)</li>
+</ul>
+
+<hr />
+
+<h1 id="2-introduction">2. Introduction</h1>
+
+<blockquote>
+  <ul>
+    <li>제가 근무하고 있는 기업은 프로덕트 데이터 분석을 할 수 있는 환경이 조성되어 있습니다. 그 중 Redash를 BI 도구로 도입하여 2년 가까이 사용하고 있습니다. 본 글에서는 <strong>데이터 분석 환경을 조성하고자 Redash를 어떻게 도입하여 활용했는지</strong> 공유 드리고자 합니다.</li>
+  </ul>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-logo.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="3-background">3. Background</h1>
+
+<blockquote>
+  <ul>
+    <li>Redash를 도입하기로 결정한 배경은 다음과 같습니다.</li>
+    <li>(1) <strong>데이터 추출의 자유도</strong>가 매우 높았기 때문입니다.</li>
+    <li>(2) 오픈소스를 통해 별도의 <strong>비용 없이</strong> 이용할 수 있었기 때문입니다.</li>
+  </ul>
+</blockquote>
+
+<p>데이터 분석가가 없던 시절, 원래 GA4와 Amplitude를 통해 아주 기초적인 데이터 현황만을 확인하고 있었을 뿐, 이벤트 정의서 같은 뼈대가 없어 데이터를 적극적으로 활용하기 어려웠습니다.</p>
+
+<p>사내 최초로 데이터 분석가로 입사한 본인은 초반 6개월 동안 이러한 상황을 개선하고자, <strong>일관성과 활용도를 갖춘 환경을 만드는 것</strong>을 목표로 두었습니다. 그 결과, 약 2년 전부터 아래와 같은 파이프라인을 갖추게 되었고, 조직이 예전보다 훨씬 높은 Data-informed Decisions 환경을 누릴 수 있게 되었습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/pipeline.webp" alt="" /></p>
+<blockquote>
+  <p>사내 데이터 파이프라인</p>
+</blockquote>
+
+<p>파이프라인의 최종 BI 도구인 Redash를 도입하기로 결정한 배경은 다음과 같습니다.</p>
+
+<p><strong>(1) 데이터 추출의 자유도가 매우 높았기 때문입니다.</strong></p>
+
+<p>많은 데이터 분석가 분들이 공감하시듯, 노코드 PA 툴의 경우 처음에는 마냥 사용하기 편하지만 깊이를 다져갈수록 분석의 자유도가 떨어져 한계에 부딪히기 마련입니다.</p>
+
+<p>반면 Redash의 경우, 쿼리를 직접 작성한 후 출력된 결과를 기반으로 시각화를 할 수 있기 때문에 조건과 집계를 자유롭게 적용할 수 있습니다. 따라서 <strong>향후 조직의 데이터 기반 의사결정 깊이가 증진될수록 Redash를 지속적으로 활용할 수 있다는 점이 매력적이었습니다.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://redash.io/product/">https://redash.io/product/</a></p>
+</blockquote>
+
+<p><strong>(2) 오픈소스를 통해 별도의 비용 없이 이용할 수 있었기 때문입니다.</strong></p>
+
+<p><a href="https://hub.docker.com/r/redash/redash">Docker Compose</a>를 빌드하여 Redash 애플리케이션을 매우 쉽게 개발할 수 있으며, VM Instance 운영 외에 추가 비용이 들지 않았습니다.</p>
+
+<hr />
+
+<h1 id="4-how-i-used-redash">4. How I Used Redash</h1>
+
+<blockquote>
+  <ol>
+    <li>대시보드의 이름과 태그를 정돈하여 사람들이 헤매지 않도록 했습니다.</li>
+    <li>Query Parameters를 적극적으로 사용했습니다.</li>
+    <li>각 대시보드의 상단에는 제목, 목차, 간단한 가이드를 작성했습니다.</li>
+    <li>차트에 대한 설명은 좌측에, 각 차트는 우측에 배치했습니다.</li>
+    <li>차트의 활용 가이드는 LLM의 도움을 받아 작성했습니다.</li>
+    <li>하위 제목은 더 크게, 상위 제목은 더 작게 표현했습니다.</li>
+    <li>카테고리의 Cardinality가 높을 경우, 차트에서는 최대 20개까지만 표현하고, 보충 테이블을 통해 전수를 확인할 수 있도록 구성했습니다.</li>
+    <li>하이퍼링크를 통해 편의성을 제공했습니다.</li>
+    <li>각 쿼리문은 모두 Git Repo에 별도로 보관했습니다.</li>
+  </ol>
+</blockquote>
+
+<h3 id="1-대시보드의-이름과-태그를-정돈하여-사람들이-헤매지-않도록-했습니다">1. 대시보드의 이름과 태그를 정돈하여 사람들이 헤매지 않도록 했습니다.</h3>
+
+<p>Redash의 단점 중 하나는 각 대시보드를 디렉토리로 분류할 수 있는 기능이 따로 없다는 점입니다. 특히, 사내 구성원이 확인하는 대시보드는 크게 다음 두 가지 종류로 나뉘게 될 것입니다.</p>
+<ul>
+  <li>주기적으로 팔로업해야 하는 기본 대시보드 (<strong>범용성</strong>)</li>
+  <li>Ad-hoc 분석 요청에 의해 만들어진 대시보드 (<strong>일회성/특수성</strong>)</li>
+</ul>
+
+<p>이 때문에 목적이 다른 여러 가지 대시보드들이 시간이 흐를수록 뒤죽박죽 섞이게 되어 탐색하기 매우 복잡해질 것이 뻔합니다. <strong>탐색의 복잡성은 사용성을 해치게 될 것이고, 결국 조직의 데이터 활용 역량과 시간에 악영향을 끼치게 될 것입니다.</strong></p>
+
+<p>이를 어떻게 극복해야 할지 고민하다, 최선의 방법으로 <strong>대시보드의 이름과 태그</strong>를 통해 탐색의 편의성이 유지될 수 있도록 접근했습니다.</p>
+
+<p><strong>(1) 각 대시보드의 제목에 다음과 같은 Prefix를 달았습니다.</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">기본-{프로덕트 이름}</code>: 각 구성원들이 주기적으로 확인해야 하는 범용 대시보드</li>
+  <li><code class="language-plaintext highlighter-rouge">Ad-hoc</code>: 특정 구성원이 요청한 분석 내용을 정리한 대시보드</li>
+  <li><code class="language-plaintext highlighter-rouge">Private</code>: 민감한 정보를 가지고 있어 특정 구성원들에게만 공유해야 하는 대시보드</li>
+  <li><code class="language-plaintext highlighter-rouge">Public</code>: 외부 제공 목적의 공개한 대시보드</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-prefix.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 일부</p>
+</blockquote>
+
+<p><strong>(2) 대시보드마다 총 2개의 태그를 달아, 필터링하기 용이하도록 만들었습니다.</strong></p>
+
+<ul>
+  <li><strong>상위 개념의 태그</strong>: <code class="language-plaintext highlighter-rouge">기본</code>, <code class="language-plaintext highlighter-rouge">Ad-hoc</code>, <code class="language-plaintext highlighter-rouge">Private</code>, <code class="language-plaintext highlighter-rouge">Public</code> 중 하나를 명시</li>
+  <li><strong>하위 목적의 태그</strong>: 프로덕트 이름이나 분석을 요청한 구성원 이름을 명시</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-tags.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 일부</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-filters.webp" alt="" /></p>
+<blockquote>
+  <p>Redash 우측의 각 태그를 클릭하면, 해당 대시보드 목록만 필터링하여 탐색할 수 있습니다.</p>
+</blockquote>
+
+<h3 id="2-query-parameters를-적극적으로-사용했습니다">2. Query Parameters를 적극적으로 사용했습니다.</h3>
+
+<p>Query Parameters란 Redash가 제공하는 동적 변수 기능입니다. 즉, <strong>사용자가 Redash UI에서 원하는 값을 선택하여 쿼리를 실행할 수 있는 것입니다.</strong> 이를 활용하면 다음과 같은 장점이 있습니다.</p>
+<ul>
+  <li>각 케이스 별로 일일이 쿼리문을 생성할 필요 없이, 실행 시점에 Query Parameters 값만 변경함으로써 원하는 데이터가 출력되도록 할 수 있어요.</li>
+  <li>각 케이스 별로 모든 차트를 대시보드에 추가할 필요가 없으므로 대시보드의 가시성이 좋아지고 복잡도를 방지할 수 있어요.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameters.webp" alt="" /></p>
+<blockquote>
+  <p>대시보드 레벨과 각 차트 레벨에 부여한 Query Parameters</p>
+</blockquote>
+
+<p>Query Parameters는 Level과 Type 두 가지 차원에서 다음과 같이 분류됩니다.</p>
+
+<p><strong>(1) Level 차원</strong></p>
+
+<ul>
+  <li><strong>대시보드 레벨 파라미터 (Dashboard Parameter)</strong>: 파라미터 값을 변경하면 대시보드 내의 모든 차트에 적용됩니다.</li>
+  <li><strong>차트 레벨 파라미터 (Widget Parameter)</strong>: 파라미터 값을 변경하면 해당 차트에만 적용됩니다.</li>
+  <li><strong>정적인 값을 지닌 파라미터 (Static Value)</strong>: 파라미터를 특정 값에 고정시킵니다.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-query-parameter-level.webp" alt="" /></p>
+<blockquote>
+  <p>Query Parameters의 Level 지정하기</p>
+</blockquote>
+
+<p><strong>(2) Type 차원</strong></p>
+
+<ul>
+  <li><strong>Text</strong>: 파라미터 값을 사용자가 자유롭게 텍스트로 입력할 수 있습니다.</li>
+  <li><strong>Number</strong>: 파라미터 값을 사용자가 숫자로만 입력할 수 있도록 합니다.</li>
+  <li><strong>Dropdown List</strong>: 사전 정의된 리스트에서 값을 선택합니다. (정적 리스트)</li>
+  <li><strong>Query Based Dropdown List</strong>: 다른 쿼리 실행 결과 리스트에서 값을 선택합니다. (동적 리스트)</li>
+  <li><strong>Date</strong>: 특정 날짜를 선택합니다.</li>
+  <li><strong>Date Range</strong>: 특정 날짜 기간을 선택합니다.</li>
+</ul>
+
+<p>이제 제가 사용한 대표적인 Query Parameters를 소개해드리도록 하겠습니다.</p>
+
+<p>(A) 간격 파라미터</p>
+
+<p>아래 쿼리문의 <code class="language-plaintext highlighter-rouge">DATE_TRUNC()</code> 함수의 간격을 동적 파라미터로 두었습니다. 이를 통해 사용자가 DAY, WEEK, MONTH, QUARTER, YEAR 기반으로 각 집계 결과를 자유롭게 확인할 수 있습니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">DATE_TRUNC</span><span class="p">(</span><span class="nb">date</span><span class="p">,</span> <span class="p">{{</span> <span class="err">간격</span> <span class="p">}})</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-interval.webp" alt="" /></p>
+<blockquote>
+  <p>간격 파라미터</p>
+</blockquote>
+
+<p>(B) 기간 파라미터</p>
+
+<p>아래 쿼리문은 파티션 필터인 <code class="language-plaintext highlighter-rouge">date</code>를 통해 조회를 원하는 파티션만 검색하게 됩니다. 이 기간을 특정할 수 있도록 파라미터화했습니다. 이를 통해, 사용자가 아래와 같이 파라미터 값을 입력하여 조회 기간을 선택할 수 있습니다.</p>
+<ul>
+  <li><strong>정적 기간</strong>: 2024년 1월 1일부터 2024년 1월 10일까지</li>
+  <li><strong>동적 기간</strong>: This Week, Last Month, This Year 등</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="nb">date</span> <span class="k">BETWEEN</span> <span class="s1">'{{Date Range.start}}'</span> <span class="k">AND</span> <span class="s1">'{{Date Range.end}}'</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-date-range.webp" alt="" /></p>
+<blockquote>
+  <p>기간 파라미터</p>
+</blockquote>
+
+<p>(C) 국가 파라미터</p>
+
+<p>국가 파라미터의 경우, <strong>Query Based Dropdown List</strong>를 사용했습니다. 프로덕트 사용자 유입에 따라 시간이 흐를수록 접속 국가가 지속적으로 증가하기 때문에 정적인 목록으로 관리하기에는 어려움이 따르기 때문입니다.</p>
+
+<ul>
+  <li>먼저, 국가 목록을 동적으로 불러오는 쿼리를 작성했습니다. (트래픽 규모가 큰 순서대로 정렬하고, ALL 항목도 포함될 수 있도록 했어요.)</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country.webp" alt="" /></p>
+<blockquote>
+  <p>다음과 같이 country 칼럼만 존재하는 쿼리문을 저장했습니다.</p>
+</blockquote>
+
+<ul>
+  <li>새로운 접속 국가가 발생할 수 있으니, Scheduled Run을 활성화하여 최신성이 유지될 수 있도록 했어요.</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-scheduled-run.webp" alt="" /></p>
+<blockquote>
+  <p>Scheduled Run 활성화하기</p>
+</blockquote>
+
+<p>아래 쿼리문은 Country 파라미터의 값이 <code class="language-plaintext highlighter-rouge">ALL</code>이면 전체를 출력하고, 그렇지 않을 경우 <code class="language-plaintext highlighter-rouge">country</code> 칼럼이 해당 값과 동일한 경우만 출력할 수 있도록 작성한 것입니다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">...</span>
+    <span class="k">WHERE</span>
+        <span class="p">...</span>
+        <span class="k">AND</span> <span class="k">CASE</span>
+            <span class="k">WHEN</span> <span class="s1">'ALL'</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">ELSE</span> <span class="n">country</span> <span class="k">IN</span> <span class="p">({{</span><span class="n">Country</span><span class="p">}})</span>
+        <span class="k">END</span>
+</code></pre></div></div>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-country-2.webp" alt="" /></p>
+
+<h3 id="3-각-대시보드의-상단에는-제목-목차-간단한-가이드를-작성했습니다">3. 각 대시보드의 상단에는 제목, 목차, 간단한 가이드를 작성했습니다.</h3>
+
+<p><strong>사내에는 데이터 분석을 업무에 적극적으로 활용하는 분들도 계시는 반면, 여러 가지 이유로 깊게 관여하지 못하는 분들도 계십니다.</strong> 데이터가 업무 관련성이 낮을 수도 있고, 메인 업무만으로도 시간이 부족하실 수도 있고, 혹은 활용은 하고 싶으나 데이터 이해의 어려움을 겪고 계신 것 때문일 수도 있겠죠.</p>
+
+<p><strong>따라서 최대한 많은 구성원들이 빠르고 쉽게 이해할 수 있는 대시보드를 제공하는 것이 가장 중요하다고 생각했습니다.</strong> 조금이라도 장벽을 낮추기 위해 아래 사례와 같이 제목, 목차, 그리고 가이드를 작성했습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-josh-sample-dashboard.webp" alt="" /></p>
+
+<p>Redash에서 차트뿐만 아니라 Textbox도 자유롭게 추가할 수 있는데요. 특히, <a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">Markdown 문법</a>을 잘 활용하면 시각적으로 보기 편하게 작성할 수 있습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-markdown.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.markdownguide.org/cheat-sheet/#basic-syntax">https://www.markdownguide.org/cheat-sheet/#basic-syntax</a></p>
+</blockquote>
+
+<h3 id="4-차트에-대한-설명은-좌측에-각-차트는-우측에-배치했습니다">4. 차트에 대한 설명은 좌측에, 각 차트는 우측에 배치했습니다.</h3>
+
+<p>디자이너와 프론트엔드 개발자 분들이라면 잘 아시듯이, <strong>한국어와 영어는 LTR(Left to Right) 성격을 지닌 언어입니다.</strong> (<a href="https://developer.apple.com/design/human-interface-guidelines/layout">Apple Developer 페이지 참고</a>) 한국어와 영어를 사용하는 사람들은 텍스트와 숫자는 물론, 이미지를 포함한 컨텐츠 자체를 LTR 방식으로 습득하는 경향을 지니고 있는 것입니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-ltr.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.linkedin.com/pulse/mastering-front-end-development-creating-ltrrtl-guide-limbachiya-17zif/">Mastering Front-End Development: Creating LTR/RTL Layouts - A Comprehensive Guide
+</a></p>
+</blockquote>
+
+<p>사용자들의 이러한 인지 성향을 반영하여, 대시보드의 UI를 기본적으로 다음과 같이 배치했습니다.</p>
+<ul>
+  <li><strong>좌측 1/3 영역</strong>: 차트의 제목, 정의, 상세한 활용 방법을 작성한다.</li>
+  <li><strong>우측 2/3 영역</strong>: 해당 차트나 테이블을 보여준다.</li>
+</ul>
+
+<p>이를 통해, <strong>사용자의 시선 이동 습관</strong>을 자연스럽게 따라갈 수 있도록 한 것입니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-topic-trends.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<h3 id="5-차트의-활용-가이드는-llm의-도움을-받아-작성했습니다">5. 차트의 활용 가이드는 LLM의 도움을 받아 작성했습니다.</h3>
+
+<p>사실, 데이터 분석가 분들끼리는 대시보드에 표현할 지표의 의미를 정의하고 설명하는 것에는 큰 어려움이 없습니다. 다만, 각기 다른 포지션의 사내 구성원들이 이해하기 쉽게 설명하는 것은 어렵기 마련입니다. 다양한 R&amp;R에 대한 이해와 공감, 그리고 데이터 문해력을 함께 갖추어야 하기 때문이죠. <strong>이러한 상호 간의 얼음 장벽을 조금이라도 해소하기 위해 대시보드 사용자 관점에서 UX Writing이 이루어질 수 있도록 LLM을 활용해봤습니다.</strong></p>
+
+<p><strong>(1) 작성한 프롬프트 샘플</strong></p>
+
+<pre><code class="language-plain">    "활성 사용자 수" 차트의 설명 가이드를 작성해주세요.
+
+    배경: 사내 BI 대시보드를 이용하는 사내 임직원들에게 보여주는 차트입니다.
+
+    조건 1: 데이터 지식이 부족한 임직원이 있을 수 있으니 친절하고 명료하게 표현해야 합니다.
+    조건 2: 사업 전략, 마케팅, 디자인, 개발 등 각 전문성에 연관된 설명이 있으면 좋습니다.
+
+    작성 포맷:
+    # 활성 사용자 수
+    &gt; 간략한 정의
+    ---
+    * 3-5개 Bullet Points 자세한 설명
+    ---
+    * 3-5개 Bullet Points 차트를 업무에 활용하는 방법 사례
+</code></pre>
+
+<p><strong>(2) ChatGPT 4o의 답변 사례</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-chatgpt.webp" alt="" /></p>
+
+<h3 id="6-하위-제목은-더-크게-상위-제목은-더-작게-표현했습니다">6. 하위 제목은 더 크게, 상위 제목은 더 작게 표현했습니다.</h3>
+
+<p>저를 포함하여 Markdown에 익숙한 분들은 일반적으로 아래와 같이 <strong>대제목은 크게, 소제목은 작게</strong> 표현하곤 하실 것입니다.</p>
+
+<pre><code class="language-plain">    # 1. 대제목
+    ## 1.1. 소제목
+</code></pre>
+
+<p>그런데, 아래와 같이 각 소제목 파트의 양이 워낙 많아 한 화면에 정보의 Hierarchy를 보여줄 수 없는 경우에는 문제가 생길 수 있습니다. 즉, 스크롤을 하게 되면서 사용자는 다음과 같은 혼란에 빠지기 쉬운 것입니다.</p>
+
+<blockquote>
+  <p>“내가 지금 보고 있는 소제목 파트의 대제목이 뭐였지?”</p>
+</blockquote>
+
+<pre><code class="language-plain">    # 1. 대제목
+    ...
+    ...
+    (중략)
+    ...
+    ...
+    ## 1.1. 소제목
+    ...
+    ...
+    (중략)
+    ...
+    ...
+    ## 1.2. 소제목
+</code></pre>
+
+<p>이러한 문제가 생길 것을 직감하여, UX/UI 전문가이신 사내 디자이너 및 프론트엔드 개발자 동료 분들께 의견을 구하니 다음과 같은 조언을 해주셨습니다.</p>
+
+<blockquote>
+  <p>“현재 사용자가 focus한 내용은 소제목 파트이니, 소제목을 더 크게 표현하고, 대제목을 작게 표현해주는 게 사용자 경험을 잘 반영해줄 수 있을 것 같아요.”</p>
+</blockquote>
+
+<p>결국 저는 대제목을 크게 한 번 표현한 이후부터는, <strong>소제목 작성시 대제목을 머릿말 처럼 작게 표시함으로써 소제목에 focus하려는 사용자의 심리를 잘 따라갈 수 있도록</strong> 구성했습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<h3 id="7-카테고리의-cardinality가-높을-경우-차트에서는-최대-20개까지만-표현하고-보충-테이블을-통해-전수를-확인할-수-있도록-구성했습니다">7. 카테고리의 Cardinality가 높을 경우, 차트에서는 최대 20개까지만 표현하고, 보충 테이블을 통해 전수를 확인할 수 있도록 구성했습니다.</h3>
+
+<p>사실 본 기업은 글로벌 서비스를 운영하고 있다보니, 사용자들의 접속 국가 개수가 100개를 훨씬 넘습니다. 만일 국가별 획득 사용자 수 추이를 차트로 표현한다면 아래의 두 가지 방식이 존재할 것입니다.</p>
+
+<p><strong>(1) 전체 국가를 모두 표현하는 방식</strong></p>
+<ul>
+  <li><strong>장점</strong>: 정보의 완전성을 갖출 수 있어요.</li>
+  <li><strong>단점</strong>: 가독성이 떨어지고, 브라우저의 메모리 사용량이 지나치게 높아져요.</li>
+</ul>
+
+<p><strong>(2) 상위 N개 국가만 명시하고, 나머지는 “기타”로 집계하는 방식</strong></p>
+<ul>
+  <li><strong>장점</strong>: 가독성이 높아져 흐름을 읽기 쉬워져요.</li>
+  <li><strong>단점</strong>: 정보가 불완전하여 “소수 국가”의 데이터를 확인하기 어려워져요.</li>
+</ul>
+
+<p>이 딜레마를 해결하기 위해 다음과 같은 접근 방법을 선택했습니다.</p>
+<ul>
+  <li>가독성을 위해 차트에서는 최대 20개국만 명시하기</li>
+  <li>정보의 완전성을 위해 전체 국가 데이터를 별도의 테이블로 보충하기</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-example-users-cnt-by-country.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<p>사실 BI 전문가분들 사이에서 차트에 표현할 Cardinality를 최대 7개로 제한하는 것이 좋다는 불문율이 존재하기도 합니다. 하지만 저희 기업의 사업 특성상 워낙 많은 국가에서 프로덕트가 사용되고 있기 때문에 20개국으로 Limit을 올리기로 결정했습니다.</p>
+
+<h3 id="8-하이퍼링크를-통해-편의성을-제공했습니다">8. 하이퍼링크를 통해 편의성을 제공했습니다.</h3>
+
+<p>가령, <strong>컨텐츠 마케팅 영역에서는 각 컨텐츠 페이지를 비교 분석해야 하는 경우가 빈번합니다.</strong> 따라서 “페이지별” 인사이트를 제공하기 위한 테이블을 만들 때는 항상 하이퍼링크를 추가했습니다.</p>
+
+<p>비교 분석을 하는 컨텐츠 마케터 시각에서는, 각 페이지의 트래픽, CTA 전환율, Engagements, 체류 시간 등의 수치를 확인하면서 해당 컨텐츠 자체의 정성적인 배경을 파악하는 것이 자연스러운 사고 흐름일 것입니다. <strong>따라서 편하게 해당 페이지로 이동하여 비교 분석할 수 있도록 하이퍼링크를 사용하게 된 것입니다.</strong></p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-clicks.webp" alt="" /></p>
+<blockquote>
+  <p>사내 대시보드 사례</p>
+</blockquote>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-hyperlinks.webp" alt="" /></p>
+<blockquote>
+  <p>하이퍼링크 옵션</p>
+</blockquote>
+
+<h3 id="9-각-쿼리문은-모두-git-repo에-별도로-보관했습니다">9. 각 쿼리문은 모두 Git Repo에 별도로 보관했습니다.</h3>
+
+<p>Redash에서 각 쿼리문을 저장할 수 있고, 대시보드 처럼 태그를 통해 탐색의 편의성을 높일 수 있습니다.</p>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-queries.webp" alt="" /></p>
+<blockquote>
+  <p>Redash &gt; Queries</p>
+</blockquote>
+
+<p><strong>그러나 대시보드를 만드는 과정에서 쿼리문의 재사용이나 반복 적용된 쿼리문의 전면 수정 등을 진행할 경우 이를 일일이 탐색하려면 엄청난 작업 비효율성을 발생할 것입니다.</strong> 따라서 저는 기본적으로 모든 쿼리문을 다음과 같은 체계를 두어 Git Repo로 관리하고 있습니다.</p>
+<ul>
+  <li>**디렉토리: 각 대시보드</li>
+  <li><strong>개별 파일</strong>: 대시보드에 포함된 각 쿼리문</li>
+</ul>
+
+<p><img src="/assets/2024-08-09-redash-dashboard/redash-git-repo.webp" alt="" /></p>
+<blockquote>
+  <p>사내 Redash 전용 Git Repo</p>
+</blockquote>
+
+<p>Git Repo를 통한 관리는 다음과 같은 장점을 가져다줄 수 있습니다.</p>
+<ul>
+  <li>데이터 마트의 도입이나 택소노미의 변경 등으로 인해 모든 쿼리문을 한꺼번에 수정해야 한다면, 반복 작업 시간을 크게 단축할 수 있습니다.</li>
+  <li>쿼리문을 재사용하여 새로운 대시보드를 생성할 경우, 탐색 시간이 크게 단축됩니다.</li>
+  <li>VS Code의 Copilot의 코드 생성 기능을 사용함으로써 작업 시간이 매우 크게 단축됩니다.</li>
+</ul>
+
+<hr />
+
+<h1 id="5-conclusion">5. Conclusion</h1>
+
+<blockquote>
+  <ul>
+    <li>생각을 닫은 채 기계적으로 대시보드를 만드는 행위를 지양했습니다.</li>
+    <li>사내 구성원들에게 실질적으로 도움이 되는 방식으로 제공했습니다.</li>
+    <li>Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU <code class="language-plaintext highlighter-rouge">39%</code>, WAU <code class="language-plaintext highlighter-rouge">52%</code>, MAU <code class="language-plaintext highlighter-rouge">77%</code>)</li>
+  </ul>
+</blockquote>
+
+<p>지금까지 제가 근무하고 있는 기업에서 Redash를 어떻게 활용하고 있는지에 대해 말씀 드렸습니다. 이 과정에서 데이터 분석과 엔지니어링 업무를 수행하며 느낀 중요한 점이 하나 있습니다. <strong>바로, 생각을 닫은 채 기계적으로 대시보드를 만드는 행위를 지양해야 한다는 것입니다.</strong> 데이터 기반 의사결정과 데이터 리터러시에 기여하기 위해 다음과 같은 내적 질문을 끊임없이 던져야 합니다.</p>
+
+<blockquote>
+  <p>“대시보드를 어떤 방식으로 제공해야 의사결정의 실효성과 데이터 활용도를 높일 수 있을까?”</p>
+</blockquote>
+
+<p>다양하고 복잡한 기능을 갖춘 웅장한 차트를 제공하는 것도 좋지만, 결국 가장 중요한 것은 <strong>사내 구성원들에게 실질적인 도움이 되는 방식으로 제공</strong>하는 것입니다. Redash 대시보드를 만드는 과정에서 사용자 심리를 공부하고 LLM을 활용하게 된 배경에도 결국 이러한 고민이 있었습니다.</p>
+
+<p><strong>현재의 대시보드가 결코 완벽하다고 생각하지 않습니다.</strong> 사업 전략, 데이터의 변화, 조직의 성장과 변화에 따라 대시보드를 개선해야 하는 시기가 올 것입니다. 고객이 애정하는 프로덕트가 되는 데 기여할 수 있도록 BI에 대한 관심을 지속적으로 갖고 열심히 노력해야 할 것으로 생각합니다.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (Korean)" /><category term="Article (Project)" /><category term="Level (2. Intermediate)" /><category term="Field (Data Visualization)" /><category term="Skills (Redash)" /><summary type="html"><![CDATA[“오픈소스 BI 도구인 Redash를 활용해 데이터를 시각화하고, 조직 내 다양한 구성원이 데이터를 쉽게 활용할 수 있도록 대시보드를 체계적으로 관리했습니다. 높은 접근성과 데이터 리터러시를 확보하기 위해 관리 규칙을 설정하고, 쿼리 파라미터 기능을 적극적으로 활용했습니다. 그 결과, Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU 39%, WAU 52%, MAU 77%)”]]></summary></entry><entry><title type="html">데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화</title><link href="http://localhost:4000/voc-dashboard-ko/" rel="alternate" type="text/html" title="데이터 기반 VOC 분석 및 자동화 대시보드 구축: 비용 절감과 효율성 극대화" /><published>2024-07-20T00:00:00+09:00</published><updated>2024-07-20T00:00:00+09:00</updated><id>http://localhost:4000/voc-dashboard-ko</id><content type="html" xml:base="http://localhost:4000/voc-dashboard-ko/"><![CDATA[<blockquote>
   <p>“사내 구성원 분들이 젠데스크 고객 문의 내역 팔로업에 어려움을 겪고 있다는 사실을 공유 받아, 이를 해결하기 위해 Redash VOC 대시보드를 구축했습니다. 젠데스크 데이터를 자동으로 수집하고 전처리한 후, OpenAI API를 활용해 고객 문의 내역을 주제별로 분류하고 요약했습니다. 추가적으로, 매주 월요일마다 가장 많이 증가한 문의 주제를 슬랙으로 알림을 보내어, 고객 이슈를 효율적으로 식별하고 대응할 수 있도록 기여했습니다. 결과적으로 매월 약 $275 기회 비용을 제거할 수 있었으며, 사내 구성원 분들의 VOC 팔로업 시간을 감소시키는 성과를 얻었습니다.”</p>
 </blockquote>
 
@@ -3635,536 +4632,4 @@
 <hr />
 
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Project)" /><category term="Level (2. Intermediate)" /><category term="Field (Data Visualization)" /><category term="Field (Analytics Engineering)" /><category term="Field (LLM)" /><category term="Skills (Python)" /><category term="Skills (SQL)" /><summary type="html"><![CDATA[“I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups.”]]></summary></entry><entry><title type="html">Rolling MAU 쿼리 최적화</title><link href="http://localhost:4000/rolling-mau-ko/" rel="alternate" type="text/html" title="Rolling MAU 쿼리 최적화" /><published>2024-06-30T00:00:00+09:00</published><updated>2024-06-30T00:00:00+09:00</updated><id>http://localhost:4000/rolling-mau-ko</id><content type="html" xml:base="http://localhost:4000/rolling-mau-ko/"><![CDATA[<blockquote>
-  <p>“Rolling MAU와 같은 복잡한 Rolling Metrics를 계산하는 데는 대규모 데이터셋에서 막대한 시간과 비용이 소요될 수 있습니다. 기존 쿼리로 6시간 이상 걸리던 작업을 쿼리 최적화와 B-tree Index를 통해 6초로 단축했습니다. 이 과정에서 불필요한 메모리 사용을 줄이고 쿼리 성능을 극대화하여 데이터 처리 효율성을 크게 향상시켰습니다. 이를 통해 기업이 Rolling MAU 지표를 효율적으로 관리하고 인프라 비용을 절감하는 데 기여할 수 있었습니다.”</p>
-</blockquote>
-
-<hr />
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Performance Summary</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>- 쿼리 실행 시간: <code class="language-plaintext highlighter-rouge">6시간</code>→ <code class="language-plaintext highlighter-rouge">6초</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<hr />
-
-<h1 id="목차">목차</h1>
-<ol>
-  <li>STAR Summary</li>
-  <li>Situation</li>
-  <li>Tasks</li>
-  <li>Actions</li>
-  <li>Results</li>
-</ol>
-
-<hr />
-
-<h1 id="1-star-summary">1. STAR Summary</h1>
-
-<h3 id="situation">Situation</h3>
-<ul>
-  <li>회사는 Rolling MAU와 같은 복잡한 Rolling Metrics를 계산하고 관리하는 데 <strong>막대한 비용과 시간을 소모</strong>하고 있었습니다. 특히, 사용자가 많아질수록 이 지표를 효율적으로 추출하는 것이 더욱 어려워질 것으로 예상되었으며, 실제로 기존 쿼리로는 Rolling MAU를 계산하는 데 <strong>6시간</strong> 이상 소요되었습니다. Incremental Strategy를 적용하더라도 <strong>2시간</strong>이 걸리는 상황이었습니다.</li>
-</ul>
-
-<h3 id="tasks">Tasks</h3>
-<ul>
-  <li>저는 Rolling MAU 지표를 효율적으로 계산할 수 있는 쿼리를 설계하여 실행 시간을 획기적으로 줄이고 인프라 비용을 절감하는 것을 목표로 삼았습니다. 이를 위해 <strong>쿼리 최적화를 통해 연산 비용을 낮추고 성능을 향상시키는 것</strong>이 필요했습니다.</li>
-</ul>
-
-<h3 id="actions">Actions</h3>
-
-<ol>
-  <li><strong>B-tree Index 생성</strong>
-    <ul>
-      <li>Rolling MAU를 계산할 때 가장 많은 시간이 소요되는 <code class="language-plaintext highlighter-rouge">date</code> 칼럼에 B-tree Index를 생성하여 스캔 속도를 향상시키고자 했습니다. 이를 통해 아래 조건에서 <strong>비교 연산의 부담을 줄이고자 한 것</strong>입니다.
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>        </div>
-      </li>
-    </ul>
-  </li>
-  <li><strong>쿼리 최적화</strong>
-    <ul>
-      <li>B-tree Index 생성 이후에도 성능 개선이 충분하지 않았습니다. 이에 따라 메모리 사용량을 줄이기 위해 쿼리에서 필요한 컬럼만 불러오는 방식으로 변경했습니다. MAIN 테이블에서 모든 행을 불러오는 대신, 아래와 같이 <strong>필요한 칼럼만 불러와 SELF JOIN 과정에서 기하급수적인 메모리 사용량을 대폭 줄였습니다.</strong>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nb">date</span> <span class="k">FROM</span> <span class="n">daily_activated_users</span>
-</code></pre></div>        </div>
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<h3 id="results">Results</h3>
-<ul>
-  <li>이 최적화 전략 덕분에 Rolling MAU 계산 <strong>쿼리의 실행 시간이 6시간에서 6초로 대폭 단축</strong>되었습니다. 이로 인해 데이터 처리 효율성이 극적으로 향상되었고, 쿼리 실행 시간과 인프라 비용 측면에서도 큰 절감 효과를 얻을 수 있었습니다. 이러한 성과는 기업이 Rolling Metrics와 같은 복잡한 지표를 보다 효율적으로 관리할 수 있도록 도왔습니다.</li>
-</ul>
-
-<hr />
-
-<h1 id="2-situation">2. Situation</h1>
-
-<blockquote>
-  <ul>
-    <li>회사는 Rolling MAU와 같은 복잡한 Rolling Metrics를 계산하고 관리하는 데 <strong>막대한 비용과 시간을 소모</strong>하고 있었습니다. 특히, 사용자가 많아질수록 이 지표를 효율적으로 추출하는 것이 더욱 어려워질 것으로 예상되었으며, 실제로 기존 쿼리로는 Rolling MAU를 계산하는 데 <strong>6시간</strong> 이상 소요되었습니다. Incremental Strategy를 적용하더라도 <strong>2시간</strong>이 걸리는 상황이었습니다.</li>
-  </ul>
-</blockquote>
-
-<h3 id="구체적인-문제-상황">구체적인 문제 상황</h3>
-<ul>
-  <li>회사가 운영하는 프로덕트는 시간이 지남에 따라 사용자 수가 급증하고 있었으며, 데이터 웨어하우스 관점에서 최적화가 중요한 이슈로 떠오르고 있었습니다. 특히, Rolling MAU는 프로덕트 요금제의 기준으로 필수적인 지표 역할을 했습니다. 그러나 Rolling MAU의 계산 과정은 매우 복잡하고 연산 비용이 높아 큰 고민이 되었습니다.</li>
-</ul>
-
-<h3 id="기존-쿼리-분석-및-병목-지점-파악">기존 쿼리 분석 및 병목 지점 파악</h3>
-
-<h5 id="1-기존-쿼리">(1) 기존 쿼리</h5>
-<ul>
-  <li>초기에 작성된 쿼리는 각 날짜별로 최근 30일 동안의 활성 사용자 수를 계산하기 위해 SELF JOIN을 사용했습니다. 이 방식은 모든 날짜에 대해 연관된 데이터를 반복적으로 조회하고 계산하는 과정에서 O(n²)의 연산 복잡도를 가지며, 사용자가 많아질수록 연산 비용이 기하급수적으로 증가하는 문제점을 지니고 있었습니다. 실제로, 이 쿼리를 Full Scan으로 실행할 때 6시간 이상 소요되었으며, Incremental Strategy로 실행해도 2시간 가까이 걸렸습니다.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">SELECT</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
- <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">GROUP</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">ORDER</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h5 id="2-기존-쿼리-분석-rolling-2-day-active-users-사례">(2) 기존 쿼리 분석 (<code class="language-plaintext highlighter-rouge">Rolling 2-day Active Users 사례</code>)</h5>
-
-<ul>
-  <li><strong>A</strong>. 먼저, 아래 과정을 통해 <code class="language-plaintext highlighter-rouge">daily_activated_users</code> 테이블의 데이터를 가져옵니다.
-    <details>
- <summary>자세히 보기</summary>
- <div>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">FROM</span>
-       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-</code></pre></div>        </div>
-
-        <p><img src="/assets/2024-06-30-rolling-mau/1.webp" alt="Joshua Kim" /></p>
-      </div>
- </details>
-  </li>
-  <li><strong>B</strong>. 그런 후, SELF JOIN을 통해 각 일별 Recent 2-day 활성 사용자 목록을 모두 이어 붙입니다.
-    <details>
- <summary>자세히 보기</summary>
- <div>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">FROM</span>
-       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-    <span class="k">LEFT</span> <span class="k">JOIN</span>
-       <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-       <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'1 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>        </div>
-
-        <p><img src="/assets/2024-06-30-rolling-mau/2.webp" alt="Joshua Kim" /></p>
-      </div>
- </details>
-  </li>
-  <li><strong>C</strong>. 이제 <code class="language-plaintext highlighter-rouge">MAIN.date</code>를 기준으로 그룹화하여 순수 사용자 수를 계산합니다.
-    <details>
- <summary>자세히 보기</summary>
- <div>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
-       <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
-    <span class="k">FROM</span>
-       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-    <span class="k">LEFT</span> <span class="k">JOIN</span>
-       <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-       <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-    <span class="k">GROUP</span> <span class="k">BY</span>
-       <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>        </div>
-
-        <p><img src="/assets/2024-06-30-rolling-mau/3.webp" alt="Joshua Kim" /></p>
-      </div>
- </details>
-  </li>
-  <li>정확한 병목 지점 파악
-    <ul>
-      <li><strong>연산 시간이 가장 많이 소모되는 지점은 단계 B입니다.</strong> 이 단계에서는 각 행마다 Recent 2-day Window에 해당하는 모든 행을 이어 붙이는 과정이 이루어집니다. 예를 들어, 1월 2일의 행 수가 10개이고, Recent 2-day Window에 해당하는 행이 100개라면, 총 1,000개의 행(10*100)을 이어 붙여야 하므로 메모리 사용량이 급격히 증가합니다. 즉, SELF JOIN을 통해 각 일별 Recent 2-day 활성 사용자 목록을 이어 붙이는 과정이 Scan 시간과 메모리 사용량을 상당히 많이 소모하는 원인이었습니다.</li>
-      <li>이러한 상황에서, Rolling MAU 지표를 보다 효율적으로 개선하고 쿼리 실행 시간을 대폭 줄이기 위한 최적화가 시급한 과제로 떠올랐습니다. 또한, 기존 인프라로는 이와 같은 연산 비용을 지속적으로 감당하는 것이 비효율적이었기 때문에, 최적화를 통해 인프라 비용도 절감할 필요가 있었습니다. 즉, 비용과 시간을 절감할 수 있는 솔루션을 찾는 것이 절실한 상황이었습니다.</li>
-    </ul>
-  </li>
-</ul>
-
-<hr />
-
-<h1 id="3-tasks">3. Tasks</h1>
-<blockquote>
-  <ul>
-    <li>저는 Rolling MAU 지표를 효율적으로 계산할 수 있는 쿼리를 설계하여 실행 시간을 획기적으로 줄이고 인프라 비용을 절감하는 것을 목표로 삼았습니다. 이를 위해 <strong>쿼리 최적화를 통해 연산 비용을 낮추고 성능을 향상시키는 것</strong>이 필요했습니다.</li>
-  </ul>
-</blockquote>
-
-<h3 id="1-쿼리-실행-시간-단축"><strong>1. 쿼리 실행 시간 단축</strong></h3>
-<ul>
-  <li>Rolling MAU를 계산하는 기존 쿼리는 O(n²)의 연산 복잡도를 가지고 있었기 때문에, 실행 시간이 6시간 이상 걸렸습니다. 이를 크게 단축하여 실시간 분석에 가까운 성능을 구현하는 것이 최우선 과제였습니다. 실행 시간을 초 단위로 줄여야만, 빠르게 변화하는 사용자 활동 데이터를 분석하고 즉각적으로 대응할 수 있는 환경을 마련할 수 있었습니다.</li>
-</ul>
-
-<h3 id="2-인프라-비용-절감"><strong>2. 인프라 비용 절감</strong></h3>
-<ul>
-  <li>쿼리 실행 시 사용되는 메모리와 처리 능력은 비용으로 직결됩니다. 기존 쿼리는 데이터 양이 증가함에 따라 메모리 사용량도 기하급수적으로 늘어나고, 이로 인해 인프라 비용이 급증하는 문제가 있었습니다. 따라서, 메모리 사용량을 줄이고 인프라 자원을 효율적으로 활용할 수 있는 쿼리 구조를 설계하는 것이 필요했습니다.</li>
-</ul>
-
-<hr />
-
-<h1 id="4-actions">4. Actions</h1>
-
-<blockquote>
-  <ol>
-    <li><strong>B-tree Index 생성</strong>
-      <ul>
-        <li>Rolling MAU를 계산할 때 가장 많은 시간이 소요되는 <code class="language-plaintext highlighter-rouge">date</code> 칼럼에 B-tree Index를 생성하여 스캔 속도를 향상시키고자 했습니다. 이를 통해 아래 조건에서 <strong>비교 연산의 부담을 줄이고자 한 것</strong>입니다.
-          <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>          </div>
-        </li>
-      </ul>
-    </li>
-    <li><strong>쿼리 최적화</strong>
-      <ul>
-        <li>B-tree Index 생성 이후에도 성능 개선이 충분하지 않았습니다. 이에 따라 메모리 사용량을 줄이기 위해 쿼리에서 필요한 컬럼만 불러오는 방식으로 변경했습니다. MAIN 테이블에서 모든 행을 불러오는 대신, 아래와 같이 <strong>필요한 칼럼만 불러와 SELF JOIN 과정에서 기하급수적인 메모리 사용량을 대폭 줄였습니다.</strong>
-          <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nb">date</span> <span class="k">FROM</span> <span class="n">daily_activated_users</span>
-</code></pre></div>          </div>
-        </li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<h3 id="1-b-tree-index-생성"><strong>1. B-tree Index 생성</strong></h3>
-<ul>
-  <li>병목 지점이었던 <code class="language-plaintext highlighter-rouge">date</code> 칼럼 비교 연산의 성능을 향상시키기 위해, <code class="language-plaintext highlighter-rouge">date</code> 칼럼에 <strong>B-tree Index</strong>를 생성했습니다.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_dates</span> <span class="k">ON</span> <span class="n">daily_activated_users</span> <span class="k">USING</span> <span class="n">btree</span> <span class="p">(</span><span class="nb">date</span><span class="p">);</span>
-</code></pre></div>    </div>
-  </li>
-  <li>이를 통해, 아래의 <code class="language-plaintext highlighter-rouge">date</code> 검색 속도를 개선하여 쿼리 시간이 소폭 개선되었으나, 여전히 메모리 사용량과 실행 시간이 과도하게 많이 소요되고 있었습니다.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h3 id="2-쿼리-최적화"><strong>2. 쿼리 최적화</strong></h3>
-<ul>
-  <li>안타깝게도 <code class="language-plaintext highlighter-rouge">date</code> 칼럼을 Index로 생성했음에도 불구하고 쿼리 실행 시간은 여전히 과도하게 많이 소요되고 있었습니다.</li>
-  <li><strong>즉, 핵심 문제는 <code class="language-plaintext highlighter-rouge">date</code> 칼럼 비교 연산 과정이라기보다는, SELF JOIN 과정의 기하급수적인 메모리 사용 과정이었던 것입니다.</strong> 따라서 메모리 사용량을 줄이기 위해 반드시 필요한 칼럼만을 불러오는 방법을 고안했습니다.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">SELECT</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
- <span class="k">FROM</span>
-    <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nb">date</span> <span class="k">FROM</span> <span class="n">daily_activated_users</span><span class="p">)</span> <span class="n">MAIN</span> <span class="c1">-- 변경한 부분</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">GROUP</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-  </li>
-  <li>이를 통해 SELF JOIN의 데이터 처리량을 드라마틱하게 줄여 메모리 사용량을 대폭 감소시켰습니다.</li>
-</ul>
-
-<hr />
-
-<h1 id="5-results">5. Results</h1>
-<blockquote>
-  <ul>
-    <li>이 최적화 전략 덕분에 Rolling MAU 계산 <strong>쿼리의 실행 시간이 6시간에서 6초로 대폭 단축</strong>되었습니다. 이로 인해 데이터 처리 효율성이 극적으로 향상되었고, 쿼리 실행 시간과 인프라 비용 측면에서도 큰 절감 효과를 얻을 수 있었습니다. 이러한 성과는 기업이 Rolling Metrics와 같은 복잡한 지표를 보다 효율적으로 관리할 수 있도록 도왔습니다.</li>
-  </ul>
-</blockquote>
-
-<h3 id="쿼리-실행-시간의-극적-단축"><strong>쿼리 실행 시간의 극적 단축</strong></h3>
-<ul>
-  <li>Rolling MAU는 프로덕트의 요금제 기준으로 기획되었기 때문에, 본 문제는 상당히 중요한 이슈였습니다.
-    <ul>
-      <li><strong>최적화 이전</strong>: Rolling MAU를 계산하는 쿼리가 약 6시간 소요</li>
-      <li><strong>최적화 이후</strong>: 동일한 작업이 단 6초 만에 완료</li>
-    </ul>
-  </li>
-  <li>이렇게 단축된 실행 시간 덕분에 더욱 안정적인 프로덕트 운영이 가능해졌으며 요금제 기준의 대체 방법을 고민할 수도 있었던 기업의 기회비용을 절약할 수 있었습니다.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (Korean)" /><category term="Article (Issue Resolution)" /><category term="Level (3. Advanced)" /><category term="Field (Analytics Engineering)" /><category term="Skills (SQL)" /><summary type="html"><![CDATA[“Rolling MAU와 같은 복잡한 Rolling Metrics를 계산하는 데는 대규모 데이터셋에서 막대한 시간과 비용이 소요될 수 있습니다. 기존 쿼리로 6시간 이상 걸리던 작업을 쿼리 최적화와 B-tree Index를 통해 6초로 단축했습니다. 이 과정에서 불필요한 메모리 사용을 줄이고 쿼리 성능을 극대화하여 데이터 처리 효율성을 크게 향상시켰습니다. 이를 통해 기업이 Rolling MAU 지표를 효율적으로 관리하고 인프라 비용을 절감하는 데 기여할 수 있었습니다.”]]></summary></entry><entry><title type="html">Rolling MAU Query Optimization</title><link href="http://localhost:4000/rolling-mau-en/" rel="alternate" type="text/html" title="Rolling MAU Query Optimization" /><published>2024-06-30T00:00:00+09:00</published><updated>2024-06-30T00:00:00+09:00</updated><id>http://localhost:4000/rolling-mau-en</id><content type="html" xml:base="http://localhost:4000/rolling-mau-en/"><![CDATA[<blockquote>
-  <p>“Calculating complex Rolling Metrics like Rolling MAU can consume significant time and cost on large datasets. A task that previously took over 6 hours with the original query was reduced to 6 seconds through query optimization and the use of a B-tree Index. This process significantly enhanced data processing efficiency by minimizing unnecessary memory usage and maximizing query performance. As a result, the company was able to manage Rolling MAU metrics more efficiently, contributing to infrastructure cost savings.”</p>
-</blockquote>
-
-<hr />
-
-<table>
-  <thead>
-    <tr>
-      <th><strong>Performance Summary</strong></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>- Query Execution Time: <code class="language-plaintext highlighter-rouge">6 hours</code>→ <code class="language-plaintext highlighter-rouge">6 seconds</code></td>
-    </tr>
-  </tbody>
-</table>
-
-<hr />
-
-<h1 id="table-of-contents">Table of Contents</h1>
-<ol>
-  <li>STAR Summary</li>
-  <li>Situation</li>
-  <li>Tasks</li>
-  <li>Actions</li>
-  <li>Results</li>
-</ol>
-
-<hr />
-
-<h1 id="1-star-summary">1. STAR Summary</h1>
-
-<h3 id="situation">Situation</h3>
-<ul>
-  <li>The company was consuming <strong>significant time and costs</strong> to calculate and manage complex Rolling Metrics like Rolling MAU. As the number of users increased, it was expected to become even more challenging to extract this metric efficiently, and indeed, the original query took more than <strong>6 hours</strong> to calculate Rolling MAU. Even with an Incremental Strategy applied, it still took <strong>2 hours</strong>.</li>
-</ul>
-
-<h3 id="tasks">Tasks</h3>
-<ul>
-  <li>My goal was to design a query that could calculate the Rolling MAU metric efficiently, drastically reduce execution time, and lower infrastructure costs. This required <strong>query optimization to reduce computational costs and improve performance</strong>.</li>
-</ul>
-
-<h3 id="actions">Actions</h3>
-
-<ol>
-  <li><strong>Creating a B-tree Index</strong>
-    <ul>
-      <li>To speed up the most time-consuming process of calculating Rolling MAU, I created a B-tree Index on the <code class="language-plaintext highlighter-rouge">date</code> column to enhance scan speed. This was intended to <strong>reduce the burden of comparison operations</strong> under the following condition:
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>        </div>
-      </li>
-    </ul>
-  </li>
-  <li><strong>Query Optimization</strong>
-    <ul>
-      <li>Even after creating the B-tree Index, the performance improvement was not sufficient. Therefore, I changed the query to fetch only the necessary columns to reduce memory usage. Instead of fetching all rows from the MAIN table, I fetched only the necessary columns, <strong>significantly reducing the exponential memory usage during the SELF JOIN process.</strong>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nb">date</span> <span class="k">FROM</span> <span class="n">daily_activated_users</span>
-</code></pre></div>        </div>
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<h3 id="results">Results</h3>
-<ul>
-  <li>Thanks to this optimization strategy, the execution time for the Rolling MAU calculation query was <strong>reduced from 6 hours to 6 seconds.</strong> This led to a dramatic improvement in data processing efficiency and significant cost savings in query execution time and infrastructure. These results helped the company manage complex metrics like Rolling Metrics more efficiently.</li>
-</ul>
-
-<hr />
-
-<h1 id="2-situation">2. Situation</h1>
-
-<blockquote>
-  <ul>
-    <li>The company was consuming <strong>significant time and costs</strong> to calculate and manage complex Rolling Metrics like Rolling MAU. As the number of users increased, it was expected to become even more challenging to extract this metric efficiently, and indeed, the original query took more than <strong>6 hours</strong> to calculate Rolling MAU. Even with an Incremental Strategy applied, it still took <strong>2 hours</strong>.</li>
-  </ul>
-</blockquote>
-
-<h3 id="specific-problem-situation">Specific Problem Situation</h3>
-<ul>
-  <li>The company’s product saw a rapid increase in users over time, making optimization a critical issue from a data warehouse perspective. The Rolling MAU, a key metric for product pricing, played an essential role. However, the calculation process for Rolling MAU was very complex and computationally expensive, which posed a significant challenge.</li>
-</ul>
-
-<h3 id="analysis-of-the-existing-query-and-identification-of-bottlenecks">Analysis of the Existing Query and Identification of Bottlenecks</h3>
-
-<h5 id="1-the-existing-query">(1) The Existing Query</h5>
-<ul>
-  <li>The initial query used a SELF JOIN to calculate the number of active users over the last 30 days for each date. This approach had a computational complexity of O(n²) because it repeatedly retrieved and calculated related data for each date, causing an exponential increase in computation cost as the number of users grew. In practice, this query took more than 6 hours to execute with a Full Scan, and nearly 2 hours even with an Incremental Strategy.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">SELECT</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
- <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">GROUP</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">ORDER</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h5 id="2-analysis-of-the-existing-query-rolling-2-day-active-users-example">(2) Analysis of the Existing Query (<code class="language-plaintext highlighter-rouge">Rolling 2-day Active Users Example</code>)</h5>
-
-<ul>
-  <li><strong>A</strong>. First, the <code class="language-plaintext highlighter-rouge">daily_activated_users</code> table data is retrieved through the following process:
-    <details>
- <summary>View code</summary>
- <div>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">FROM</span>
-       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-</code></pre></div>        </div>
-
-        <p><img src="/assets/2024-06-30-rolling-mau/1.webp" alt="Joshua Kim" /></p>
-      </div>
- </details>
-  </li>
-  <li><strong>B</strong>. Then, a SELF JOIN is performed to concatenate the list of active users for the recent 2-day period for each day.
-    <details>
- <summary>View code</summary>
- <div>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">FROM</span>
-       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-    <span class="k">LEFT</span> <span class="k">JOIN</span>
-       <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-       <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'1 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>        </div>
-
-        <p><img src="/assets/2024-06-30-rolling-mau/2.webp" alt="Joshua Kim" /></p>
-      </div>
- </details>
-  </li>
-  <li><strong>C</strong>. Now, the users are grouped by <code class="language-plaintext highlighter-rouge">MAIN.date</code> to calculate the unique number of users.
-    <details>
- <summary>View code</summary>
- <div>
-        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
-       <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
-    <span class="k">FROM</span>
-       <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
-    <span class="k">LEFT</span> <span class="k">JOIN</span>
-       <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-       <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-    <span class="k">GROUP</span> <span class="k">BY</span>
-       <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>        </div>
-
-        <p><img src="/assets/2024-06-30-rolling-mau/3.webp" alt="Joshua Kim" /></p>
-      </div>
- </details>
-  </li>
-  <li>Identifying the Exact Bottleneck
-    <ul>
-      <li><strong>The most time-consuming part is step B.</strong> In this step, all rows corresponding to the Recent 2-day Window are concatenated for each row. For example, if there are 10 rows on January 2nd, and 100 rows corresponding to the Recent 2-day Window, a total of 1,000 rows (10*100) need to be concatenated, resulting in a rapid increase in memory usage. The process of concatenating the list of active users for each day through SELF JOIN was the primary cause of excessive scan time and memory usage.</li>
-      <li>Given this situation, it became urgent to optimize the Rolling MAU metric to improve efficiency and significantly reduce query execution time. Additionally, continuing to bear such computational costs with the existing infrastructure was inefficient, necessitating optimization to reduce infrastructure costs. In other words, finding a solution to save both time and costs was crucial.</li>
-    </ul>
-  </li>
-</ul>
-
-<hr />
-
-<h1 id="3-tasks">3. Tasks</h1>
-<blockquote>
-  <ul>
-    <li>My goal was to design a query that could calculate the Rolling MAU metric efficiently, drastically reduce execution time, and lower infrastructure costs. This required <strong>query optimization to reduce computational costs and improve performance</strong>.</li>
-  </ul>
-</blockquote>
-
-<h3 id="1-reducing-query-execution-time"><strong>1. Reducing Query Execution Time</strong></h3>
-<ul>
-  <li>The original query for calculating Rolling MAU had a computational complexity of O(n²), resulting in an execution time of over 6 hours. Drastically reducing this time to achieve near real-time performance was the top priority. Reducing execution time to the second level was essential to quickly analyze changing user activity data and respond immediately.</li>
-</ul>
-
-<h3 id="2-reducing-infrastructure-costs"><strong>2. Reducing Infrastructure Costs</strong></h3>
-<ul>
-  <li>Memory and processing power used during query execution directly translate to costs. The original query had an issue where memory usage increased exponentially as the data volume grew, leading to a sharp rise in infrastructure costs. Therefore, it was necessary to design a query structure that minimized memory usage and efficiently utilized infrastructure resources.</li>
-</ul>
-
-<hr />
-
-<h1 id="4-actions">4. Actions</h1>
-
-<blockquote>
-  <ol>
-    <li><strong>Creating a B-tree Index</strong>
-      <ul>
-        <li>To speed up the most time-consuming process of calculating Rolling MAU, I created a B-tree Index on the <code class="language-plaintext highlighter-rouge">date</code> column to enhance scan speed. This was intended to <strong>reduce the burden of comparison operations</strong> under the following condition:
-          <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>          </div>
-        </li>
-      </ul>
-    </li>
-    <li><strong>Query Optimization</strong>
-      <ul>
-        <li>Even after creating the B-tree Index, the performance improvement was not sufficient. Therefore, I changed the query to fetch only the necessary columns to reduce memory usage. Instead of fetching all rows from the MAIN table, I fetched only the necessary columns, <strong>significantly reducing the exponential memory usage during the SELF JOIN process.</strong>
-          <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nb">date</span> <span class="k">FROM</span> <span class="n">daily_activated_users</span>
-</code></pre></div>          </div>
-        </li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<h3 id="1-creating-a-b-tree-index"><strong>1. Creating a B-tree Index</strong></h3>
-<ul>
-  <li>To improve the performance of comparison operations on the <code class="language-plaintext highlighter-rouge">date</code> column, which was the bottleneck, I created a <strong>B-tree Index</strong> on the <code class="language-plaintext highlighter-rouge">date</code> column.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_dates</span> <span class="k">ON</span> <span class="n">daily_activated_users</span> <span class="k">USING</span> <span class="n">btree</span> <span class="p">(</span><span class="nb">date</span><span class="p">);</span>
-</code></pre></div>    </div>
-  </li>
-  <li>This improved the search speed for <code class="language-plaintext highlighter-rouge">date</code> and slightly reduced query time, but the memory usage and execution time were still excessively high.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">FROM</span>
-    <span class="n">daily_activated_users</span> <span class="n">MAIN</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-  </li>
-</ul>
-
-<h3 id="2-query-optimization"><strong>2. Query Optimization</strong></h3>
-<ul>
-  <li>Unfortunately, even after creating an index on the <code class="language-plaintext highlighter-rouge">date</code> column, the query execution time was still excessively high.</li>
-  <li><strong>The core issue was not the comparison operations on the <code class="language-plaintext highlighter-rouge">date</code> column, but rather the exponential memory usage during the SELF JOIN process.</strong> To reduce memory usage, I devised a method to retrieve only the necessary columns.
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">SELECT</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
-    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">SUB</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">rolling_mau</span>
- <span class="k">FROM</span>
-    <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="nb">date</span> <span class="k">FROM</span> <span class="n">daily_activated_users</span><span class="p">)</span> <span class="n">MAIN</span> <span class="c1">-- The Modified Part</span>
- <span class="k">LEFT</span> <span class="k">JOIN</span>
-    <span class="n">daily_activated_users</span> <span class="n">SUB</span>
-    <span class="k">ON</span> <span class="n">SUB</span><span class="p">.</span><span class="nb">date</span> <span class="k">BETWEEN</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'29 DAYS'</span> <span class="k">AND</span> <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
- <span class="k">GROUP</span> <span class="k">BY</span>
-    <span class="n">MAIN</span><span class="p">.</span><span class="nb">date</span>
-</code></pre></div>    </div>
-  </li>
-  <li>This drastically reduced the data processing load during SELF JOIN, significantly decreasing memory usage.</li>
-</ul>
-
-<hr />
-
-<h1 id="5-results">5. Results</h1>
-<blockquote>
-  <ul>
-    <li>Thanks to this optimization strategy, the execution time for the Rolling MAU calculation query was <strong>reduced from 6 hours to 6 seconds.</strong> This led to a dramatic improvement in data processing efficiency and significant cost savings in query execution time and infrastructure. These results helped the company manage complex metrics like Rolling Metrics more efficiently.</li>
-  </ul>
-</blockquote>
-
-<h3 id="dramatic-reduction-in-query-execution-time"><strong>Dramatic Reduction in Query Execution Time</strong></h3>
-<ul>
-  <li>Since Rolling MAU was a key metric for product pricing, this issue was of significant importance.
-    <ul>
-      <li><strong>Before Optimization</strong>: The query for calculating Rolling MAU took about 6 hours</li>
-      <li><strong>After Optimization</strong>: The same task was completed in just 6 seconds</li>
-    </ul>
-  </li>
-  <li>The reduced execution time enabled more stable product operations and saved the company from considering alternative pricing methods, thereby saving opportunity costs.</li>
-</ul>
-
-<hr />
-
-<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
-<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Issue Resolution)" /><category term="Level (3. Advanced)" /><category term="Field (Analytics Engineering)" /><category term="Skills (SQL)" /><summary type="html"><![CDATA[“Calculating complex Rolling Metrics like Rolling MAU can consume significant time and cost on large datasets. A task that previously took over 6 hours with the original query was reduced to 6 seconds through query optimization and the use of a B-tree Index. This process significantly enhanced data processing efficiency by minimizing unnecessary memory usage and maximizing query performance. As a result, the company was able to manage Rolling MAU metrics more efficiently, contributing to infrastructure cost savings.”]]></summary></entry></feed>
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>]]></content><author><name></name></author><category term="Language (English)" /><category term="Article (Project)" /><category term="Level (2. Intermediate)" /><category term="Field (Data Visualization)" /><category term="Field (Analytics Engineering)" /><category term="Field (LLM)" /><category term="Skills (Python)" /><category term="Skills (SQL)" /><summary type="html"><![CDATA[“I learned that internal team members were facing difficulties in following up on Zendesk customer inquiries, so I developed a Redash VOC dashboard to address this issue. The system automatically collected and preprocessed Zendesk data, then used the OpenAI API to categorize and summarize customer inquiries by topic. Additionally, a Slack notification was set up to alert the team each Monday about the topics with the highest increase in inquiries, helping identify and respond to customer issues more efficiently. As a result, we were able to eliminate about $275 in opportunity costs each month and reduce the time spent by team members on VOC follow-ups.”]]></summary></entry></feed>
