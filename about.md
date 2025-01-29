@@ -4,9 +4,9 @@ title: Joshua Kim
 permalink: /about/
 ---
 
-> *"Building Impactful Data Solutions While Fostering Personal Growth and Putting Teams First"*
+> *“Driving data-driven decision-making and solving organization challenges through the integration of analysis and engineering.”*
 
-![]({{ site.baseurl }}/assets/profile/joshua-elpaso.png)
+![]({{ site.baseurl }}/assets/profile/joshua-busan.png)
 
 ---
 
@@ -14,25 +14,32 @@ permalink: /about/
 
 Hello! I'm **Jinseok Kim (Joshua)**, a dedicated **Data Analyst** and **Analytics Engineer** with deep expertise in developing robust data infrastructures and crafting analytics solutions that drive strategic decision-making. My strength lies not just in technical execution, but in my ability to communicate insights effectively, fostering a culture of data literacy across teams. I strive to understand different perspectives and work collaboratively toward shared goals, ensuring that my contributions align with both team success and organizational growth.
 
-## 📺 My YouTube Video
+## 🗺️ Career Roadmap
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/8VnYUtjj7Fk?si=-Hj66y1F5R7tBoBp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+![]({{ site.baseurl }}/assets/profile/career-roadmap.webp)
+
+---
+
+## 🗺️ Skills Roadmap
+
+![]({{ site.baseurl }}/assets/profile/skills-roadmap.webp)
 
 ---
 
 ## 👨🏼‍💻 Professional Background
 
-- **Current Role**: Analytics Engineer (Data Warehouse)
+- **Current Role**: Analytics Engineer
 - **Previous Experience**:
-  - Data Analyst (A/B Tests and Ad-hoc Analyses)
-  - VBA Developer (Workflow Automation Solutions)
+  - Data Analyst
+  - VBA Programmer
 
 ---
 
 ## 👨🏼‍🎓 Education
 
-- Master's in **AI Big Data**
-- Bachelor's in **Finance**
+- M.Eng. in **AI Big Data**
+- B.B.A. in **Finance**
+- B.A. in **Philosophy**
 
 ---
 
