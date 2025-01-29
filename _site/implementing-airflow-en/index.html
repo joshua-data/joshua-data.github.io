@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3596487245525606"
+    crossorigin="anonymous">
+  </script>
+
+  <title>Review of Implementing Airflow – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “By adopting Airflow, we transitioned from a traditional Python-based session approach to a DAG-based workflow to efficiently manage our internal data notification system. Using Docker Compose, we set up Airflow in both local and VM environments and automated various data pipelines, including Slack notifications. This implementation reduced maintenance overhead, improved stability, and established a scalable data processing environment.”
+
+" />
+    <meta property="og:description" content="
+  “By adopting Airflow, we transitioned from a traditional Python-based session approach to a DAG-based workflow to efficiently manage our internal data notification system. Using Docker Compose, we set up Airflow in both local and VM environments and automated various data pipelines, including Slack notifications. This implementation reduced maintenance overhead, improved stability, and established a scalable data processing environment.”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="Review of Implementing Airflow" />
+    <meta property="twitter:title" content="Review of Implementing Airflow" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Review of Implementing Airflow</h1>
+
+  <div>
+    <span class="date">
+      2024-12-28
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (English)">
+          Language (English)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Project)">
+          Article (Project)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (1. Beginner)">
+          Level (1. Beginner)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Data Engineering)">
+          Field (Data Engineering)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (Airflow)">
+          Skills (Airflow)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“By adopting Airflow, we transitioned from a traditional Python-based session approach to a DAG-based workflow to efficiently manage our internal data notification system. Using Docker Compose, we set up Airflow in both local and VM environments and automated various data pipelines, including Slack notifications. This implementation reduced maintenance overhead, improved stability, and established a scalable data processing environment.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>Background of Adoption</li>
+  <li>Review of Implementation
+    <ul>
+      <li>2.1. Project Plan</li>
+      <li>2.2. Local Environment Setup</li>
+      <li>2.3. VM Instance Environment Setup</li>
+      <li>2.4. Creating a DAG</li>
+    </ul>
+  </li>
+  <li>Future Challenges</li>
+</ol>
+
+<hr />
+
+<h1 id="1-background-of-adoption">1. Background of Adoption</h1>
+
+<p>As a Data Engineer at IoTrust, I mainly focus on <strong>Analytics Engineering</strong> tasks such as:</p>
+
+<pre><code class="language-plain">- (1) Designing and developing the data warehouse &amp; data mart
+- (2) BI dashboards
+- (3) Ad-hoc data notification bot development
+- (4) Event taxonomy design and documentation management
+- (5) Automation of (Finance/HR/CX) tasks
+</code></pre>
+
+<p>However, over time, problems began to arise with my role in “<strong>(3) Ad-hoc data notification bot development</strong>”. As I worked to enable colleagues to quickly check key metrics on Slack in real-time, the number of Python files gradually increased, and managing them became more resource-intensive.</p>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/1.webp" alt="" /></p>
+
+<p>Specifically, I was managing all Slack notifications by running individual Python files directly in separate sessions using <code class="language-plaintext highlighter-rouge">tmux</code>. <code class="language-plaintext highlighter-rouge">tmux</code> is an open-source terminal multiplexer that allows managing multiple sessions independently within a single terminal. (<a href="https://en.wikipedia.org/wiki/Tmux">Wikipedia</a>)</p>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/2.webp" alt="" /></p>
+
+<p>As the number of Python files grew and the complexity increased, the following issues emerged:</p>
+
+<p><strong>(1) Increased Maintenance Burden</strong></p>
+
+<p>When a Python script encountered an error, execution stopped immediately, and colleagues would not receive notifications until debugging was complete. There was no retry mechanism in place.</p>
+
+<p>Additionally, debugging took a significant amount of time. Since dependent pipeline steps were all managed within a single main() function, identifying the exact failure point was difficult, leading to considerable time wasted. As a result, it became harder to stay focused on more important tasks.</p>
+
+<p><strong>(2) Lack of Stability in Session-Based Management</strong></p>
+
+<p>Server reboots or network issues could disrupt tasks, and there were instances where sessions were unexpectedly terminated, requiring recovery efforts.</p>
+
+<p>Moreover, since all sessions shared the same environment, dependency conflicts could occur even when using <a href="https://docs.python.org/3/library/venv.html">Python Venv</a>.</p>
+
+<p><strong>Due to these reasons, the need for Airflow as a workflow management tool grew stronger.</strong></p>
+
+<ul>
+  <li>Tasks can be automatically recovered simply by restarting containers.</li>
+  <li>Each task operates in an isolated environment.</li>
+  <li>The system is scalable for future workflow expansions.</li>
+  <li>The web UI makes task monitoring and management easier.</li>
+</ul>
+
+<p>Initially, I had considered introducing Airflow when starting “<strong>Ad-hoc data notification bot development</strong>”. However, since the workflow was small at the time, I followed the <strong>YAGNI</strong> principle and decided against premature adoption.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">YAGNI</a> stands for “<strong>You Aren’t Gonna Need It</strong>,” an Agile software development principle that advises against adding unnecessary complexity. At that time, I believed in setting up a workflow that only met current needs, so I opted for a session-based approach.</p>
+
+<p>However, as the workflow scaled, inefficiencies and resource waste in session management became more evident. This led me to finally decide on adopting Airflow.</p>
+
+<hr />
+
+<h1 id="2-review-of-implementation">2. Review of Implementation</h1>
+
+<h3 id="21-project-plan">2.1. Project Plan</h3>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/3.webp" alt="" /></p>
+
+<p>First, I established a plan as shown above.</p>
+
+<p>(1) Modify existing Python scripts to fit the <strong>DAG format</strong>.</p>
+
+<p>(2) Build the Airflow project in a <strong>local environment</strong> using Docker Compose and verify that notifications are correctly sent to a Slack test channel.</p>
+
+<p>(3) Deploy the Airflow project on a <strong>VM instance</strong> using Docker Compose to finalize the notification system.</p>
+
+<h3 id="22-local-environment-setup">2.2. Local Environment Setup</h3>
+
+<p>(0) Docker must be installed.</p>
+
+<ul>
+  <li>I installed the Docker Desktop app. You can refer to <a href="https://www.docker.com/get-started/">this guide</a> for installation instructions.</li>
+</ul>
+
+<p>(1) Created a Python virtual environment.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> venv venv
+<span class="nb">source </span>venv/bin/activate
+</code></pre></div></div>
+
+<p>(2) Loaded the Airflow image by running the following command in a directory named <code class="language-plaintext highlighter-rouge">airflow</code> (this will generate a <code class="language-plaintext highlighter-rouge">docker-compose.yaml</code> file).</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-LfO</span> <span class="s1">'https://airflow.apache.org/docs/apache-airflow/2.9.1/docker-compose.yaml'</span>
+</code></pre></div></div>
+
+<p>(3) Created <code class="language-plaintext highlighter-rouge">dags</code>, <code class="language-plaintext highlighter-rouge">logs</code>, <code class="language-plaintext highlighter-rouge">plugins</code> directories and an <code class="language-plaintext highlighter-rouge">.env</code> file with the <strong>AIRFLOW_UID</strong> environment variable.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> ./dags ./logs ./plugins
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"AIRFLOW_UID=</span><span class="si">$(</span><span class="nb">id</span> <span class="nt">-u</span><span class="si">)</span><span class="s2">"</span> <span class="o">&gt;</span> .env
+</code></pre></div></div>
+
+<p>(4) Created a <code class="language-plaintext highlighter-rouge">Dockerfile</code> with the following content.</p>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># First-time build can take upto 10 mins.</span>
+
+<span class="k">FROM</span><span class="s"> apache/airflow:2.9.1</span>
+
+<span class="k">ENV</span><span class="s"> AIRFLOW_HOME=/opt/airflow</span>
+
+<span class="k">USER</span><span class="s"> root</span>
+<span class="k">RUN </span>apt-get update <span class="nt">-qq</span> <span class="o">&amp;&amp;</span> apt-get <span class="nb">install </span>vim <span class="nt">-qqq</span>
+<span class="c"># git gcc g++ -qqq</span>
+
+<span class="k">COPY</span><span class="s"> requirements.txt .</span>
+<span class="k">RUN </span>pip <span class="nb">install</span> <span class="nt">--no-cache-dir</span> <span class="nt">-r</span> requirements.txt
+
+<span class="c"># Ref: https://airflow.apache.org/docs/docker-stack/recipes.html</span>
+
+<span class="k">SHELL</span><span class="s"> ["/bin/bash", "-o", "pipefail", "-e", "-u", "-x", "-c"]</span>
+
+<span class="k">ARG</span><span class="s"> CLOUD_SDK_VERSION=322.0.0</span>
+<span class="k">ENV</span><span class="s"> GCLOUD_HOME=/home/google-cloud-sdk</span>
+
+<span class="k">ENV</span><span class="s"> PATH="${GCLOUD_HOME}/bin/:${PATH}"</span>
+
+<span class="k">RUN </span><span class="nv">DOWNLOAD_URL</span><span class="o">=</span><span class="s2">"https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-</span><span class="k">${</span><span class="nv">CLOUD_SDK_VERSION</span><span class="k">}</span><span class="s2">-linux-x86_64.tar.gz"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nv">TMP_DIR</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span><span class="si">)</span><span class="s2">"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> curl <span class="nt">-fL</span> <span class="s2">"</span><span class="k">${</span><span class="nv">DOWNLOAD_URL</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--output</span> <span class="s2">"</span><span class="k">${</span><span class="nv">TMP_DIR</span><span class="k">}</span><span class="s2">/google-cloud-sdk.tar.gz"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="k">${</span><span class="nv">GCLOUD_HOME</span><span class="k">}</span><span class="s2">"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">tar </span>xzf <span class="s2">"</span><span class="k">${</span><span class="nv">TMP_DIR</span><span class="k">}</span><span class="s2">/google-cloud-sdk.tar.gz"</span> <span class="nt">-C</span> <span class="s2">"</span><span class="k">${</span><span class="nv">GCLOUD_HOME</span><span class="k">}</span><span class="s2">"</span> <span class="nt">--strip-components</span><span class="o">=</span>1 <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="s2">"</span><span class="k">${</span><span class="nv">GCLOUD_HOME</span><span class="k">}</span><span class="s2">/install.sh"</span> <span class="se">\
+</span>       <span class="nt">--bash-completion</span><span class="o">=</span><span class="nb">false</span> <span class="se">\
+</span>       <span class="nt">--path-update</span><span class="o">=</span><span class="nb">false</span> <span class="se">\
+</span>       <span class="nt">--usage-reporting</span><span class="o">=</span><span class="nb">false</span> <span class="se">\
+</span>       <span class="nt">--quiet</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-rf</span> <span class="s2">"</span><span class="k">${</span><span class="nv">TMP_DIR</span><span class="k">}</span><span class="s2">"</span> <span class="se">\
+</span>    <span class="o">&amp;&amp;</span> gcloud <span class="nt">--version</span>
+
+<span class="k">WORKDIR</span><span class="s"> $AIRFLOW_HOME</span>
+
+<span class="k">COPY</span><span class="s"> scripts scripts</span>
+<span class="k">RUN </span><span class="nb">chmod</span> +x scripts
+
+<span class="k">USER</span><span class="s"> $AIRFLOW_UID</span>
+</code></pre></div></div>
+
+<p>(5) Created a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apache-airflow-providers-google
+pyarrow
+</code></pre></div></div>
+
+<p>(6) Edited <code class="language-plaintext highlighter-rouge">docker-compose.yaml</code> to include environment variables for Google Cloud and Slack authentication.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/keys</code>: Used to store the Google Cloud service account JSON key file.</li>
+  <li><code class="language-plaintext highlighter-rouge">.env</code>: Stores Airflow Admin login credentials and Slack API token.</li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">x-airflow-common</span><span class="pi">:</span>
+  <span class="s">...</span>
+  <span class="s">environment</span><span class="err">:</span>
+    <span class="s">...</span>
+    <span class="s">AIRFLOW__CORE__LOAD_EXAMPLES</span><span class="err">:</span> <span class="s1">'</span><span class="s">false'</span> <span class="c1"># Prevents sample DAGs from being created.</span>
+    <span class="s">...</span>
+    <span class="s">GOOGLE_APPLICATION_CREDENTIALS</span><span class="err">:</span> <span class="s">/keys/airflow_credentials.json</span> <span class="c1"># Path to Google Cloud service account JSON key file.</span>
+    <span class="na">AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT</span><span class="pi">:</span> <span class="s1">'</span><span class="s">google-cloud-platform://?extra__google_cloud_platform__key_path=/keys/airflow_credentials.json'</span> <span class="c1"># Same as above.</span>
+    <span class="na">GCP_PROJECT_ID</span><span class="pi">:</span> <span class="s1">'</span><span class="s">gcp_project_id'</span> <span class="c1"># Google Cloud project ID.</span>
+    <span class="na">AIRFLOW_CONN_SLACK_DEFAULT</span><span class="pi">:</span> <span class="s1">'</span><span class="s">slack://:${SLACK_TOKEN}@'</span> <span class="c1"># Slack API token managed in the .env file.</span>
+    <span class="s">...</span>
+  <span class="na">volumes</span><span class="pi">:</span>
+    <span class="s">...</span>
+    <span class="s">- ./keys:/keys:ro</span> <span class="c1"># Maps the `/keys` directory containing the Google Cloud service account JSON key file to Docker.</span>
+<span class="nn">...</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="s">...</span>
+  <span class="s">airflow-init</span><span class="err">:</span>
+    <span class="s">...</span>
+    <span class="s">environment</span><span class="err">:</span>
+      <span class="s">...</span>
+      <span class="s">_AIRFLOW_WWW_USER_USERNAME</span><span class="err">:</span> <span class="s">${_AIRFLOW_WWW_USER_USERNAME}</span> <span class="c1"># Airflow Webserver login credentials stored in .env.</span>
+      <span class="na">_AIRFLOW_WWW_USER_PASSWORD</span><span class="pi">:</span> <span class="s">${_AIRFLOW_WWW_USER_PASSWORD}</span> <span class="c1"># Airflow Webserver login credentials stored in .env.</span>
+      <span class="s">...</span>
+</code></pre></div></div>
+
+<p>(7) Building Docker Compose and Initializing Airflow</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose build
+docker-compose up airflow-init
+</code></pre></div></div>
+
+<p>(8) Running Docker Compose</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span>
+docker-compose ps
+</code></pre></div></div>
+
+<p>(9) Accessing the Airflow Webserver</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) Open http://0.0.0.0:8080 in a browser.
+2) Log in using the credentials set in the `docker-compose.yaml` file:
+  - _AIRFLOW_WWW_USER_USERNAME
+  - _AIRFLOW_WWW_USER_PASSWORD
+</code></pre></div></div>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/4.webp" alt="" /></p>
+
+<p>(10) Initializing Git and Linking to GitHub</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+git remote add origin https://github.com/.../airflow.git
+git branch <span class="nt">-m</span> main
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"created airflow project"</span>
+git push <span class="nt">-u</span> origin main
+</code></pre></div></div>
+
+<h3 id="23-vm-instance-environment-setup">2.3. VM Instance Environment Setup</h3>
+
+<p>(1) Creating Firewall Rules (To allow internal access to the Airflow Webserver running on the VM Instance, I configured firewall rules.)</p>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/5.webp" alt="" /></p>
+
+<ul>
+  <li><strong>Direction</strong>: Ingress</li>
+  <li><strong>Target Tags</strong>: airflow (You can name this as needed.)</li>
+  <li><strong>Source Filter &gt; IP Range</strong>: Internal company IP address range.</li>
+  <li><strong>Protocol and Port</strong>: tcp-8080 (The webserver communicates with the host machine via port 8080, which can be modified in <code class="language-plaintext highlighter-rouge">docker-compose.yaml</code>.)</li>
+</ul>
+
+<p>(2) Creating the <code class="language-plaintext highlighter-rouge">airflow</code> VM Instance</p>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/6.webp" alt="" /></p>
+
+<ul>
+  <li><strong>Machine Type</strong>: E2 series with at least 2 vCPUs and 8GB of memory (If using 4GB, the server may struggle with network traffic.)</li>
+  <li><strong>OS &amp; Storage</strong>: Debian OS, 10GB storage.</li>
+  <li><strong>Firewall</strong>: Enabled HTTP &amp; HTTPS traffic, and assigned the <code class="language-plaintext highlighter-rouge">airflow</code> tag created in the firewall settings.</li>
+</ul>
+
+<p>(3) Installing Docker and Python Virtual Environment (Following the same setup as in the local environment)</p>
+
+<ul>
+  <li>Refer to steps (0) and (1) from Section 2.2 for installing Docker and setting up a Python virtual environment.</li>
+</ul>
+
+<p>(4) Cloning the Repository and Configuring Environment Files (Created the <code class="language-plaintext highlighter-rouge">airflow</code> directory and cloned the remote repository. Then, manually added <code class="language-plaintext highlighter-rouge">/keys</code> and <code class="language-plaintext highlighter-rouge">.env</code> files.)</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/.../airflow.git
+</code></pre></div></div>
+
+<p>(5) Building and Running Airflow on the VM (Following the same procedure as the local environment)</p>
+
+<ul>
+  <li>Refer to steps (7) and (8) from Section 2.2 to build and execute Docker Compose.</li>
+</ul>
+
+<p>(6) Accessing the Airflow Webserver on the VM</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) Open http://{VM Instance External IP}:8080 in a browser.
+2) Log in using the credentials set in the docker-compose.yaml file:
+  - _AIRFLOW_WWW_USER_USERNAME
+  - _AIRFLOW_WWW_USER_PASSWORD
+</code></pre></div></div>
+
+<h3 id="24-creating-a-dag">2.4. Creating a DAG</h3>
+
+<p>The simplest DAG I created is <strong>the Daily BigQuery Usage Notification</strong>. This is primarily a self-notification system to help me manage Google Cloud resources efficiently. Below, I will break down the <code class="language-plaintext highlighter-rouge">DAG.py</code> code step by step.</p>
+
+<p>(1) Importing Required Libraries and Operators</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ========================================================================
+# Importing Required Libraries and Environment Variables
+# ========================================================================
+</span>
+<span class="kn">from</span> <span class="n">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span> <span class="n">airflow.operators.python</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
+<span class="kn">from</span> <span class="n">airflow.providers.slack.operators.slack</span> <span class="kn">import</span> <span class="n">SlackAPIPostOperator</span>
+<span class="kn">from</span> <span class="n">airflow.models</span> <span class="kn">import</span> <span class="n">Variable</span>
+
+<span class="kn">from</span> <span class="n">google.cloud</span> <span class="kn">import</span> <span class="n">bigquery</span>
+
+<span class="kn">from</span> <span class="n">pendulum</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="n">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Instead of using BigQuery-specific Airflow operators, I opted for <code class="language-plaintext highlighter-rouge">google.cloud.bigquery</code> and <code class="language-plaintext highlighter-rouge">PythonOperator</code>. Since this DAG primarily involves SELECT queries that return large datasets, using XCom to pass data between tasks would be inefficient.</li>
+</ul>
+
+<p>(2) Defining Key Variables and Clients</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ========================================================================
+# Defining Clients and Key Variables
+# ========================================================================
+</span>
+<span class="n">bigquery_client</span> <span class="o">=</span> <span class="n">bigquery</span><span class="p">.</span><span class="nc">Client</span><span class="p">()</span>
+<span class="n">kst</span> <span class="o">=</span> <span class="nf">timezone</span><span class="p">(</span><span class="sh">'</span><span class="s">Asia/Seoul</span><span class="sh">'</span><span class="p">)</span>
+
+<span class="n">SLACK_CHANNEL_TEST</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">slack-channel-test</span><span class="sh">'</span><span class="p">)</span>
+<span class="n">SLACK_CHANNEL</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
+    <span class="sh">'</span><span class="s">slack-channel-prod</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">default_var</span><span class="o">=</span><span class="n">SLACK_CHANNEL_TEST</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>kst</strong>: Since Airflow uses UTC as its default timezone, I explicitly set it to Korean Standard Time using <code class="language-plaintext highlighter-rouge">pendulum.timezone</code>.</li>
+  <li><strong>Slack Channel</strong>: The final step in this DAG sends a notification to a Slack channel. To prevent unnecessary alerts, I first test the DAG using <strong>a dedicated Slack test channel</strong> before deploying it to the production channel.</li>
+</ul>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/7.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html">Apache Airflow Docs</a></p>
+</blockquote>
+
+<p>(3) Defining DAG Default Arguments</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ========================================================================
+# Defining DAG Default Arguments
+# ========================================================================
+</span>
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sh">'</span><span class="s">owner</span><span class="sh">'</span><span class="p">:</span> <span class="sh">'</span><span class="s">Joshua Kim</span><span class="sh">'</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">start_date</span><span class="sh">'</span><span class="p">:</span> <span class="nf">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">kst</span><span class="p">),</span>
+    <span class="sh">'</span><span class="s">depends_on_past</span><span class="sh">'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="bp">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>(4) Writing Dynamic Query Functions</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ========================================================================
+# Query Definitions
+# ========================================================================
+</span>
+<span class="bp">...</span>
+
+<span class="c1"># Query Usage (by user)
+</span><span class="k">def</span> <span class="nf">query_usage_by_user</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="sh">"""</span><span class="s">
+        SELECT
+            user_email AS user,
+            SUM(total_bytes_billed) / POW(2, 30) AS gibibyte
+        FROM
+            `</span><span class="si">{</span><span class="n">project_id</span><span class="si">}</span><span class="s">.</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s">.INFORMATION_SCHEMA.JOBS`
+        WHERE
+            DATE(TIMESTAMP(creation_time), </span><span class="sh">"</span><span class="s">Asia/Seoul</span><span class="sh">"</span><span class="s">) = </span><span class="sh">'</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="sh">'</span><span class="s">
+            AND job_type = </span><span class="sh">'</span><span class="s">QUERY</span><span class="sh">'</span><span class="s">
+        GROUP BY
+            1
+        ORDER BY
+            2 DESC
+    </span><span class="sh">"""</span>
+
+<span class="bp">...</span>
+</code></pre></div></div>
+
+<p>(5) Writing Core Functions for Task Execution</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ========================================================================
+# Function Definitions
+# ========================================================================
+</span>
+<span class="c1"># Fetch BigQuery Data
+</span><span class="k">def</span> <span class="nf">fetch_bigquery_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="c1"># Yesterday
+</span>    <span class="n">today_kst</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="sh">'</span><span class="s">execution_date</span><span class="sh">'</span><span class="p">].</span><span class="nf">in_timezone</span><span class="p">(</span><span class="n">kst</span><span class="p">)</span>
+    <span class="n">yesterday_kst</span> <span class="o">=</span> <span class="n">today_kst</span><span class="p">.</span><span class="nf">subtract</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_date_string</span><span class="p">()</span>
+
+    <span class="bp">...</span>
+
+    <span class="c1"># Query Usage by user Yesterday
+</span>    <span class="n">usage_by_user_df</span> <span class="o">=</span> <span class="n">bigquery_client</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nf">query_usage_by_user</span><span class="p">(</span><span class="n">yesterday_kst</span><span class="p">)).</span><span class="nf">to_dataframe</span><span class="p">()</span>
+    <span class="n">usage_by_user_dict</span> <span class="o">=</span> <span class="n">usage_by_user_df</span><span class="p">.</span><span class="nf">set_index</span><span class="p">(</span><span class="sh">'</span><span class="s">user</span><span class="sh">'</span><span class="p">)[</span><span class="sh">'</span><span class="s">gibibyte</span><span class="sh">'</span><span class="p">].</span><span class="nf">to_dict</span><span class="p">()</span>
+
+    <span class="c1"># Push Data to XCom
+</span>    <span class="bp">...</span>
+    <span class="n">kwargs</span><span class="p">[</span><span class="sh">'</span><span class="s">ti</span><span class="sh">'</span><span class="p">].</span><span class="nf">xcom_push</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="sh">'</span><span class="s">usage_by_user_dict</span><span class="sh">'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">usage_by_user_dict</span><span class="p">)</span>
+    <span class="bp">...</span>
+
+<span class="c1"># Write a Slack Message
+</span><span class="k">def</span> <span class="nf">write_slack_message</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="c1"># Read BigQuery Data
+</span>    <span class="bp">...</span>
+    <span class="n">usage_by_user_dict</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="sh">'</span><span class="s">ti</span><span class="sh">'</span><span class="p">].</span><span class="nf">xcom_pull</span><span class="p">(</span><span class="n">task_ids</span><span class="o">=</span><span class="sh">'</span><span class="s">fetch_bigquery_data</span><span class="sh">'</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="sh">'</span><span class="s">usage_by_user_dict</span><span class="sh">'</span><span class="p">)</span>
+
+    <span class="c1"># Create a Message
+</span>    <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">:bigquery: *Daily BigQuery Usage Summary* (Korean Timezone)</span><span class="se">\n</span><span class="sh">"</span>
+    <span class="bp">...</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">*:busts_in_silhouette: By User*</span><span class="se">\n</span><span class="sh">"</span>
+    <span class="bp">...</span>
+    <span class="k">for</span> <span class="n">user</span><span class="p">,</span> <span class="n">usage</span> <span class="ow">in</span> <span class="n">usage_by_user_dict</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="sh">"</span><span class="s">   - *</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s">*: `</span><span class="si">{</span><span class="nf">float</span><span class="p">(</span><span class="n">usage</span><span class="p">)</span><span class="si">:</span><span class="p">,.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">`GiB</span><span class="se">\n</span><span class="sh">"</span>
+    <span class="bp">...</span>
+
+    <span class="k">return</span> <span class="n">message</span>
+</code></pre></div></div>
+
+<p>(6) Defining the DAG</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ========================================================================
+# DAG Definition
+# ========================================================================
+</span>
+<span class="k">with</span> <span class="nc">DAG</span><span class="p">(</span>
+    <span class="sh">'</span><span class="s">bigquery_usage_alert</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="sh">'</span><span class="s">BigQuery Usage Notification</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">schedule_interval</span><span class="o">=</span><span class="sh">'</span><span class="s">5 0 * * *</span><span class="sh">'</span><span class="p">,</span> <span class="c1"># Runs daily at 12:05 AM KST
+</span>    <span class="n">catchup</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+    
+    <span class="c1"># Fetch BigQuery Data
+</span>    <span class="n">task_fetch_bigquery_data</span> <span class="o">=</span> <span class="nc">PythonOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="sh">'</span><span class="s">fetch_bigquery_data</span><span class="sh">'</span><span class="p">,</span>
+        <span class="n">python_callable</span><span class="o">=</span><span class="n">fetch_bigquery_data</span><span class="p">,</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Write a Slack Message
+</span>    <span class="n">task_write_slack_message</span> <span class="o">=</span> <span class="nc">PythonOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="sh">'</span><span class="s">write_slack_message</span><span class="sh">'</span><span class="p">,</span>
+        <span class="n">python_callable</span><span class="o">=</span><span class="n">write_slack_message</span><span class="p">,</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Send a Slack Message
+</span>    <span class="n">task_send_slack_message</span> <span class="o">=</span> <span class="nc">SlackAPIPostOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="sh">'</span><span class="s">send_slack_message</span><span class="sh">'</span><span class="p">,</span>
+        <span class="n">text</span><span class="o">=</span><span class="sh">''</span><span class="p">,</span>
+        <span class="n">slack_conn_id</span><span class="o">=</span><span class="sh">'</span><span class="s">slack_default</span><span class="sh">'</span><span class="p">,</span>
+        <span class="n">channel</span><span class="o">=</span><span class="n">SLACK_CHANNEL</span><span class="p">,</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Data Lineage
+</span>    <span class="n">task_fetch_bigquery_data</span> <span class="o">&gt;&gt;</span> <span class="n">task_write_slack_message</span> <span class="o">&gt;&gt;</span> <span class="n">task_send_slack_message</span>
+</code></pre></div></div>
+
+<ul>
+  <li>This DAG follows a straightforward workflow:</li>
+</ul>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/8.webp" alt="" /></p>
+
+<ul>
+  <li>And the Slack notification looks like this:</li>
+</ul>
+
+<p><img src="/assets/2024-12-28-implementing-airflow/9.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="3-future-challenges">3. Future Challenges</h1>
+
+<p>Airflow presents a steep learning curve, especially for those unfamiliar with Linux or Docker environments. However, its flexibility makes it an excellent orchestration tool for data analysts, analytics engineers, and backend developers.</p>
+
+<p>Following the successful implementation of Airflow in our company, I am now considering <strong>additional enhancements</strong>:</p>
+
+<ul>
+  <li>Designing external data collection pipelines and sending refined data to stakeholders via email or Slack.</li>
+  <li>Managing dbt table dependencies by setting up separate batch executions using Airflow DAGs.</li>
+  <li>Exploring other optimization opportunities.</li>
+</ul>
+
+<p>By reducing maintenance overhead and improving workflow stability through Airflow, I aim to maximize my work efficiency and focus more on high-impact tasks that enable my colleagues to better utilize data. Ultimately, this aligns with both my learning goals and my company’s growth objectives.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/dbt-docs-site-hosting-ko/">
+            &#xE000; dbt Docs 사내 공유 방법 (사이트 호스팅 후기)
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/implementing-airflow-ko/">
+            Airflow 도입 후기 &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
