@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>GA4-based Data Warehouse Implementation Review – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “This article shares the process and outcomes of building a data warehouse to efficiently utilize Google Analytics 4 (GA4) data. Previously, queries were executed directly on the GA4 Export Table, but issues such as schema complexity, slow query execution times, and high costs necessitated a transition to a data mart. By implementing an Incremental Strategy using dbt, we optimized performance, resulting in significantly improved query speeds, reduced costs, and enhanced data accessibility within the organization, enabling more efficient data utilization.”
+
+" />
+    <meta property="og:description" content="
+  “This article shares the process and outcomes of building a data warehouse to efficiently utilize Google Analytics 4 (GA4) data. Previously, queries were executed directly on the GA4 Export Table, but issues such as schema complexity, slow query execution times, and high costs necessitated a transition to a data mart. By implementing an Incremental Strategy using dbt, we optimized performance, resulting in significantly improved query speeds, reduced costs, and enhanced data accessibility within the organization, enabling more efficient data utilization.”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="GA4-based Data Warehouse Implementation Review" />
+    <meta property="twitter:title" content="GA4-based Data Warehouse Implementation Review" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>GA4-based Data Warehouse Implementation Review</h1>
+
+  <div>
+    <span class="date">
+      2024-11-03
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (English)">
+          Language (English)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Project)">
+          Article (Project)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (2. Intermediate)">
+          Level (2. Intermediate)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Analytics Engineering)">
+          Field (Analytics Engineering)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (SQL)">
+          Skills (SQL)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (dbt)">
+          Skills (dbt)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“This article shares the process and outcomes of building a data warehouse to efficiently utilize Google Analytics 4 (GA4) data. Previously, queries were executed directly on the GA4 Export Table, but issues such as schema complexity, slow query execution times, and high costs necessitated a transition to a data mart. By implementing an Incremental Strategy using dbt, we optimized performance, resulting in significantly improved query speeds, reduced costs, and enhanced data accessibility within the organization, enabling more efficient data utilization.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li>Introduction</li>
+  <li>Diagnosing the Problem
+    <ul>
+      <li>2.1. Complex Schema of the Source Table</li>
+      <li>2.2. Slow Query Execution Time and High Query Costs</li>
+    </ul>
+  </li>
+  <li>Solution: Building a Data Warehouse
+    <ul>
+      <li>3.1. Simplified Schema for Each Data Mart Table</li>
+      <li>3.2. Faster Query Execution and Reduced Costs</li>
+    </ul>
+  </li>
+  <li>Implementation of the Data Warehouse
+    <ul>
+      <li>4.1. Data Lineage Preview of the Data Warehouse</li>
+      <li>4.2. Creating the <code class="language-plaintext highlighter-rouge">core_fct_events</code> Table Model</li>
+      <li>4.3. Creating Event-Specific Table Models</li>
+      <li>4.4. Creating the <code class="language-plaintext highlighter-rouge">core_dim_users</code> Table Model</li>
+      <li>4.5. Managing Where Statements and Variables for Incremental Strategy</li>
+    </ul>
+  </li>
+  <li>Results
+    <ul>
+      <li>5.1. Improved Query Speed and Reduced Costs</li>
+      <li>5.2. Enhanced Organizational Data Accessibility</li>
+    </ul>
+  </li>
+  <li>Conclusion</li>
+</ol>
+
+<hr />
+
+<h1 id="1-introduction">1. Introduction</h1>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/1.webp" alt="" /></p>
+<blockquote>
+  <p>Simplified IoTrust Data Pipeline</p>
+</blockquote>
+
+<p>Our company operates the B2C product D’Cent Wallet and the B2B2C product Wepen Wallet. Among them, the D’Cent Wallet primarily loads data into BigQuery via Google Analytics 4!</p>
+
+<p>Many startups directly execute queries on the Google Analytics 4 Export Table stored in BigQuery. However, this “source table-dependent” query execution approach can lead to significant issues over time, including increased query costs and execution times.</p>
+
+<p>To overcome this, I implemented a “rarely seen” GA4-based data warehouse structure. This article shares my experience with this approach.</p>
+
+<hr />
+
+<h1 id="2-diagnosing-the-problem">2. Diagnosing the Problem</h1>
+
+<h3 id="21-complex-schema-of-the-source-table">2.1. Complex Schema of the Source Table</h3>
+
+<p>The Google Analytics 4 Export Table streamed to BigQuery is designed with flexible structural expansion in mind. As a result, event parameters and purchase product information are stored in RECORD types. This design choice by Google leverages a columnar database structure to reduce storage costs.</p>
+
+<p>For example, <code class="language-plaintext highlighter-rouge">event_params</code> is stored in a key-value format similar to JSON, making it challenging for those unfamiliar with this structure to write queries.</p>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/2.webp" alt="" /></p>
+<blockquote>
+  <p>GA4 Source Table Schema (Public Sample Table)</p>
+</blockquote>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/3.webp" alt="" /></p>
+<blockquote>
+  <p>GA4 Source Table Preview (Public Sample Table)</p>
+</blockquote>
+
+<p>Even extracting a simple page visit count requires writing a complex query, as shown below. This poses a steep learning curve for new users.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+    <span class="n">event_date</span><span class="p">,</span>
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">ga_session_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sessions_cnt</span><span class="p">,</span>
+    <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">user_pseudo_id</span><span class="p">)</span> <span class="k">AS</span> <span class="n">users_cnt</span>
+<span class="k">FROM</span>
+    <span class="nv">`events_*`</span>
+<span class="k">WHERE</span>
+    <span class="n">_table_suffix</span> <span class="k">BETWEEN</span> <span class="s1">'20240101'</span> <span class="k">AND</span> <span class="s1">'20241231'</span>
+    <span class="k">AND</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'page_view'</span>
+    <span class="k">AND</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span><span class="p">)</span> <span class="k">LIKE</span> <span class="s1">'%store.dcentwallet.com/pages/dcent-biometric-crypto-wallet%'</span>
+<span class="k">GROUP</span> <span class="k">BY</span>
+    <span class="mi">1</span>
+<span class="k">ORDER</span> <span class="k">BY</span>
+    <span class="mi">1</span>
+<span class="p">;</span>
+</code></pre></div></div>
+
+<p>A simplified table schema is needed to allow users to write queries more easily.</p>
+
+<h3 id="22-slow-query-execution-time-and-high-query-costs">2.2. Slow Query Execution Time and High Query Costs</h3>
+
+<p>Executing queries directly on the source table becomes increasingly inefficient over time, leading to slow execution times and rapidly rising query costs.</p>
+
+<p>For non-technical colleagues who only consume dashboards, long update times significantly hinder data usability. A somewhat extreme quote captures this challenge well:</p>
+
+<blockquote>
+  <p>“If a dashboard update takes longer than 5 seconds, marketers and designers will immediately disengage. Optimizing queries is critical to maintaining data usability.”</p>
+</blockquote>
+
+<hr />
+
+<h1 id="3-solution-building-a-data-warehouse">3. Solution: Building a Data Warehouse</h1>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/4.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://ardas-it.com/benefits-of-enterprise-data-warehouse">Benefits of Enterprise Data Warehouse</a></p>
+</blockquote>
+
+<p>Implementing a data warehouse dramatically resolves the aforementioned issues.</p>
+
+<h3 id="31-simplified-schema-for-each-data-mart-table">3.1. Simplified Schema for Each Data Mart Table</h3>
+
+<p>By simplifying the structure of each data mart and its tables, colleagues can execute queries with ease. This reduces dependence on data analysts and analytics engineers, creating a self-service environment for data queries.</p>
+
+<h3 id="32-faster-query-execution-and-reduced-costs">3.2. Faster Query Execution and Reduced Costs</h3>
+
+<p>Data mart tables are structured with only the necessary columns and rows, making them significantly smaller than source tables. Running queries on data marts results in drastically improved execution times and lower costs.</p>
+
+<hr />
+
+<h1 id="4-implementation-of-the-data-warehouse">4. Implementation of the Data Warehouse</h1>
+
+<h3 id="41-data-lineage-preview-of-the-data-warehouse">4.1. Data Lineage Preview of the Data Warehouse</h3>
+
+<p>The core layer of the D’Cent App data warehouse is structured as follows, forming a star schema from the source tables <code class="language-plaintext highlighter-rouge">ga4.events</code> and <code class="language-plaintext highlighter-rouge">ga4.events_intraday</code>.</p>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/5.webp" alt="" /></p>
+<blockquote>
+  <p>Partial View of D’Cent App Data Warehouse Data Lineage</p>
+</blockquote>
+
+<h3 id="42-creating-the-core_fct_events-table-model">4.2. Creating the <code class="language-plaintext highlighter-rouge">core_fct_events</code> Table Model</h3>
+
+<p>The foundational fact table, containing all recorded events, was created while excluding unique event parameters. The goal was to include as much information as possible.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+    <span class="k">DISTINCT</span>
+
+    <span class="n">PARSE_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="n">event_date</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+    <span class="nb">DATETIME</span><span class="p">(</span><span class="n">TIMESTAMP_MICROS</span><span class="p">(</span><span class="n">event_timestamp</span><span class="p">),</span> <span class="s1">'Asia/Seoul'</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">datetime</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">user_pseudo_id</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">user_pseudo_id</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_id'</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_id</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_number'</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_number</span><span class="p">,</span>
+
+    <span class="n">event_name</span><span class="p">,</span>
+    
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">web_info</span><span class="p">.</span><span class="n">hostname</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hostname</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location_full</span><span class="p">,</span>        
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span>  <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_title'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_title</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">(</span>
+        <span class="k">LOWER</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">user_properties</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'xxx'</span><span class="p">)),</span>
+        <span class="k">LOWER</span><span class="p">(</span><span class="k">CAST</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">double_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">user_properties</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'xxx'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">STRING</span><span class="p">)),</span>
+        <span class="k">LOWER</span><span class="p">(</span><span class="k">CAST</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">float_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">user_properties</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'xxx'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">STRING</span><span class="p">)),</span>
+        <span class="k">LOWER</span><span class="p">(</span><span class="k">CAST</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">user_properties</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'xxx'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">STRING</span><span class="p">)),</span>
+        <span class="s1">'UNK'</span>
+    <span class="p">)</span> <span class="k">AS</span> <span class="n">xxx</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">platform</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">operating_system</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">device_os</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">category</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">device_category</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">app_info</span><span class="p">.</span><span class="k">version</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">app_version</span><span class="p">,</span>
+
+    <span class="k">CASE</span>
+        <span class="k">WHEN</span> <span class="n">geo</span><span class="p">.</span><span class="n">continent</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+        <span class="k">WHEN</span> <span class="n">geo</span><span class="p">.</span><span class="n">continent</span> <span class="o">=</span> <span class="s1">''</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+        <span class="k">WHEN</span> <span class="n">geo</span><span class="p">.</span><span class="n">continent</span> <span class="o">=</span> <span class="s1">'(not set)'</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+        <span class="k">ELSE</span> <span class="n">geo</span><span class="p">.</span><span class="n">continent</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">continent</span><span class="p">,</span>
+    <span class="k">CASE</span>
+        <span class="k">WHEN</span> <span class="n">geo</span><span class="p">.</span><span class="n">country</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+        <span class="k">WHEN</span> <span class="n">geo</span><span class="p">.</span><span class="n">country</span> <span class="o">=</span> <span class="s1">''</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+        <span class="k">WHEN</span> <span class="n">geo</span><span class="p">.</span><span class="n">country</span> <span class="o">=</span> <span class="s1">'(not set)'</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+        <span class="k">ELSE</span> <span class="n">geo</span><span class="p">.</span><span class="n">country</span>
+    <span class="k">END</span> <span class="k">AS</span> <span class="n">country</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">traffic_source</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">first_utm_campaign</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">traffic_source</span><span class="p">.</span><span class="n">medium</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">first_utm_medium</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">traffic_source</span><span class="p">.</span><span class="k">source</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">first_utm_source</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'campaign_id'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">event_utm_campaign_id</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'campaign'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">event_utm_campaign</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'medium'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">event_utm_medium</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'source'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">event_utm_source</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'term'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">event_utm_term</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'content'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">event_utm_content</span><span class="p">,</span>
+    <span class="p">...</span>
+<span class="k">FROM</span>
+    
+<span class="k">WHERE</span>
+    <span class="n">event_date</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">event_timestamp</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">event_name</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>(1) In the GA4 Export Table, identical events are often collected twice in succession for unknown reasons. This issue occurs frequently, particularly depending on the structure of the app’s development source code. Since this can lead to data distortion during the aggregation process, we ensured that duplicates are always removed using DISTINCT, even at the cost of additional computation.</p>
+
+<p>(2) To simplify model queries, we used Select Subqueries with UNNEST for event parameters and user properties.</p>
+
+<p>(3) We established the following null-handling rules to prevent data distortion during the aggregation process:</p>
+
+<ul>
+  <li>String: “UNK” (unknown)</li>
+  <li>Number: -1</li>
+  <li>Date: “1900-01-01”</li>
+</ul>
+
+<p>(4) Rows without <code class="language-plaintext highlighter-rouge">event_date</code>, <code class="language-plaintext highlighter-rouge">event_timestamp</code>, or <code class="language-plaintext highlighter-rouge">event_name</code> values were excluded from the model. If any of these three values are unknown, they provide no meaningful value as data.</p>
+
+<p>(5) Handling the <code class="language-plaintext highlighter-rouge">page_location</code> field is time-consuming for query writers due to varying query elements in page URLs. To address this, we defined a custom dbt macro function named <code class="language-plaintext highlighter-rouge">clean_url</code> to ensure a clean and standardized output.</p>
+
+<ul>
+  <li>Example of the <code class="language-plaintext highlighter-rouge">clean_url</code> macro:</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">macro</span> <span class="n">clean_url</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="k">REPLACE</span><span class="p">(</span>
+        <span class="n">REGEXP_REPLACE</span><span class="p">(</span>
+            <span class="n">REGEXP_REPLACE</span><span class="p">(</span>
+                <span class="k">LOWER</span><span class="p">({{</span> <span class="k">column_name</span> <span class="p">}}),</span>
+                <span class="n">r</span><span class="s1">'(</span><span class="se">\?</span><span class="s1">.*)$'</span><span class="p">,</span>
+                <span class="s1">''</span>
+            <span class="p">),</span>
+            <span class="n">r</span><span class="s1">'/$'</span><span class="p">,</span>
+            <span class="s1">''</span>
+        <span class="p">),</span>
+        <span class="s1">'https://'</span><span class="p">,</span>
+        <span class="s1">''</span>
+    <span class="p">)</span>
+
+<span class="p">{</span><span class="o">%</span> <span class="n">endmacro</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="43-creating-event-specific-table-models">4.3. Creating Event-Specific Table Models</h3>
+
+<p>As previously mentioned, each event has a completely different parameter structure. We needed to build independent event parameter information for each event. If the organization’s event taxonomy changes and new parameters are collected, applying these changes to the entire data warehouse would significantly increase query costs. By managing event-specific models, we ensured that only the necessary event-specific tables are affected, minimizing the impact of changes in the source table.</p>
+
+<p>For example, the following model query defines <code class="language-plaintext highlighter-rouge">core_fct_evt_click_tab</code>, which includes only the <code class="language-plaintext highlighter-rouge">click_tab</code> event and the <code class="language-plaintext highlighter-rouge">to_tab_name</code> parameter.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span>
+    <span class="k">DISTINCT</span>
+
+    <span class="n">PARSE_DATE</span><span class="p">(</span><span class="s1">'%Y%m%d'</span><span class="p">,</span> <span class="n">event_date</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+    <span class="nb">DATETIME</span><span class="p">(</span><span class="n">TIMESTAMP_MICROS</span><span class="p">(</span><span class="n">event_timestamp</span><span class="p">),</span> <span class="s1">'Asia/Seoul'</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">datetime</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">user_pseudo_id</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">user_pseudo_id</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_id'</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_id</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">int_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'ga_session_number'</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ga_session_number</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">web_info</span><span class="p">.</span><span class="n">hostname</span><span class="p">,</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hostname</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location_full</span><span class="p">,</span>        
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="p">{{</span> <span class="n">clean_url</span><span class="p">(</span><span class="s1">'value.string_value'</span><span class="p">)</span> <span class="p">}}</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_location'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_location</span><span class="p">,</span>
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="n">value</span><span class="p">.</span><span class="n">string_value</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'page_title'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">page_title</span><span class="p">,</span>
+
+    <span class="n">COALESCE</span><span class="p">((</span><span class="k">SELECT</span> <span class="p">{{</span> <span class="n">clean_url</span><span class="p">(</span><span class="s1">'value.string_value'</span><span class="p">)</span> <span class="p">}}</span> <span class="k">FROM</span> <span class="k">UNNEST</span> <span class="p">(</span><span class="n">event_params</span><span class="p">)</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">=</span> <span class="s1">'to_tab_name'</span><span class="p">),</span> <span class="s1">'UNK'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">to_tab_name</span><span class="p">,</span>
+    <span class="p">...</span>
+<span class="k">FROM</span>
+    <span class="p">{{</span> <span class="k">source</span><span class="p">(</span><span class="s1">'ga4'</span><span class="p">,</span> <span class="s1">'events'</span><span class="p">)</span> <span class="p">}}</span>
+<span class="k">WHERE</span>
+    <span class="n">event_date</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">event_timestamp</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'click_tab'</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>(1) We did not collect detailed columns such as Geo, Demographic, and Tech data. From a Star Schema perspective, managing these through <code class="language-plaintext highlighter-rouge">core_fct_events</code> and <code class="language-plaintext highlighter-rouge">core_dim_users</code> tables via JOIN operations is a more optimal approach.</p>
+
+<p>(2) We created dozens of event-specific model queries in this manner.</p>
+
+<p><img src="site.baseurl/assets/2024-11-03-implementing-data-warehouse-ga4/6.webp" alt="Data Lineage" /></p>
+<blockquote>
+  <p>A section of the D’CENT App Data Warehouse Data Lineage</p>
+</blockquote>
+
+<p>Meanwhile, the configuration for <code class="language-plaintext highlighter-rouge">core_fct_events</code> and each event-specific model is structured as follows:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s">xxx</span>
+
+<span class="na">models</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">core_fct_events</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Main event table</span>
+    <span class="na">meta</span><span class="pi">:</span>
+      <span class="na">owner</span><span class="pi">:</span> <span class="s">Joshua Kim</span>
+    <span class="na">config</span><span class="pi">:</span>
+      <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">core"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">fact"</span><span class="pi">]</span>
+      <span class="na">materialized</span><span class="pi">:</span> <span class="s">incremental</span>
+      <span class="na">incremental_strategy</span><span class="pi">:</span> <span class="s">insert_overwrite</span>
+      <span class="na">on_schema_change</span><span class="pi">:</span> <span class="s">append_new_columns</span>
+      <span class="na">partition_by</span><span class="pi">:</span>
+        <span class="na">field</span><span class="pi">:</span> <span class="s">date</span>
+        <span class="na">data_type</span><span class="pi">:</span> <span class="s">date</span>
+        <span class="na">granularity</span><span class="pi">:</span> <span class="s">day</span>
+      <span class="na">time_ingestion_partitioning</span><span class="pi">:</span> <span class="kc">true</span>
+      <span class="na">require_partition_filter</span><span class="pi">:</span> <span class="kc">true</span>
+      <span class="na">copy_partitions</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">columns</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">date</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">Event occurrence date (NOT NULL)</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">datetime</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">Event occurrence timestamp (NOT NULL)</span>
+      <span class="s">...</span>
+
+</code></pre></div></div>
+
+<p>(1) The <code class="language-plaintext highlighter-rouge">date</code> column was set as the partitioning key.</p>
+
+<p>(2) Queries were required to include a partition filter on <code class="language-plaintext highlighter-rouge">date</code> (<strong>require_partition_filter</strong>) to prevent full table scans and reduce query execution costs.</p>
+
+<p>(3) The materialization strategy was set to Incremental (Insert Overwrite).</p>
+
+<ul>
+  <li>The D’CENT App data warehouse updates every hour. Each incremental update checks whether the source table for each <code class="language-plaintext highlighter-rouge">date</code> partition has been updated and applies only the updated partitions.</li>
+  <li>In BigQuery’s <code class="language-plaintext highlighter-rouge">date</code> partition environment, using Insert Overwrite removes all data for a specific <code class="language-plaintext highlighter-rouge">date</code> partition before reinserting the updated data. This allows for a stable update strategy without complex incremental logic in dbt models.</li>
+</ul>
+
+<h3 id="44-creating-the-core_dim_users-table-model">4.4. Creating the <code class="language-plaintext highlighter-rouge">core_dim_users</code> Table Model</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">core_dim_users</code> table serves as a user dimension table, containing user attributes associated with <code class="language-plaintext highlighter-rouge">user_pseudo_id</code>, which is shared among fact tables in the Star Schema.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">WITH</span>
+<span class="n">CTE_raw</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">user_pseudo_id</span><span class="p">,</span>
+        <span class="n">event_timestamp</span><span class="p">,</span>
+        <span class="n">user_first_touch_timestamp</span><span class="p">,</span>
+        <span class="p">...</span>
+        <span class="n">geo</span><span class="p">.</span><span class="n">country</span><span class="p">,</span>
+        <span class="p">...</span>
+    <span class="k">FROM</span>
+        <span class="p">{{</span> <span class="k">source</span><span class="p">(</span><span class="s1">'ga4'</span><span class="p">,</span> <span class="s1">'events'</span><span class="p">)</span> <span class="p">}}</span>
+    <span class="k">WHERE</span>
+        <span class="n">user_pseudo_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+        <span class="p">...</span>
+<span class="p">),</span>
+
+<span class="n">CTE_latest</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="k">SELECT</span>
+        <span class="n">user_pseudo_id</span><span class="p">,</span>
+        <span class="n">event_timestamp</span><span class="p">,</span>
+        <span class="n">COALESCE</span><span class="p">(</span><span class="nb">DATE</span><span class="p">(</span><span class="n">TIMESTAMP_MICROS</span><span class="p">(</span><span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">user_first_touch_timestamp</span> <span class="k">IGNORE</span> <span class="n">NULLS</span><span class="p">)</span> <span class="n">OVER</span> <span class="n">w</span><span class="p">),</span> <span class="s1">'Asia/Seoul'</span><span class="p">),</span> <span class="nb">DATE</span><span class="p">(</span><span class="s1">'1900-01-01 00:00:00'</span><span class="p">,</span> <span class="s1">'Asia/Seoul'</span><span class="p">))</span> <span class="k">AS</span> <span class="n">user_first_touch_date</span><span class="p">,</span>
+        <span class="n">COALESCE</span><span class="p">(</span><span class="nb">DATETIME</span><span class="p">(</span><span class="n">TIMESTAMP_MICROS</span><span class="p">(</span><span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">user_first_touch_timestamp</span> <span class="k">IGNORE</span> <span class="n">NULLS</span><span class="p">)</span> <span class="n">OVER</span> <span class="n">w</span><span class="p">),</span> <span class="s1">'Asia/Seoul'</span><span class="p">),</span> <span class="nb">DATETIME</span><span class="p">(</span><span class="s1">'1900-01-01 00:00:00'</span><span class="p">,</span> <span class="s1">'Asia/Seoul'</span><span class="p">))</span> <span class="k">AS</span> <span class="n">user_first_touch_datetime</span><span class="p">,</span>
+        
+        <span class="k">CASE</span>
+            <span class="k">WHEN</span> <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">country</span> <span class="k">IGNORE</span> <span class="n">NULLS</span><span class="p">)</span> <span class="n">OVER</span> <span class="n">w</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+            <span class="k">WHEN</span> <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">country</span> <span class="k">IGNORE</span> <span class="n">NULLS</span><span class="p">)</span> <span class="n">OVER</span> <span class="n">w</span> <span class="o">=</span> <span class="s1">''</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+            <span class="k">WHEN</span> <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">country</span> <span class="k">IGNORE</span> <span class="n">NULLS</span><span class="p">)</span> <span class="n">OVER</span> <span class="n">w</span> <span class="o">=</span> <span class="s1">'(not set)'</span> <span class="k">THEN</span> <span class="s1">'UNK'</span>
+            <span class="k">ELSE</span> <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">country</span> <span class="k">IGNORE</span> <span class="n">NULLS</span><span class="p">)</span> <span class="n">OVER</span> <span class="n">w</span>
+        <span class="k">END</span> <span class="k">AS</span> <span class="n">country</span><span class="p">,</span>
+
+        <span class="n">ROW_NUMBER</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">AS</span> <span class="n">row_num</span>
+    <span class="k">FROM</span>
+        <span class="n">CTE_raw</span>
+    <span class="k">WINDOW</span> <span class="n">w</span> 
+        <span class="k">AS</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">user_pseudo_id</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">event_timestamp</span> <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="n">UNBOUNDED</span> <span class="k">FOLLOWING</span><span class="p">)</span>    
+<span class="p">)</span>
+
+<span class="k">SELECT</span>
+    <span class="o">*</span> <span class="k">EXCEPT</span> <span class="p">(</span><span class="n">event_timestamp</span><span class="p">,</span> <span class="n">row_num</span><span class="p">)</span>
+<span class="k">FROM</span>
+    <span class="n">CTE_latest</span>
+<span class="k">WHERE</span>
+    <span class="n">row_num</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>(1) The main query flow follows these steps:</p>
+
+<ul>
+  <li>First, the source table retrieves all user information.</li>
+  <li>Then, the most recent information is inserted into the existing table using Insert Overwrite.</li>
+</ul>
+
+<p>(2) We implemented Slowly Changing Dimension (SCD) Type 1, updating user attributes without maintaining historical records. While we considered SCD Type 3 for tracking historical changes, we decided against it due to:</p>
+
+<ul>
+  <li>The organization’s insufficient data literacy to justify tracking user history.</li>
+  <li>The high query costs associated with SCD Type 3.</li>
+</ul>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/7.webp" alt="" /></p>
+<blockquote>
+  <p><a href="https://www.bps-corp.com/post/so-what-are-slowly-changing-dimensions-scd">What are Slowly Changing Dimensions (SCD)?</a></p>
+</blockquote>
+
+<p>Meanwhile, the configuration of the <code class="language-plaintext highlighter-rouge">core_dim_users</code> model is structured as follows:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="m">1</span>
+
+<span class="na">models</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">core_dim_users</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">User Dimension 테이블</span>
+    <span class="na">meta</span><span class="pi">:</span>
+      <span class="na">owner</span><span class="pi">:</span> <span class="s">Joshua Kim</span>
+    <span class="na">config</span><span class="pi">:</span>
+      <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">core"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">dim"</span><span class="pi">]</span>
+      <span class="na">materialized</span><span class="pi">:</span> <span class="s">incremental</span>
+      <span class="na">incremental_strategy</span><span class="pi">:</span> <span class="s">merge</span>
+      <span class="na">unique_key</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">user_pseudo_id"</span><span class="pi">]</span>
+      <span class="na">cluster_by</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">user_pseudo_id"</span><span class="pi">]</span>
+      <span class="na">on_schema_change</span><span class="pi">:</span> <span class="s">append_new_columns</span>
+    <span class="na">columns</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">user_pseudo_id</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">User Identifier (PK)</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">user_first_touch_date</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">The date when the user first opened the app or visited the website. (NULL=1900-01-01)</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">user_first_touch_datetime</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">The timestamp when the user first opened the app or visited the website. (NULL=1900-01-01 00:00:00)</span>
+      <span class="s">...</span>
+</code></pre></div></div>
+
+<p>(1) By clustering based on <code class="language-plaintext highlighter-rouge">user_pseudo_id</code> (<strong>cluster_by</strong>), we enable faster retrieval of dimension data during JOIN operations in the future.</p>
+
+<p>(2) The materialization strategy is set to Incremental (Merge).</p>
+
+<ul>
+  <li>The Incremental approach is applied, with <code class="language-plaintext highlighter-rouge">user_pseudo_id</code> as the unique key, ensuring that any changes in user information columns are merged accordingly. This results in a table structured as an SCD Type 1 model, where only the most recent user information is retained.</li>
+</ul>
+
+<h3 id="45-managing-where-statements-and-variables-for-the-incremental-strategy">4.5. Managing Where Statements and Variables for the Incremental Strategy</h3>
+
+<p>One challenge encountered during the <code class="language-plaintext highlighter-rouge">dbt run</code> execution process was that Google Analytics 4 Export Tables are ingested in near real-time through streaming. However, certain columns are not collected in real-time, or their values may fluctuate. We observed that it takes approximately three days for each date-partitioned table to be fully completed.</p>
+
+<p>Due to this, maintaining a one-hour update cycle for the data warehouse via dbt to ensure data freshness was challenging. Since the source table experiences irregular updates, the best approach was to identify date-partitioned tables where changes occurred and use them as variables for dbt processing. This approach can be summarized as follows:</p>
+
+<p>(1) Where Statement for Each Model</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+<span class="k">FROM</span>
+    <span class="p">{{</span> <span class="k">source</span><span class="p">(</span><span class="s1">'ga4'</span><span class="p">,</span> <span class="s1">'events_intraday'</span><span class="p">)</span> <span class="p">}}</span>
+<span class="k">WHERE</span>
+    <span class="n">event_date</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">event_timestamp</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">event_name</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="c1">-- (1) Applying Variables (Start Date &amp; End Date): Reads only the relevant date-partitioned tables</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">var</span><span class="p">(</span><span class="s1">'start_date'</span><span class="p">,</span> <span class="k">None</span><span class="p">)</span> <span class="k">is</span> <span class="k">not</span> <span class="k">none</span> <span class="k">and</span> <span class="n">var</span><span class="p">(</span><span class="s1">'end_date'</span><span class="p">,</span> <span class="k">None</span><span class="p">)</span> <span class="k">is</span> <span class="k">not</span> <span class="k">none</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">AND</span> <span class="n">_table_suffix</span> <span class="k">BETWEEN</span> <span class="s1">''</span> <span class="k">AND</span> <span class="s1">''</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="c1">-- (2) Applying Variables (table_suffixes): Reads only tables updated since the last orchestration run</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">var</span><span class="p">(</span><span class="nv">"table_suffixes"</span><span class="p">,</span> <span class="k">None</span><span class="p">)</span> <span class="k">is</span> <span class="k">not</span> <span class="k">none</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">AND</span> <span class="n">_table_suffix</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'{{ var("table_suffixes") }}'</span><span class="p">)</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>(2) Variables in the <code class="language-plaintext highlighter-rouge">dbt_project.yml</code> File</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">...</span>
+<span class="c1"># Variables</span>
+<span class="na">vars</span><span class="pi">:</span>
+  <span class="na">start_date</span><span class="pi">:</span> <span class="c1"># D'CENT App GA4 Export Table Start Date (Default: None)</span>
+  <span class="na">end_date</span><span class="pi">:</span> <span class="c1"># D'CENT App GA4 Export Table End Date (Default: None)</span>
+  <span class="na">table_suffixes</span><span class="pi">:</span> <span class="c1"># D'CENT App GA4 Export Table Suffixes (Default: None)</span>
+<span class="nn">...</span>
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="5-results">5. Results</h1>
+
+<h3 id="51-improved-query-performance-and-cost-reduction">5.1. Improved Query Performance and Cost Reduction</h3>
+
+<p>Query execution times in Redash and other BI tools have significantly decreased. Previously, queries took over 15 seconds to execute, but after integrating the data warehouse, execution now completes within just 5 seconds.</p>
+
+<h3 id="52-enhanced-data-accessibility-for-the-organization">5.2. Enhanced Data Accessibility for the Organization</h3>
+
+<p>By hosting dbt Docs, anyone can easily access table specifications, as shown below. This enables internal team members to write queries in a more structured and consistent manner, improving overall data accessibility within the organization.</p>
+
+<p><img src="/assets/2024-11-03-implementing-data-warehouse-ga4/8.webp" alt="" /></p>
+<blockquote>
+  <p>Example of <code class="language-plaintext highlighter-rouge">mart_snp_dau</code> table documentation (Daily Active Users, New Users, Returning Users, Total Sessions, Total Session Duration)</p>
+</blockquote>
+
+<hr />
+
+<h1 id="6-conclusion">6. Conclusion</h1>
+
+<p>Building a data warehouse and its associated data marts is a challenging yet highly rewarding task. Even minor issues at the early stages can lead to significant errors in the data used across the organization, making this a highly responsible role. Since I am solely responsible for data management at IoTrust, there is no one to provide feedback on my mistakes. As a result, I adopt a self-review process, essentially working with multiple versions of myself.🙄</p>
+
+<p>However, seeing my colleagues access and utilize data easily through the data warehouse is incredibly fulfilling. It strengthens my sense of ownership over data, and I become even more invested in ensuring that the organization’s data-driven decision-making is executed properly.</p>
+
+<p>Moving forward, I plan to focus not just on internal product data but also on leveraging external product data. My goal is to create an environment where both internal and external data can be utilized together to drive better insights.</p>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/dbt-docs-site-hosting-ko/">
+            &#xE000; dbt Docs 사내 공유 방법 (사이트 호스팅 후기)
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/implementing-data-warehouse-ga4-ko/">
+            GA4 기반 데이터 웨어하우스 구축 후기 &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
