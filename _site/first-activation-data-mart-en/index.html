@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-K04Y972F7E');
+  </script>
+
+  <title>Data Mart Modeling Review (First Activation Funnel Metrics) – Joshua Kim – Analytics Engineer | Data Analyst</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  “This post summarizes my experience designing and building a data mart to effectively provide new user activation conversion metrics. I designed the data model to flexibly respond to changing business requirements, and focused on queries and structures that are immediately applicable in practice. Through this process, I was able to apply data modeling theory to real-world problem solving and once again realized the importance of deeply understanding requirements.”
+
+" />
+    <meta property="og:description" content="
+  “This post summarizes my experience designing and building a data mart to effectively provide new user activation conversion metrics. I designed the data model to flexibly respond to changing business requirements, and focused on queries and structures that are immediately applicable in practice. Through this process, I was able to apply data modeling theory to real-world problem solving and once again realized the importance of deeply understanding requirements.”
+
+" />
+    
+    <meta name="author" content="Joshua Kim" />
+
+    
+    <meta property="og:title" content="Data Mart Modeling Review (First Activation Funnel Metrics)" />
+    <meta property="twitter:title" content="Data Mart Modeling Review (First Activation Funnel Metrics)" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+
+  
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/logo/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/logo/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/logo/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/logo/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/logo/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/logo/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>      
+
+    <div class="wrapper-masthead">
+  <div class="container">
+    <header class="masthead clearfix">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
+      
+
+      <div class="site-info">
+        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
+        <p class="site-description">Analytics Engineer | Data Analyst</p>
+      </div>
+
+      <nav>
+        
+        
+        <a href="/about">About</a>
+        
+        
+        
+        <a href="/">Articles</a>
+        
+        
+        
+        <a href="/archive">Archive</a>
+        
+        
+        
+        <a href="/tags">Tags</a>
+        
+        
+      </nav>
+    </header>
+  </div>
+</div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Data Mart Modeling Review (First Activation Funnel Metrics)</h1>
+
+  <div>
+    <span class="date">
+      2025-01-25
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/tags#Language (English)">
+          Language (English)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Article (Project)">
+          Article (Project)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Level (2. Intermediate)">
+          Level (2. Intermediate)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Field (Analytics Engineering)">
+          Field (Analytics Engineering)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (SQL)">
+          Skills (SQL)
+        </a>
+      </li>
+      
+      <li>
+        <a href="http://localhost:4000/tags#Skills (dbt)">
+          Skills (dbt)
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>“This post summarizes my experience designing and building a data mart to effectively provide new user activation conversion metrics. I designed the data model to flexibly respond to changing business requirements, and focused on queries and structures that are immediately applicable in practice. Through this process, I was able to apply data modeling theory to real-world problem solving and once again realized the importance of deeply understanding requirements.”</p>
+</blockquote>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/3.webp" alt="" /></p>
+
+<hr />
+
+<h1 id="table-of-contents">Table of Contents</h1>
+<ol>
+  <li><strong>The Squad Organization Was Launched!</strong>
+    <ul>
+      <li>1.1. Background</li>
+      <li>1.2. Core Metrics of the Squad</li>
+      <li>1.3. What the Data Analyst Needs to Do</li>
+    </ul>
+  </li>
+  <li><strong>What I Needed to Do</strong>
+    <ul>
+      <li>2.1. Reflecting on the Core Metrics</li>
+      <li>2.2. Let’s Build a Data Mart!</li>
+    </ul>
+  </li>
+  <li><strong>A Preview of the Data Mart</strong>
+    <ul>
+      <li>3.1. <code class="language-plaintext highlighter-rouge">dim__users</code></li>
+      <li>3.2. <code class="language-plaintext highlighter-rouge">fact__first_activation_events</code></li>
+      <li>3.3. Example Records</li>
+      <li>3.4. Key Features</li>
+    </ul>
+  </li>
+  <li><strong>Example Queries</strong>
+    <ul>
+      <li>4.1. Designed for Usability</li>
+      <li>4.2. Beginner Query</li>
+      <li>4.3. Intermediate Query</li>
+      <li>4.4. Advanced Query</li>
+    </ul>
+  </li>
+  <li><strong>How the Modeling Was Done</strong>
+    <ul>
+      <li>5.1. [STEP 1] Load the Entire <code class="language-plaintext highlighter-rouge">dim__users</code> Table</li>
+      <li>5.2. [STEP 2] Keep Only New <code class="language-plaintext highlighter-rouge">first_visit</code> Data</li>
+      <li>5.3. [STEP 3] Incrementally Load the <code class="language-plaintext highlighter-rouge">fact__events</code> Table</li>
+      <li>5.4. [STEP 4] Keep Only New First Key Events</li>
+      <li>5.5. [STEP 5] Combine and Insert New <code class="language-plaintext highlighter-rouge">first_visit</code> and First Key Events Data</li>
+      <li>5.6. Final Review</li>
+    </ul>
+  </li>
+  <li><strong>Modeling Review</strong>
+    <ul>
+      <li>6.1. Good Requirement Gathering Leads to Good Data Marts</li>
+      <li>6.2. Data Modeling Is Not Complete with Theory Alone</li>
+    </ul>
+  </li>
+  <li><strong>Acknowledgements</strong>
+    <ul>
+      <li>7.1. Inspired by Toss Securities’ “DW Design Review” Video</li>
+      <li>7.2. Special Thanks to the Squad Leader</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h1 id="1-the-squad-organization-was-launched">1. The Squad Organization Was Launched!</h1>
+
+<h3 id="11-background">1.1. Background</h3>
+
+<blockquote>
+  <p>Let’s focus not just on user acquisition, but on product improvements and marketing activities that lock in new users!</p>
+</blockquote>
+
+<h3 id="12-core-metrics-of-the-squad">1.2. Core Metrics of the Squad</h3>
+
+<blockquote>
+  <p>“Let’s increase the <strong>conversion rate of users who perform Key Event 1 within 1 day after their first visit, and Key Event 2 within 7 days</strong>!”</p>
+</blockquote>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/1.webp" alt="" /></p>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/2.webp" alt="" /></p>
+
+<h3 id="13-what-the-data-analyst-needs-to-do">1.3. What the Data Analyst Needs to Do</h3>
+
+<blockquote>
+  <p>“Please prepare the data so that we can thoroughly analyze the core metrics and provide them via dashboard.”</p>
+</blockquote>
+
+<h1 id="2-what-i-needed-to-do">2. What I Needed to Do</h1>
+
+<h3 id="21-reflecting-on-the-core-metrics">2.1. Reflecting on the Core Metrics</h3>
+
+<ul>
+  <li>The sequence of First Visit - Key Event 1 - Key Event 2 is clear.</li>
+  <li>Only conversions within the maximum conversion period are recognized.</li>
+  <li>Conversion rates are measured on a user basis.</li>
+  <li>The squad’s core metrics may change in the future: Key Events and maximum conversion periods.</li>
+</ul>
+
+<h3 id="22-lets-build-a-data-mart">2.2. Let’s Build a Data Mart!</h3>
+
+<ul>
+  <li>Running queries directly on the Core Layer’s <code class="language-plaintext highlighter-rouge">fact__events</code> would be too complex and costly.</li>
+  <li>With the possibility of changes in core metrics, it would be difficult to control query accuracy and delivery.</li>
+</ul>
+
+<h1 id="3-a-preview-of-the-data-mart">3. A Preview of the Data Mart</h1>
+
+<h3 id="31-dim__users">3.1. <code class="language-plaintext highlighter-rouge">dim__users</code></h3>
+
+<ul>
+  <li>Already managed as a conformed dimension in the Core Layer.</li>
+  <li>SCD Type 1 (only the latest value is kept, no historical values).</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Column</strong></th>
+      <th><strong>Description</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">user_id</code></td>
+      <td>User ID</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_date</code></td>
+      <td>First visit date</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_datetime</code></td>
+      <td>First visit datetime</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">country</code></td>
+      <td>Most recent country</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">device_os</code></td>
+      <td>Most recent device OS</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">app_version</code></td>
+      <td>Most recent app version</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_campaign</code></td>
+      <td>UTM Campaign at first visit</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_medium</code></td>
+      <td>UTM Medium at first visit</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_source</code></td>
+      <td>UTM Source at first visit</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="32-fact__first_activation_events">3.2. <code class="language-plaintext highlighter-rouge">fact__first_activation_events</code></h3>
+
+<ul>
+  <li>This is a newly created table for this data mart.</li>
+  <li>Only the first events for each user are stored.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>Column</strong></th>
+      <th><strong>Description</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">date</code></td>
+      <td>Date of first event occurrence</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">datetime</code></td>
+      <td>Datetime of first event occurrence</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">user_id</code></td>
+      <td>User ID</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">event_name</code></td>
+      <td>Event name</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_visit_date</code></td>
+      <td>User’s first visit date</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">first_visit_datetime</code></td>
+      <td>User’s first visit datetime</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">hours_from_first_visit</code></td>
+      <td>Hours elapsed from first visit to first event</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">days_from_first_visit</code></td>
+      <td>Days elapsed from first visit to first event</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="33-example-records">3.3. Example Records</h3>
+
+<ul>
+  <li>If the <code class="language-plaintext highlighter-rouge">fact__events</code> table looks like this for user Jinseok:</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>date</strong></th>
+      <th><strong>datetime</strong></th>
+      <th><strong>user_id</strong></th>
+      <th><strong>event_name</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:00:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">first_visit</code></td>
+    </tr>
+    <tr>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:01:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">add_to_cart</code></td>
+    </tr>
+    <tr>
+      <td>2025-01-02</td>
+      <td>2025-01-02 01:00:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">add_to_cart</code></td>
+    </tr>
+    <tr>
+      <td>2025-01-02</td>
+      <td>2025-01-02 01:01:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">purchase</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">fact__first_activation_events</code> table would be constructed as follows, keeping only the first events and adding necessary columns:</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>date</strong></th>
+      <th><strong>datetime</strong></th>
+      <th><strong>user_id</strong></th>
+      <th><strong>event_name</strong></th>
+      <th><strong>first_visit_date</strong></th>
+      <th><strong>first_visit_datetime</strong></th>
+      <th><strong>hours_from_first_visit</strong></th>
+      <th><strong>days_from_first_visit</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:00:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">first_visit</code></td>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:00:00</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:01:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">add_to_cart</code></td>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:00:00</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2025-01-02</td>
+      <td>2025-01-02 01:01:00</td>
+      <td>Jinseok</td>
+      <td><code class="language-plaintext highlighter-rouge">purchase</code></td>
+      <td>2025-01-01</td>
+      <td>2025-01-01 01:00:00</td>
+      <td>25</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="34-key-features">3.4. Key Features</h3>
+
+<ul>
+  <li>This is a transaction fact table (since <code class="language-plaintext highlighter-rouge">user_id</code> is present, you can easily filter dimensions via <code class="language-plaintext highlighter-rouge">dim__users</code>).</li>
+  <li>The grain is the combination of <code class="language-plaintext highlighter-rouge">user_id</code> and <code class="language-plaintext highlighter-rouge">event_name</code> (only the first event for each user is stored).</li>
+  <li>Conversion period information is stored as a pre-calculated non-additive fact (so you don’t need to use joins or window functions later).</li>
+</ul>
+
+<h1 id="4-example-queries">4. Example Queries</h1>
+
+<h3 id="41-designed-for-usability">4.1. Designed for Usability</h3>
+
+<ul>
+  <li>If the core metric’s Key Event changes? → Just modify the <code class="language-plaintext highlighter-rouge">event_name</code> part.</li>
+  <li>If the maximum conversion period changes? → Just modify the <code class="language-plaintext highlighter-rouge">hours_from_first_visit</code> or <code class="language-plaintext highlighter-rouge">days_from_first_visit</code> part.</li>
+  <li>Need to filter by user attributes? → Just join with <code class="language-plaintext highlighter-rouge">dim__users</code>.</li>
+</ul>
+
+<h3 id="42-beginner-query">4.2. Beginner Query</h3>
+
+<ul>
+  <li>☝🏻 Show the trend of users who converted via <code class="language-plaintext highlighter-rouge">key_event_1</code> (regardless of conversion period).</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="nb">date</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="n">users_cnt</span>
+    <span class="k">FROM</span>
+        <span class="n">fact__first_activation_events</span>
+    <span class="k">WHERE</span> <span class="k">TRUE</span>
+        <span class="k">AND</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+    <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="43-intermediate-query">4.3. Intermediate Query</h3>
+
+<ul>
+  <li>☝🏻 Show the trend of conversion rates for users who performed <code class="language-plaintext highlighter-rouge">key_event_1</code> within 1 day of <code class="language-plaintext highlighter-rouge">first_visit</code>.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">first_visit_date</span> <span class="k">AS</span> <span class="n">cohort_date</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">first_visit</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">key_event_1</span>
+    <span class="k">FROM</span>
+        <span class="n">fact__first_activation_events</span>
+    <span class="k">WHERE</span> <span class="k">TRUE</span>
+        <span class="k">AND</span> <span class="p">(</span>
+            <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span>
+            <span class="k">OR</span> <span class="p">(</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span> <span class="k">AND</span> <span class="n">days_from_first_visit</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+    <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+</code></pre></div></div>
+
+<ul>
+  <li>☝🏻 (Squad’s core metric) Show the trend of conversion rates for users who performed <code class="language-plaintext highlighter-rouge">key_event_1</code> within 1 day and <code class="language-plaintext highlighter-rouge">key_event_2</code> within 7 days of <code class="language-plaintext highlighter-rouge">first_visit</code>.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">first_visit_date</span> <span class="k">AS</span> <span class="n">cohort_date</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">first_visit</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">key_event_1</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_2'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">key_event_2</span>
+    <span class="k">FROM</span>
+        <span class="n">fact__first_activation_events</span>
+    <span class="k">WHERE</span> <span class="k">TRUE</span>
+        <span class="k">AND</span> <span class="p">(</span>
+            <span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span>
+            <span class="k">OR</span> <span class="p">(</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span> <span class="k">AND</span> <span class="n">days_from_first_visit</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">OR</span> <span class="p">(</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_2'</span> <span class="k">AND</span> <span class="n">days_from_first_visit</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+    <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="44-advanced-query">4.4. Advanced Query</h3>
+
+<ul>
+  <li>☝🏻 Show the trend of conversion rates for US users who performed <code class="language-plaintext highlighter-rouge">key_event_1</code> within 1 day and <code class="language-plaintext highlighter-rouge">key_event_2</code> within 7 days of <code class="language-plaintext highlighter-rouge">first_visit</code>.</li>
+</ul>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="n">FACT</span><span class="p">.</span><span class="n">first_visit_date</span> <span class="k">AS</span> <span class="n">cohort_date</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">FACT</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">first_visit</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">FACT</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">key_event_1</span><span class="p">,</span>
+        <span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">FACT</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_2'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="k">AS</span> <span class="n">key_event_2</span>
+    <span class="k">FROM</span>
+        <span class="n">fact__first_activation_events</span> <span class="n">FACT</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span>
+        <span class="n">dim__users</span> <span class="n">DIM</span>
+        <span class="k">ON</span> <span class="n">FACT</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">DIM</span><span class="p">.</span><span class="n">user_id</span>
+    <span class="k">WHERE</span> <span class="k">TRUE</span>
+        <span class="k">AND</span> <span class="n">DIM</span><span class="p">.</span><span class="n">country</span> <span class="o">=</span> <span class="s1">'United States'</span>
+        <span class="k">AND</span> <span class="p">(</span>
+            <span class="n">FACT</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span>
+            <span class="k">OR</span> <span class="p">(</span><span class="n">FACT</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_1'</span> <span class="k">AND</span> <span class="n">FACT</span><span class="p">.</span><span class="n">days_from_first_visit</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">OR</span> <span class="p">(</span><span class="n">FACT</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'key_event_2'</span> <span class="k">AND</span> <span class="n">FACT</span><span class="p">.</span><span class="n">days_from_first_visit</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">GROUP</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+    <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="mi">1</span>
+</code></pre></div></div>
+
+<h1 id="5-how-the-modeling-was-done">5. How the Modeling Was Done</h1>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/3.webp" alt="" /></p>
+
+<h3 id="51-step-1-load-the-entire-dim__users-table">5.1. [STEP 1] Load the Entire <code class="language-plaintext highlighter-rouge">dim__users</code> Table</h3>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/4.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">WITH</span>
+    <span class="n">CTE_first_visits_raw</span> <span class="k">AS</span> <span class="p">(</span>
+        <span class="k">SELECT</span>
+            <span class="n">user_id</span><span class="p">,</span>
+            <span class="n">first_date</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+            <span class="n">first_datetime</span> <span class="k">AS</span> <span class="nb">datetime</span>
+        <span class="k">FROM</span>
+            <span class="p">{{</span> <span class="k">ref</span><span class="p">(</span><span class="s1">'dim__users'</span><span class="p">)</span> <span class="p">}}</span>
+    <span class="p">),</span>	
+</code></pre></div></div>
+
+<h3 id="52-step-2-keep-only-new-first_visit-data">5.2. [STEP 2] Keep Only New <code class="language-plaintext highlighter-rouge">first_visit</code> Data</h3>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/5.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="n">CTE_first_visits</span> <span class="k">AS</span> <span class="p">(</span>
+        <span class="k">SELECT</span>
+            <span class="n">SRC</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="n">SRC</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+            <span class="n">SRC</span><span class="p">.</span><span class="nb">datetime</span>
+        <span class="k">FROM</span>
+            <span class="n">CTE_first_visits_raw</span> <span class="n">SRC</span>
+        <span class="k">LEFT</span> <span class="k">JOIN</span> 
+            <span class="p">{{</span> <span class="n">this</span> <span class="p">}}</span> <span class="k">EXISTING</span>
+            <span class="k">ON</span> <span class="n">SRC</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">user_id</span>
+            <span class="k">AND</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="s1">'first_visit'</span>
+        <span class="k">WHERE</span> <span class="k">TRUE</span>
+            <span class="k">AND</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">user_id</span> <span class="k">IS</span> <span class="k">NULL</span>
+    <span class="p">),</span>
+
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="53-step-3-incrementally-load-the-fact__events-table">5.3. [STEP 3] Incrementally Load the <code class="language-plaintext highlighter-rouge">fact__events</code> Table</h3>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/6.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">CTE_events_raw</span> <span class="k">AS</span> <span class="p">(</span>
+        <span class="k">SELECT</span>
+            <span class="n">user_id</span><span class="p">,</span>
+            <span class="n">event_name</span><span class="p">,</span>
+            <span class="k">MIN</span><span class="p">(</span><span class="nb">date</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">date</span><span class="p">,</span>
+            <span class="k">MIN</span><span class="p">(</span><span class="nb">datetime</span><span class="p">)</span> <span class="k">AS</span> <span class="nb">datetime</span>
+        <span class="k">FROM</span>
+            <span class="p">{{</span> <span class="k">ref</span><span class="p">(</span><span class="s1">'fact__events'</span><span class="p">)</span> <span class="p">}}</span>
+        <span class="k">WHERE</span> <span class="k">TRUE</span>
+            <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+            <span class="k">AND</span> <span class="nb">datetime</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="nb">datetime</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">{{</span> <span class="n">this</span> <span class="p">}})</span>
+            <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+            <span class="k">AND</span> <span class="n">event_name</span> <span class="k">IN</span> <span class="p">(</span>
+                <span class="s1">'Key Event 1'</span><span class="p">,</span>
+                <span class="s1">'Key Event 2'</span><span class="p">,</span>
+                <span class="p">...</span>
+            <span class="p">)</span>
+        <span class="k">GROUP</span> <span class="k">BY</span>
+            <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+    <span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="54-step-4-keep-only-new-first-key-events">5.4. [STEP 4] Keep Only New First Key Events</h3>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/7.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">,</span>
+
+    <span class="n">CTE_events</span> <span class="k">AS</span> <span class="p">(</span>
+        <span class="k">SELECT</span>
+            <span class="n">SRC</span><span class="p">.</span><span class="o">*</span>
+        <span class="k">FROM</span>
+            <span class="n">CTE_events_raw</span> <span class="n">SRC</span>
+        <span class="k">LEFT</span> <span class="k">JOIN</span> 
+            <span class="p">{{</span> <span class="n">this</span> <span class="p">}}</span> <span class="k">EXISTING</span>
+            <span class="k">ON</span> <span class="n">SRC</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">user_id</span>
+            <span class="k">AND</span> <span class="n">SRC</span><span class="p">.</span><span class="n">event_name</span> <span class="o">=</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">event_name</span>
+        <span class="k">WHERE</span> <span class="k">TRUE</span>
+            <span class="k">AND</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">user_id</span> <span class="k">IS</span> <span class="k">NULL</span>
+            <span class="k">AND</span> <span class="k">EXISTING</span><span class="p">.</span><span class="n">event_name</span> <span class="k">IS</span> <span class="k">NULL</span>
+    <span class="p">)</span>
+
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="55-step-5-combine-and-insert-new-first_visit-and-first-key-events-data">5.5. [STEP 5] Combine and Insert New <code class="language-plaintext highlighter-rouge">first_visit</code> and First Key Events Data</h3>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/8.webp" alt="" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">SELECT</span>
+        <span class="nb">date</span><span class="p">,</span>
+        <span class="nb">datetime</span><span class="p">,</span>
+        <span class="n">user_id</span><span class="p">,</span>
+        <span class="s1">'first_visit'</span> <span class="k">AS</span> <span class="n">event_name</span><span class="p">,</span>
+        <span class="nb">date</span> <span class="k">AS</span> <span class="n">first_visit_date</span><span class="p">,</span>
+        <span class="nb">datetime</span> <span class="k">AS</span> <span class="n">first_visit_datetime</span><span class="p">,</span>
+        <span class="k">NULL</span> <span class="k">AS</span> <span class="n">hours_from_first_visit</span><span class="p">,</span>
+        <span class="k">NULL</span> <span class="k">AS</span> <span class="n">days_from_first_visit</span>
+    <span class="k">FROM</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">CTE_first_visits</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">CTE_first_visits_raw</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+
+    <span class="k">UNION</span> <span class="k">ALL</span>
+
+    <span class="k">SELECT</span>
+        <span class="n">FCT</span><span class="p">.</span><span class="nb">date</span><span class="p">,</span>
+        <span class="n">FCT</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span>
+        <span class="n">FCT</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span>
+        <span class="n">FCT</span><span class="p">.</span><span class="n">event_name</span><span class="p">,</span>
+        <span class="n">DIM</span><span class="p">.</span><span class="nb">date</span> <span class="k">AS</span> <span class="n">first_visit_date</span><span class="p">,</span>
+        <span class="n">DIM</span><span class="p">.</span><span class="nb">datetime</span> <span class="k">AS</span> <span class="n">first_visit_datetime</span><span class="p">,</span>
+        <span class="n">TIMESTAMP_DIFF</span><span class="p">(</span>
+            <span class="n">TIMESTAMP_TRUNC</span><span class="p">(</span><span class="n">FCT</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span> <span class="n">HOUR</span><span class="p">),</span>
+            <span class="n">TIMESTAMP_TRUNC</span><span class="p">(</span><span class="n">DIM</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span> <span class="n">HOUR</span><span class="p">),</span>
+            <span class="n">HOUR</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">AS</span> <span class="n">hours_from_first_visit</span><span class="p">,</span> <span class="c1">-- Starts from 1</span>
+        <span class="n">TIMESTAMP_DIFF</span><span class="p">(</span>
+            <span class="n">TIMESTAMP_TRUNC</span><span class="p">(</span><span class="n">FCT</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span> <span class="k">DAY</span><span class="p">),</span>
+            <span class="n">TIMESTAMP_TRUNC</span><span class="p">(</span><span class="n">DIM</span><span class="p">.</span><span class="nb">datetime</span><span class="p">,</span> <span class="k">DAY</span><span class="p">),</span>
+            <span class="k">DAY</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">AS</span> <span class="n">days_from_first_visit</span> <span class="c1">-- Starts from 1</span>
+    <span class="k">FROM</span>
+        <span class="p">{</span><span class="o">%</span> <span class="n">if</span> <span class="n">is_incremental</span><span class="p">()</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">CTE_events</span> <span class="n">FCT</span>
+        <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+        <span class="n">CTE_events_raw</span> <span class="n">FCT</span> 
+        <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span>
+        <span class="n">CTE_first_visits_raw</span> <span class="n">DIM</span>
+        <span class="k">ON</span> <span class="n">FCT</span><span class="p">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">DIM</span><span class="p">.</span><span class="n">user_id</span>
+</code></pre></div></div>
+
+<h3 id="56-final-review">5.6. Final Review</h3>
+
+<p><img src="/assets/2025-01-25-first-activation-data-mart/3.webp" alt="" /></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">models</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">fact__first_activation_events</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">User's first event history</span>
+    <span class="na">meta</span><span class="pi">:</span>
+      <span class="na">owner</span><span class="pi">:</span> <span class="s">Jinseok Kim</span>
+    <span class="na">config</span><span class="pi">:</span>
+      <span class="na">materialized</span><span class="pi">:</span> <span class="s">incremental</span>
+      <span class="na">incremental_strategy</span><span class="pi">:</span> <span class="s">insert_overwrite</span>
+      <span class="na">on_schema_change</span><span class="pi">:</span> <span class="s">append_new_columns</span>
+      <span class="na">partition_by</span><span class="pi">:</span>
+        <span class="na">field</span><span class="pi">:</span> <span class="s">date</span>
+        <span class="na">data_type</span><span class="pi">:</span> <span class="s">date</span>
+        <span class="na">granularity</span><span class="pi">:</span> <span class="s">day</span>
+      <span class="na">time_ingestion_partitioning</span><span class="pi">:</span> <span class="kc">true</span>
+      <span class="na">require_partition_filter</span><span class="pi">:</span> <span class="kc">false</span>
+      <span class="na">copy_partitions</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">columns</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">date</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">...</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">...</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">...</span>
+</code></pre></div></div>
+
+<h1 id="6-modeling-review">6. Modeling Review</h1>
+
+<h3 id="61-good-requirement-gathering-leads-to-good-data-marts">6.1. Good Requirement Gathering Leads to Good Data Marts</h3>
+
+<ul>
+  <li>A good data mart = a data mart that can be used repeatedly and sustainably</li>
+  <li>To accurately understand the squad’s core metrics, I spent hours discussing with the squad leader.
+    <ul>
+      <li>How exactly is the conversion rate defined?</li>
+      <li>How might the core metrics change in the future?</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="62-data-modeling-is-not-complete-with-theory-alone">6.2. Data Modeling Is Not Complete with Theory Alone</h3>
+
+<ul>
+  <li>There are systematic theories for DWH such as Kimball and Inmon.</li>
+  <li>However, the most important thing is: “Does it help solve the problem?”
+    <ul>
+      <li>Organizational data usage tendencies, data characteristics, core problems</li>
+    </ul>
+  </li>
+  <li>The <code class="language-plaintext highlighter-rouge">fact__first_activation_events</code> table was not created solely based on theory.
+    <ul>
+      <li>It was created by applying DWH theory to meet organizational needs.</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="7-acknowledgements">7. Acknowledgements</h1>
+
+<h3 id="71-inspired-by-toss-securities-dw-design-review-video">7.1. Inspired by Toss Securities’ “DW Design Review” Video</h3>
+
+<blockquote>
+  <p><a href="https://www.youtube.com/watch?v=MWDVBZycou4">Toss SLASH 24 - Designing and Operating a DW for All-Purpose Data Analysis</a></p>
+</blockquote>
+
+<ul>
+  <li>This video provided important clues for understanding the flow of user activation data.</li>
+</ul>
+
+<h3 id="72-special-thanks-to-the-squad-leader">7.2. Special Thanks to the Squad Leader</h3>
+
+<ul>
+  <li>The squad leader actively helped resolve my questions to provide core metric data.
+    <ul>
+      <li>Provided background to help see the business goals clearly.</li>
+      <li>Carefully quantified the core metrics together.</li>
+    </ul>
+  </li>
+  <li>I am sincerely grateful for the intensive training that helped me align my perspective as a data analyst with the organization’s goals.</li>
+</ul>
+
+<hr />
+
+<h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
+
+<p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
+
+  </div>
+
+  <div class="pagination">
+    
+      <span class="prev" >
+          <a href="http://localhost:4000/implementing-airflow-ko/">
+            &#xE000; Airflow 도입 후기
+          </a>
+      </span>
+    
+    
+      <span class="next" >
+          <a href="http://localhost:4000/first-activation-data-mart-ko/">
+            데이터 마트 모델링 후기 (First Activation Funnel 지표) &#xE001;
+          </a>
+      </span>
+    
+  </div>
+
+  <script type="text/javascript"
+  src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
+</script>
+<script>
+$(document).ready(function() {
+    mermaid.initialize({
+        theme: 'forest'
+    });
+});
+</script>
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/joshua-data" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.linkedin.com/in/joshuajsk" class="icon-17 linkedin" title="LinkedIn"><svg viewBox="0 0 512 512"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"/></svg><!--[if lt IE 9]><em>LinkedIn</em><![endif]--></a></li>
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M201.8 347.2c0 20.3-16.5 36.8-36.8 36.8 -20.3 0-36.8-16.5-36.8-36.8s16.5-36.8 36.8-36.8C185.3 310.4 201.8 326.8 201.8 347.2zM128.2 204.7v54.5c68.5 0.7 124 56.3 124.7 124.7h54.5C306.7 285.3 226.9 205.4 128.2 204.7zM128.2 166.6c57.9 0.3 112.3 22.9 153.2 63.9 41 41 63.7 95.5 63.9 153.5h54.5c-0.3-149.9-121.7-271.4-271.6-271.9V166.6L128.2 166.6z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<div class="footer-wrapper">
+    <p>Joshua Kim</p>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fjoshua-data.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=ghostery.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</div>
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
