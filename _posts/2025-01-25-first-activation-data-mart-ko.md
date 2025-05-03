@@ -4,7 +4,7 @@ title: "데이터 마트 모델링 후기 (First Activation Funnel 지표)"
 tags:
   - Language (Korean)
   - Article (Project)
-  - Level (2. Intermediate)
+  - Level (3. Advanced)
   - Field (Analytics Engineering)
   - Skills (SQL)
   - Skills (dbt)

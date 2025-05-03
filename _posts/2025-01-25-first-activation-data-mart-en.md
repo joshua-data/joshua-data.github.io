@@ -4,7 +4,7 @@ title: "Data Mart Modeling Review (First Activation Funnel Metrics)"
 tags:
   - Language (English)
   - Article (Project)
-  - Level (2. Intermediate)
+  - Level (3. Advanced)
   - Field (Analytics Engineering)
   - Skills (SQL)
   - Skills (dbt)
