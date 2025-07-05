@@ -12,7 +12,7 @@ permalink: /about/
 
 ## 👦🏼 About Me
 
-Hello! I'm **Jinseok Kim (Joshua)**, a dedicated **Data Analyst** and **Analytics Engineer** with deep expertise in developing robust data infrastructures and crafting analytics solutions that drive strategic decision-making. My strength lies not just in technical execution, but in my ability to communicate insights effectively, fostering a culture of data literacy across teams. I strive to understand different perspectives and work collaboratively toward shared goals, ensuring that my contributions align with both team success and organizational growth.
+Hello! I'm **Jinseok Kim (Joshua)**, a dedicated **Analytics Engineer** with deep expertise in developing robust data infrastructures and crafting analytics solutions that drive strategic decision-making. My strength lies not just in technical execution, but in my ability to communicate insights effectively, fostering a culture of data literacy across teams. I strive to understand different perspectives and work collaboratively toward shared goals, ensuring that my contributions align with both team success and organizational growth.
 
 ## 🗺️ Career Roadmap
 
@@ -32,6 +32,7 @@ Hello! I'm **Jinseok Kim (Joshua)**, a dedicated **Data Analyst** and **Analytic
 - **Previous Experience**:
   - Data Analyst
   - VBA Programmer
+  - Equity RA
 
 ---
 
