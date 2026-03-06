@@ -1,24 +1,39 @@
-<div class="wrapper-masthead">
-  <div class="container">
-    <header class="masthead clearfix">
-      {% if site.avatar %}
-        <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
-      {% endif %}
+<header class="header" id="header">
+  <div class="container header__inner">
+    {% if site.avatar %}
+      <a href="{{ site.baseurl }}/" class="header__avatar">
+        <img src="{{ site.avatar }}" alt="{{ site.name }}" />
+      </a>
+    {% endif %}
 
-      <div class="site-info">
-        <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-        <p class="site-description">{{ site.description }}</p>
-      </div>
+    <div class="header__info">
+      <h1 class="header__title">
+        <a href="{{ site.baseurl }}/">{{ site.name }}</a>
+      </h1>
+      <p class="header__description">{{ site.description }}</p>
+    </div>
 
-      <nav>
-        {% for nav in site.navigation %}
-        {% if nav.url contains 'http://' or nav.url contains 'https://' %}
-        <a href="{{ nav.url }}">{{ nav.name }}</a>
+    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      {% for nav in site.navigation %}
+        {% assign current_url = page.url | remove: 'index.html' %}
+        {% assign nav_url = nav.url | remove: 'index.html' %}
+        {% if current_url == nav_url or current_url == '/' and nav_url == '/' %}
+          {% assign is_active = true %}
         {% else %}
-        <a href="{{ site.baseurl }}{{ nav.url }}">{{ nav.name }}</a>
+          {% assign is_active = false %}
         {% endif %}
-        {% endfor %}
-      </nav>
-    </header>
+        {% if nav.url contains 'http://' or nav.url contains 'https://' %}
+          <a href="{{ nav.url }}" class="nav__link{% if is_active %} nav__link--active{% endif %}">{{ nav.name }}</a>
+        {% else %}
+          <a href="{{ site.baseurl }}{{ nav.url }}" class="nav__link{% if is_active %} nav__link--active{% endif %}">{{ nav.name }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
   </div>
-</div>
+</header>

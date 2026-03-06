@@ -52,7 +52,7 @@ tags:
 
 ### Results
 * **Conclusion from key metrics**: Displaying discount percentages did not bring significant changes to Purchase CVR and ARPU, which may be because it did not effectively communicate the inherent value of the product.
-* **Increase in Add to Cart CVRT**: Discount information acted as a driver for purchase decisions, increasing the Add to Cart CVR, showing that visually highlighting discounts could positively influence user behavior.
+* **Increase in Add to Cart CVR**: Discount information acted as a driver for purchase decisions, increasing the Add to Cart CVR and demonstrating that visually highlighting discounts can positively influence user behavior.
 
 ---
 
@@ -149,7 +149,7 @@ P(Click Begin Checkout Button | Visit Experiment Page)
 
 **4.1.3. Guardrail Metrics**
 
-> Our company sells the same products on other platforms such as Amazon, Naver, and Coupang. However, the scope of the A/B Test TF’s activities was primarily limited to our own website’s conversion rates and ARPU. AlthoughI didn’t expect our website's performance to negatively impact other e-commerce platforms, I set up guardrail metrics to ensure a holistic view of overall company performance.
+> Our company sells the same products on other platforms such as Amazon, Naver, and Coupang. However, the scope of the A/B Test TF's activities was primarily limited to our own website's conversion rates and ARPU. Although I didn't expect our website's performance to negatively impact other e-commerce platforms, I set up guardrail metrics to ensure a holistic view of overall company performance.
 
 ![]({{ site.baseurl }}/assets/2023-04-30-ab-test-review/4.png)
 
@@ -269,7 +269,7 @@ Data was retrieved from BigQuery and analyzed using Python.
 
 # 5. Results
 > * **Conclusion from key metrics**: Displaying discount percentages did not bring significant changes to Purchase CVR and ARPU, which may be because it did not effectively communicate the inherent value of the product.
-> * **Increase in Add to Cart CVRT**: Discount information acted as a driver for purchase decisions, increasing the Add to Cart CVR, showing that visually highlighting discounts could positively influence user behavior.
+> * **Increase in Add to Cart CVR**: Discount information acted as a driver for purchase decisions, increasing the Add to Cart CVR and demonstrating that visually highlighting discounts can positively influence user behavior.
 
 ### 5.1. Analysis Results
 

@@ -8,88 +8,272 @@ permalink: /tags/
   <h2>No post found</h2>
 {% endif %}
 
-<div class="tags">
-  <ul class="label">
-
-    <!-- Give Language Tags Sorting Priority -->
-    {% if site.tags['Language (English)'] %}
-    <li>
-      <a href="#Language-English">
-        <span>Language (English)</span>
-        <span class="count">{{ site.tags['Language (English)'] | size }}</span>
-      </a>
-    </li>
-    {% endif %}
-    {% if site.tags['Language (Korean)'] %}
-    <li>
-      <a href="#Language-Korean">
-        <span>Language (Korean)</span>
-        <span class="count">{{ site.tags['Language (Korean)'] | size }}</span>
-      </a>
-    </li>
-    {% endif %}
-    {% assign sorted_tags = site.tags | sort %}
-    {% for tag in sorted_tags %}
-      {% if tag[0] != 'Language (English)' and tag[0] != 'Language (Korean)' %}
-      <li>
-        <a href="#{{ tag[0] }}">
-          <span>{{ tag[0] }}</span>
-          <span class="count">{{ tag[1] | size }}</span>
-        </a>
-      </li>
+<div class="tags-filter">
+  <!-- Language Filter -->
+  <div class="tags-filter__section">
+    <h3 class="tags-filter__heading">Language</h3>
+    <div class="tags-filter__buttons" data-category="language">
+      <button class="tags-filter__btn tags-filter__btn--active" data-tag="all">
+        All
+        <span class="tags-filter__count">{{ site.posts | size }}</span>
+      </button>
+      {% if site.tags['Language (English)'] %}
+      <button class="tags-filter__btn" data-tag="Language (English)">
+        English
+        <span class="tags-filter__count">{{ site.tags['Language (English)'] | size }}</span>
+      </button>
       {% endif %}
-    {% endfor %}
-  </ul>
+      {% if site.tags['Language (Korean)'] %}
+      <button class="tags-filter__btn" data-tag="Language (Korean)">
+        Korean
+        <span class="tags-filter__count">{{ site.tags['Language (Korean)'] | size }}</span>
+      </button>
+      {% endif %}
+    </div>
+  </div>
 
-    <!-- Give Language Tags Sorting Priority -->
-  {% if site.tags['Language (English)'] %}
-  <h2 id="Language-English">
-    Language (English)
-  </h2>
-  <ul class="tag">
-    {% for post in site.tags['Language (English)'] %}
-      <li>
-        <a href="{{ post.url }}">{{ post.title }}</a>
-        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-      </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% if site.tags['Language (Korean)'] %}
-  <h2 id="Language-Korean">
-    Language (Korean)
-  </h2>
-  <ul class="tag">
-    {% for post in site.tags['Language (Korean)'] %}
-      <li>
-        <a href="{{ post.url }}">{{ post.title }}</a>
-        <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-      </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% assign sorted_tags = site.tags | sort %}
-  {% for tag in sorted_tags %}
-    {% if tag[0] != 'Language (English)' and tag[0] != 'Language (Korean)' %}
-    <h2 id="{{ tag[0] }}">
-      {{ tag[0] }}
-    </h2>
-    <ul class="tag">
-      {% for post in tag[1] %}
-        {% if post.title != null %}
-          <li>
-            {% if post.link %}
-              <a href="{{ post.link }}">
-            {% else %}
-              <a href="{{ site.baseurl }}{{ post.url }}">
-            {% endif %}
-                {{ post.title }}
-              </a>
-              <time>{{ post.date | date: "%Y-%m-%d" }}</time>
-          </li>
+  <!-- Level Filter -->
+  <div class="tags-filter__section">
+    <h3 class="tags-filter__heading">Level</h3>
+    <div class="tags-filter__buttons" data-category="level">
+      <button class="tags-filter__btn tags-filter__btn--active" data-tag="all">
+        All
+        <span class="tags-filter__count">{{ site.posts | size }}</span>
+      </button>
+      {% if site.tags['Level (1. Beginner)'] %}
+      <button class="tags-filter__btn" data-tag="Level (1. Beginner)">
+        Beginner
+        <span class="tags-filter__count">{{ site.tags['Level (1. Beginner)'] | size }}</span>
+      </button>
+      {% endif %}
+      {% if site.tags['Level (2. Intermediate)'] %}
+      <button class="tags-filter__btn" data-tag="Level (2. Intermediate)">
+        Intermediate
+        <span class="tags-filter__count">{{ site.tags['Level (2. Intermediate)'] | size }}</span>
+      </button>
+      {% endif %}
+      {% if site.tags['Level (3. Advanced)'] %}
+      <button class="tags-filter__btn" data-tag="Level (3. Advanced)">
+        Advanced
+        <span class="tags-filter__count">{{ site.tags['Level (3. Advanced)'] | size }}</span>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="tags-filter__section">
+    <h3 class="tags-filter__heading">Categories</h3>
+    <div class="tags-filter__buttons tags-filter__buttons--multi" data-category="tags">
+      {% assign sorted_tags = site.tags | sort %}
+      {% for tag in sorted_tags %}
+        {% unless tag[0] contains 'Language' or tag[0] contains 'Level' %}
+        <button class="tags-filter__btn" data-tag="{{ tag[0] }}">
+          {{ tag[0] | remove: "Article (" | remove: "Field (" | remove: "Skills (" | remove: ")" }}
+          <span class="tags-filter__count">{{ tag[1] | size }}</span>
+        </button>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Active Filters Display -->
+  <div class="tags-filter__active" id="active-filters" style="display: none;">
+    <span class="tags-filter__active-label">Active filters:</span>
+    <div class="tags-filter__active-tags" id="active-tags"></div>
+    <button class="tags-filter__clear" id="clear-filters">Clear all</button>
+  </div>
+</div>
+
+<!-- Results Count -->
+<div class="tags-results">
+  <p class="tags-results__count">
+    Showing <strong id="results-count">{{ site.posts | size }}</strong> articles
+  </p>
+</div>
+
+<!-- Posts List -->
+<div class="tags-posts" id="posts-container">
+  {% for post in site.posts %}
+  <article class="tags-post" data-tags="{{ post.tags | join: '|||' }}">
+    <div class="tags-post__meta">
+      <time class="tags-post__date">{{ post.date | date: "%Y-%m-%d" }}</time>
+      {% for tag in post.tags %}
+        {% if tag contains 'Language' %}
+        <span class="tags-post__lang">
+          {% if tag contains 'English' %}EN{% else %}KO{% endif %}
+        </span>
+        {% endif %}
+        {% if tag contains 'Level' %}
+        <span class="tags-post__level tags-post__level--{% if tag contains 'Beginner' %}beginner{% elsif tag contains 'Intermediate' %}intermediate{% else %}advanced{% endif %}">
+          {% if tag contains 'Beginner' %}Beginner{% elsif tag contains 'Intermediate' %}Intermediate{% else %}Advanced{% endif %}
+        </span>
         {% endif %}
       {% endfor %}
-    </ul>
-    {% endif %}
+    </div>
+    <h3 class="tags-post__title">
+      {% if post.link %}
+      <a href="{{ post.link }}">{{ post.title }}</a>
+      {% else %}
+      <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+      {% endif %}
+    </h3>
+    <div class="tags-post__tags">
+      {% for tag in post.tags %}
+        {% unless tag contains 'Language' %}
+        <span class="tags-post__tag" data-tag="{{ tag }}">
+          {{ tag | remove: "Article (" | remove: "Level (" | remove: "Field (" | remove: "Skills (" | remove: ")" }}
+        </span>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </article>
   {% endfor %}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const posts = document.querySelectorAll('.tags-post');
+  const languageButtons = document.querySelectorAll('[data-category="language"] .tags-filter__btn');
+  const levelButtons = document.querySelectorAll('[data-category="level"] .tags-filter__btn');
+  const tagButtons = document.querySelectorAll('[data-category="tags"] .tags-filter__btn');
+  const activeFiltersContainer = document.getElementById('active-filters');
+  const activeTagsContainer = document.getElementById('active-tags');
+  const clearFiltersBtn = document.getElementById('clear-filters');
+  const resultsCount = document.getElementById('results-count');
+
+  let currentLanguage = 'all';
+  let currentLevel = 'all';
+  let selectedTags = new Set();
+
+  // Language filter (single select)
+  languageButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      languageButtons.forEach(b => b.classList.remove('tags-filter__btn--active'));
+      this.classList.add('tags-filter__btn--active');
+      currentLanguage = this.dataset.tag;
+      filterPosts();
+    });
+  });
+
+  // Level filter (single select)
+  levelButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      levelButtons.forEach(b => b.classList.remove('tags-filter__btn--active'));
+      this.classList.add('tags-filter__btn--active');
+      currentLevel = this.dataset.tag;
+      filterPosts();
+    });
+  });
+
+  // Tag filter (multi select)
+  tagButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const tag = this.dataset.tag;
+
+      if (selectedTags.has(tag)) {
+        selectedTags.delete(tag);
+        this.classList.remove('tags-filter__btn--active');
+      } else {
+        selectedTags.add(tag);
+        this.classList.add('tags-filter__btn--active');
+      }
+
+      filterPosts();
+    });
+  });
+
+  // Click on post tags to filter
+  document.querySelectorAll('.tags-post__tag').forEach(tag => {
+    tag.addEventListener('click', function() {
+      const tagName = this.dataset.tag;
+      const btn = document.querySelector(`[data-category="tags"] [data-tag="${tagName}"]`);
+      if (btn) btn.click();
+    });
+  });
+
+  // Clear all filters
+  clearFiltersBtn.addEventListener('click', function() {
+    currentLanguage = 'all';
+    currentLevel = 'all';
+    selectedTags.clear();
+
+    languageButtons.forEach(b => b.classList.remove('tags-filter__btn--active'));
+    languageButtons[0].classList.add('tags-filter__btn--active');
+    levelButtons.forEach(b => b.classList.remove('tags-filter__btn--active'));
+    levelButtons[0].classList.add('tags-filter__btn--active');
+    tagButtons.forEach(b => b.classList.remove('tags-filter__btn--active'));
+
+    filterPosts();
+  });
+
+  function filterPosts() {
+    let visibleCount = 0;
+
+    posts.forEach(post => {
+      const postTags = post.dataset.tags.split('|||');
+
+      // Check language filter
+      let languageMatch = currentLanguage === 'all' || postTags.includes(currentLanguage);
+
+      // Check level filter
+      let levelMatch = currentLevel === 'all' || postTags.includes(currentLevel);
+
+      // Check tag filters (AND logic - must have all selected tags)
+      let tagMatch = selectedTags.size === 0 ||
+        Array.from(selectedTags).every(tag => postTags.includes(tag));
+
+      if (languageMatch && levelMatch && tagMatch) {
+        post.style.display = '';
+        visibleCount++;
+      } else {
+        post.style.display = 'none';
+      }
+    });
+
+    // Update results count
+    resultsCount.textContent = visibleCount;
+
+    // Update active filters display
+    updateActiveFilters();
+  }
+
+  function updateActiveFilters() {
+    const hasFilters = currentLanguage !== 'all' || currentLevel !== 'all' || selectedTags.size > 0;
+    activeFiltersContainer.style.display = hasFilters ? 'flex' : 'none';
+
+    activeTagsContainer.innerHTML = '';
+
+    if (currentLanguage !== 'all') {
+      const langTag = document.createElement('span');
+      langTag.className = 'tags-filter__active-tag';
+      langTag.innerHTML = `${currentLanguage.replace('Language (', '').replace(')', '')} <button data-remove-lang>&times;</button>`;
+      langTag.querySelector('button').addEventListener('click', () => {
+        languageButtons[0].click();
+      });
+      activeTagsContainer.appendChild(langTag);
+    }
+
+    if (currentLevel !== 'all') {
+      const levelTag = document.createElement('span');
+      levelTag.className = 'tags-filter__active-tag';
+      levelTag.innerHTML = `${currentLevel.replace('Level (', '').replace(')', '').replace(/^\d+\.\s*/, '')} <button data-remove-level>&times;</button>`;
+      levelTag.querySelector('button').addEventListener('click', () => {
+        levelButtons[0].click();
+      });
+      activeTagsContainer.appendChild(levelTag);
+    }
+
+    selectedTags.forEach(tag => {
+      const tagEl = document.createElement('span');
+      tagEl.className = 'tags-filter__active-tag';
+      tagEl.innerHTML = `${tag.replace(/Article \(|Field \(|Skills \(/g, '').replace(')', '')} <button data-remove-tag="${tag}">&times;</button>`;
+      tagEl.querySelector('button').addEventListener('click', () => {
+        const btn = document.querySelector(`[data-category="tags"] [data-tag="${tag}"]`);
+        if (btn) btn.click();
+      });
+      activeTagsContainer.appendChild(tagEl);
+    });
+  }
+});
+</script>

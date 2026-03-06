@@ -457,7 +457,7 @@ By hosting dbt Docs, anyone can easily access table specifications, as shown bel
 
 # 6. Conclusion
 
-Building a data warehouse and its associated data marts is a challenging yet highly rewarding task. Even minor issues at the early stages can lead to significant errors in the data used across the organization, making this a highly responsible role. Since I am solely responsible for data management at IoTrust, there is no one to provide feedback on my mistakes. As a result, I adopt a self-review process, essentially working with multiple versions of myself.🙄
+Building a data warehouse and its associated data marts is a challenging yet highly rewarding task. Even minor issues at the early stages can lead to significant errors in the data used across the organization, making this a highly responsible role. Since I am solely responsible for data management at IoTrust, there is no one to provide feedback on my mistakes. As a result, I adopt a self-review process, essentially working with multiple versions of myself.
 
 However, seeing my colleagues access and utilize data easily through the data warehouse is incredibly fulfilling. It strengthens my sense of ownership over data, and I become even more invested in ensuring that the organization's data-driven decision-making is executed properly.
 

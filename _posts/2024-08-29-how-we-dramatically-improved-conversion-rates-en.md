@@ -61,7 +61,7 @@ tags:
 
 ### Detailed Situation
 * In 2023, a competitor with the top market share globally became heavily embroiled in business controversy, resulting in a windfall for our company, with a significant increase in sales on our own website. This was due to external market influences rather than the results of our internal marketing efforts.
-* As a data analyst, I also wanted to deeply monitor and follow up on this "**abnormal phenomenon caused by unusual market flows.**"
+* As a data analyst, I wanted to closely monitor and investigate this "**abnormal phenomenon caused by unusual market dynamics.**"
 
 ### Data Follow-up
 
@@ -376,8 +376,8 @@ tags:
    * The major events in the purchase conversion stages were as follows:
       * `view_item`: Viewing the item page.
       * `begin_checkout`: Starting the purchase process.
-      * `add_payment_info`: Completing the entry of purchase-related information such as shipping address, email, and contact information, the nproceeding to the payment process.
-      * `purchase`: Completing the final payment and vewing the Thank you page.
+      * `add_payment_info`: Completing the entry of purchase-related information such as shipping address, email, and contact information, then proceeding to the payment process.
+      * `purchase`: Completing the final payment and viewing the Thank You page.
    * Among these four stages, it was confirmed that there was a drop in conversion rates at the point of moving from `add_payment_info` to `purchase`.
 
 ---
@@ -404,10 +404,10 @@ tags:
 3. The user segments of incoming visitors had changed.
    * If the conversion rate suddenly diverges from the past without any changes to the website UI, it was determined that this was due to changes in user segments.
 
-      * This was because it was primarily "**natural inflow**" caused by market influences, rather than the "**artificial inflow**" that previously visited in response to marketing activities.
+      * This was primarily due to "**organic traffic**" driven by market influences, rather than the "**paid traffic**" that previously arrived through marketing activities.
       ![]({{ site.baseurl }}/assets/2024-08-29-how-we-dramatically-improved-conversion-rates/4.png)   
    
-      * It was due to the nature/behavior pattern with high purchase intent compared to the past (significantly increased **item page view rate** compared to before).
+      * These visitors exhibited behavior patterns indicating high purchase intent (significantly higher **item page view rates** compared to before).
       ![]({{ site.baseurl }}/assets/2024-08-29-how-we-dramatically-improved-conversion-rates/2.png)
 
 ---

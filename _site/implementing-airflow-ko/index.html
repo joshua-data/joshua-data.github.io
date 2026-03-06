@@ -12,7 +12,7 @@
     gtag('config', 'G-K04Y972F7E');
   </script>
 
-  <title>Airflow 도입 후기 – Joshua Kim – Analytics Engineer | Data Analyst</title>
+  <title>Airflow 도입 후기 – Joshua Kim – Analytics Engineer</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -59,7 +59,7 @@
   <![endif]-->
 
   <link rel="stylesheet" type="text/css" href="/style.css" />
-  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer" href="/feed.xml" />
 
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
@@ -84,87 +84,107 @@
 
   <body>      
 
-    <div class="wrapper-masthead">
-  <div class="container">
-    <header class="masthead clearfix">
-      
-        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
-      
+    <header class="header" id="header">
+  <div class="container header__inner">
+    
+      <a href="/" class="header__avatar">
+        <img src="https://avatars.githubusercontent.com/u/144670043?v=4" alt="Joshua Kim" />
+      </a>
+    
 
-      <div class="site-info">
-        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
-        <p class="site-description">Analytics Engineer | Data Analyst</p>
-      </div>
+    <div class="header__info">
+      <h1 class="header__title">
+        <a href="/">Joshua Kim</a>
+      </h1>
+      <p class="header__description">Analytics Engineer</p>
+    </div>
 
-      <nav>
-        
-        
-        <a href="/about">About</a>
-        
-        
-        
-        <a href="/">Articles</a>
-        
-        
-        
-        <a href="/archive">Archive</a>
+    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      
         
         
         
-        <a href="/tags">Tags</a>
+        
+          <a href="/about" class="nav__link">About</a>
+        
+      
         
         
-      </nav>
-    </header>
+        
+        
+          <a href="/" class="nav__link">Articles</a>
+        
+      
+        
+        
+        
+        
+          <a href="/archive" class="nav__link">Archive</a>
+        
+      
+        
+        
+        
+        
+          <a href="/tags" class="nav__link">Tags</a>
+        
+      
+    </nav>
   </div>
-</div>
+</header>
+
 
     <div id="main" role="main" class="container">
-      <article class="post">
-  <h1>Airflow 도입 후기</h1>
+      <div class="post-layout">
+  <article class="post">
+    <header class="post__header">
+      <h1 class="post__title">Airflow 도입 후기</h1>
+      <div class="post__meta">
+        <time class="post__date">2024-12-28</time>
+        <ul class="post__tags">
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Language (Korean)">
+              Korean
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Article (Project)">
+              Project
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Level (1. Beginner)">
+              1. Beginner
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Field (Data Engineering)">
+              Data Engineering
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Skills (Airflow)">
+              Airflow
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </header>
 
-  <div>
-    <span class="date">
-      2024-12-28
-    </span>
-
-    <ul class="tag">
-      
-      <li>
-        <a href="http://localhost:4000/tags#Language (Korean)">
-          Language (Korean)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Article (Project)">
-          Article (Project)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Level (1. Beginner)">
-          Level (1. Beginner)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Field (Data Engineering)">
-          Field (Data Engineering)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Skills (Airflow)">
-          Skills (Airflow)
-        </a>
-      </li>
-      
-    </ul>
-  </div>
-
-  <div class="entry">
-    <blockquote>
+    <div class="post__content entry">
+      <blockquote>
   <p>“Airflow 도입을 통해 사내 데이터 알림 시스템을 효율적으로 관리하고자 기존 Python 기반 세션 방식에서 벗어나 DAG 기반 워크플로우를 구축했습니다. Docker Compose를 활용해 로컬 및 VM 환경에서 Airflow를 설정하고, Slack 알림을 포함한 다양한 데이터 파이프라인을 자동화했습니다. 이를 통해 유지보수 부담을 줄이고, 안정성을 높이며, 확장 가능한 데이터 처리 환경을 마련할 수 있었습니다.”</p>
 </blockquote>
 
@@ -647,37 +667,189 @@ git push <span class="nt">-u</span> origin main
 
 <p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
 
-  </div>
+    </div>
 
-  <div class="pagination">
-    
-      <span class="prev" >
-          <a href="http://localhost:4000/implementing-airflow-en/">
-            &#xE000; Review of Implementing Airflow
-          </a>
-      </span>
-    
-    
-      <span class="next" >
-          <a href="http://localhost:4000/first-activation-data-mart-en/">
-            Data Mart Modeling Review (First Activation Funnel Metrics) &#xE001;
-          </a>
-      </span>
-    
-  </div>
+    <nav class="post__pagination">
+      
+      <a href="http://localhost:4000/implementing-airflow-en/" class="post__pagination-link post__pagination-link--prev">
+        <span class="post__pagination-label">Previous</span>
+        <span class="post__pagination-title">Review of Implementing Airflow</span>
+      </a>
+      
+      
+      <a href="http://localhost:4000/first-activation-data-mart-en/" class="post__pagination-link post__pagination-link--next">
+        <span class="post__pagination-label">Next</span>
+        <span class="post__pagination-title">Data Mart Modeling Review (First Activation Funnel Metrics)</span>
+      </a>
+      
+    </nav>
 
-  <script type="text/javascript"
+    <script type="text/javascript"
   src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
 </script>
 <script>
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     mermaid.initialize({
-        theme: 'forest'
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#4a90d9',
+            primaryTextColor: '#fff',
+            primaryBorderColor: '#3a7bc8',
+            lineColor: '#5a9fd4',
+            secondaryColor: '#f0f7ff',
+            tertiaryColor: '#e8f4fd'
+        }
     });
 });
 </script>
-  
-</article>
+    
+  </article>
+
+  <aside class="post-toc" id="post-toc">
+    <button class="post-toc__toggle" id="toc-toggle" aria-label="Toggle table of contents">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <span>Contents</span>
+    </button>
+    <div class="post-toc__panel" id="toc-panel">
+      <h3 class="post-toc__heading">Table of Contents</h3>
+      <nav class="post-toc__nav" id="toc-nav">
+        <!-- TOC will be generated by JavaScript -->
+      </nav>
+    </div>
+  </aside>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tocNav = document.getElementById('toc-nav');
+  const tocToggle = document.getElementById('toc-toggle');
+  const tocPanel = document.getElementById('toc-panel');
+  const postToc = document.getElementById('post-toc');
+  const content = document.querySelector('.post__content');
+
+  if (!content || !tocNav) return;
+
+  // Get all headings
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length === 0) {
+    postToc.style.display = 'none';
+    return;
+  }
+
+  // Generate IDs for headings without them
+  headings.forEach((heading, index) => {
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+  });
+
+  // Build TOC
+  const tocList = document.createElement('ul');
+  tocList.className = 'post-toc__list';
+
+  headings.forEach(heading => {
+    const li = document.createElement('li');
+    li.className = 'post-toc__item post-toc__item--' + heading.tagName.toLowerCase();
+
+    const link = document.createElement('a');
+    link.className = 'post-toc__link';
+    link.href = '#' + heading.id;
+    link.textContent = heading.textContent;
+    link.addEventListener('click', function(e) {
+      // Close mobile TOC after clicking
+      if (window.innerWidth < 1200) {
+        postToc.classList.remove('post-toc--open');
+      }
+    });
+
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+
+  tocNav.appendChild(tocList);
+
+  // Toggle mobile TOC
+  tocToggle.addEventListener('click', function() {
+    postToc.classList.toggle('post-toc--open');
+  });
+
+  // Close TOC when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!postToc.contains(e.target) && postToc.classList.contains('post-toc--open')) {
+      postToc.classList.remove('post-toc--open');
+    }
+  });
+
+  // Highlight current section in TOC
+  const tocLinks = tocNav.querySelectorAll('.post-toc__link');
+
+  function highlightCurrentSection() {
+    let current = '';
+
+    headings.forEach(heading => {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top <= 100) {
+        current = heading.id;
+      }
+    });
+
+    tocLinks.forEach(link => {
+      link.classList.remove('post-toc__link--active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('post-toc__link--active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', highlightCurrentSection);
+  highlightCurrentSection();
+
+  // Code block copy buttons
+  const codeBlocks = document.querySelectorAll('pre.highlight');
+
+  codeBlocks.forEach(block => {
+    // Wrap the code block
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    block.parentNode.insertBefore(wrapper, block);
+    wrapper.appendChild(block);
+
+    // Create copy button
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'code-copy-btn';
+    copyBtn.textContent = 'Copy';
+    copyBtn.type = 'button';
+    wrapper.appendChild(copyBtn);
+
+    copyBtn.addEventListener('click', async function() {
+      const code = block.querySelector('code');
+      const text = code ? code.textContent : block.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = 'Copied!';
+        copyBtn.classList.add('code-copy-btn--copied');
+
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+          copyBtn.classList.remove('code-copy-btn--copied');
+        }, 2000);
+      } catch (err) {
+        copyBtn.textContent = 'Failed';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      }
+    });
+  });
+});
+</script>
 
     </div>
 
@@ -735,5 +907,41 @@ $(document).ready(function() {
 
     
 
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const toggle = document.getElementById('nav-toggle');
+      const nav = document.getElementById('nav');
+      const header = document.getElementById('header');
+
+      if (toggle && nav) {
+        toggle.addEventListener('click', function() {
+          const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', !isOpen);
+          nav.classList.toggle('nav--open');
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('.nav__link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('nav--open');
+          });
+        });
+      }
+
+      // Sticky header shadow on scroll
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 10) {
+            header.classList.add('header--scrolled');
+          } else {
+            header.classList.remove('header--scrolled');
+          }
+        });
+      }
+    });
+    </script>
   </body>
 </html>

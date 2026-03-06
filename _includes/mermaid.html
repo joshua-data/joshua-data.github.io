@@ -2,9 +2,18 @@
   src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
 </script>
 <script>
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     mermaid.initialize({
-        theme: 'forest'
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#4a90d9',
+            primaryTextColor: '#fff',
+            primaryBorderColor: '#3a7bc8',
+            lineColor: '#5a9fd4',
+            secondaryColor: '#f0f7ff',
+            tertiaryColor: '#e8f4fd'
+        }
     });
 });
 </script>

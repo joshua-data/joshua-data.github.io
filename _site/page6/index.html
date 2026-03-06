@@ -12,7 +12,7 @@
     gtag('config', 'G-K04Y972F7E');
   </script>
 
-  <title>Joshua Kim – Analytics Engineer | Data Analyst</title>
+  <title>Joshua Kim – Analytics Engineer</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -20,8 +20,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Analytics Engineer | Data Analyst">
-    <meta property="og:description" content="Analytics Engineer | Data Analyst" />
+    <meta name="description" content="Analytics Engineer">
+    <meta property="og:description" content="Analytics Engineer" />
     
     <meta name="author" content="Joshua Kim" />
 
@@ -50,7 +50,7 @@
   <![endif]-->
 
   <link rel="stylesheet" type="text/css" href="/style.css" />
-  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer" href="/feed.xml" />
 
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
@@ -75,40 +75,61 @@
 
   <body>      
 
-    <div class="wrapper-masthead">
-  <div class="container">
-    <header class="masthead clearfix">
-      
-        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
-      
+    <header class="header" id="header">
+  <div class="container header__inner">
+    
+      <a href="/" class="header__avatar">
+        <img src="https://avatars.githubusercontent.com/u/144670043?v=4" alt="Joshua Kim" />
+      </a>
+    
 
-      <div class="site-info">
-        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
-        <p class="site-description">Analytics Engineer | Data Analyst</p>
-      </div>
+    <div class="header__info">
+      <h1 class="header__title">
+        <a href="/">Joshua Kim</a>
+      </h1>
+      <p class="header__description">Analytics Engineer</p>
+    </div>
 
-      <nav>
-        
-        
-        <a href="/about">About</a>
-        
-        
-        
-        <a href="/">Articles</a>
-        
-        
-        
-        <a href="/archive">Archive</a>
+    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      
         
         
         
-        <a href="/tags">Tags</a>
+        
+          <a href="/about" class="nav__link">About</a>
+        
+      
         
         
-      </nav>
-    </header>
+        
+        
+          <a href="/" class="nav__link">Articles</a>
+        
+      
+        
+        
+        
+        
+          <a href="/archive" class="nav__link">Archive</a>
+        
+      
+        
+        
+        
+        
+          <a href="/tags" class="nav__link">Tags</a>
+        
+      
+    </nav>
   </div>
-</div>
+</header>
+
 
     <div id="main" role="main" class="container">
       
@@ -485,5 +506,41 @@
 
     
 
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const toggle = document.getElementById('nav-toggle');
+      const nav = document.getElementById('nav');
+      const header = document.getElementById('header');
+
+      if (toggle && nav) {
+        toggle.addEventListener('click', function() {
+          const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', !isOpen);
+          nav.classList.toggle('nav--open');
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('.nav__link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('nav--open');
+          });
+        });
+      }
+
+      // Sticky header shadow on scroll
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 10) {
+            header.classList.add('header--scrolled');
+          } else {
+            header.classList.remove('header--scrolled');
+          }
+        });
+      }
+    });
+    </script>
   </body>
 </html>

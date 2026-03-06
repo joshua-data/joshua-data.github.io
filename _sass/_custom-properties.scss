@@ -1,0 +1,111 @@
+// ==========================================================================
+// CSS Custom Properties (Light/Dark Mode)
+// ==========================================================================
+
+:root {
+  // ========== Light Mode (Default) ==========
+
+  // Background colors
+  --color-bg-primary: #{$oc-white};
+  --color-bg-secondary: #{$oc-gray-0};
+  --color-bg-tertiary: #{$oc-gray-1};
+  --color-bg-card: #{$oc-white};
+
+  // Text colors
+  --color-text-primary: #{$oc-gray-8};
+  --color-text-secondary: #{$oc-gray-6};
+  --color-text-muted: #{$oc-gray-5};
+
+  // Link colors
+  --color-link: #{$oc-blue-8};
+  --color-link-hover: #{$oc-blue-6};
+
+  // Border colors
+  --color-border: #{$oc-gray-2};
+  --color-border-light: #{$oc-gray-1};
+
+  // Accent colors
+  --color-accent: #{$oc-blue-7};
+  --color-accent-light: #{$oc-blue-1};
+
+  // Component colors
+  --color-tag-bg: #{$oc-gray-1};
+  --color-tag-text: #{$oc-gray-7};
+  --color-blockquote-border: #{$oc-gray-3};
+  --color-blockquote-bg: #{$oc-gray-0};
+  --color-table-stripe: #{$oc-gray-0};
+  --color-footer-bg: #{$oc-gray-0};
+
+  // Code colors
+  --color-code-bg: #{$oc-gray-1};
+  --color-code-text: #{$oc-indigo-8};
+
+  // ========== Shadows ==========
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+  // ========== Border Radius ==========
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  // ========== Transitions ==========
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  // ========== Spacing ==========
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+}
+
+// ========== Dark Mode ==========
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Background colors
+    --color-bg-primary: #{$oc-gray-9};
+    --color-bg-secondary: #{$oc-gray-8};
+    --color-bg-tertiary: #{$oc-gray-7};
+    --color-bg-card: #{$oc-gray-8};
+
+    // Text colors
+    --color-text-primary: #{$oc-gray-1};
+    --color-text-secondary: #{$oc-gray-3};
+    --color-text-muted: #{$oc-gray-4};
+
+    // Link colors
+    --color-link: #{$oc-blue-4};
+    --color-link-hover: #{$oc-blue-3};
+
+    // Border colors
+    --color-border: #{$oc-gray-6};
+    --color-border-light: #{$oc-gray-7};
+
+    // Accent colors
+    --color-accent: #{$oc-blue-5};
+    --color-accent-light: #{$oc-gray-8};
+
+    // Component colors
+    --color-tag-bg: #{$oc-gray-7};
+    --color-tag-text: #{$oc-gray-2};
+    --color-blockquote-border: #{$oc-gray-6};
+    --color-blockquote-bg: #{$oc-gray-8};
+    --color-table-stripe: #{$oc-gray-8};
+    --color-footer-bg: #{$oc-gray-8};
+
+    // Code colors
+    --color-code-bg: #{$oc-gray-8};
+    --color-code-text: #{$oc-indigo-3};
+
+    // Shadows (stronger for dark mode)
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+}
