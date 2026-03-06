@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-07-05T15:37:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Analytics Engineer | Data Analyst</subtitle><entry><title type="html">데이터 마트 모델링 후기 (First Activation Funnel 지표)</title><link href="http://localhost:4000/first-activation-data-mart-ko/" rel="alternate" type="text/html" title="데이터 마트 모델링 후기 (First Activation Funnel 지표)" /><published>2025-01-25T00:00:00+09:00</published><updated>2025-01-25T00:00:00+09:00</updated><id>http://localhost:4000/first-activation-data-mart-ko</id><content type="html" xml:base="http://localhost:4000/first-activation-data-mart-ko/"><![CDATA[<blockquote>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-03-07T01:57:36+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joshua Kim</title><subtitle>Analytics Engineer</subtitle><entry><title type="html">데이터 마트 모델링 후기 (First Activation Funnel 지표)</title><link href="http://localhost:4000/first-activation-data-mart-ko/" rel="alternate" type="text/html" title="데이터 마트 모델링 후기 (First Activation Funnel 지표)" /><published>2025-01-25T00:00:00+09:00</published><updated>2025-01-25T00:00:00+09:00</updated><id>http://localhost:4000/first-activation-data-mart-ko</id><content type="html" xml:base="http://localhost:4000/first-activation-data-mart-ko/"><![CDATA[<blockquote>
   <p>“신규 사용자 활성 전환율 지표를 효과적으로 제공하기 위해 데이터 마트를 직접 설계하고 구축한 경험을 정리했습니다. 비즈니스 요구사항 변화에 유연하게 대응할 수 있도록 데이터 모델을 설계했고, 실무에서 바로 활용 가능한 쿼리와 구조를 고민했습니다. 이 과정을 통해 데이터 모델링 이론을 실제 문제 해결에 적용하는 역량과, 요구사항을 깊이 있게 파악하는 중요성을 다시 한 번 체감할 수 있었습니다.”</p>
 </blockquote>
 
@@ -3247,7 +3247,7 @@ git push <span class="nt">-u</span> origin main
 
 <h1 id="6-conclusion">6. Conclusion</h1>
 
-<p>Building a data warehouse and its associated data marts is a challenging yet highly rewarding task. Even minor issues at the early stages can lead to significant errors in the data used across the organization, making this a highly responsible role. Since I am solely responsible for data management at IoTrust, there is no one to provide feedback on my mistakes. As a result, I adopt a self-review process, essentially working with multiple versions of myself.🙄</p>
+<p>Building a data warehouse and its associated data marts is a challenging yet highly rewarding task. Even minor issues at the early stages can lead to significant errors in the data used across the organization, making this a highly responsible role. Since I am solely responsible for data management at IoTrust, there is no one to provide feedback on my mistakes. As a result, I adopt a self-review process, essentially working with multiple versions of myself.</p>
 
 <p>However, seeing my colleagues access and utilize data easily through the data warehouse is incredibly fulfilling. It strengthens my sense of ownership over data, and I become even more invested in ensuring that the organization’s data-driven decision-making is executed properly.</p>
 
@@ -3643,7 +3643,7 @@ git push <span class="nt">-u</span> origin main
 <h3 id="detailed-situation">Detailed Situation</h3>
 <ul>
   <li>In 2023, a competitor with the top market share globally became heavily embroiled in business controversy, resulting in a windfall for our company, with a significant increase in sales on our own website. This was due to external market influences rather than the results of our internal marketing efforts.</li>
-  <li>As a data analyst, I also wanted to deeply monitor and follow up on this “<strong>abnormal phenomenon caused by unusual market flows.</strong>”</li>
+  <li>As a data analyst, I wanted to closely monitor and investigate this “<strong>abnormal phenomenon caused by unusual market dynamics.</strong>”</li>
 </ul>
 
 <h3 id="data-follow-up">Data Follow-up</h3>
@@ -3963,8 +3963,8 @@ git push <span class="nt">-u</span> origin main
         <ul>
           <li><code class="language-plaintext highlighter-rouge">view_item</code>: Viewing the item page.</li>
           <li><code class="language-plaintext highlighter-rouge">begin_checkout</code>: Starting the purchase process.</li>
-          <li><code class="language-plaintext highlighter-rouge">add_payment_info</code>: Completing the entry of purchase-related information such as shipping address, email, and contact information, the nproceeding to the payment process.</li>
-          <li><code class="language-plaintext highlighter-rouge">purchase</code>: Completing the final payment and vewing the Thank you page.</li>
+          <li><code class="language-plaintext highlighter-rouge">add_payment_info</code>: Completing the entry of purchase-related information such as shipping address, email, and contact information, then proceeding to the payment process.</li>
+          <li><code class="language-plaintext highlighter-rouge">purchase</code>: Completing the final payment and viewing the Thank You page.</li>
         </ul>
       </li>
       <li>Among these four stages, it was confirmed that there was a drop in conversion rates at the point of moving from <code class="language-plaintext highlighter-rouge">add_payment_info</code> to <code class="language-plaintext highlighter-rouge">purchase</code>.</li>
@@ -4008,11 +4008,11 @@ git push <span class="nt">-u</span> origin main
 
         <ul>
           <li>
-            <p>This was because it was primarily “<strong>natural inflow</strong>” caused by market influences, rather than the “<strong>artificial inflow</strong>” that previously visited in response to marketing activities.
+            <p>This was primarily due to “<strong>organic traffic</strong>” driven by market influences, rather than the “<strong>paid traffic</strong>” that previously arrived through marketing activities.
  <img src="/assets/2024-08-29-how-we-dramatically-improved-conversion-rates/4.png" alt="" /></p>
           </li>
           <li>
-            <p>It was due to the nature/behavior pattern with high purchase intent compared to the past (significantly increased <strong>item page view rate</strong> compared to before).
+            <p>These visitors exhibited behavior patterns indicating high purchase intent (significantly higher <strong>item page view rates</strong> compared to before).
  <img src="/assets/2024-08-29-how-we-dramatically-improved-conversion-rates/2.png" alt="" /></p>
           </li>
         </ul>

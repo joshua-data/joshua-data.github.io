@@ -286,7 +286,7 @@ While data analysts are usually familiar with the meaning of the metrics shown o
     * 3-5 bullet points with examples of how the chart can be used for work purposes
 ```
 
-**(2) ChatGPT 4o의 답변 사례**
+**(2) Example Response from ChatGPT 4o**
 
 ![]({{ site.baseurl }}/assets/2024-08-09-redash-dashboard/redash-chatgpt.webp)
 

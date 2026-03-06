@@ -12,7 +12,7 @@
     gtag('config', 'G-K04Y972F7E');
   </script>
 
-  <title>회귀 모델이 풀 수 없는 문제 – Joshua Kim – Analytics Engineer | Data Analyst</title>
+  <title>회귀 모델이 풀 수 없는 문제 – Joshua Kim – Analytics Engineer</title>
 
       <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -59,7 +59,7 @@
   <![endif]-->
 
   <link rel="stylesheet" type="text/css" href="/style.css" />
-  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer | Data Analyst" href="/feed.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Joshua Kim - Analytics Engineer" href="/feed.xml" />
 
   <link rel="apple-touch-icon" sizes="57x57" href="/assets/logo/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/logo/apple-icon-60x60.png">
@@ -84,87 +84,107 @@
 
   <body>      
 
-    <div class="wrapper-masthead">
-  <div class="container">
-    <header class="masthead clearfix">
-      
-        <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/144670043?v=4" /></a>
-      
+    <header class="header" id="header">
+  <div class="container header__inner">
+    
+      <a href="/" class="header__avatar">
+        <img src="https://avatars.githubusercontent.com/u/144670043?v=4" alt="Joshua Kim" />
+      </a>
+    
 
-      <div class="site-info">
-        <h1 class="site-name"><a href="/">Joshua Kim</a></h1>
-        <p class="site-description">Analytics Engineer | Data Analyst</p>
-      </div>
+    <div class="header__info">
+      <h1 class="header__title">
+        <a href="/">Joshua Kim</a>
+      </h1>
+      <p class="header__description">Analytics Engineer</p>
+    </div>
 
-      <nav>
-        
-        
-        <a href="/about">About</a>
-        
-        
-        
-        <a href="/">Articles</a>
-        
-        
-        
-        <a href="/archive">Archive</a>
+    <button class="nav__toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      
         
         
         
-        <a href="/tags">Tags</a>
+        
+          <a href="/about" class="nav__link">About</a>
+        
+      
         
         
-      </nav>
-    </header>
+        
+        
+          <a href="/" class="nav__link">Articles</a>
+        
+      
+        
+        
+        
+        
+          <a href="/archive" class="nav__link">Archive</a>
+        
+      
+        
+        
+        
+        
+          <a href="/tags" class="nav__link">Tags</a>
+        
+      
+    </nav>
   </div>
-</div>
+</header>
+
 
     <div id="main" role="main" class="container">
-      <article class="post">
-  <h1>회귀 모델이 풀 수 없는 문제</h1>
+      <div class="post-layout">
+  <article class="post">
+    <header class="post__header">
+      <h1 class="post__title">회귀 모델이 풀 수 없는 문제</h1>
+      <div class="post__meta">
+        <time class="post__date">2022-12-25</time>
+        <ul class="post__tags">
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Language (Korean)">
+              Korean
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Article (Project)">
+              Project
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Level (2. Intermediate)">
+              2. Intermediate
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Field (Data Analysis)">
+              Data Analysis
+            </a>
+          </li>
+          
+          <li class="post__tag">
+            <a href="http://localhost:4000/tags#Skills (Python)">
+              Python
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </header>
 
-  <div>
-    <span class="date">
-      2022-12-25
-    </span>
-
-    <ul class="tag">
-      
-      <li>
-        <a href="http://localhost:4000/tags#Language (Korean)">
-          Language (Korean)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Article (Project)">
-          Article (Project)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Level (2. Intermediate)">
-          Level (2. Intermediate)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Field (Data Analysis)">
-          Field (Data Analysis)
-        </a>
-      </li>
-      
-      <li>
-        <a href="http://localhost:4000/tags#Skills (Python)">
-          Skills (Python)
-        </a>
-      </li>
-      
-    </ul>
-  </div>
-
-  <div class="entry">
-    <blockquote>
+    <div class="post__content entry">
+      <blockquote>
   <p>이번 아티클에서는 회귀모델(Regression Model)이 어떤 경우에 저조한 성과를 내는지, 더 나아가 Dataset이 어떤 특성을 지닐 때 회귀모델로 해당 문제를 풀어낼 수 없는지 필자가 경험한 바를 서술해보고자 한다.</p>
 </blockquote>
 
@@ -949,31 +969,184 @@
 <h2 id="published-by-joshua-kim"><em>Published by</em> Joshua Kim</h2>
 <p><img src="/assets/profile/joshua-profile.png" alt="Joshua Kim" /></p>
 
-  </div>
+    </div>
 
-  <div class="pagination">
-    
-    
-      <span class="next" >
-          <a href="http://localhost:4000/ab-test-review-en/">
-            A/B Test Review: The Impact of Displaying Discount Percentages &#xE001;
-          </a>
-      </span>
-    
-  </div>
+    <nav class="post__pagination">
+      
+      
+      <a href="http://localhost:4000/ab-test-review-en/" class="post__pagination-link post__pagination-link--next">
+        <span class="post__pagination-label">Next</span>
+        <span class="post__pagination-title">A/B Test Review: The Impact of Displaying Discount Percentages</span>
+      </a>
+      
+    </nav>
 
-  <script type="text/javascript"
+    <script type="text/javascript"
   src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js">
 </script>
 <script>
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     mermaid.initialize({
-        theme: 'forest'
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#4a90d9',
+            primaryTextColor: '#fff',
+            primaryBorderColor: '#3a7bc8',
+            lineColor: '#5a9fd4',
+            secondaryColor: '#f0f7ff',
+            tertiaryColor: '#e8f4fd'
+        }
     });
 });
 </script>
-  
-</article>
+    
+  </article>
+
+  <aside class="post-toc" id="post-toc">
+    <button class="post-toc__toggle" id="toc-toggle" aria-label="Toggle table of contents">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <span>Contents</span>
+    </button>
+    <div class="post-toc__panel" id="toc-panel">
+      <h3 class="post-toc__heading">Table of Contents</h3>
+      <nav class="post-toc__nav" id="toc-nav">
+        <!-- TOC will be generated by JavaScript -->
+      </nav>
+    </div>
+  </aside>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tocNav = document.getElementById('toc-nav');
+  const tocToggle = document.getElementById('toc-toggle');
+  const tocPanel = document.getElementById('toc-panel');
+  const postToc = document.getElementById('post-toc');
+  const content = document.querySelector('.post__content');
+
+  if (!content || !tocNav) return;
+
+  // Get all headings
+  const headings = content.querySelectorAll('h1, h2, h3, h4');
+
+  if (headings.length === 0) {
+    postToc.style.display = 'none';
+    return;
+  }
+
+  // Generate IDs for headings without them
+  headings.forEach((heading, index) => {
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+  });
+
+  // Build TOC
+  const tocList = document.createElement('ul');
+  tocList.className = 'post-toc__list';
+
+  headings.forEach(heading => {
+    const li = document.createElement('li');
+    li.className = 'post-toc__item post-toc__item--' + heading.tagName.toLowerCase();
+
+    const link = document.createElement('a');
+    link.className = 'post-toc__link';
+    link.href = '#' + heading.id;
+    link.textContent = heading.textContent;
+    link.addEventListener('click', function(e) {
+      // Close mobile TOC after clicking
+      if (window.innerWidth < 1200) {
+        postToc.classList.remove('post-toc--open');
+      }
+    });
+
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+
+  tocNav.appendChild(tocList);
+
+  // Toggle mobile TOC
+  tocToggle.addEventListener('click', function() {
+    postToc.classList.toggle('post-toc--open');
+  });
+
+  // Close TOC when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!postToc.contains(e.target) && postToc.classList.contains('post-toc--open')) {
+      postToc.classList.remove('post-toc--open');
+    }
+  });
+
+  // Highlight current section in TOC
+  const tocLinks = tocNav.querySelectorAll('.post-toc__link');
+
+  function highlightCurrentSection() {
+    let current = '';
+
+    headings.forEach(heading => {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top <= 100) {
+        current = heading.id;
+      }
+    });
+
+    tocLinks.forEach(link => {
+      link.classList.remove('post-toc__link--active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('post-toc__link--active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', highlightCurrentSection);
+  highlightCurrentSection();
+
+  // Code block copy buttons
+  const codeBlocks = document.querySelectorAll('pre.highlight');
+
+  codeBlocks.forEach(block => {
+    // Wrap the code block
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    block.parentNode.insertBefore(wrapper, block);
+    wrapper.appendChild(block);
+
+    // Create copy button
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'code-copy-btn';
+    copyBtn.textContent = 'Copy';
+    copyBtn.type = 'button';
+    wrapper.appendChild(copyBtn);
+
+    copyBtn.addEventListener('click', async function() {
+      const code = block.querySelector('code');
+      const text = code ? code.textContent : block.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = 'Copied!';
+        copyBtn.classList.add('code-copy-btn--copied');
+
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+          copyBtn.classList.remove('code-copy-btn--copied');
+        }, 2000);
+      } catch (err) {
+        copyBtn.textContent = 'Failed';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy';
+        }, 2000);
+      }
+    });
+  });
+});
+</script>
 
     </div>
 
@@ -1031,5 +1204,41 @@ $(document).ready(function() {
 
     
 
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
+      const toggle = document.getElementById('nav-toggle');
+      const nav = document.getElementById('nav');
+      const header = document.getElementById('header');
+
+      if (toggle && nav) {
+        toggle.addEventListener('click', function() {
+          const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', !isOpen);
+          nav.classList.toggle('nav--open');
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('.nav__link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            toggle.setAttribute('aria-expanded', 'false');
+            nav.classList.remove('nav--open');
+          });
+        });
+      }
+
+      // Sticky header shadow on scroll
+      if (header) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 10) {
+            header.classList.add('header--scrolled');
+          } else {
+            header.classList.remove('header--scrolled');
+          }
+        });
+      }
+    });
+    </script>
   </body>
 </html>

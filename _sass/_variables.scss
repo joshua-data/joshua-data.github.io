@@ -78,9 +78,52 @@ $dt-width: 180px;
 $dt-dd-space: 20px;
 $dd-position: $dt-width+$dt-dd-space;
 
-// Mobile breakpoints
+// ==========================================================================
+// Responsive Breakpoints (Mobile-First)
+// ==========================================================================
+$breakpoint-sm: 480px;
+$breakpoint-md: 640px;
+$breakpoint-lg: 900px;
+$breakpoint-xl: 1200px;
+
+// Mobile-first mixins
+@mixin sm {
+  @media screen and (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media screen and (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media screen and (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media screen and (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// Legacy mobile mixin (max-width for backwards compatibility)
 @mixin mobile {
   @media screen and (max-width: 640px) {
     @content;
   }
 }
+
+// ==========================================================================
+// Responsive Typography (using clamp)
+// ==========================================================================
+$font-size-xs: clamp(12px, 2vw, 13px);
+$font-size-sm: clamp(13px, 2.2vw, 14px);
+$font-size-base: clamp(16px, 2.5vw, 18px);
+$font-size-lg: clamp(18px, 3vw, 22px);
+$font-size-xl: clamp(22px, 4vw, 28px);
+$font-size-2xl: clamp(26px, 5vw, 36px);

@@ -417,7 +417,7 @@ tags:
 <summary>System Prompt</summary>
 <div markdown="1">
    ```
-   our task is to summarize customer inquiry details into a single sentence in Korean.
+   Your task is to summarize customer inquiry details into a single sentence in Korean.
    Keep in mind that the customer is from a blockchain hardware and app wallet service company.
    The summary must be provided in a single sentence in Korean, and sensitive personal information or links must be removed.
    ```
@@ -455,7 +455,7 @@ tags:
    ```python
    # Define the system prompt for OpenAI
    prompt_system = '''
-   our task is to summarize customer inquiry details into a single sentence in Korean.
+   Your task is to summarize customer inquiry details into a single sentence in Korean.
    Keep in mind that the customer is from a blockchain hardware and app wallet service company.
    The summary must be provided in a single sentence in Korean, and sensitive personal information or links must be removed.
    '''
