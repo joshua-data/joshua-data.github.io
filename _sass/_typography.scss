@@ -14,15 +14,16 @@ $font-weight-bold: 700;
 $font-weight-extrabold: 800;
 
 // Fluid Font Scale (using clamp for responsive typography)
-$text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);      // 12-13px
-$text-sm: clamp(0.8125rem, 0.775rem + 0.2vw, 0.875rem);    // 13-14px
-$text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);       // 16-18px
-$text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);         // 18-22px
-$text-xl: clamp(1.375rem, 1.2rem + 0.75vw, 1.75rem);       // 22-28px
-$text-2xl: clamp(1.625rem, 1.4rem + 1.25vw, 2.25rem);      // 26-36px
-$text-3xl: clamp(2rem, 1.6rem + 2vw, 3rem);                // 32-48px
-$text-4xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);              // 40-64px
-$text-5xl: clamp(3rem, 2.5rem + 3vw, 5rem);                // 48-80px
+// Note: Using string interpolation to avoid Sass unit conversion errors in older versions
+$text-xs: #{"clamp(0.75rem, calc(0.7rem + 0.25vw), 0.8125rem)"};      // 12-13px
+$text-sm: #{"clamp(0.8125rem, calc(0.775rem + 0.2vw), 0.875rem)"};    // 13-14px
+$text-base: #{"clamp(1rem, calc(0.95rem + 0.25vw), 1.125rem)"};       // 16-18px
+$text-lg: #{"clamp(1.125rem, calc(1rem + 0.5vw), 1.375rem)"};         // 18-22px
+$text-xl: #{"clamp(1.375rem, calc(1.2rem + 0.75vw), 1.75rem)"};       // 22-28px
+$text-2xl: #{"clamp(1.625rem, calc(1.4rem + 1.25vw), 2.25rem)"};      // 26-36px
+$text-3xl: #{"clamp(2rem, calc(1.6rem + 2vw), 3rem)"};                // 32-48px
+$text-4xl: #{"clamp(2.5rem, calc(2rem + 2.5vw), 4rem)"};              // 40-64px
+$text-5xl: #{"clamp(3rem, calc(2.5rem + 3vw), 5rem)"};                // 48-80px
 
 // Line Heights
 $leading-none: 1;
