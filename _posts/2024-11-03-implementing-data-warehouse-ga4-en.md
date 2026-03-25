@@ -465,6 +465,3 @@ Moving forward, I plan to focus not just on internal product data but also on le
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

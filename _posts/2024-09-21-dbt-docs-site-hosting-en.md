@@ -152,6 +152,3 @@ I pinned the dbt Docs site link in the Slack channel to allow team members to ea
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

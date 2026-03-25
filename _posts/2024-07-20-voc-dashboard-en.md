@@ -715,5 +715,3 @@ Conclusion)  By developing internally, we were able to eliminate approximately $
 
 ---
 
-## *Published by* Joshua Kim
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

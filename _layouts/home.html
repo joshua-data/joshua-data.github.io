@@ -1,0 +1,256 @@
+---
+layout: default
+---
+
+<div class="home">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__container">
+      <div class="hero__content">
+        <div class="hero__text">
+          <p class="hero__greeting animate animate-fadeInUp">Hi, I'm</p>
+          <h1 class="hero__name animate animate-fadeInUp animate-delay-100">Joshua Kim</h1>
+          <p class="hero__role animate animate-fadeInUp animate-delay-200">Analytics Engineer</p>
+          <p class="hero__tagline animate animate-fadeInUp animate-delay-300">Analytics Engineer who builds end-to-end — from CDC pipelines and dbt models to an AI-powered Slack agent adopted by 70% of the company.</p>
+          <div class="hero__buttons animate animate-fadeInUp animate-delay-400">
+            <a href="{{ site.baseurl }}/about/" class="btn-primary">About Me</a>
+            <a href="https://www.linkedin.com/in/joshuajsk/" class="btn-secondary" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <div class="hero__image animate animate-fadeInUp animate-delay-200">
+          <div class="hero__avatar">
+            <img src="{{ site.baseurl }}/assets/profile/profile-logo.png" alt="{{ site.name }}">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll animate animate-fadeIn animate-delay-600">
+      <span>Scroll</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- What I Do Section -->
+  <section class="section section--alt">
+    <div class="section__container">
+      <div class="section__header">
+        <span class="section__subtitle">Expertise</span>
+        <h2 class="section__title">What I Do</h2>
+        <p class="section__description">From data analysis to AI-powered solutions</p>
+      </div>
+      <div class="card-grid card-grid--4">
+        <div class="card-feature hover-lift">
+          <div class="card-feature__icon card-feature__icon--analytics">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <h3 class="card-feature__title">Analytics Engineering</h3>
+          <p class="card-feature__description">Sole AE designing dbt models and semantic layers that standardize metrics across 3+ products.</p>
+        </div>
+        <div class="card-feature hover-lift">
+          <div class="card-feature__icon card-feature__icon--engineering">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+          </div>
+          <h3 class="card-feature__title">Data Engineering</h3>
+          <p class="card-feature__description">CDC pipelines with 3-layer architecture enabling near real-time data ingestion on GCP.</p>
+        </div>
+        <div class="card-feature hover-lift">
+          <div class="card-feature__icon card-feature__icon--ai">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2"></path><circle cx="7.5" cy="14.5" r="1.5"></circle><circle cx="16.5" cy="14.5" r="1.5"></circle></svg>
+          </div>
+          <h3 class="card-feature__title">AI Development</h3>
+          <p class="card-feature__description">Built NL2SQL AI agent adopted by 70% of company — self-serve analytics via Claude API.</p>
+        </div>
+        <div class="card-feature hover-lift">
+          <div class="card-feature__icon card-feature__icon--analysis">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+          </div>
+          <h3 class="card-feature__title">Data Analysis</h3>
+          <p class="card-feature__description">Led A/B testing that improved conversion by 32%p. Expert in GA4 and Amplitude funnel analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights Section -->
+  <section class="section">
+    <div class="section__container">
+      <div class="section__header">
+        <span class="section__subtitle">Impact</span>
+        <h2 class="section__title">Highlights</h2>
+        <p class="section__description">Key achievements and community involvement</p>
+      </div>
+      <div class="card-grid card-grid--4">
+        <div class="card-stat hover-lift">
+          <div class="card-stat__value">4+</div>
+          <p class="card-stat__label">Years of Experience</p>
+        </div>
+        <div class="card-stat hover-lift">
+          <div class="card-stat__value">32%p</div>
+          <p class="card-stat__label">Conversion Improvement</p>
+        </div>
+        <div class="card-stat hover-lift">
+          <div class="card-stat__value">1,800+</div>
+          <p class="card-stat__label">Community Members</p>
+        </div>
+        <div class="card-stat hover-lift">
+          <div class="card-stat__value">6M</div>
+          <p class="card-stat__label">MAU Platform</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="section section--alt">
+    <div class="section__container">
+      <div class="section__header">
+        <span class="section__subtitle">Portfolio</span>
+        <h2 class="section__title">Featured Projects</h2>
+        <p class="section__description">Building data solutions that drive impact</p>
+      </div>
+      <div class="card-grid">
+        <div class="card-project hover-lift">
+          <span class="card-project__company">Hwahae Global</span>
+          <h3 class="card-project__title">NL2SQL AI Agent "DAHAE"</h3>
+          <p class="card-project__description">Built an AI-powered Slack bot using Claude API, DataHub, and BigQuery that enables natural language data queries. Adopted by 70% of the company.</p>
+          <div class="card-project__tags">
+            <span class="tag">Claude API</span>
+            <span class="tag">BigQuery</span>
+            <span class="tag">Python</span>
+          </div>
+        </div>
+        <div class="card-project hover-lift">
+          <span class="card-project__company">IoTrust</span>
+          <h3 class="card-project__title">Data Warehouse from Scratch</h3>
+          <p class="card-project__description">Architected the entire analytics infrastructure as the company's first data professional, implementing ELT pipelines with Airflow and dbt.</p>
+          <div class="card-project__tags">
+            <span class="tag">Airflow</span>
+            <span class="tag">dbt</span>
+            <span class="tag">BigQuery</span>
+          </div>
+        </div>
+        <div class="card-project hover-lift">
+          <span class="card-project__company">Hwahae Global</span>
+          <h3 class="card-project__title">CDC Pipelines</h3>
+          <p class="card-project__description">Designed and implemented Change Data Capture pipelines using Kafka Connect for near real-time data ingestion from MySQL to BigQuery.</p>
+          <div class="card-project__tags">
+            <span class="tag">Kafka</span>
+            <span class="tag">CDC</span>
+            <span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-xl">
+        <a href="{{ site.baseurl }}/projects/" class="btn-secondary">View All Projects &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Articles Section -->
+  <section class="section">
+    <div class="section__container">
+      <div class="section__header">
+        <span class="section__subtitle">Blog</span>
+        <h2 class="section__title">Recent Articles</h2>
+        <p class="section__description">Thoughts on data engineering, analytics, and AI</p>
+      </div>
+
+      <div class="posts-grid" id="recent-posts-grid">
+        {% comment %} Jekyll posts - load all, JS will sort and limit {% endcomment %}
+        {% for post in site.posts %}
+        <article class="card-post hover-lift" data-type="jekyll" data-date="{{ post.date | date: '%Y-%m-%d' }}" style="display: none;">
+          <div class="card-post__meta">
+            <span class="card-post__date">{{ post.date | date: "%Y-%m-%d" }}</span>
+            {% if post.tags contains "Language (English)" %}
+            <span class="badge-lang badge-lang--en">EN</span>
+            {% elsif post.tags contains "Language (Korean)" %}
+            <span class="badge-lang badge-lang--ko">KO</span>
+            {% endif %}
+          </div>
+          <h3 class="card-post__title">
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          </h3>
+          <p class="card-post__excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+          <a href="{{ site.baseurl }}{{ post.url }}" class="card-post__readmore">
+            Read More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </article>
+        {% endfor %}
+
+        {% comment %} Medium articles - load all, JS will sort and limit {% endcomment %}
+        {% for article in site.data.medium_articles %}
+        <article class="card-post hover-lift" data-type="medium" data-date="{{ article.date }}" style="display: none;">
+          <div class="card-post__meta">
+            <span class="card-post__date">{{ article.date }}</span>
+            <span class="badge-lang badge-lang--{% if article.language == 'en' %}en{% else %}ko{% endif %}">{% if article.language == 'en' %}EN{% else %}KO{% endif %}</span>
+            <span class="badge-source badge-source--medium">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+              </svg>
+            </span>
+          </div>
+          <h3 class="card-post__title">
+            <a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a>
+          </h3>
+          <p class="card-post__excerpt">{{ article.tags | join: ", " | capitalize }}</p>
+          <a href="{{ article.url }}" target="_blank" rel="noopener" class="card-post__readmore">
+            Read on Medium
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+
+      <div class="text-center mt-xl">
+        <a href="{{ site.baseurl }}/tags/" class="btn-secondary">View All Articles &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById('recent-posts-grid');
+    if (grid) {
+      const posts = Array.from(grid.querySelectorAll('.card-post'));
+
+      // Sort by date descending
+      posts.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+        return dateB - dateA;
+      });
+
+      // Clear grid and show only the first 4 sorted posts
+      grid.innerHTML = '';
+      posts.slice(0, 4).forEach(post => {
+        post.style.display = '';
+        grid.appendChild(post);
+      });
+    }
+  });
+  </script>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="section__container">
+      <div class="page-cta">
+        <h2 class="page-cta__title">Let's Connect</h2>
+        <p class="page-cta__text">Interested in discussing data engineering, analytics strategies, or collaboration opportunities?</p>
+        <div class="page-cta__buttons">
+          <a href="https://www.linkedin.com/in/joshuajsk/" class="page-cta__btn page-cta__btn--linkedin" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            Connect on LinkedIn
+          </a>
+          <a href="https://github.com/joshua-data" class="page-cta__btn page-cta__btn--github" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            View GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

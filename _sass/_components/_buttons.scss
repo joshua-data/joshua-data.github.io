@@ -1,0 +1,207 @@
+// ==========================================================================
+// Button Components
+// ==========================================================================
+
+// ========== Base Button ==========
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: $font-sans;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-accent-light);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Icon inside button
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+  }
+}
+
+// ========== Primary Button (Gradient) ==========
+.btn-primary {
+  @extend .btn;
+  background: var(--gradient-primary);
+  color: white;
+  border-color: transparent;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-accent);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ========== Secondary Button (Outline) ==========
+.btn-secondary {
+  @extend .btn;
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+  }
+}
+
+// ========== Ghost Button (Minimal) ==========
+.btn-ghost {
+  @extend .btn;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-color: transparent;
+
+  @media (hover: hover) {
+    &:hover {
+      background: var(--color-bg-tertiary);
+    }
+  }
+}
+
+// ========== Text Button (Link style) ==========
+.btn-text {
+  @extend .btn;
+  background: transparent;
+  color: var(--color-accent);
+  padding: 0.5rem 0.75rem;
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--color-accent-secondary);
+      background: var(--color-accent-light);
+    }
+  }
+}
+
+// ========== Icon Button ==========
+.btn-icon {
+  @extend .btn;
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.btn-icon-primary {
+  @extend .btn-icon;
+  background: var(--gradient-primary);
+  color: white;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-accent);
+    }
+  }
+}
+
+.btn-icon-ghost {
+  @extend .btn-icon;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+
+  @media (hover: hover) {
+    &:hover {
+      background: var(--color-bg-tertiary);
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+// ========== Button Sizes ==========
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: $font-size-xs;
+}
+
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: $font-size-base;
+}
+
+// ========== Button Group ==========
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  @include sm {
+    gap: 1rem;
+  }
+}
+
+// ========== Social Button ==========
+.btn-social {
+  @extend .btn;
+  padding: 0.625rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-light);
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: var(--color-bg-tertiary);
+      color: var(--color-text-primary);
+      border-color: var(--color-border);
+    }
+  }
+
+  // Social brand colors on hover
+  &.btn-social--linkedin:hover {
+    color: #0077b5;
+    border-color: #0077b5;
+  }
+
+  &.btn-social--github:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+  }
+
+  &.btn-social--medium:hover {
+    color: #00ab6c;
+    border-color: #00ab6c;
+  }
+
+  &.btn-social--twitter:hover {
+    color: #1da1f2;
+    border-color: #1da1f2;
+  }
+}

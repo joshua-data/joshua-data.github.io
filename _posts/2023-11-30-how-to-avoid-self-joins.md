@@ -248,5 +248,3 @@ WHERE Statement의 Subquery가 JOIN보다 반드시 우월한 것도 아니고, 
 
 ---
 
-## *Published by* Joshua Kim
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

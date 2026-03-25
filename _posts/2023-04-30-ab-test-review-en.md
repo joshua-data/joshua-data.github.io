@@ -297,6 +297,3 @@ Although it didn’t directly boost revenue, **the Add to Cart conversion rate**
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

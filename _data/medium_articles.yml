@@ -1,0 +1,677 @@
+# Medium Articles Data
+# This file contains external Medium blog articles to be displayed on the Blog page
+
+# 2026
+- title: "Operating a CDC Pipeline (RDS → BigQuery with GCP Datastream)"
+  date: "2026-03-03"
+  url: "https://joshua-data.medium.com/rds-to-bigquery-cdc-with-datastream-en-ad524be9c6a3"
+  tags:
+    - data-engineering
+    - bigquery
+    - cdc
+  language: en
+
+- title: "CDC 파이프라인 운영 후기 (RDS → BigQuery with GCP Datastream)"
+  date: "2026-03-03"
+  url: "https://joshua-data.medium.com/rds-to-bigquery-cdc-with-datastream-ko-290de8e23155"
+  tags:
+    - data-engineering
+    - bigquery
+    - cdc
+  language: ko
+
+- title: "Building an AI Data Analysis Bot for Slack — Handle Data Requests Right in Slack"
+  date: "2026-02-18"
+  url: "https://joshua-data.medium.com/nl2sql-slack-ai-agent-development-journey-en-d96adbd059f8"
+  tags:
+    - ai
+    - slack
+    - nl2sql
+  language: en
+
+- title: "슬랙 AI 데이터 분석봇 개발기 — 데이터 요청, 이제 슬랙에서 끝내요"
+  date: "2026-02-18"
+  url: "https://joshua-data.medium.com/nl2sql-slack-ai-agent-development-journey-ko-ea0541c4148d"
+  tags:
+    - ai
+    - slack
+    - nl2sql
+  language: ko
+
+- title: "Findy 출시 Week 1 Review"
+  date: "2026-01-24"
+  url: "https://joshua-data.medium.com/findy-002-2e91b3f98b55"
+  tags:
+    - project
+    - findy
+  language: ko
+
+- title: "장소 검색이 너무 귀찮아서 혼자 서비스를 만들었습니다"
+  date: "2026-01-18"
+  url: "https://joshua-data.medium.com/findy-001-59bf3186f928"
+  tags:
+    - project
+    - findy
+  language: ko
+
+# 2025
+- title: "데이터쟁이의 2025년 회고"
+  date: "2025-10-08"
+  url: "https://joshua-data.medium.com/2025-review-80ed0ffd39cb"
+  tags:
+    - life
+    - review
+  language: ko
+
+- title: "Reflection of a Data Professional in 2025"
+  date: "2025-10-08"
+  url: "https://joshua-data.medium.com/2025-review-en-f9a990e4d5b3"
+  tags:
+    - life
+    - review
+  language: en
+
+- title: "Using BigQuery Table-valued Function (TVFs) as Custom Models in dbt"
+  date: "2025-10-25"
+  url: "https://joshua-data.medium.com/bigquery-tvf-custom-materialization-in-dbt-en-56b62e02ec7e"
+  tags:
+    - analytics-engineering
+    - bigquery
+    - dbt
+  language: en
+
+- title: "dbt에서 빅쿼리 TVF를 커스텀 모델로 사용하기"
+  date: "2025-10-25"
+  url: "https://joshua-data.medium.com/bigquery-tvf-custom-materialization-in-dbt-5d18264ce192"
+  tags:
+    - analytics-engineering
+    - bigquery
+    - dbt
+  language: ko
+
+- title: "Building a 'Consecutive Activation' Data Mart"
+  date: "2025-10-04"
+  url: "https://joshua-data.medium.com/data-mart-streak-days-eng-3979659e4161"
+  tags:
+    - analytics-engineering
+    - data-mart
+  language: en
+
+- title: "'연속 활성화' 데이터 마트 개발하기"
+  date: "2025-10-04"
+  url: "https://joshua-data.medium.com/data-mart-streak-days-92207373ab4c"
+  tags:
+    - analytics-engineering
+    - data-mart
+  language: ko
+
+- title: "profiles.yaml 동적화로 편리한 로컬 테스트 만들기"
+  date: "2025-09-23"
+  url: "https://joshua-data.medium.com/dynamic-profiles-yaml-with-system-env-variables-88e65b383777"
+  tags:
+    - analytics-engineering
+    - dbt
+  language: ko
+
+- title: "AE로 입사 후 2개월 동안 한 일"
+  date: "2025-09-03"
+  url: "https://joshua-data.medium.com/working-as-an-analytics-engineer-93526b5622ac"
+  tags:
+    - life
+    - analytics-engineering
+  language: ko
+
+- title: "dbt에서 UDF 관리하기"
+  date: "2025-08-24"
+  url: "https://joshua-data.medium.com/how-i-dealt-with-bigquery-udf-in-dbt-e144ed4ffb7c"
+  tags:
+    - analytics-engineering
+    - dbt
+    - bigquery
+  language: ko
+
+- title: "이벤트 테이블에서 세션 식별하여 모델링하기"
+  date: "2025-08-16"
+  url: "https://joshua-data.medium.com/how-i-modeled-session-dimension-table-9a835e8d7263"
+  tags:
+    - analytics-engineering
+    - data-modeling
+  language: ko
+
+- title: "비전공자 출신 데이터 분석가가 개발 지식 쌓아가는 방법"
+  date: "2025-08-15"
+  url: "https://joshua-data.medium.com/how-i-dived-into-engineering-0bf7893c6ee0"
+  tags:
+    - life
+    - career
+  language: ko
+
+- title: "연속된 데이터 구간 식별하여 Grouping하기 (lag/lead 말고 row_number)"
+  date: "2025-08-10"
+  url: "https://joshua-data.medium.com/analytics-engineering-grouping-consecutive-data-f213f4c54410"
+  tags:
+    - analytics-engineering
+    - sql
+  language: ko
+
+- title: "dbt 증분 로드 매크로로 Daily, Weekly, Monthly를 하나의 DAG에 담기"
+  date: "2025-08-09"
+  url: "https://joshua-data.medium.com/analytics-engineering-integrated-interval-management-with-dbt-macro-bad5d260d9b4"
+  tags:
+    - analytics-engineering
+    - dbt
+  language: ko
+
+- title: "AU 테이블이란 무엇인가"
+  date: "2025-08-06"
+  url: "https://joshua-data.medium.com/analytics-engineering-activated-users-table-b8bce9686b54"
+  tags:
+    - analytics-engineering
+    - data-modeling
+  language: ko
+
+- title: "Accumulating Snapshot & Transactional Fact 테이블을 통합할 때 겪은 이슈"
+  date: "2025-07-16"
+  url: "https://joshua-data.medium.com/accumulating-snapshot-transactional-fact-integration-cc42c0dcbe90"
+  tags:
+    - analytics-engineering
+    - data-modeling
+  language: ko
+
+- title: "데브시스터즈 | Engineering Day 2025 리뷰 — DW는 계획대로 되지 않아!"
+  date: "2025-06-17"
+  url: "https://joshua-data.medium.com/devsisters-dw-engineering-0ab942dac863"
+  tags:
+    - study
+    - data-warehouse
+  language: ko
+
+- title: "빅쿼리 TVF로 마케팅 이벤트 정산 쿼리 자동화하기"
+  date: "2025-06-12"
+  url: "https://joshua-data.medium.com/bigquery-tvf-1ab3ad792b68"
+  tags:
+    - analytics-engineering
+    - bigquery
+  language: ko
+
+- title: "빅쿼리에서 개인정보 자동으로 마스킹하기"
+  date: "2025-06-07"
+  url: "https://joshua-data.medium.com/bigquery-dlp-remote-function-d6dad25df7c5"
+  tags:
+    - data-engineering
+    - bigquery
+    - privacy
+  language: ko
+
+- title: "토스 | SLASH 21 리뷰 — 효과적인 데이터 품질(DQ) 시스템 구축하기"
+  date: "2025-04-29"
+  url: "https://joshua-data.medium.com/data-quality-system-2b9890657b97"
+  tags:
+    - study
+    - data-quality
+  language: ko
+
+- title: "CI/CD란 무엇인가?"
+  date: "2025-04-20"
+  url: "https://joshua-data.medium.com/cicd-for-dummies-ec3bbab02872"
+  tags:
+    - data-engineering
+    - cicd
+  language: ko
+
+- title: "5년째 고수 중인 나의 재테크 방법"
+  date: "2025-04-09"
+  url: "https://joshua-data.medium.com/my-personal-finance-pipeline-2c6447c60923"
+  tags:
+    - life
+    - finance
+  language: ko
+
+- title: "Metabase 도입 후기"
+  date: "2025-02-09"
+  url: "https://joshua-data.medium.com/metabase-bbc70419a2b0"
+  tags:
+    - data-engineering
+    - bi-tools
+  language: ko
+
+- title: "데이터 마트 개발기: '사용자 활성화 퍼널 분석'"
+  date: "2025-01-25"
+  url: "https://joshua-data.medium.com/data-mart-first-activation-funnel-02be566f188e"
+  tags:
+    - analytics-engineering
+    - data-mart
+  language: ko
+
+- title: "토스 | SLASH 24 리뷰 — 활성 사용자 데이터 분석을 위한 DW 설계하기"
+  date: "2025-01-06"
+  url: "https://joshua-data.medium.com/data-modeling-with-activation-388ab7c5dcc1"
+  tags:
+    - study
+    - data-warehouse
+  language: ko
+
+# 2024
+- title: "Airflow 도입 후기"
+  date: "2024-12-28"
+  url: "https://joshua-data.medium.com/airflow-review-d849fb39f779"
+  tags:
+    - data-engineering
+    - airflow
+  language: ko
+
+- title: "사내 도서관 대출/반납 시스템 구축 후기"
+  date: "2024-12-12"
+  url: "https://joshua-data.medium.com/library-checkout-system-5677f8fbfc60"
+  tags:
+    - rpa
+    - automation
+  language: ko
+
+- title: "데이터쟁이의 2024년 회고"
+  date: "2024-12-02"
+  url: "https://joshua-data.medium.com/2024-review-71a2fde3c03a"
+  tags:
+    - life
+    - review
+  language: ko
+
+- title: "데이터로 프로덕트 뜯어보기 - 당근 vs. 숨고 전환율 분석"
+  date: "2024-11-21"
+  url: "https://joshua-data.medium.com/comparing-conversion-strategies-d40d7258e530"
+  tags:
+    - study
+    - product-analytics
+  language: ko
+
+- title: "Categorical Data Encoding 방법"
+  date: "2024-11-06"
+  url: "https://joshua-data.medium.com/categorical-data-encoding-de70e478490b"
+  tags:
+    - study
+    - machine-learning
+  language: ko
+
+- title: "GA4 기반 데이터 웨어하우스 구축 후기"
+  date: "2024-11-03"
+  url: "https://joshua-data.medium.com/ga4-data-warehouse-f900bc06c078"
+  tags:
+    - analytics-engineering
+    - ga4
+    - data-warehouse
+  language: ko
+
+- title: "이벤트 택소노미의 중요성"
+  date: "2024-10-13"
+  url: "https://joshua-data.medium.com/event-taxonomy-fc9dd62a229e"
+  tags:
+    - analytics-engineering
+    - event-tracking
+  language: ko
+
+- title: "개인성의 가치: 내가 믿는 철학과 월클을 향한 길"
+  date: "2024-10-01"
+  url: "https://joshua-data.medium.com/%EA%B0%9C%EC%9D%B8%EC%84%B1%EC%9D%98-%EA%B0%80%EC%B9%98-%EB%82%B4%EA%B0%80-%EB%AF%BF%EB%8A%94-%EC%B2%A0%ED%95%99%EA%B3%BC-%EC%9B%94%ED%81%B4%EC%9D%84-%ED%96%A5%ED%95%9C-%EA%B8%B8-6d19f70ae5ec"
+  tags:
+    - life
+    - philosophy
+  language: ko
+
+- title: "dbt Docs 사내 공유 방법"
+  date: "2024-09-21"
+  url: "https://joshua-data.medium.com/dbt-docs-site-hosting-guide-24c2d08e277f"
+  tags:
+    - data-engineering
+    - dbt
+  language: ko
+
+- title: "A/B 테스트 후기와 소고(小考)"
+  date: "2024-09-15"
+  url: "https://joshua-data.medium.com/ab-test-review-bcfb3613e829"
+  tags:
+    - data-analysis
+    - ab-testing
+  language: ko
+
+- title: "BigQuery 파티션 필터링, 이렇게 최적화했어요."
+  date: "2024-09-04"
+  url: "https://joshua-data.medium.com/bigquery-partition-filtering-optimization-fa2e52855dda"
+  tags:
+    - analytics-engineering
+    - bigquery
+    - optimization
+  language: ko
+
+- title: "구매 전환율 급상승 후기"
+  date: "2024-08-27"
+  url: "https://joshua-data.medium.com/purchase-conversion-rate-improvement-6a8b4f81c2b4"
+  tags:
+    - data-analysis
+    - conversion
+  language: ko
+
+- title: "NOT IN 대신 JOIN을 통한 쿼리 최적화 방법 (쿼리 시간 96% 절감 후기)"
+  date: "2024-08-13"
+  url: "https://joshua-data.medium.com/sql-optimization-from-not-in-to-left-join-16132ca048ba"
+  tags:
+    - analytics-engineering
+    - sql
+    - optimization
+  language: ko
+
+- title: "Redash 대시보드 활용 방법과 후기"
+  date: "2024-08-09"
+  url: "https://joshua-data.medium.com/redash-tips-916837af425d"
+  tags:
+    - data-analysis
+    - redash
+    - bi-tools
+  language: ko
+
+- title: "한국과 미국의 기업 문화 차이점"
+  date: "2024-08-02"
+  url: "https://joshua-data.medium.com/differences-between-us-and-south-korea-dd48fd834890"
+  tags:
+    - life
+    - culture
+  language: ko
+
+- title: "데이터로 프로덕트 뜯어보기 - YouTube"
+  date: "2024-07-29"
+  url: "https://joshua-data.medium.com/product-analytics-youtube-d0600584e4b0"
+  tags:
+    - study
+    - product-analytics
+  language: ko
+
+- title: "Seoul dbt Meetup #3 발표 후기"
+  date: "2024-07-25"
+  url: "https://joshua-data.medium.com/seoul-dbt-meetup-speaking-review-9e75f6e61ea5"
+  tags:
+    - life
+    - dbt
+    - speaking
+  language: ko
+
+- title: "젠데스크 티켓 분석으로 VOC 대시보드 만들기: OpenAI, BigQuery, Redash"
+  date: "2024-07-20"
+  url: "https://joshua-data.medium.com/zendesk-openai-dashboard-9a222d567953"
+  tags:
+    - data-engineering
+    - openai
+    - voc
+  language: ko
+
+- title: "데이터 엔지니어의 생일 축하 슬랙 메시지 자동화 개발기 feat. Apps Script"
+  date: "2024-07-03"
+  url: "https://joshua-data.medium.com/slack-birthday-message-756b3810eb14"
+  tags:
+    - rpa
+    - automation
+    - slack
+  language: ko
+
+- title: "Rolling MAU, 불가능을 가능의 영역으로 만드는 방법"
+  date: "2024-06-30"
+  url: "https://joshua-data.medium.com/rolling-mau-41edd178984f"
+  tags:
+    - analytics-engineering
+    - metrics
+  language: ko
+
+- title: "동료들과 [요즘 팀장의 오답노트]를 함께 읽고"
+  date: "2024-06-23"
+  url: "https://joshua-data.medium.com/team-leaders-29dfa4c4804f"
+  tags:
+    - culture
+    - book-review
+  language: ko
+
+- title: "dbt를 통한 데이터 웨어하우스 개발 후기"
+  date: "2024-06-16"
+  url: "https://joshua-data.medium.com/data-warehouse-with-dbt-b65be67750e9"
+  tags:
+    - analytics-engineering
+    - dbt
+    - data-warehouse
+  language: ko
+
+- title: "데이터로 프로덕트 뜯어보기 — Medium"
+  date: "2024-06-11"
+  url: "https://joshua-data.medium.com/product-analytics-medium-df151e2f482b"
+  tags:
+    - study
+    - product-analytics
+  language: ko
+
+- title: "데이터야놀자 2024 발표 후기"
+  date: "2024-06-06"
+  url: "https://joshua-data.medium.com/throwback-to-datayanolja-086dbc21206b"
+  tags:
+    - life
+    - speaking
+  language: ko
+
+- title: "Web 2와 Web 3 데이터 통합으로 비즈니스 성장하기: 위핀 사용자 통계"
+  date: "2024-05-25"
+  url: "https://joshua-data.medium.com/web2-web3-data-integration-6b70532430d3"
+  tags:
+    - analytics-engineering
+    - web3
+  language: ko
+
+- title: "IP 주소-국가 매핑 쿼리 최적화 방법 (쿼리 시간 90% 절감 후기)"
+  date: "2024-05-19"
+  url: "https://joshua-data.medium.com/ip-address-to-country-mapping-80c29119048a"
+  tags:
+    - analytics-engineering
+    - sql
+    - optimization
+  language: ko
+
+- title: "나는 왜 데분생을 운영하는가?"
+  date: "2024-05-13"
+  url: "https://joshua-data.medium.com/survival-from-data-analysis-129f32e31961"
+  tags:
+    - life
+    - community
+  language: ko
+
+- title: "User Movement 지표 쿼리 작성하기"
+  date: "2024-02-19"
+  url: "https://joshua-data.medium.com/user-movement-6779553aa143"
+  tags:
+    - data-analysis
+    - metrics
+  language: ko
+
+- title: "빅쿼리 Nested 칼럼을 CROSS JOIN으로 접근하면 데이터 분석을 망칩니다."
+  date: "2024-02-06"
+  url: "https://joshua-data.medium.com/bigquery-nested-cols-cross-join-005839b9a6ee"
+  tags:
+    - analytics-engineering
+    - bigquery
+  language: ko
+
+- title: "데이터 분석가가 바라본 '좋은 프로덕트'란?"
+  date: "2024-01-10"
+  url: "https://joshua-data.medium.com/great-products-ec470e767f13"
+  tags:
+    - data-analysis
+    - product
+  language: ko
+
+- title: "SQL 최적화 일기: 코호트 리텐션 Batch Query 만들기"
+  date: "2024-01-01"
+  url: "https://joshua-data.medium.com/retention-batch-query-d986898a72ef"
+  tags:
+    - analytics-engineering
+    - sql
+    - optimization
+  language: ko
+
+# 2023
+- title: "『마스터링 이더리움』 중요한 내용 모조리 요약"
+  date: "2023-12-05"
+  url: "https://joshua-data.medium.com/mastering-ethereum-cb527e3b38d1"
+  tags:
+    - study
+    - blockchain
+    - ethereum
+  language: ko
+
+- title: "SQL 최적화 일기: SELF JOIN을 피하는 방법"
+  date: "2023-11-30"
+  url: "https://joshua-data.medium.com/self-join-fc6ea4aacc5f"
+  tags:
+    - analytics-engineering
+    - sql
+    - optimization
+  language: ko
+
+- title: "Toastmasters Club Log #1"
+  date: "2023-11-25"
+  url: "https://joshua-data.medium.com/toastmasters-club-log-1-0fd909c85582"
+  tags:
+    - life
+    - speaking
+  language: en
+
+- title: "SQL 최적화 일기: Static vs. Rolling Stickiness"
+  date: "2023-11-19"
+  url: "https://joshua-data.medium.com/static-vs-rolling-stickiness-543a1c936a1f"
+  tags:
+    - data-analysis
+    - sql
+    - metrics
+  language: ko
+
+- title: "Near Protocol: Account Model and Transaction Story"
+  date: "2023-11-18"
+  url: "https://joshua-data.medium.com/near-protocol-faa12581edc4"
+  tags:
+    - study
+    - blockchain
+  language: en
+
+- title: "Intro to Encoding & Decoding Ethereum Contract Functions"
+  date: "2023-10-16"
+  url: "https://joshua-data.medium.com/intro-to-encoding-and-decoding-ethereum-contract-functions-0e12583916aa"
+  tags:
+    - analytics-engineering
+    - blockchain
+    - ethereum
+  language: en
+
+- title: "Finding all NFTs (ERC721) held by an address (feat. Dune Analytics)"
+  date: "2023-10-08"
+  url: "https://joshua-data.medium.com/finding-all-nfts-erc721-held-by-an-address-feat-dune-analytics-ed460d04e915"
+  tags:
+    - analytics-engineering
+    - blockchain
+    - nft
+  language: en
+
+- title: "OpenSea에서 발생한 트랜잭션 데이터 구조"
+  date: "2023-09-18"
+  url: "https://joshua-data.medium.com/opensea-nft-transaction-data-architecture-fb8e7bd6d5ac"
+  tags:
+    - analytics-engineering
+    - blockchain
+    - nft
+  language: ko
+
+- title: "데이터 분석가의 파이썬 클라이언트 개발기 feat. pyinstaller"
+  date: "2023-07-15"
+  url: "https://joshua-data.medium.com/python-executable-file-with-pyinstaller-c4cb8de42af7"
+  tags:
+    - rpa
+    - python
+  language: ko
+
+- title: "The Last Click Attribution Model Using BigQuery"
+  date: "2023-07-09"
+  url: "https://joshua-data.medium.com/the-last-click-attribution-model-using-bigquery-cf5f66fcf2cb"
+  tags:
+    - data-analysis
+    - bigquery
+    - attribution
+  language: en
+
+- title: "It's Harder than You Think to Extract DAU Separating New and Existing Users in BigQuery"
+  date: "2023-06-14"
+  url: "https://joshua-data.medium.com/extract-dau-separating-new-and-existing-users-in-bigquery-de665167e6b9"
+  tags:
+    - data-analysis
+    - bigquery
+    - metrics
+  language: en
+
+- title: "Harnessing the Power of BigQuery and Python: Overcoming Google Optimize A/B Testing Limitations"
+  date: "2023-06-04"
+  url: "https://joshua-data.medium.com/harnessing-the-power-of-bigquery-and-python-overcoming-google-optimize-a-b-testing-limitations-9233365a0707"
+  tags:
+    - data-analysis
+    - bigquery
+    - ab-testing
+  language: en
+
+- title: "Ethereum On-chain Data: DAU, MAU, Stickiness, and Retention"
+  date: "2023-05-29"
+  url: "https://joshua-data.medium.com/ethereum-on-chain-data-ba15b47492e7"
+  tags:
+    - data-analysis
+    - blockchain
+    - metrics
+  language: en
+
+- title: "Let's Create the Sankey Chart"
+  date: "2023-05-21"
+  url: "https://joshua-data.medium.com/ga4-bigquery-redash-sankey-chart-5f0d690217fe"
+  tags:
+    - data-analysis
+    - visualization
+  language: en
+
+# 2022
+- title: "회귀 모델이 풀 수 없는 문제"
+  date: "2022-12-25"
+  url: "https://joshua-data.medium.com/regression-model-d7924c8d93a7"
+  tags:
+    - data-analysis
+    - machine-learning
+  language: ko
+
+- title: "데이터 분석 스토리: 온체인 데이터 분석하기 | Dune Analytics 101"
+  date: "2022-12-03"
+  url: "https://joshua-data.medium.com/data-analysis-dune-analytics-101-2a825e4972d7"
+  tags:
+    - data-analysis
+    - blockchain
+    - dune-analytics
+  language: ko
+
+- title: "데이터 분석 스토리: Amplitude 톺아보기"
+  date: "2022-11-01"
+  url: "https://joshua-data.medium.com/data-analysis-story-intro-to-amplitude-2b77077c9508"
+  tags:
+    - data-analysis
+    - amplitude
+  language: ko
+
+- title: "Tech Law: 이더리움 머지 업그레이드와 하드포크 자산의 법적 권리"
+  date: "2022-10-15"
+  url: "https://joshua-data.medium.com/tech-law-%EC%9D%B4%EB%8D%94%EB%A6%AC%EC%9B%80-%EB%A8%B8%EC%A7%80-%EC%97%85%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%9C%EC%99%80-%ED%95%98%EB%93%9C%ED%8F%AC%ED%81%AC-%EC%9E%90%EC%82%B0%EC%9D%98-%EB%B2%95%EC%A0%81-%EA%B6%8C%EB%A6%AC-bb75caf36b13"
+  tags:
+    - study
+    - blockchain
+    - ethereum
+  language: ko
+
+- title: "탈중앙화 개념과 측정 방법"
+  date: "2022-09-01"
+  url: "https://joshua-data.medium.com/%ED%83%88%EC%A4%91%EC%95%99%ED%99%94-%EA%B0%9C%EB%85%90%EA%B3%BC-%EC%B8%A1%EC%A0%95-%EB%B0%A9%EB%B2%95-1d9162bd7891"
+  tags:
+    - study
+    - blockchain
+  language: ko
