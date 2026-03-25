@@ -392,5 +392,3 @@ While sophisticated and complex charts are valuable, the ultimate goal should be
 
 ---
 
-## *Published by* Joshua Kim
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

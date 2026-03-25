@@ -457,6 +457,3 @@ models:
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

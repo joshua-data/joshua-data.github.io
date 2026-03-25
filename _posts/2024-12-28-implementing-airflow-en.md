@@ -474,6 +474,3 @@ By reducing maintenance overhead and improving workflow stability through Airflo
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

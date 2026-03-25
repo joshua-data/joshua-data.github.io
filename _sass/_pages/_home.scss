@@ -1,0 +1,187 @@
+// ==========================================================================
+// Home Page Styles
+// ==========================================================================
+
+.home {
+  // Remove default footer margin for home page
+  & + .footer {
+    margin-top: 0;
+  }
+}
+
+// ========== Posts Grid ==========
+.posts-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+
+  @include sm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// ========== Legacy Home Styles (for backwards compatibility) ==========
+
+// Remove old hero styles that conflict with new ones
+.home-section {
+  @extend .section;
+}
+
+.home-section--highlight {
+  @extend .section--alt;
+}
+
+.home-section__header {
+  @extend .section__header;
+}
+
+.home-section__title {
+  @extend .section__title;
+}
+
+.home-section__subtitle {
+  @extend .section__description;
+}
+
+.home-section__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: var(--space-md);
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: var(--color-accent);
+
+  &:hover {
+    gap: 0.5rem;
+  }
+}
+
+// Legacy cards mapping
+.home-cards {
+  @extend .card-grid;
+
+  @include md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.home-card {
+  @extend .card-feature;
+}
+
+.home-card__icon {
+  @extend .card-feature__icon;
+
+  &--analytics { @extend .card-feature__icon--analytics; }
+  &--engineering { @extend .card-feature__icon--engineering; }
+  &--ai { @extend .card-feature__icon--ai; }
+  &--analysis { @extend .card-feature__icon--analysis; }
+}
+
+.home-card__title {
+  @extend .card-feature__title;
+}
+
+.home-card__desc {
+  @extend .card-feature__description;
+}
+
+// Legacy highlights mapping
+.home-highlights {
+  @extend .card-grid;
+
+  @include md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.home-highlight {
+  @extend .card-stat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-highlight__number {
+  @extend .card-stat__value;
+}
+
+.home-highlight__label {
+  @extend .card-stat__label;
+}
+
+.home-highlight__detail {
+  font-size: $font-size-xs;
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+// Legacy CTA mapping
+.home-cta {
+  @extend .footer-cta;
+}
+
+.home-cta__title {
+  @extend .footer-cta__title;
+}
+
+.home-cta__text {
+  @extend .footer-cta__text;
+}
+
+.home-cta__buttons {
+  @extend .footer-cta__buttons;
+}
+
+.home-cta__btn {
+  @extend .btn;
+  padding: 0.75rem 1.25rem;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &--linkedin {
+    background: #0077b5;
+    color: white;
+    border-color: #0077b5;
+
+    &:hover {
+      background: darken(#0077b5, 10%);
+    }
+  }
+
+  &--github {
+    background: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    border-color: var(--color-text-primary);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &--medium {
+    background: #00ab6c;
+    color: white;
+    border-color: #00ab6c;
+
+    &:hover {
+      background: darken(#00ab6c, 10%);
+    }
+  }
+}

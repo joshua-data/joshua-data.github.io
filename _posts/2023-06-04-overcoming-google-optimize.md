@@ -1108,5 +1108,3 @@ Therefore, by connecting to BigQuery (where the experiment data is loaded) from 
 
 ---
 
-## *Published by* Joshua Kim
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

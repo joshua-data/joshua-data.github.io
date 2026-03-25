@@ -204,5 +204,3 @@ Add Python to environment variables를 꼭 체크 후 Install을 진행해주세
 
 ---
 
-## *Published by* Joshua Kim
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

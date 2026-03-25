@@ -1,0 +1,106 @@
+// ==========================================================================
+// Unified CTA Component
+// ==========================================================================
+// Use this component for all "Let's Connect" / "Want to see more?" sections
+
+.page-cta {
+  text-align: center;
+  padding: var(--space-2xl);
+  background: var(--gradient-hero-overlay);
+  border-radius: var(--radius-xl);
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  &__text {
+    font-size: $font-size-base;
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-xl);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    @extend .btn;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &--primary {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-accent);
+        color: white;
+      }
+    }
+
+    &--secondary {
+      background: transparent;
+      border: 2px solid var(--color-border);
+      color: var(--color-text-primary);
+
+      &:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+    }
+
+    // Social-specific button styles
+    &--linkedin {
+      background: #0077b5;
+      color: white;
+      border: none;
+
+      &:hover {
+        background: darken(#0077b5, 8%);
+        transform: translateY(-2px);
+        color: white;
+      }
+    }
+
+    &--github {
+      background: var(--color-text-primary);
+      color: var(--color-bg-primary);
+      border: none;
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        color: var(--color-bg-primary);
+      }
+    }
+
+    &--medium {
+      background: #00ab6c;
+      color: white;
+      border: none;
+
+      &:hover {
+        background: darken(#00ab6c, 8%);
+        transform: translateY(-2px);
+        color: white;
+      }
+    }
+  }
+}

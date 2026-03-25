@@ -152,6 +152,3 @@ dbt Docs 사이트 링크를 슬랙 채널에 고정(Pin)하여 구성원 분들
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

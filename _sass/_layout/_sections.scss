@@ -1,0 +1,306 @@
+// ==========================================================================
+// Section Layout Components
+// ==========================================================================
+
+// ========== Base Section ==========
+.section {
+  padding: var(--section-padding-y) 0;
+
+  &--alt {
+    background: var(--color-bg-secondary);
+  }
+
+  &--gradient {
+    background: var(--gradient-hero-overlay);
+  }
+
+  &--dark {
+    background: var(--color-bg-primary);
+
+    @media (prefers-color-scheme: dark) {
+      background: var(--color-bg-secondary);
+    }
+  }
+}
+
+// ========== Section Container ==========
+.section__container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+
+  @include lg {
+    padding: 0 var(--space-lg);
+  }
+
+  &--narrow {
+    max-width: var(--container-narrow);
+  }
+
+  &--wide {
+    max-width: var(--container-wide);
+  }
+}
+
+// ========== Section Header ==========
+.section__header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-2xl);
+
+  @include md {
+    margin-bottom: var(--space-3xl);
+  }
+}
+
+.section__subtitle {
+  display: inline-block;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.section__title {
+  font-size: $font-size-2xl;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-md);
+  line-height: 1.2;
+
+  @include md {
+    font-size: $font-size-3xl;
+  }
+
+  &--gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.section__description {
+  font-size: $font-size-base;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin: 0;
+
+  @include md {
+    font-size: $font-size-lg;
+  }
+}
+
+// ========== Hero Section ==========
+.hero {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  padding: var(--space-2xl) 0;
+  background: var(--gradient-hero-overlay);
+
+  @include md {
+    padding: var(--space-4xl) 0;
+  }
+
+  &__container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    width: 100%;
+
+    @include lg {
+      padding: 0 var(--space-lg);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-xl);
+
+    @include lg {
+      flex-direction: row;
+      text-align: left;
+      gap: var(--space-3xl);
+    }
+  }
+
+  &__image {
+    flex-shrink: 0;
+    order: -1;
+
+    @include lg {
+      order: 0;
+    }
+  }
+
+  &__avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    background: var(--color-bg-card);
+
+    @include md {
+      width: 220px;
+      height: 220px;
+    }
+
+    @include lg {
+      width: 280px;
+      height: 280px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &__text {
+    flex-grow: 1;
+    max-width: 600px;
+  }
+
+  &__greeting {
+    font-size: $font-size-lg;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+
+    @include md {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__name {
+    font-size: $font-size-3xl;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+    line-height: 1.1;
+
+    @include md {
+      font-size: $font-size-4xl;
+    }
+
+    @include lg {
+      font-size: $font-size-5xl;
+    }
+  }
+
+  &__role {
+    font-size: $font-size-xl;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-lg);
+
+    @include md {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__tagline {
+    font-size: $font-size-base;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-xl);
+    max-width: 500px;
+
+    @include lg {
+      font-size: $font-size-lg;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
+
+    @include lg {
+      justify-content: flex-start;
+    }
+  }
+
+  &__scroll {
+    display: none;
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: $font-size-xs;
+    animation: bounce 2s ease infinite;
+
+    @include md {
+      display: flex;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+// ========== Page Header ==========
+.page-header {
+  padding: var(--space-3xl) 0 var(--space-2xl);
+  background: var(--gradient-hero-overlay);
+  text-align: center;
+
+  &__container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+
+    @include lg {
+      padding: 0 var(--space-lg);
+    }
+  }
+
+  &__title {
+    font-size: $font-size-3xl;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-sm);
+
+    @include md {
+      font-size: $font-size-4xl;
+    }
+  }
+
+  &__subtitle {
+    font-size: $font-size-lg;
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// ========== Content Section ==========
+.content-section {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-md);
+
+  @include lg {
+    padding: var(--space-3xl) var(--space-lg);
+  }
+}

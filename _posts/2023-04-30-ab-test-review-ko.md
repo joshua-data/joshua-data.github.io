@@ -298,6 +298,3 @@ BigQuery로부터 데이터를 불러와 Python 상에서 분석을 했습니다
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)

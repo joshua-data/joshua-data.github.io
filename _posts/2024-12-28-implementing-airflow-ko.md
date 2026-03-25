@@ -474,6 +474,3 @@ Airflow를 통해 유지보수 부담을 줄이고, 워크플로우의 안정성
 
 ---
 
-## *Published by* Joshua Kim
-
-![Joshua Kim]({{ site.baseurl }}/assets/profile/joshua-profile.png)
