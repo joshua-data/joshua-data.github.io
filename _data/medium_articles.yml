@@ -2,6 +2,25 @@
 # This file contains external Medium blog articles to be displayed on the Blog page
 
 # 2026
+
+- title: "How I Approach Data Modeling — An Analytics Engineer’s Thought Process"
+  date: "2026-03-30"
+  url: "https://joshua-data.medium.com/my-analytics-engineering-process-en-435445038897"
+  tags:
+    - analytics-engineering
+    - bigquery
+    - dbt
+  language: en
+
+- title: "내가 데이터 모델링하는 순서 — Analytics Engineer의 사고 프로세스"
+  date: "2026-03-30"
+  url: "https://joshua-data.medium.com/my-analytics-engineering-process-ko-833684c87e77"
+  tags:
+    - analytics-engineering
+    - bigquery
+    - dbt
+  language: ko
+
 - title: "Operating a CDC Pipeline (RDS → BigQuery with GCP Datastream)"
   date: "2026-03-03"
   url: "https://joshua-data.medium.com/rds-to-bigquery-cdc-with-datastream-en-ad524be9c6a3"
