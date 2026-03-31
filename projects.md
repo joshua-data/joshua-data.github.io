@@ -320,7 +320,7 @@ permalink: /projects/
 <div class="proj-card__icon proj-card__icon--community">
 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
 </div>
-<h3 class="proj-card__title">Seoul dbt Meetup</h3>
+<h3 class="proj-card__title"><a href="https://www.meetup.com/seoul-dbt-meetup" target="_blank">Seoul dbt Meetup</a></h3>
 <p class="proj-card__tagline">Community Organizer</p>
 </div>
 <div class="proj-card__body">
@@ -333,7 +333,7 @@ permalink: /projects/
 <div class="proj-card__icon proj-card__icon--community">
 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
 </div>
-<h3 class="proj-card__title">Data Analysis Korea</h3>
+<h3 class="proj-card__title"><a href="https://www.linkedin.com/company/data-korea" target="_blank">Data Analysis Korea</a></h3>
 <p class="proj-card__tagline">Community Founder</p>
 </div>
 <div class="proj-card__body">
