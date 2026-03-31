@@ -319,6 +319,52 @@ Heungkuk Securities
 
 <section class="exp-section">
 
+<h2>Military Service</h2>
+
+<div class="exp-timeline">
+
+<div class="exp-timeline__item exp-timeline__item--minor exp-timeline__item--highlight">
+<div class="exp-timeline__marker"></div>
+<div class="exp-timeline__content">
+<div class="exp-timeline__header">
+<span class="exp-timeline__date">Sep 2010 - Jul 2012</span>
+<span class="exp-timeline__badge exp-timeline__badge--military">Military</span>
+</div>
+<h3 class="exp-timeline__title">Sergeant | Administrative Specialist</h3>
+<p class="exp-timeline__company">
+Republic of Korea Army
+<span class="exp-timeline__location">Busan, South Korea</span>
+</p>
+<p class="exp-timeline__desc">Completed mandatory military service as an Administrative Specialist, focusing on operational documentation and personnel management.</p>
+
+<div class="exp-achievements">
+<h4 class="exp-achievements__title">Key Responsibilities</h4>
+<ul class="exp-achievements__list">
+<li>
+<strong>Classified Document Management</strong>
+<p>Drafted and updated classified operational documents, ensuring accuracy and compliance with military protocols.</p>
+</li>
+<li>
+<strong>Personnel & Training Administration</strong>
+<p>Managed organizational charts, coordinated training schedules, and maintained personnel records for the unit.</p>
+</li>
+</ul>
+</div>
+
+<div class="exp-tech">
+<span class="exp-tech__tag">Document Management</span>
+<span class="exp-tech__tag">Personnel Administration</span>
+<span class="exp-tech__tag">Training Coordination</span>
+</div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="exp-section">
+
 <h2>Education</h2>
 
 <div class="exp-education">
