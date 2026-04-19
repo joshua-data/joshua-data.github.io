@@ -3,6 +3,58 @@
 
 # 2026
 
+- title: "Catalog as a Code: A DataHub Metadata CI/CD Pipeline Inspired by dbt"
+  date: "2026-04-19"
+  url: "https://joshua-data.medium.com/catalog-as-a-code-en-167c79007fe4"
+  tags:
+    - data-engineering
+    - cicd
+  language: en
+
+- title: "Catalog as a Code: dbt에서 영감을 얻어 구축한 DataHub 메타데이터 CI/CD 파이프라인"
+  date: "2026-04-19"
+  url: "https://joshua-data.medium.com/catalog-as-a-code-ko-0a5f094a859e"
+  tags:
+    - data-engineering
+    - cicd
+  language: ko
+
+- title: "Building Dashboards Without BI SaaS: A Generative BI Platform Powered by Claude Code"
+  date: "2026-04-10"
+  url: "https://joshua-data.medium.com/generative-bi-en-3669ffd08ddb"
+  tags:
+    - ai
+    - nl2sql
+    - bi-tools
+  language: en
+
+- title: "BI SaaS 없이 대시보드 만들기: Claude Code로 구현한 Gen BI 플랫폼"
+  date: "2026-04-10"
+  url: "https://joshua-data.medium.com/generative-bi-ko-0023e0f5ea90"
+  tags:
+    - ai
+    - nl2sql
+    - bi-tools
+  language: ko
+
+- title: "Building an AI Data Analysis Bot for Slack — Prompt Caching"
+  date: "2026-04-07"
+  url: "https://joshua-data.medium.com/nl2sql-slack-ai-agent-prompt-caching-en-af1ac07d5994"
+  tags:
+    - ai
+    - slack
+    - nl2sql
+  language: en
+
+- title: "슬랙 AI 데이터 분석봇 개발기 — 프롬프트 캐싱"
+  date: "2026-04-07"
+  url: "https://joshua-data.medium.com/nl2sql-slack-ai-agent-prompt-caching-ko-f80cf9f3b0e7"
+  tags:
+    - ai
+    - slack
+    - nl2sql
+  language: ko
+
 - title: "How I Approach Data Modeling — An Analytics Engineer’s Thought Process"
   date: "2026-03-30"
   url: "https://joshua-data.medium.com/my-analytics-engineering-process-en-435445038897"
