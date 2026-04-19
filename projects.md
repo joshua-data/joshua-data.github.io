@@ -1,5 +1,6 @@
 ---
-layout: projects
+layout: section
+section_class: projects
 title: Projects
 subtitle: AI-powered tools, data infrastructure, and analytics solutions
 permalink: /projects/

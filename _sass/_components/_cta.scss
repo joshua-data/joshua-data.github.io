@@ -68,12 +68,12 @@
 
     // Social-specific button styles
     &--linkedin {
-      background: #0077b5;
+      background: $color-linkedin;
       color: white;
       border: none;
 
       &:hover {
-        background: darken(#0077b5, 8%);
+        background: darken($color-linkedin, 8%);
         transform: translateY(-2px);
         color: white;
       }
@@ -92,12 +92,12 @@
     }
 
     &--medium {
-      background: #00ab6c;
+      background: $color-medium;
       color: white;
       border: none;
 
       &:hover {
-        background: darken(#00ab6c, 8%);
+        background: darken($color-medium, 8%);
         transform: translateY(-2px);
         color: white;
       }

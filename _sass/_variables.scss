@@ -47,6 +47,11 @@ $slate-800: #1e293b;
 $slate-900: #0f172a;
 $slate-950: #020617;
 
+// Social Media Brand Colors
+$color-linkedin: #0077b5;
+$color-medium: #00ab6c;
+$color-github: #333;
+
 // Legacy color variables (using Open Color for compatibility)
 $blue: #4183C4;
 $black: #000;
@@ -141,11 +146,19 @@ $breakpoint-xl: 1200px;
   }
 }
 
-// Legacy mobile mixin (max-width for backwards compatibility)
-@mixin mobile {
-  @media screen and (max-width: 640px) {
-    @content;
-  }
+// ==========================================================================
+// Reusable Mixins
+// ==========================================================================
+@mixin hover-lift($shadow: var(--shadow-card-hover)) {
+  transform: translateY(-4px);
+  box-shadow: $shadow;
+}
+
+@mixin gradient-text($gradient: var(--gradient-primary)) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 // ==========================================================================

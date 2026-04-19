@@ -1,14 +1,16 @@
 <head>
 
+  {% if site.data.personal.google_analytics_id %}
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K04Y972F7E"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.data.personal.google_analytics_id }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-K04Y972F7E');
+    gtag('config', '{{ site.data.personal.google_analytics_id }}');
   </script>
+  {% endif %}
 
   <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 

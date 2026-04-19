@@ -72,10 +72,7 @@
   &__role {
     font-size: $font-size-xl;
     font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @include gradient-text;
     margin-bottom: var(--space-md);
   }
 
@@ -585,11 +582,11 @@
     }
 
     &--linkedin {
-      background: #0077b5;
+      background: $color-linkedin;
       color: white;
 
       &:hover {
-        background: darken(#0077b5, 10%);
+        background: darken($color-linkedin, 10%);
         color: white;
       }
     }
@@ -605,11 +602,11 @@
     }
 
     &--medium {
-      background: #00ab6c;
+      background: $color-medium;
       color: white;
 
       &:hover {
-        background: darken(#00ab6c, 10%);
+        background: darken($color-medium, 10%);
         color: white;
       }
     }

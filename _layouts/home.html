@@ -9,13 +9,13 @@ layout: default
       <div class="hero__content">
         <div class="hero__text">
           <p class="hero__greeting animate animate-fadeInUp">Hi, I'm</p>
-          <h1 class="hero__name animate animate-fadeInUp animate-delay-100">Joshua Kim</h1>
-          <p class="hero__role animate animate-fadeInUp animate-delay-200">Analytics Engineer</p>
-          <p class="hero__tagline animate animate-fadeInUp animate-delay-300">Analytics Engineer who builds end-to-end — from CDC pipelines and dbt models to an AI-powered Slack agent adopted by 70% of the company.</p>
+          <h1 class="hero__name animate animate-fadeInUp animate-delay-100">{{ site.data.personal.name }}</h1>
+          <p class="hero__role animate animate-fadeInUp animate-delay-200">{{ site.data.personal.role }}</p>
+          <p class="hero__tagline animate animate-fadeInUp animate-delay-300">{{ site.data.personal.tagline }}</p>
           <div class="hero__buttons animate animate-fadeInUp animate-delay-400">
             <a href="{{ site.baseurl }}/about/" class="btn-primary">About Me</a>
-            <a href="https://www.linkedin.com/in/joshuajsk/" class="btn-secondary" target="_blank" rel="noopener">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <a href="{{ site.data.personal.social.linkedin.url }}" class="btn-secondary" target="_blank" rel="noopener">
+              {% include icon-linkedin.html size=18 %}
               LinkedIn
             </a>
           </div>
@@ -42,34 +42,15 @@ layout: default
         <p class="section__description">From data analysis to AI-powered solutions</p>
       </div>
       <div class="card-grid card-grid--4">
+        {% for item in site.data.expertise %}
         <div class="card-feature hover-lift">
-          <div class="card-feature__icon card-feature__icon--analytics">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <div class="card-feature__icon card-feature__icon--{{ item.icon_class }}">
+            {{ item.icon_svg }}
           </div>
-          <h3 class="card-feature__title">Analytics Engineering</h3>
-          <p class="card-feature__description">Sole AE designing dbt models and semantic layers that standardize metrics across 3+ products.</p>
+          <h3 class="card-feature__title">{{ item.title }}</h3>
+          <p class="card-feature__description">{{ item.description }}</p>
         </div>
-        <div class="card-feature hover-lift">
-          <div class="card-feature__icon card-feature__icon--engineering">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-          </div>
-          <h3 class="card-feature__title">Data Engineering</h3>
-          <p class="card-feature__description">CDC pipelines with 3-layer architecture enabling near real-time data ingestion on GCP.</p>
-        </div>
-        <div class="card-feature hover-lift">
-          <div class="card-feature__icon card-feature__icon--ai">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2"></path><circle cx="7.5" cy="14.5" r="1.5"></circle><circle cx="16.5" cy="14.5" r="1.5"></circle></svg>
-          </div>
-          <h3 class="card-feature__title">AI Development</h3>
-          <p class="card-feature__description">Built NL2SQL AI agent adopted by 70% of company — self-serve analytics via Claude API.</p>
-        </div>
-        <div class="card-feature hover-lift">
-          <div class="card-feature__icon card-feature__icon--analysis">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-          </div>
-          <h3 class="card-feature__title">Data Analysis</h3>
-          <p class="card-feature__description">Led A/B testing that improved conversion by 32%p. Expert in GA4 and Amplitude funnel analysis.</p>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -83,22 +64,12 @@ layout: default
         <p class="section__description">Key achievements and community involvement</p>
       </div>
       <div class="card-grid card-grid--4">
+        {% for stat in site.data.stats %}
         <div class="card-stat hover-lift">
-          <div class="card-stat__value">7+</div>
-          <p class="card-stat__label">Years of Experience</p>
+          <div class="card-stat__value">{{ stat.value }}</div>
+          <p class="card-stat__label">{{ stat.label }}</p>
         </div>
-        <div class="card-stat hover-lift">
-          <div class="card-stat__value">32%p</div>
-          <p class="card-stat__label">Conversion Improvement</p>
-        </div>
-        <div class="card-stat hover-lift">
-          <div class="card-stat__value">1,800+</div>
-          <p class="card-stat__label">Community Members</p>
-        </div>
-        <div class="card-stat hover-lift">
-          <div class="card-stat__value">6M</div>
-          <p class="card-stat__label">MAU Platform</p>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -110,12 +81,12 @@ layout: default
         <h2 class="page-cta__title">Let's Connect</h2>
         <p class="page-cta__text">Interested in discussing data engineering, analytics strategies, or collaboration opportunities?</p>
         <div class="page-cta__buttons">
-          <a href="https://www.linkedin.com/in/joshuajsk/" class="page-cta__btn page-cta__btn--linkedin" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <a href="{{ site.data.personal.social.linkedin.url }}" class="page-cta__btn page-cta__btn--linkedin" target="_blank" rel="noopener">
+            {% include icon-linkedin.html %}
             Connect on LinkedIn
           </a>
-          <a href="https://github.com/joshua-data" class="page-cta__btn page-cta__btn--github" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <a href="{{ site.data.personal.social.github.url }}" class="page-cta__btn page-cta__btn--github" target="_blank" rel="noopener">
+            {% include icon-github.html %}
             View GitHub
           </a>
         </div>

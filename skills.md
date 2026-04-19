@@ -1,5 +1,6 @@
 ---
-layout: skills
+layout: section
+section_class: skills-page
 title: Skills
 subtitle: Technical expertise and language proficiency
 permalink: /skills/

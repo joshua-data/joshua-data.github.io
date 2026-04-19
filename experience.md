@@ -1,5 +1,6 @@
 ---
-layout: experience
+layout: section
+section_class: experience
 title: Experience
 subtitle: My professional journey in data and analytics
 permalink: /experience/
