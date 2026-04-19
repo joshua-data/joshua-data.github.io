@@ -75,10 +75,7 @@
   }
 
   &--gradient {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @include gradient-text;
   }
 }
 
@@ -199,10 +196,7 @@
   &__role {
     font-size: $font-size-xl;
     font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @include gradient-text;
     margin-bottom: var(--space-lg);
 
     @include md {

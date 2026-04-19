@@ -156,12 +156,12 @@
   }
 
   &--linkedin {
-    background: #0077b5;
+    background: $color-linkedin;
     color: white;
-    border-color: #0077b5;
+    border-color: $color-linkedin;
 
     &:hover {
-      background: darken(#0077b5, 10%);
+      background: darken($color-linkedin, 10%);
     }
   }
 
@@ -176,12 +176,12 @@
   }
 
   &--medium {
-    background: #00ab6c;
+    background: $color-medium;
     color: white;
-    border-color: #00ab6c;
+    border-color: $color-medium;
 
     &:hover {
-      background: darken(#00ab6c, 10%);
+      background: darken($color-medium, 10%);
     }
   }
 }

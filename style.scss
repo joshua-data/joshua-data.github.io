@@ -225,7 +225,7 @@ dt {
   font-weight: bold;
   margin-bottom: $li-bottom-space;
 
-  @include mobile {
+  @media screen and (max-width: $breakpoint-md) {
     width: 120px;
   }
 }
@@ -234,7 +234,7 @@ dd {
   margin-left: $dd-position;
   margin-bottom: $li-bottom-space;
 
-  @include mobile {
+  @media screen and (max-width: $breakpoint-md) {
     margin-left: 140px;
   }
 }
@@ -706,7 +706,7 @@ img {
   align-items: center;
   gap: var(--space-md);
 
-  @include mobile {
+  @media screen and (max-width: $breakpoint-md) {
     font-size: $font-size-sm;
     flex-direction: column;
     gap: var(--space-sm);
@@ -2778,7 +2778,7 @@ footer {
     color: white;
     border-radius: 50%;
 
-    @include mobile {
+    @media screen and (max-width: $breakpoint-md) {
       display: none;
     }
   }

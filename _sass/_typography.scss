@@ -66,10 +66,7 @@ $tracking-widest: 0.1em;
 
 // Gradient Text
 .text-gradient {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  @include gradient-text;
 }
 
 // Text Colors

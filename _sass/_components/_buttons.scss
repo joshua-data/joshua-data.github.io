@@ -186,8 +186,8 @@
 
   // Social brand colors on hover
   &.btn-social--linkedin:hover {
-    color: #0077b5;
-    border-color: #0077b5;
+    color: $color-linkedin;
+    border-color: $color-linkedin;
   }
 
   &.btn-social--github:hover {
@@ -196,8 +196,8 @@
   }
 
   &.btn-social--medium:hover {
-    color: #00ab6c;
-    border-color: #00ab6c;
+    color: $color-medium;
+    border-color: $color-medium;
   }
 
   &.btn-social--twitter:hover {
