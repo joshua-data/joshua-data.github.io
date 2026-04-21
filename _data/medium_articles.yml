@@ -3,6 +3,24 @@
 
 # 2026
 
+- title: "12 Areas Where Data Teams Should Adopt Agentic AI"
+  date: "2026-04-21"
+  url: "https://joshua-data.medium.com/12-areas-to-adopt-agentic-ai-en-6ecd93670683"
+  tags:
+    - ai
+    - nl2sql
+    - career
+  language: en
+
+- title: "데이터팀이 Agentic AI를 도입해야 할 12개의 영역"
+  date: "2026-04-21"
+  url: "https://joshua-data.medium.com/12-areas-to-adopt-agentic-ai-ko-0f288b57b819"
+  tags:
+    - ai
+    - nl2sql
+    - career
+  language: ko
+
 - title: "Catalog as a Code: A DataHub Metadata CI/CD Pipeline Inspired by dbt"
   date: "2026-04-19"
   url: "https://joshua-data.medium.com/catalog-as-a-code-en-167c79007fe4"
