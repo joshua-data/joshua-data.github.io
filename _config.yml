@@ -52,6 +52,7 @@ plugins:
 exclude:
   - LICENSE
   - README.md
+  - CLAUDE.md
   - CNAME
   - Gemfile
   - Gemfile.lock
