@@ -55,5 +55,4 @@ exclude:
   - CNAME
   - Gemfile
   - Gemfile.lock
-  - .context
   - .claude
