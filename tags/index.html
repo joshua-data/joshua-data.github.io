@@ -5,17 +5,7 @@ permalink: /tags/
 ---
 
 {% comment %}
-Category Taxonomy (10 slugs — used as flat tags in front matter / medium_articles.yml)
-- analytics-engineering: dbt workflows, AE thought process
-- data-modeling: dimensional modeling, fact/dim/marts, sessions, AU tables, event taxonomy, DW design
-- data-engineering: Airflow, CDC, pipelines, RPA, automation
-- sql-bigquery: SQL deep dives, query optimization, BigQuery features
-- product-analytics: A/B testing, conversion, retention, DAU/MAU, attribution, product teardowns
-- data-viz-bi: dashboards, Redash, Metabase, BI tools, charts
-- ai-llm: agentic AI, NL2SQL, AI bots, prompt caching, OpenAI, classical ML
-- data-governance-platform: DQ, catalog, CI/CD, PII masking, taxonomy
-- blockchain-web3: Ethereum, NFT, on-chain, Dune
-- career-reflections: retrospectives, talks, recaps, culture, life, side projects
+  Category definitions live in _data/taxonomy.yml — edit there to add/rename/remove.
 {% endcomment %}
 
 {% comment %} Calculate totals {% endcomment %}
@@ -87,16 +77,9 @@ Category Taxonomy (10 slugs — used as flat tags in front matter / medium_artic
   <div class="tags-filter__section">
     <h3 class="tags-filter__heading">Categories</h3>
     <div class="tags-filter__buttons tags-filter__buttons--multi" data-category="tags">
-      <button class="tags-filter__btn" data-tag="analytics-engineering">Analytics Engineering</button>
-      <button class="tags-filter__btn" data-tag="data-modeling">Data Modeling</button>
-      <button class="tags-filter__btn" data-tag="data-engineering">Data Engineering</button>
-      <button class="tags-filter__btn" data-tag="sql-bigquery">SQL &amp; BigQuery</button>
-      <button class="tags-filter__btn" data-tag="product-analytics">Product Analytics</button>
-      <button class="tags-filter__btn" data-tag="data-viz-bi">Data Viz &amp; BI</button>
-      <button class="tags-filter__btn" data-tag="ai-llm">AI &amp; LLM</button>
-      <button class="tags-filter__btn" data-tag="data-governance-platform">Data Governance &amp; Platform</button>
-      <button class="tags-filter__btn" data-tag="blockchain-web3">Blockchain &amp; Web3</button>
-      <button class="tags-filter__btn" data-tag="career-reflections">Career &amp; Reflections</button>
+      {% for category in site.data.taxonomy %}
+      <button class="tags-filter__btn" data-tag="{{ category.slug }}">{{ category.label }}</button>
+      {% endfor %}
     </div>
   </div>
 
@@ -185,18 +168,10 @@ Category Taxonomy (10 slugs — used as flat tags in front matter / medium_artic
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Slug → display name (10 canonical categories)
+  // Slug → display name (generated from _data/taxonomy.yml at build time)
   const categoryNames = {
-    'analytics-engineering': 'Analytics Engineering',
-    'data-modeling': 'Data Modeling',
-    'data-engineering': 'Data Engineering',
-    'sql-bigquery': 'SQL & BigQuery',
-    'product-analytics': 'Product Analytics',
-    'data-viz-bi': 'Data Viz & BI',
-    'ai-llm': 'AI & LLM',
-    'data-governance-platform': 'Data Governance & Platform',
-    'blockchain-web3': 'Blockchain & Web3',
-    'career-reflections': 'Career & Reflections'
+    {% for category in site.data.taxonomy %}'{{ category.slug }}': {{ category.label | jsonify }}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
   };
 
   // Pretty-print the per-article tag chips

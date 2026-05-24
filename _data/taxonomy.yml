@@ -1,0 +1,47 @@
+# =============================================================================
+# taxonomy.yml — Category definitions for blog posts & Medium articles.
+# Each entry: { slug, label, description }
+# `slug` is what posts use in their front-matter `tags:` and what tags/index.html filters on.
+# `label` is what's displayed as the filter button text.
+# To add a new category: append an entry here, then tag posts with the slug.
+# =============================================================================
+
+- slug: analytics-engineering
+  label: Analytics Engineering
+  description: dbt workflows, AE thought process
+
+- slug: data-modeling
+  label: Data Modeling
+  description: dimensional modeling, fact/dim/marts, sessions, AU tables, event taxonomy, DW design
+
+- slug: data-engineering
+  label: Data Engineering
+  description: Airflow, CDC, pipelines, RPA, automation
+
+- slug: sql-bigquery
+  label: SQL & BigQuery
+  description: SQL deep dives, query optimization, BigQuery features
+
+- slug: product-analytics
+  label: Product Analytics
+  description: A/B testing, conversion, retention, DAU/MAU, attribution, product teardowns
+
+- slug: data-viz-bi
+  label: Data Viz & BI
+  description: dashboards, Redash, Metabase, BI tools, charts
+
+- slug: ai-llm
+  label: AI & LLM
+  description: agentic AI, NL2SQL, AI bots, prompt caching, OpenAI, classical ML
+
+- slug: data-governance-platform
+  label: Data Governance & Platform
+  description: DQ, catalog, CI/CD, PII masking, taxonomy
+
+- slug: blockchain-web3
+  label: Blockchain & Web3
+  description: Ethereum, NFT, on-chain, Dune
+
+- slug: career-reflections
+  label: Career & Reflections
+  description: retrospectives, talks, recaps, culture, life, side projects

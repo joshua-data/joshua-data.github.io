@@ -1,37 +1,29 @@
 # =============================================================================
-# Jekyll Configuration
+# Jekyll Configuration — build/runtime settings only.
 #
-# Site identity / nav / social are mirrored from _data/* for convenience
-# (Jekyll plugins like jekyll-feed require site.name/description/url).
-# To edit content, prefer _data/ files (profile.yml, ui.yml, home.yml, taxonomy.yml).
+# All site content (identity, nav, social, copy) lives in _data/:
+#   _data/profile.yml   — name, role, social links, email, GA ID
+#   _data/ui.yml        — nav menu, section titles, footer labels
+#   _data/home.yml      — About cards + Testimonials
+#   _data/taxonomy.yml  — blog category slugs ↔ display names
+#
+# The handful of keys below (name/description/url) are duplicated here only
+# because jekyll-feed and jekyll-sitemap read them directly from site config.
+# Keep them in sync with _data/ui.yml:site.
 # =============================================================================
 
-# --- Site identity (required by jekyll-feed/sitemap) ---
+# --- Site identity (consumed by jekyll-feed / jekyll-sitemap) ---
 name: Joshua Kim
 description: Analytics Engineer
 url: http://joshua-data.github.io
 baseurl:
-avatar: /assets/profile/profile-logo.png
-
-# --- Navigation (consumed by _includes/nav.html, _includes/footer.html) ---
-navigation:
-  - name: Home
-    url: /
-  - name: Blog
-    url: /tags
-
-# --- Footer social handles (consumed by _includes/footer.html) ---
-footer-links:
-  github: joshua-data
-  linkedin: joshuajsk
-  rss: /feed.xml
 
 # --- Permalinks & pagination ---
 permalink: /:title/
 paginate: 5
 paginate_path: /page:num/
 
-# --- Front-matter defaults (posts auto-receive layout: post) ---
+# --- Front-matter defaults — every _posts/*.md auto-receives layout: post ---
 defaults:
   - scope:
       path: ""
