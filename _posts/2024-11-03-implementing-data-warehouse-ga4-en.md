@@ -257,7 +257,7 @@ WHERE
 
 (2) We created dozens of event-specific model queries in this manner.
 
-![Data Lineage](site.baseurl/assets/2024-11-03-implementing-data-warehouse-ga4/6.webp)
+![Data Lineage]({{ site.baseurl }}/assets/2024-11-03-implementing-data-warehouse-ga4/6.webp)
 > A section of the D'CENT App Data Warehouse Data Lineage
 
 Meanwhile, the configuration for `core_fct_events` and each event-specific model is structured as follows:
