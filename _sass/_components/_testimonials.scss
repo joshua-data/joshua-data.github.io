@@ -1,0 +1,66 @@
+// ==========================================================================
+// Testimonials — quote cards rendered on the home page.
+// Markup lives in _layouts/home.html, data in _data/home.yml.
+// ==========================================================================
+
+.about-testimonials {
+  display: grid;
+  gap: var(--space-lg);
+
+  @include md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.about-testimonial {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+
+  // Featured testimonial spans the full width on md+ screens.
+  &--featured {
+    @include md {
+      grid-column: span 2;
+    }
+
+    border-color: var(--color-border);
+  }
+
+  &__quote {
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    line-height: 1.7;
+    margin: 0 0 var(--space-md) !important;
+    padding: 0 !important;
+    border: none !important;
+    border-left: none !important;
+    background: none !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+
+    &::before {
+      content: '"';
+      font-size: 2rem;
+      color: var(--color-accent);
+      line-height: 0;
+      vertical-align: -0.4em;
+      margin-right: var(--space-xs);
+    }
+  }
+
+  &__author {
+    font-size: $font-size-sm;
+
+    strong {
+      display: block;
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+
+    span {
+      color: var(--color-text-muted);
+    }
+  }
+}

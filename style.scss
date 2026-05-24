@@ -13,21 +13,21 @@
 @import "typography";
 @import "animations";
 
-// Components
+// Components — reusable UI primitives
 @import "_components/buttons";
 @import "_components/cards";
 @import "_components/badges";
 @import "_components/cta";
+@import "_components/testimonials";
 
-// Layout
+// Layout — page-level scaffolding
 @import "_layout/header";
 @import "_layout/footer";
 @import "_layout/sections";
 @import "_layout/grid";
 
-// Pages
+// Pages — styles unique to a single page
 @import "_pages/home";
-@import "_pages/about";
 @import "_pages/blog";
 @import "_pages/post";
 
