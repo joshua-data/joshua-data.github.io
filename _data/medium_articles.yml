@@ -3,6 +3,24 @@
 
 # 2026
 
+- title: "Building an AI Data Analysis Bot for Slack — CI/CD Environment"
+  date: "2026-04-30"
+  url: "https://joshua-data.medium.com/ai-agent-ci-cd-environment-en-a1ba1d588cf1"
+  tags:
+    - ai-llm
+    - data-engineering
+    - analytics-engineering
+  language: en
+
+- title: "슬랙 AI 데이터 분석봇 개발기 — CI/CD 환경 구축"
+  date: "2026-04-30"
+  url: "https://joshua-data.medium.com/ai-agent-ci-cd-environment-ko-29ecac6fff50"
+  tags:
+    - ai-llm
+    - data-engineering
+    - analytics-engineering
+  language: ko
+
 - title: "12 Areas Where Data Teams Should Adopt Agentic AI"
   date: "2026-04-21"
   url: "https://joshua-data.medium.com/12-areas-to-adopt-agentic-ai-en-6ecd93670683"
