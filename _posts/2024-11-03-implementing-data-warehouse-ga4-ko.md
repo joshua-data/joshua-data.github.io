@@ -3,11 +3,8 @@ layout: post
 title: "GA4 기반 데이터 웨어하우스 구축 후기"
 tags:
   - Language (Korean)
-  - Article (Project)
-  - Level (2. Intermediate)
-  - Field (Analytics Engineering)
-  - Skills (SQL)
-  - Skills (dbt)
+  - analytics-engineering
+  - data-modeling
 ---
 
 > "이 글은 Google Analytics 4(GA4) 데이터를 효율적으로 활용하기 위해 데이터 웨어하우스를 구축한 과정과 결과를 공유하는 후기입니다. 기존에는 GA4 Export Table에 직접 쿼리를 실행하는 방식이었지만, 스키마 복잡성, 느린 쿼리 실행 시간, 높은 비용 문제를 해결하기 위해 데이터 마트를 구성하고, dbt를 활용한 Incremental Strategy를 적용하여 성능을 최적화했습니다. 그 결과, 쿼리 속도가 획기적으로 향상되고 비용이 절감되었으며, 조직 내 데이터 접근성이 높아져 보다 효율적인 데이터 활용이 가능해졌습니다."

@@ -3,10 +3,8 @@ layout: post
 title: "Review of Implementing Airflow"
 tags:
   - Language (English)
-  - Article (Project)
-  - Level (1. Beginner)
-  - Field (Data Engineering)
-  - Skills (Airflow)
+  - data-engineering
+  - analytics-engineering
 ---
 
 > "By adopting Airflow, we transitioned from a traditional Python-based session approach to a DAG-based workflow to efficiently manage our internal data notification system. Using Docker Compose, we set up Airflow in both local and VM environments and automated various data pipelines, including Slack notifications. This implementation reduced maintenance overhead, improved stability, and established a scalable data processing environment."

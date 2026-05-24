@@ -3,11 +3,8 @@ layout: post
 title: "GA4-based Data Warehouse Implementation Review"
 tags:
   - Language (English)
-  - Article (Project)
-  - Level (2. Intermediate)
-  - Field (Analytics Engineering)
-  - Skills (SQL)
-  - Skills (dbt)
+  - analytics-engineering
+  - data-modeling
 ---
 
 > "This article shares the process and outcomes of building a data warehouse to efficiently utilize Google Analytics 4 (GA4) data. Previously, queries were executed directly on the GA4 Export Table, but issues such as schema complexity, slow query execution times, and high costs necessitated a transition to a data mart. By implementing an Incremental Strategy using dbt, we optimized performance, resulting in significantly improved query speeds, reduced costs, and enhanced data accessibility within the organization, enabling more efficient data utilization."

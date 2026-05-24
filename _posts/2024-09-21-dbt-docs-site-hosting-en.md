@@ -3,10 +3,8 @@ layout: post
 title: "How to Share dbt Docs Internally (Site Hosting Review)"
 tags:
   - Language (English)
-  - Article (Issue Resolution)
-  - Level (1. Beginner)
-  - Field (Analytics Engineering)
-  - Skills (Linux)
+  - analytics-engineering
+  - data-governance-platform
 ---
 
 > "I worked on automating data warehouse documentation using dbt Docs within the company, aiming to improve internal data accessibility and efficiency. Specifically, I utilized dbt's automated documentation feature to keep dependencies between tables and specifications up to date, thereby improving the accuracy and speed of data usage. I successfully built the system by resolving technical issues, such as hosting dbt Docs on a VM instance and adding firewall settings to allow internal team members to access it within the company's IP range."

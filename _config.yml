@@ -1,111 +1,67 @@
+# =============================================================================
+# Jekyll Configuration
 #
-# This file contains configuration flags to customize your site
-#
+# Site identity / nav / social are mirrored from _data/* for convenience
+# (Jekyll plugins like jekyll-feed require site.name/description/url).
+# To edit content, prefer _data/ files (profile.yml, ui.yml, home.yml, taxonomy.yml).
+# =============================================================================
 
-# Name of your site (displayed in the header)
+# --- Site identity (required by jekyll-feed/sitemap) ---
 name: Joshua Kim
-
-# Short bio or description (displayed in the header)
 description: Analytics Engineer
-
-#
-# Flags below are optional
-#
-
-# URL of your avatar or profile pic (you could use your GitHub profile pic)
+url: http://joshua-data.github.io
+baseurl:
 avatar: /assets/profile/profile-logo.png
 
-
-# Tabs in header. There are 'Blog', 'About', 'Archive', 'Tags'
-# and URL Link(e.g. 'Theme' tab below) tabs. If you don't need one, just delete
-# it from the list(Delete '- name: ' and 'url: ', too!)
+# --- Navigation (consumed by _includes/nav.html, _includes/footer.html) ---
 navigation:
   - name: Home
     url: /
-  - name: About
-    url: /about
-  - name: Experience
-    url: /experience
-  - name: Projects
-    url: /projects
-  - name: Skills
-    url: /skills
   - name: Blog
     url: /tags
 
-# Pagination
-paginate: 5
-
-# Includes an icon in the footer for each username you enter
+# --- Footer social handles (consumed by _includes/footer.html) ---
 footer-links:
-  behance: # https://www.behance.net/<username>
-  dribbble:
-  email: 
-  facebook:
-  flickr:
   github: joshua-data
-  googleplus: # anything in your profile username that comes after plus.google.com/
-  instagram:
   linkedin: joshuajsk
-  pinterest:
   rss: /feed.xml
-  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
-  tumblr: # https://<username>.tumblr.com
-  twitter: 
-  youtube: # channel/<your_long_string> or user/<user-name>
 
-# Text under the icons in footer
-footer-text: Joshua Kim
-
-# Enter your Disqus shortname (not your username) to enable commenting on posts
-# You can find your shortname on the Settings page of your Disqus account
-disqus: # <username>.disqus.com
-
-# Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics: 
-
-# Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
-# Used for Sitemap.xml and your RSS feed
-url: http://joshua-data.github.io
-
-# If you're hosting your site at a Project repository on GitHub pages
-# (http://yourusername.github.io/repository-name)
-# and NOT your User repository (http://yourusername.github.io)
-# then add in the baseurl here, like this: "/repository-name"
-baseurl:
-
-#
-# !! You don't need to change any of the configuration flags below !!
-#
-
+# --- Permalinks & pagination ---
 permalink: /:title/
+paginate: 5
 paginate_path: /page:num/
 
-# The release of Jekyll Now that you're using
-version: v1.2.0
+# --- Front-matter defaults (posts auto-receive layout: post) ---
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
 
-# Jekyll 3 now only supports Kramdown for Markdown
+# --- Markdown / syntax highlighting ---
 kramdown:
-  # Use GitHub flavored markdown, including triple backtick fenced code blocks
   input: GFM
-  # Jekyll 3 and GitHub Pages now only support rouge for syntax highlighting
   syntax_highlighter: rouge
   syntax_highlighter_opts:
-    # Use existing pygments syntax highlighting css
     css_class: 'highlight'
 
-# Set the Sass partials directory, as we're using @imports
+# --- Sass ---
 sass:
-  style: :expanded # You might prefer to minify using :compressed
+  style: :expanded
 
-# Use the following plug-ins
+# --- Plugins ---
 plugins:
-  - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
-  - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+  - jekyll-sitemap
+  - jekyll-feed
   - jekyll-paginate
 
-# Exclude these files from your production _site
+# --- Exclude from build output ---
 exclude:
   - LICENSE
   - README.md
   - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - .context
+  - .claude

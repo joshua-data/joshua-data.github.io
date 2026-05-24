@@ -20,13 +20,13 @@ $small-font-size: 14px;
 // Colors (Modern Tech Palette)
 // ==========================================================================
 
-// Primary Gradient Colors
-$gradient-start: #667eea;     // Purple-blue
-$gradient-end: #764ba2;       // Deep purple
+// Primary Gradient Colors (monochrome)
+$gradient-start: #0f172a;     // slate-900
+$gradient-end: #334155;       // slate-700
 
-// Accent Colors
-$accent-primary: #667eea;
-$accent-secondary: #764ba2;
+// Accent Colors (monochrome)
+$accent-primary: #0f172a;     // slate-900
+$accent-secondary: #334155;   // slate-700
 $accent-success: #38ef7d;
 $accent-highlight: #4facfe;
 $accent-pink: #f093fb;

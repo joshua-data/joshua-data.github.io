@@ -1,24 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   {% include head.html %}
 
-  <body>      
-
+  <body>
     {% include nav.html %}
 
-    <div id="main" role="main" class="container">
+    <main id="main" class="container" role="main">
       {{ content }}
-    </div>
+    </main>
 
-    <div class="wrapper-footer">
-      <div class="container">
-        <footer class="footer">
-          {% include footer.html %}
-        </footer>
-      </div>
-    </div>
-
-    {% include analytics.html %}
+    {% include footer.html %}
 
     <script src="{{ site.baseurl }}/assets/js/main.js"></script>
   </body>

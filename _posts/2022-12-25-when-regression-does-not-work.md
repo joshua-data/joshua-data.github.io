@@ -3,10 +3,8 @@ layout: post
 title: "회귀 모델이 풀 수 없는 문제"
 tags:
   - Language (Korean)
-  - Article (Project)
-  - Level (2. Intermediate)
-  - Field (Data Analysis)
-  - Skills (Python)
+  - ai-llm
+  - product-analytics
 ---
 
 > 이번 아티클에서는 회귀모델(Regression Model)이 어떤 경우에 저조한 성과를 내는지, 더 나아가 Dataset이 어떤 특성을 지닐 때 회귀모델로 해당 문제를 풀어낼 수 없는지 필자가 경험한 바를 서술해보고자 한다.

@@ -28,9 +28,6 @@
 // Pages
 @import "_pages/home";
 @import "_pages/about";
-@import "_pages/experience";
-@import "_pages/projects";
-@import "_pages/skills";
 @import "_pages/blog";
 @import "_pages/post";
 
@@ -828,15 +825,15 @@ img {
 
 // Footer
 .wrapper-footer {
-  margin-top: var(--space-2xl);
+  margin-top: 0;
   border-top: 1px solid var(--color-border-light);
-  background-color: var(--color-footer-bg);
+  background-color: var(--color-bg-primary);
   transition: background-color var(--transition-normal),
               border-color var(--transition-normal);
 }
 
 footer {
-  padding: var(--space-xl) 0;
+  padding: 0;
   text-align: center;
 
   p {
@@ -1077,6 +1074,10 @@ footer {
       background: var(--color-accent);
       border-color: var(--color-accent);
       color: var(--color-bg-primary);
+
+      &:hover {
+        color: var(--color-bg-primary);
+      }
 
       .tags-filter__count {
         background: rgba(255, 255, 255, 0.2);

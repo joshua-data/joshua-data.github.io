@@ -455,7 +455,7 @@
   gap: var(--space-md);
 
   @include md {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 
@@ -515,8 +515,8 @@
       grid-column: span 2;
     }
 
-    background: var(--color-accent-light);
-    border-color: var(--color-accent);
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
   }
 
   &__quote {

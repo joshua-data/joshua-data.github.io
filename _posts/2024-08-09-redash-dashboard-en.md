@@ -3,10 +3,7 @@ layout: post
 title: "Redash Dashboard Usage Review"
 tags:
   - Language (English)
-  - Article (Project)
-  - Level (2. Intermediate)
-  - Field (Data Visualization)
-  - Skills (Redash)
+  - data-viz-bi
 ---
 
 > "Utilizing the open-source BI tool Redash, I visualized data and systematically managed dashboards to ensure easy access for various members of the organization. To improve accessibility and data literacy, I implemented management rules and actively used query parameter functions. This significantly increased Redash usage frequency, strengthening its role as the organization's BI hub. (Approximately DAU `39%`, WAU `52%`, MAU `77%` among all Redash account holders)."

@@ -3,11 +3,9 @@ layout: post
 title: "데이터 마트 모델링 후기 (First Activation Funnel 지표)"
 tags:
   - Language (Korean)
-  - Article (Project)
-  - Level (3. Advanced)
-  - Field (Analytics Engineering)
-  - Skills (SQL)
-  - Skills (dbt)
+  - analytics-engineering
+  - data-modeling
+  - product-analytics
 ---
 
 > "신규 사용자 활성 전환율 지표를 효과적으로 제공하기 위해 데이터 마트를 직접 설계하고 구축한 경험을 정리했습니다. 비즈니스 요구사항 변화에 유연하게 대응할 수 있도록 데이터 모델을 설계했고, 실무에서 바로 활용 가능한 쿼리와 구조를 고민했습니다. 이 과정을 통해 데이터 모델링 이론을 실제 문제 해결에 적용하는 역량과, 요구사항을 깊이 있게 파악하는 중요성을 다시 한 번 체감할 수 있었습니다."

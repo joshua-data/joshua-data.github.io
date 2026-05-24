@@ -8,17 +8,7 @@ layout: default
     <div class="hero__container">
       <div class="hero__content">
         <div class="hero__text">
-          <p class="hero__greeting animate animate-fadeInUp">Hi, I'm</p>
-          <h1 class="hero__name animate animate-fadeInUp animate-delay-100">{{ site.data.personal.name }}</h1>
-          <p class="hero__role animate animate-fadeInUp animate-delay-200">{{ site.data.personal.role }}</p>
-          <p class="hero__tagline animate animate-fadeInUp animate-delay-300">{{ site.data.personal.tagline }}</p>
-          <div class="hero__buttons animate animate-fadeInUp animate-delay-400">
-            <a href="{{ site.baseurl }}/about/" class="btn-primary">About Me</a>
-            <a href="{{ site.data.personal.social.linkedin.url }}" class="btn-secondary" target="_blank" rel="noopener">
-              {% include icon-linkedin.html size=18 %}
-              LinkedIn
-            </a>
-          </div>
+          <p class="hero__tagline animate animate-fadeInUp">&ldquo;Data is a product. I&rsquo;ve built every stage of it.&rdquo;</p>
         </div>
         <div class="hero__image animate animate-fadeInUp animate-delay-200">
           <div class="hero__avatar">
@@ -27,70 +17,113 @@ layout: default
         </div>
       </div>
     </div>
-    <div class="hero__scroll animate animate-fadeIn animate-delay-600">
-      <span>Scroll</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-    </div>
   </section>
 
-  <!-- What I Do Section -->
+  <!-- About Me Section -->
   <section class="section section--alt">
     <div class="section__container">
       <div class="section__header">
-        <span class="section__subtitle">Expertise</span>
-        <h2 class="section__title">What I Do</h2>
-        <p class="section__description">From data analysis to AI-powered solutions</p>
+        <h2 class="section__title">About Me</h2>
       </div>
-      <div class="card-grid card-grid--4">
-        {% for item in site.data.expertise %}
-        <div class="card-feature hover-lift">
-          <div class="card-feature__icon card-feature__icon--{{ item.icon_class }}">
-            {{ item.icon_svg }}
+      <div class="home-about">
+        <p class="home-about__intro">
+          Hi, I'm <strong>Joshua</strong>. Here are a few honest notes about how I work and what I care about.
+        </p>
+
+        <div class="home-about__grid">
+
+          <div class="home-about__card">
+            <h3 class="home-about__card-title">My Working Rhythm</h3>
+            <ul class="home-about__list">
+              <li>Learn fast.</li>
+              <li>Apply what I learn quickly.</li>
+              <li>Write it down so the next person doesn't have to figure it out alone.</li>
+            </ul>
           </div>
-          <h3 class="card-feature__title">{{ item.title }}</h3>
-          <p class="card-feature__description">{{ item.description }}</p>
+
+          <div class="home-about__card">
+            <h3 class="home-about__card-title">Roles I've Held</h3>
+            <ul class="home-about__list">
+              <li>Data Analyst</li>
+              <li>Analytics Engineer</li>
+              <li>Data Engineer</li>
+            </ul>
+            <p class="home-about__note">Different titles, same goal: helping people make better decisions with data.</p>
+          </div>
+
+          <div class="home-about__card">
+            <h3 class="home-about__card-title">How I Show Up</h3>
+            <ul class="home-about__list">
+              <li>Calm, especially when things get noisy.</li>
+              <li>Self-directed, with a steady bias for getting things done.</li>
+              <li>I do my best work when I'm trusted with autonomy, and I bring teammates in early when I'm unsure.</li>
+            </ul>
+          </div>
+
+          <div class="home-about__card">
+            <h3 class="home-about__card-title">What I Care About</h3>
+            <ul class="home-about__list">
+              <li>I treat data like a product. It has real users and a long shelf life.</li>
+              <li>The best part of my day is when something I built quietly makes a teammate's job easier.</li>
+              <li>I don't like settling in. There's always something I haven't learned yet.</li>
+            </ul>
+          </div>
+
         </div>
-        {% endfor %}
       </div>
     </div>
   </section>
 
-  <!-- Highlights Section -->
+  <!-- Testimonials Section -->
   <section class="section">
     <div class="section__container">
       <div class="section__header">
-        <span class="section__subtitle">Impact</span>
-        <h2 class="section__title">Highlights</h2>
-        <p class="section__description">Key achievements and community involvement</p>
+        <h2 class="section__title">What Colleagues Say</h2>
       </div>
-      <div class="card-grid card-grid--4">
-        {% for stat in site.data.stats %}
-        <div class="card-stat hover-lift">
-          <div class="card-stat__value">{{ stat.value }}</div>
-          <p class="card-stat__label">{{ stat.label }}</p>
+      <div class="about-testimonials">
+
+        <div class="about-testimonial about-testimonial--featured">
+          <blockquote class="about-testimonial__quote">He demonstrated deep understanding and proficient practical skills in dbt, with outstanding capabilities in building and managing data pipelines. His fluency in English enabled exceptional research abilities utilizing global resources — consistently acquiring new technologies every week. What impressed me most was his exceptional ability to identify and solve tasks on his own without separate instructions. His documentation skills are outstanding; the Notion documents he created were so detailed that even beginners with no dbt experience could perform their work. The training sessions he provided were better quality than any external lecture. He is a talent who performs best when given autonomy. I can confidently recommend him for any stage in the world.</blockquote>
+          <div class="about-testimonial__author">
+            <strong>Vex Seo</strong>
+            <span>Analytics Team Lead @ Wrtn Technologies (Ex-eBay, Coupang)</span>
+          </div>
         </div>
-        {% endfor %}
+
+        <div class="about-testimonial">
+          <blockquote class="about-testimonial__quote">Deep passion and strong expertise in data, with exceptional problem-solving, thorough preparation, and a strong sense of responsibility. Clear, considerate communicator trusted by colleagues; significantly improved the organization's overall data capability.</blockquote>
+          <div class="about-testimonial__author">
+            <strong>Product Designer</strong>
+            <span>@ IoTrust</span>
+          </div>
+        </div>
+
+        <div class="about-testimonial">
+          <blockquote class="about-testimonial__quote">As the sole data engineer, effectively handled complex data and communicated insights clearly to non-technical peers. Demonstrates continuous self-development through learning and blogging, delivering highly reliable and complete results.</blockquote>
+          <div class="about-testimonial__author">
+            <strong>Frontend Developer</strong>
+            <span>@ IoTrust</span>
+          </div>
+        </div>
+
+        <div class="about-testimonial">
+          <blockquote class="about-testimonial__quote">A calm yet reliable collaborator who consistently completes work with stability and confidence. Excels in documenting and standardizing processes, improving team efficiency and productivity.</blockquote>
+          <div class="about-testimonial__author">
+            <strong>Product Designer</strong>
+            <span>@ IoTrust</span>
+          </div>
+        </div>
+
+        <div class="about-testimonial">
+          <blockquote class="about-testimonial__quote">Skilled in data visualization and documentation, working responsibly and positively; earning strong trust and respect. Highly focused and achievement-driven, consistently delivering high-quality outcomes.</blockquote>
+          <div class="about-testimonial__author">
+            <strong>Frontend Developer</strong>
+            <span>@ IoTrust</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="section">
-    <div class="section__container">
-      <div class="page-cta">
-        <h2 class="page-cta__title">Let's Connect</h2>
-        <p class="page-cta__text">Interested in discussing data engineering, analytics strategies, or collaboration opportunities?</p>
-        <div class="page-cta__buttons">
-          <a href="{{ site.data.personal.social.linkedin.url }}" class="page-cta__btn page-cta__btn--linkedin" target="_blank" rel="noopener">
-            {% include icon-linkedin.html %}
-            Connect on LinkedIn
-          </a>
-          <a href="{{ site.data.personal.social.github.url }}" class="page-cta__btn page-cta__btn--github" target="_blank" rel="noopener">
-            {% include icon-github.html %}
-            View GitHub
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 </div>

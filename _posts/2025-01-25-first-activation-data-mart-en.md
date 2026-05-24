@@ -3,11 +3,9 @@ layout: post
 title: "Data Mart Modeling Review (First Activation Funnel Metrics)"
 tags:
   - Language (English)
-  - Article (Project)
-  - Level (3. Advanced)
-  - Field (Analytics Engineering)
-  - Skills (SQL)
-  - Skills (dbt)
+  - analytics-engineering
+  - data-modeling
+  - product-analytics
 ---
 
 > "This post summarizes my experience designing and building a data mart to effectively provide new user activation conversion metrics. I designed the data model to flexibly respond to changing business requirements, and focused on queries and structures that are immediately applicable in practice. Through this process, I was able to apply data modeling theory to real-world problem solving and once again realized the importance of deeply understanding requirements."
