@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Data Mart Modeling Review (First Activation Funnel Metrics)"
+lang: en
 tags:
-  - Language (English)
   - analytics-engineering
   - data-modeling
   - product-analytics

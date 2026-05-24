@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "IP Address-Country Mapping Query Optimization"
+lang: en
 tags:
-  - Language (English)
   - sql-bigquery
   - analytics-engineering
 ---

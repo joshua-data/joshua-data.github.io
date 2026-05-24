@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Data-driven VOC Analysis and Automated Dashboard Development: Reducing Cost and Maximizing Efficiency"
+lang: en
 tags:
-  - Language (English)
   - data-viz-bi
   - ai-llm
   - data-engineering

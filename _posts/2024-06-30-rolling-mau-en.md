@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Rolling MAU Query Optimization"
+lang: en
 tags:
-  - Language (English)
   - analytics-engineering
   - product-analytics
 ---

@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Dramatic Increase in E-commerce Conversion Rates"
+lang: en
 tags:
-  - Language (English)
   - product-analytics
 ---
 

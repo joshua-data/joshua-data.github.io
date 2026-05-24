@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Let’s Create the Sankey Chart"
+lang: en
 tags:
-  - Language (English)
   - data-viz-bi
   - sql-bigquery
 ---

@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Rolling MAU 쿼리 최적화"
+lang: ko
 tags:
-  - Language (Korean)
   - analytics-engineering
   - product-analytics
 ---

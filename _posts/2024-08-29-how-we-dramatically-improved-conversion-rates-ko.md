@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "구매 전환율 급상승 후기"
+lang: ko
 tags:
-  - Language (Korean)
   - product-analytics
 ---
 

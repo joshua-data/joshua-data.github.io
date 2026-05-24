@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "GA4-based Data Warehouse Implementation Review"
+lang: en
 tags:
-  - Language (English)
   - analytics-engineering
   - data-modeling
 ---

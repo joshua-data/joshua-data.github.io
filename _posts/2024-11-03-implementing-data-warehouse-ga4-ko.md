@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "GA4 기반 데이터 웨어하우스 구축 후기"
+lang: ko
 tags:
-  - Language (Korean)
   - analytics-engineering
   - data-modeling
 ---

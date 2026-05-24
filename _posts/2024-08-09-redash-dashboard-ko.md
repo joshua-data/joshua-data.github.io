@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Redash 대시보드 활용 후기"
+lang: ko
 tags:
-  - Language (Korean)
   - data-viz-bi
 ---
 

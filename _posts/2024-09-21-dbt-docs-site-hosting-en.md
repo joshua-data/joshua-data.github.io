@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "How to Share dbt Docs Internally (Site Hosting Review)"
+lang: en
 tags:
-  - Language (English)
   - analytics-engineering
   - data-governance-platform
 ---

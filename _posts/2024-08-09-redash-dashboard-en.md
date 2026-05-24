@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Redash Dashboard Usage Review"
+lang: en
 tags:
-  - Language (English)
   - data-viz-bi
 ---
 

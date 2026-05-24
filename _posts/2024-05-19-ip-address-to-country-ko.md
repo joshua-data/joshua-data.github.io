@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "IP 주소-국가 매핑 쿼리 최적화"
+lang: ko
 tags:
-  - Language (Korean)
   - sql-bigquery
   - analytics-engineering
 ---

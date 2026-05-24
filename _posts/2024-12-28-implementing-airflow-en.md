@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Review of Implementing Airflow"
+lang: en
 tags:
-  - Language (English)
   - data-engineering
   - analytics-engineering
 ---

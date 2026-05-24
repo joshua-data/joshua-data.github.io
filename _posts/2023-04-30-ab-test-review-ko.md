@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "A/B 테스트 후기: 할인율 명시의 효과"
+lang: ko
 tags:
-  - Language (Korean)
   - product-analytics
 ---
 

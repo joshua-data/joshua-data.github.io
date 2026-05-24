@@ -9,11 +9,12 @@ layout: default
       <div class="post__meta">
         <time class="post__date">{{ page.date | date: "%Y-%m-%d" }}</time>
         <ul class="post__tags">
+          {%- assign taxonomy = site.data.taxonomy -%}
           {% for tag in page.tags %}
+            {%- assign matched = taxonomy | where: "slug", tag | first -%}
+            {%- assign label = matched.label | default: tag -%}
           <li class="post__tag">
-            <a href="{{ site.url }}{{ site.baseurl }}/tags#{{ tag }}">
-              {{ tag | remove: "Article (" | remove: "Level (" | remove: "Field (" | remove: "Skills (" | remove: "Language (" | remove: ")" }}
-            </a>
+            <a href="{{ site.baseurl }}/tags#{{ tag }}">{{ label }}</a>
           </li>
           {% endfor %}
         </ul>

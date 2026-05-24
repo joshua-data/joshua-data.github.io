@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "데이터 마트 모델링 후기 (First Activation Funnel 지표)"
+lang: ko
 tags:
-  - Language (Korean)
   - analytics-engineering
   - data-modeling
   - product-analytics

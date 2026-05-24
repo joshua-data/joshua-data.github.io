@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "The Last Click Attribution Model Using BigQuery"
+lang: en
 tags:
-  - Language (English)
   - product-analytics
   - sql-bigquery
 ---

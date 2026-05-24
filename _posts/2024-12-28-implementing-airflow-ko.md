@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Airflow 도입 후기"
+lang: ko
 tags:
-  - Language (Korean)
   - data-engineering
   - analytics-engineering
 ---

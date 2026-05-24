@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "dbt Docs 사내 공유 방법 (사이트 호스팅 후기)"
+lang: ko
 tags:
-  - Language (Korean)
   - analytics-engineering
   - data-governance-platform
 ---

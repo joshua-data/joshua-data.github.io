@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "A/B Test Review: The Impact of Displaying Discount Percentages"
+lang: en
 tags:
-  - Language (English)
   - product-analytics
 ---
 

@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "데이터 분석가의 파이썬 클라이언트 개발기 feat. pyinstaller"
+lang: ko
 tags:
-  - Language (Korean)
   - data-engineering
 ---
 

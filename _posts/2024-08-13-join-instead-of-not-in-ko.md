@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "NOT IN 대신 JOIN을 통한 쿼리 최적화"
+lang: ko
 tags:
-  - Language (Korean)
   - sql-bigquery
   - analytics-engineering
 ---

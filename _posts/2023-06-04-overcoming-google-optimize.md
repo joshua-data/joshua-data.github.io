@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Harnessing the Power of BigQuery and Python: Overcoming Google Optimize A/B Testing Limitations"
+lang: en
 tags:
-  - Language (English)
   - product-analytics
   - sql-bigquery
 ---

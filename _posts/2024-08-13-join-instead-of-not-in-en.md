@@ -1,8 +1,7 @@
 ---
-layout: post
 title: "Query Optimization by Using JOIN Instead of NOT IN"
+lang: en
 tags:
-  - Language (English)
   - sql-bigquery
   - analytics-engineering
 ---
