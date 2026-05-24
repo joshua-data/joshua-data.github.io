@@ -1,0 +1,45 @@
+# =============================================================================
+# profile.yml — Single source of truth for personal identity & contact.
+# Edit any field here to update it everywhere on the site.
+# =============================================================================
+
+# --- Identity ---
+name: Joshua Kim
+name_full: Jinseok Kim (Joshua)
+role: Analytics Engineer
+avatar: /assets/profile/profile-logo.png
+
+# --- Copy ---
+tagline: "Analytics Engineer with data modeling as my anchor — and comfortable across the rest of the stack (A/B testing, dashboards, ETL/CDC pipelines, AI agents), at my best building 0→1 with cross-functional teams."
+hero_quote: "Data is a product. I've built every stage of it."
+
+# --- Contact ---
+email: joshuajkim413@gmail.com
+
+# --- Social links ---
+# Add a platform here and it becomes available everywhere via
+#   {% include social-link.html platform="<key>" %}
+# Set `enabled: false` (or omit the key) to hide a link without deleting it.
+social:
+  github:
+    url: https://github.com/joshua-data
+    handle: joshua-data
+    label: GitHub
+    enabled: true
+  linkedin:
+    url: https://www.linkedin.com/in/joshuajsk/
+    handle: joshuajsk
+    label: LinkedIn
+    enabled: true
+  medium:
+    url: https://joshua-data.medium.com/
+    handle: joshua-data
+    label: Medium
+    enabled: true
+  rss:
+    url: /feed.xml
+    label: RSS Feed
+    enabled: true
+
+# --- Analytics ---
+google_analytics_id: G-K04Y972F7E

@@ -1,0 +1,29 @@
+# =============================================================================
+# ui.yml — User-facing labels and copy for the site chrome.
+# Update navigation, section titles, and footer text here.
+# =============================================================================
+
+# --- Site identity (mirrors _config.yml for Jekyll plugins) ---
+site:
+  title: Joshua Kim
+  description: Analytics Engineer
+
+# --- Top navigation ---
+nav:
+  - name: Home
+    url: /
+  - name: Blog
+    url: /tags
+
+# --- Home page section titles & intro copy ---
+home:
+  about_title: About Me
+  about_intro: "Hi, I'm <strong>Joshua</strong>. Here are a few honest notes about how I work and what I care about."
+  testimonials_title: What Colleagues Say
+
+# --- Footer ---
+footer:
+  nav_heading: Navigation
+  connect_heading: Connect
+  credit: Built with Jekyll
+  copyright_format: "© %{year} %{name}. All rights reserved."

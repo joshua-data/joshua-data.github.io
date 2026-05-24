@@ -29,7 +29,7 @@
   // Accent colors
   --color-accent: #{$accent-primary};
   --color-accent-secondary: #{$accent-secondary};
-  --color-accent-light: rgba(102, 126, 234, 0.1);
+  --color-accent-light: rgba(15, 23, 42, 0.06);
 
   // Component colors
   --color-tag-bg: #{$slate-100};
@@ -52,7 +52,7 @@
   --gradient-analysis: #{$gradient-analysis};
 
   // Gradient with transparency (for backgrounds)
-  --gradient-hero-overlay: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  --gradient-hero-overlay: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(15, 23, 42, 0.05) 100%);
 
   // ========== Shadows ==========
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -63,7 +63,7 @@
   --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
 
   // Colored shadows for cards
-  --shadow-accent: 0 10px 30px rgba(102, 126, 234, 0.2);
+  --shadow-accent: 0 10px 30px rgba(0, 0, 0, 0.12);
   --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.1);
 
   // ========== Border Radius ==========
@@ -91,7 +91,7 @@
   --space-4xl: 6rem;     // 96px
 
   // ========== Section Spacing ==========
-  --section-padding-y: clamp(3rem, 8vw, 6rem);
+  --section-padding-y: clamp(2rem, 5vw, 4rem);
   --section-padding-x: clamp(1rem, 5vw, 2rem);
 
   // ========== Container ==========
@@ -115,35 +115,35 @@
     --color-text-secondary: #{$slate-400};
     --color-text-muted: #{$slate-500};
 
-    // Link colors
-    --color-link: #818cf8;  // Lighter purple for dark mode
-    --color-link-hover: #a5b4fc;
+    // Link colors (monochrome)
+    --color-link: #{$slate-100};
+    --color-link-hover: #ffffff;
 
     // Border colors
     --color-border: #{$slate-700};
     --color-border-light: #{$slate-800};
-    --color-border-hover: #818cf8;
+    --color-border-hover: #{$slate-300};
 
-    // Accent colors
-    --color-accent: #818cf8;
-    --color-accent-secondary: #a78bfa;
-    --color-accent-light: rgba(129, 140, 248, 0.15);
+    // Accent colors (monochrome)
+    --color-accent: #{$slate-100};
+    --color-accent-secondary: #{$slate-300};
+    --color-accent-light: rgba(248, 250, 252, 0.08);
 
     // Component colors
     --color-tag-bg: #{$slate-700};
     --color-tag-text: #{$slate-300};
     --color-tag-bg-hover: #{$slate-600};
-    --color-blockquote-border: #818cf8;
+    --color-blockquote-border: #{$slate-300};
     --color-blockquote-bg: #{$slate-800};
     --color-table-stripe: #{$slate-800};
     --color-footer-bg: #{$slate-800};
 
     // Code colors
     --color-code-bg: #{$slate-800};
-    --color-code-text: #c4b5fd;
+    --color-code-text: #{$slate-200};
 
-    // Gradient overlay for dark mode
-    --gradient-hero-overlay: linear-gradient(135deg, rgba(129, 140, 248, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
+    // Gradient overlay for dark mode (monochrome)
+    --gradient-hero-overlay: linear-gradient(135deg, rgba(248, 250, 252, 0.04) 0%, rgba(248, 250, 252, 0.06) 100%);
 
     // Shadows (adjusted for dark mode)
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -151,7 +151,7 @@
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.35), 0 10px 10px rgba(0, 0, 0, 0.25);
     --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.5);
-    --shadow-accent: 0 10px 30px rgba(129, 140, 248, 0.25);
+    --shadow-accent: 0 10px 30px rgba(0, 0, 0, 0.5);
     --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.35);
   }
 }

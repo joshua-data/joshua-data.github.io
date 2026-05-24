@@ -17,10 +17,5 @@ vendor/
 .idea/
 .vscode/
 
-# Node (if using any JS tools)
-node_modules/
-
 # Claude
-CLAUDE.md
 .claude/
-.context/

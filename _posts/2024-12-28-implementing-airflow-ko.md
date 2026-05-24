@@ -1,12 +1,9 @@
 ---
-layout: post
 title: "Airflow 도입 후기"
+lang: ko
 tags:
-  - Language (Korean)
-  - Article (Project)
-  - Level (1. Beginner)
-  - Field (Data Engineering)
-  - Skills (Airflow)
+  - data-engineering
+  - analytics-engineering
 ---
 
 > "Airflow 도입을 통해 사내 데이터 알림 시스템을 효율적으로 관리하고자 기존 Python 기반 세션 방식에서 벗어나 DAG 기반 워크플로우를 구축했습니다. Docker Compose를 활용해 로컬 및 VM 환경에서 Airflow를 설정하고, Slack 알림을 포함한 다양한 데이터 파이프라인을 자동화했습니다. 이를 통해 유지보수 부담을 줄이고, 안정성을 높이며, 확장 가능한 데이터 처리 환경을 마련할 수 있었습니다."

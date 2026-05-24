@@ -1,12 +1,9 @@
 ---
-layout: post
 title: "IP Address-Country Mapping Query Optimization"
+lang: en
 tags:
-  - Language (English)
-  - Article (Issue Resolution)
-  - Level (3. Advanced)
-  - Field (Analytics Engineering)
-  - Skills (SQL)
+  - sql-bigquery
+  - analytics-engineering
 ---
 
 > "Optimized the process of mapping user country information using IP addresses in a data warehouse. The previous method was inefficient due to long processing times, but the new approach reduced query execution time by 90%."

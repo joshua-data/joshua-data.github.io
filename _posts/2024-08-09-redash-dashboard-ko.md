@@ -1,12 +1,8 @@
 ---
-layout: post
 title: "Redash 대시보드 활용 후기"
+lang: ko
 tags:
-  - Language (Korean)
-  - Article (Project)
-  - Level (2. Intermediate)
-  - Field (Data Visualization)
-  - Skills (Redash)
+  - data-viz-bi
 ---
 
 > "오픈소스 BI 도구인 Redash를 활용해 데이터를 시각화하고, 조직 내 다양한 구성원이 데이터를 쉽게 활용할 수 있도록 대시보드를 체계적으로 관리했습니다. 높은 접근성과 데이터 리터러시를 확보하기 위해 관리 규칙을 설정하고, 쿼리 파라미터 기능을 적극적으로 활용했습니다. 그 결과, Redash의 사용 빈도가 크게 증가하여 조직의 BI 중심 역할을 강화했습니다. (전체 Redash 계정 보유자 중 대략 DAU `39%`, WAU `52%`, MAU `77%`)"

@@ -1,0 +1,56 @@
+# =============================================================================
+# home.yml — Home page content.
+# Edit text here to update the About section and Testimonials on the home page.
+# =============================================================================
+
+# --- About Me cards (rendered in a 2x2 grid) ---
+# Each card: { title, items[], note? }
+about_cards:
+  - title: My Working Rhythm
+    items:
+      - Learn fast.
+      - Apply what I learn quickly.
+      - Write it down so the next person doesn't have to figure it out alone.
+
+  - title: Roles I've Held
+    items:
+      - Data Analyst
+      - Analytics Engineer
+      - Data Engineer
+    note: "Different titles, same goal: helping people make better decisions with data."
+
+  - title: How I Show Up
+    items:
+      - Calm, especially when things get noisy.
+      - Self-directed, with a steady bias for getting things done.
+      - I do my best work when I'm trusted with autonomy, and I bring teammates in early when I'm unsure.
+
+  - title: What I Care About
+    items:
+      - I treat data like a product. It has real users and a long shelf life.
+      - The best part of my day is when something I built quietly makes a teammate's job easier.
+      - I don't like settling in. There's always something I haven't learned yet.
+
+# --- Testimonials (the first one with featured: true is rendered larger) ---
+# Each: { quote, author, role, featured? }
+testimonials:
+  - featured: true
+    quote: "He demonstrated deep understanding and proficient practical skills in dbt, with outstanding capabilities in building and managing data pipelines. His fluency in English enabled exceptional research abilities utilizing global resources — consistently acquiring new technologies every week. What impressed me most was his exceptional ability to identify and solve tasks on his own without separate instructions. His documentation skills are outstanding; the Notion documents he created were so detailed that even beginners with no dbt experience could perform their work. The training sessions he provided were better quality than any external lecture. He is a talent who performs best when given autonomy. I can confidently recommend him for any stage in the world."
+    author: Vex Seo
+    role: "Analytics Team Lead @ Wrtn Technologies (Ex-eBay, Coupang)"
+
+  - quote: "Deep passion and strong expertise in data, with exceptional problem-solving, thorough preparation, and a strong sense of responsibility. Clear, considerate communicator trusted by colleagues; significantly improved the organization's overall data capability."
+    author: Product Designer
+    role: "@ IoTrust"
+
+  - quote: "As the sole data engineer, effectively handled complex data and communicated insights clearly to non-technical peers. Demonstrates continuous self-development through learning and blogging, delivering highly reliable and complete results."
+    author: Frontend Developer
+    role: "@ IoTrust"
+
+  - quote: "A calm yet reliable collaborator who consistently completes work with stability and confidence. Excels in documenting and standardizing processes, improving team efficiency and productivity."
+    author: Product Designer
+    role: "@ IoTrust"
+
+  - quote: "Skilled in data visualization and documentation, working responsibly and positively; earning strong trust and respect. Highly focused and achievement-driven, consistently delivering high-quality outcomes."
+    author: Frontend Developer
+    role: "@ IoTrust"

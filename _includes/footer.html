@@ -1,70 +1,62 @@
+{%- assign profile = site.data.profile -%}
+{%- assign ui = site.data.ui.footer -%}
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__content">
-      <!-- Brand Section -->
+      <!-- Brand -->
       <div class="footer__brand">
         <div class="footer__logo">
-          {% if site.avatar %}
+          {% if profile.avatar %}
           <div class="footer__avatar">
-            <img src="{{ site.avatar }}" alt="{{ site.name }}" />
+            <img src="{{ profile.avatar }}" alt="{{ profile.name }}" />
           </div>
           {% endif %}
-          <h3 class="footer__name">{{ site.name }}</h3>
+          <h3 class="footer__name">{{ profile.name }}</h3>
         </div>
-        <p class="footer__tagline">{{ site.data.personal.footer_tagline }}</p>
+        <p class="footer__tagline">&ldquo;{{ profile.hero_quote }}&rdquo;</p>
 
-        <!-- Social Links -->
+        <!-- Social icons -->
         <div class="footer__social">
-          {% if site.footer-links.github %}
-          <a href="https://github.com/{{ site.footer-links.github }}" target="_blank" rel="noopener" class="footer__social-link" aria-label="GitHub">
-            {% include icon-github.html %}
-          </a>
-          {% endif %}
-          {% if site.footer-links.linkedin %}
-          <a href="https://www.linkedin.com/in/{{ site.footer-links.linkedin }}" target="_blank" rel="noopener" class="footer__social-link" aria-label="LinkedIn">
-            {% include icon-linkedin.html %}
-          </a>
-          {% endif %}
-          <a href="{{ site.data.personal.social.medium.url }}" target="_blank" rel="noopener" class="footer__social-link" aria-label="Medium">
-            {% include icon-medium.html %}
-          </a>
-          {% if site.footer-links.rss %}
-          <a href="{{ "/feed.xml" | prepend: site.baseurl }}" target="_blank" rel="noopener" class="footer__social-link" aria-label="RSS Feed">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
-            </svg>
-          </a>
-          {% endif %}
+          {% include social-link.html platform="github" %}
+          {% include social-link.html platform="linkedin" %}
+          {% include social-link.html platform="medium" %}
+          {% include social-link.html platform="rss" %}
         </div>
       </div>
 
       <!-- Navigation -->
       <div class="footer__nav">
-        <h4>Navigation</h4>
+        <h4>{{ ui.nav_heading }}</h4>
         <ul>
-          {% for nav in site.navigation %}
-          <li><a href="{{ site.baseurl }}{{ nav.url }}">{{ nav.name }}</a></li>
+          {% for item in site.data.ui.nav %}
+          <li><a href="{{ site.baseurl }}{{ item.url }}">{{ item.name }}</a></li>
           {% endfor %}
         </ul>
       </div>
 
-      <!-- Contact -->
+      <!-- Connect -->
       <div class="footer__nav">
-        <h4>Connect</h4>
+        <h4>{{ ui.connect_heading }}</h4>
         <ul>
-          <li><a href="https://www.linkedin.com/in/{{ site.footer-links.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="https://github.com/{{ site.footer-links.github }}" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="{{ site.data.personal.social.medium.url }}" target="_blank" rel="noopener">Medium</a></li>
-          <li><a href="mailto:{{ site.data.personal.email }}">Email</a></li>
+          {% for entry in profile.social %}
+            {%- assign s = entry[1] -%}
+            {%- if s.enabled != false and s.url and entry[0] != "rss" -%}
+            <li><a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.label | default: entry[0] | capitalize }}</a></li>
+            {%- endif -%}
+          {% endfor %}
+          {% if profile.email %}
+          <li><a href="mailto:{{ profile.email }}">Email</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
 
-    <!-- Bottom Bar -->
+    <!-- Bottom bar -->
     <div class="footer__bottom">
-      <p class="footer__copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name }}. All rights reserved.</p>
+      {%- assign copyright = ui.copyright_format | replace: "%{year}", site.time | date: "%Y" | replace: "%{name}", profile.name -%}
+      <p class="footer__copyright">{{ copyright }}</p>
       <div class="footer__links">
-        <span>Built with Jekyll</span>
+        <span>{{ ui.credit }}</span>
       </div>
     </div>
   </div>

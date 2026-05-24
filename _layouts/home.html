@@ -1,95 +1,71 @@
 ---
 layout: default
 ---
+{%- assign profile = site.data.profile -%}
+{%- assign home = site.data.home -%}
+{%- assign labels = site.data.ui.home -%}
 
 <div class="home">
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="hero">
     <div class="hero__container">
       <div class="hero__content">
         <div class="hero__text">
-          <p class="hero__greeting animate animate-fadeInUp">Hi, I'm</p>
-          <h1 class="hero__name animate animate-fadeInUp animate-delay-100">{{ site.data.personal.name }}</h1>
-          <p class="hero__role animate animate-fadeInUp animate-delay-200">{{ site.data.personal.role }}</p>
-          <p class="hero__tagline animate animate-fadeInUp animate-delay-300">{{ site.data.personal.tagline }}</p>
-          <div class="hero__buttons animate animate-fadeInUp animate-delay-400">
-            <a href="{{ site.baseurl }}/about/" class="btn-primary">About Me</a>
-            <a href="{{ site.data.personal.social.linkedin.url }}" class="btn-secondary" target="_blank" rel="noopener">
-              {% include icon-linkedin.html size=18 %}
-              LinkedIn
-            </a>
-          </div>
+          <p class="hero__tagline animate animate-fadeInUp">&ldquo;{{ profile.hero_quote }}&rdquo;</p>
         </div>
         <div class="hero__image animate animate-fadeInUp animate-delay-200">
           <div class="hero__avatar">
-            <img src="{{ site.baseurl }}/assets/profile/profile-logo.png" alt="{{ site.name }}">
+            <img src="{{ site.baseurl }}{{ profile.avatar }}" alt="{{ profile.name }}">
           </div>
         </div>
       </div>
     </div>
-    <div class="hero__scroll animate animate-fadeIn animate-delay-600">
-      <span>Scroll</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-    </div>
   </section>
 
-  <!-- What I Do Section -->
+  <!-- About Me -->
   <section class="section section--alt">
     <div class="section__container">
       <div class="section__header">
-        <span class="section__subtitle">Expertise</span>
-        <h2 class="section__title">What I Do</h2>
-        <p class="section__description">From data analysis to AI-powered solutions</p>
+        <h2 class="section__title">{{ labels.about_title }}</h2>
       </div>
-      <div class="card-grid card-grid--4">
-        {% for item in site.data.expertise %}
-        <div class="card-feature hover-lift">
-          <div class="card-feature__icon card-feature__icon--{{ item.icon_class }}">
-            {{ item.icon_svg }}
+      <div class="home-about">
+        <p class="home-about__intro">{{ labels.about_intro }}</p>
+
+        <div class="home-about__grid">
+          {% for card in home.about_cards %}
+          <div class="home-about__card">
+            <h3 class="home-about__card-title">{{ card.title }}</h3>
+            <ul class="home-about__list">
+              {% for item in card.items %}
+              <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+            {% if card.note %}
+            <p class="home-about__note">{{ card.note }}</p>
+            {% endif %}
           </div>
-          <h3 class="card-feature__title">{{ item.title }}</h3>
-          <p class="card-feature__description">{{ item.description }}</p>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </div>
   </section>
 
-  <!-- Highlights Section -->
+  <!-- Testimonials -->
   <section class="section">
     <div class="section__container">
       <div class="section__header">
-        <span class="section__subtitle">Impact</span>
-        <h2 class="section__title">Highlights</h2>
-        <p class="section__description">Key achievements and community involvement</p>
+        <h2 class="section__title">{{ labels.testimonials_title }}</h2>
       </div>
-      <div class="card-grid card-grid--4">
-        {% for stat in site.data.stats %}
-        <div class="card-stat hover-lift">
-          <div class="card-stat__value">{{ stat.value }}</div>
-          <p class="card-stat__label">{{ stat.label }}</p>
+      <div class="about-testimonials">
+        {% for t in home.testimonials %}
+        <div class="about-testimonial{% if t.featured %} about-testimonial--featured{% endif %}">
+          <blockquote class="about-testimonial__quote">{{ t.quote }}</blockquote>
+          <div class="about-testimonial__author">
+            <strong>{{ t.author }}</strong>
+            <span>{{ t.role }}</span>
+          </div>
         </div>
         {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="section">
-    <div class="section__container">
-      <div class="page-cta">
-        <h2 class="page-cta__title">Let's Connect</h2>
-        <p class="page-cta__text">Interested in discussing data engineering, analytics strategies, or collaboration opportunities?</p>
-        <div class="page-cta__buttons">
-          <a href="{{ site.data.personal.social.linkedin.url }}" class="page-cta__btn page-cta__btn--linkedin" target="_blank" rel="noopener">
-            {% include icon-linkedin.html %}
-            Connect on LinkedIn
-          </a>
-          <a href="{{ site.data.personal.social.github.url }}" class="page-cta__btn page-cta__btn--github" target="_blank" rel="noopener">
-            {% include icon-github.html %}
-            View GitHub
-          </a>
-        </div>
       </div>
     </div>
   </section>
