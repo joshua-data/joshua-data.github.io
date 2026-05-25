@@ -8,7 +8,7 @@ tags:
 
 > "I want to share how I built the `dim__sessions` model — a solution to the problem of having no session ID in the Mixpanel event table, designed so that session-based analyses can be performed efficiently."
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/1.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/1.webp)
 
 ---
 
@@ -47,7 +47,7 @@ I chose to **manage sessions as a Dimension table**, for the following reasons.
 - A session is not an individual event like a pageview, click, or purchase — it is a container of attributes.
 - Each session is not "re-occurring," but it does carry a set of properties.
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/2.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/2.webp)
 
 # 3. Defining a Session
 
@@ -66,7 +66,7 @@ In addition, for each session's dimension attributes — country of access, devi
 
 Based on the premise above, I sketched the schema for `dim__sessions` as follows.
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/3.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/3.webp)
 
 Then I started writing the modeling query.
 
@@ -285,7 +285,7 @@ select * from dim__sessions_with_final_session_id
 - It scans only the partitions that are **the complement** of the incremental window.
 - This **guarantees that the `session_id` values do not drift even if the batch runs hundreds of times a day**.
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/4.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/4.webp)
 
 ```sql
 {% raw %}{% set interval = 'day' %}
@@ -334,7 +334,7 @@ select * from dim__sessions_with_final_session_id
 
 With the finished `dim__sessions` table, a variety of requirements can be answered with simple queries.
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/5.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/5.webp)
 
 ### (1) "Please tell me the average session duration per user per day."
 
@@ -384,13 +384,13 @@ After shipping the model, I was able to deliver session and duration metrics acr
 - To guarantee the incrementality of `session_id`, the current model **almost fully scans the `this` table on every run**. I found that unsatisfying.
 - Maintaining each user's max `session_id` in **a separate bridge table** would avoid the full scan and meaningfully improve performance.
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/6.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/6.webp)
 
 ### (2) Adding a `session_id` column to the event table
 
 - In the future, data analysts may want to dig into user journeys directly off the event table.
 - For that case, adding a `session_id` column to the event table itself would make analysis much more flexible and convenient. (This would be necessary when building, for example, a `fact__users_journey` table.)
 
-![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions-en/7.webp)
+![]({{ site.baseurl }}/assets/2025-08-16-identifying-and-modeling-sessions/7.webp)
 
 ---
