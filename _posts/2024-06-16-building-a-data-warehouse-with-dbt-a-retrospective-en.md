@@ -1,5 +1,5 @@
 ---
-title: "[AE] Building a data warehouse with dbt: a retrospective"
+title: "Building a data warehouse with dbt: a retrospective"
 lang: en
 tags:
   - analytics-engineering

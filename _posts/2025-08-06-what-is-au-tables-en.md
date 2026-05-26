@@ -1,5 +1,5 @@
 ---
-title: "[AE] What Is an AU Table: Everything About the Activated Users Table"
+title: "What Is an AU Table: Everything About the Activated Users Table"
 lang: en
 tags:
   - analytics-engineering
