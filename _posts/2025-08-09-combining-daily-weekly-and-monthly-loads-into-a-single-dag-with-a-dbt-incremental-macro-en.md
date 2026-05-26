@@ -1,5 +1,5 @@
 ---
-title: "[AE] Combining Daily, Weekly, and Monthly Loads into a Single DAG with a dbt Incremental Macro"
+title: "Combining Daily, Weekly, and Monthly Loads into a Single DAG with a dbt Incremental Macro"
 lang: en
 tags:
   - analytics-engineering
