@@ -1,0 +1,1 @@
+[{"name":"opened_date","evidenceType":"date","typeFidelity":"precise"},{"name":"prs_opened","evidenceType":"number","typeFidelity":"precise"},{"name":"prs_merged","evidenceType":"number","typeFidelity":"precise"},{"name":"prs_abandoned","evidenceType":"number","typeFidelity":"precise"},{"name":"prs_still_open","evidenceType":"number","typeFidelity":"precise"}]

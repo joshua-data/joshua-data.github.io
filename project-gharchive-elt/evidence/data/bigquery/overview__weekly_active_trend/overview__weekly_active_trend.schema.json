@@ -1,0 +1,1 @@
+[{"name":"week_start_date","evidenceType":"date","typeFidelity":"precise"},{"name":"events_total","evidenceType":"number","typeFidelity":"precise"},{"name":"active_users","evidenceType":"number","typeFidelity":"precise"},{"name":"active_repos","evidenceType":"number","typeFidelity":"precise"}]
