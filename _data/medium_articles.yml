@@ -4,7 +4,7 @@
 # 2026
 
 - title: "Building an End-to-End Data Platform (4): The BI Layer That Compiles to Static Files"
-  date: "2026-07-01"
+  date: "2026-07-07"
   url: "https://joshua-data.medium.com/building-an-end-to-end-data-platform-4-the-bi-layer-that-compiles-to-static-files-e909b6dcaf3d"
   tags:
     - data-viz-bi
@@ -12,7 +12,7 @@
   language: en
 
 - title: "Building an End-to-End Data Platform (3): The Marts Layer, and a Data Contract Grown Bottom-Up"
-  date: "2026-07-01"
+  date: "2026-07-03"
   url: "https://joshua-data.medium.com/building-an-end-to-end-data-platform-3-the-marts-layer-and-a-data-contract-grown-bottom-up-9d580a0a3bf4"
   tags:
     - data-modeling
