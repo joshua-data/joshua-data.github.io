@@ -2,6 +2,13 @@
 # This file contains external Medium blog articles to be displayed on the Blog page
 
 # 2026
+- title: "Building a Lakehouse, and Leading the Team That Built It"
+  date: "2026-08-08"
+  url: "https://joshua-data.medium.com/building-a-lakehouse-and-leading-the-team-that-built-it-119e99a405b7"
+  tags:
+    - data-governance-platform
+    - data-engineering
+  language: en
 
 - title: "Building an End-to-End Data Platform (4): The BI Layer That Compiles to Static Files"
   date: "2026-07-07"
