@@ -6,7 +6,7 @@
 # --- Site identity (mirrors _config.yml for Jekyll plugins) ---
 site:
   title: Joshua Kim
-  description: Analytics Engineer
+  description: Analytics Engineer | Data Engineer
 
 # --- Top navigation ---
 nav:
